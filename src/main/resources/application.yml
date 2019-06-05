@@ -1,0 +1,9 @@
+server:
+  port: 8222
+
+cool:
+  jdbc:
+    driver: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/service?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: xltys1995
