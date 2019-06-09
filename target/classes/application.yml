@@ -1,9 +1,17 @@
 server:
   port: 8222
 
-cool:
-  jdbc:
-    driver: com.mysql.jdbc.Driver
+#cool:
+#  jdbc:
+#    driver: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/service?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: xltys1995
+# DataSource Config
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/service?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password: xltys1995
+
