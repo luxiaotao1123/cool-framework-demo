@@ -12,15 +12,4 @@ public class DemoApplication {
         SpringApplication.run(DemoApplication.class, args);
     }
 
-//    @Autowired
-//    private UserService userService;
-//
-//
-//    @GetMapping("/test")
-//    @ResponseBody
-//    public String test(){
-//        User user = userService.selectById("1136299639260106754");
-//        return user.toString();
-//    }
-
 }

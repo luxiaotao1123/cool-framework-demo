@@ -38,7 +38,6 @@ public class CodeBuilder {
 
     private static final String entityName = "user";
 
-
     public static void main(String[] args) throws IOException {
         // cool code generator
         new BuildCodeTemplates(basePackage, entityName).buildCodeFile();
