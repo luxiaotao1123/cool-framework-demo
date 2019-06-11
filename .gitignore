@@ -3,6 +3,7 @@
 /.classpath
 /.project
 .idea/
+.idea/*
 /*/.iml
 *.iml
 *.class
@@ -18,14 +19,9 @@ target/classes/*
 */.springBeans
 /.springBeans
 /.project
-ddbb-vc/.settings/org.eclipse.wst.common.project.facet.core.xml
-ddbb-vc/.settings/org.eclipse.wst.common.project.facet.core.prefs.xml
-ddbb-vc/.settings/org.eclipse.m2e.core.prefs
-ddbb-vc/.settings/org.eclipse.jdt.core.prefs
-ddbb-vc/.settings/org.eclipse.core.resources.prefs
-ddbb-vc/.classpath
 jenkins.sh
 /.settings/
 /ddbb-thread/
 /ddbb-thread/*
 */.settings/
+cool-framework-demo.iml
