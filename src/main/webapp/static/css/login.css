@@ -1,0 +1,31 @@
+html{
+    height: 100%;
+    /*background-color: gainsboro;*/
+}
+
+body{
+    text-align:center;
+}
+
+#login-frame {
+    width: 300px;
+    height: 200px;
+    /*margin: 0 auto;*/
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -100px 0 0 -150px;
+}
+
+
+/**
+加黑边框 border:1px solid #000;
+position：absolute这个是绝对定位； 它不会随着窗口大小变化，只是固定在一个特定的坐标轴上面
+position：relative是相对定位 它可以随窗口大小变化。但大小仍然不会变。
+
+
+
+
+
+
+ */

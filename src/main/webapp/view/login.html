@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>cool demo login</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/css/login.css">
+    <script src="/static/layui/layui.js"></script>
+</head>
+<body>
+    <div id="login-frame">
+        <form class="layui-form" action="" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">账号</label>
+                <div class="layui-input-block">
+                    <input id="username" class="layui-input" lay-verify="username" lay-verType="tips" type="text" name="username" autocomplete="off" placeholder="请输入账号">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-block">
+                    <input id="password" class="layui-input" lay-verify="password" lay-verType="tips" type="password" name="password" autocomplete="off" placeholder="请输入密码">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <button class="layui-btn btn-submit" lay-submit="" lay-filter="login" type="button">登录</button>
+            </div>
+        </form>
+    </div>
+</body>
+<script>
+    layui.config({
+        base: '/static/js/'
+    }).use(['form','layer','store'],function () {
+        var form = layui.form,
+            layer = layui.layer,
+            store = layui.store,
+            $ = layui.jquery;
+
+
+        form.verify({
+            username: function (val) {
+                if (val === "") {
+                    return "请输入账号";
+                }
+            },
+            password: function (val) {
+                if (val === "") {
+                    return "请输入密码";
+                }
+            }
+        });
+
+        form.on('submit(login)', function (data) {
+            var user = {
+                username: $("#username").val(),
+                password: $("#password").val()
+            };
+            $.ajax({
+                url: store.uri + "/login.action",
+                data: user,
+                method: 'POST',
+                success: function (res) {
+                    if (res.code === 200){
+                        sessionStorage.setItem("token", res.data);
+                        window.location.href = store.uri + "/auth";
+                    } else {
+                        layer.alert(res.msg)
+                    }
+                }
+            });
+            return false;
+        });
+
+    })
+</script>
+</html>
