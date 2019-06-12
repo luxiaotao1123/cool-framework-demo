@@ -24,9 +24,9 @@ public class CodeBuilder {
 
     private static final String basePath = "/Users/vincent/Documents/workspace/cool-framework-demo";
 
-    private static final String basePackage = "com.cool.demo";
+    private static final String basePackage = "com.cool.demo.system";
 
-    private static final String jdbcUrl = "jdbc:mysql://127.0.0.1:3306/service?useUnicode=true&characterEncoding=utf8&useSSL=false";
+    private static final String jdbcUrl = "jdbc:mysql://127.0.0.1:3306/cool?useUnicode=true&characterEncoding=utf8&useSSL=false";
 
     private static final String jdbcDriver = "com.mysql.jdbc.Driver";
 
@@ -34,7 +34,7 @@ public class CodeBuilder {
 
     private static final String jdbcPassword = "xltys1995";
 
-    private static final String prefix = "dem_";
+    private static final String prefix = "sys_";
 
     private static final String entityName = "user";
 
@@ -160,6 +160,7 @@ public class CodeBuilder {
         // 关闭默认 xml 生成，调整生成 至 根目录
         TemplateConfig tc = new TemplateConfig();
         tc.setController(null);
+        tc.setMapper(null);
         tc.setXml(null);
         mpg.setTemplate(tc);
 
