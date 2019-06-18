@@ -12,8 +12,8 @@ public class CodeBuilder {
         generator.url="localhost:3306/cool";
         generator.username="root";
         generator.password="xltys1995";
-        generator.table="dem_customer";
-        generator.packagePath="com.cool.demo.demo";
+        generator.table="sys_user";
+        generator.packagePath="com.cool.demo.system";
         generator.build();
     }
 
@@ -26,7 +26,7 @@ public class CodeBuilder {
 
 
 
-
+}
 
 
 
@@ -212,4 +212,4 @@ public class CodeBuilder {
 //        System.err.println(mpg.getCfg().getMap().get("abc"));
 //    }
 
-}
+
