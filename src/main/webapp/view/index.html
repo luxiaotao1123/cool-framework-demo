@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Cool管理系统</title>
-    <link rel="stylesheet" href="../static/layui/css/layui.css">
-    <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/css/index.css">
 </head>
 <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
@@ -68,21 +68,51 @@
         </div>
 
         <div class="layui-body">
-            <!-- 内容主体区域 -->
-            <div style="padding: 15px;">内容主体区域</div>
+            <table id="user-table" lay-filter="test"></table>
+
+
         </div>
 
         <div class="layui-footer">
-            <!-- 底部固定区域 -->
-            © layui.com - 底部固定区域
         </div>
     </div>
-<script src="../static/layui/layui.js"></script>
+<script src="/static/layui/layui.js"></script>
 <script>
-    //JavaScript代码区域
-    layui.use('element', function(){
-        var element = layui.element;
+    layui.use('table', function () {
+        var table = layui.table;
 
+        // 表格加载
+        table.render({
+            elem: '#user-table',
+            headers: {token: sessionStorage.getItem('token')},
+            url: '/auth/user/list',
+            page: true,
+            cols: [[
+                {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
+                ,{field: 'username', title: '用户名', width:80}
+                ,{field: 'mobile', title: '联系方式', width:80}
+                ,{field: 'password', title: '密码MD5值', width:80}
+                ,{field: 'createTime', title: '注册时间', width: 177, sort: true}
+                ,{field: 'status', title: '状态', width: 80, sort: true}
+            ]],
+            request: {
+                pageName: 'pageIndex',
+                pageSize: 'pageSize'
+            },
+            parseData: function (res) {
+                return {
+                    'code': res.code,
+                    'msg': res.msg,
+                    'count': res.data.total,
+                    'data': res.data.records
+                }
+            },
+            response: {
+                statusCode: 200
+
+            }
+        });
+        
     });
 </script>
 </body>

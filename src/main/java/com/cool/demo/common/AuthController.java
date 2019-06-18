@@ -25,7 +25,7 @@ public class AuthController {
     @ResponseBody
     public R loginAction(String username, String password){
         if (username.equals("admin") && password.equals("admin")){
-            return R.ok("token123");
+            return R.ok("sdadsa");
         }else {
             return R.error("密码错误");
         }
