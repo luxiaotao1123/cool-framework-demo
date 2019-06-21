@@ -25,3 +25,4 @@ jenkins.sh
 /ddbb-thread/*
 */.settings/
 cool-framework-demo.iml
+.idea/workspace.xml
