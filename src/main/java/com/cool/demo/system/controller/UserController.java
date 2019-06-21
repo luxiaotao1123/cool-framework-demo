@@ -13,33 +13,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/auth/user")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/{id}")
+    @RequestMapping("")
+    public String index(){
+        return "user/user";
+    }
+
+    @RequestMapping(value = "/{id}/auth")
     @ResponseBody
     public R get(@PathVariable("id") Long id) {
         return R.ok(userService.selectById(String.valueOf(id)));
     }
 
-    @RequestMapping(value = "list")
+    @RequestMapping(value = "list/auth")
     @ResponseBody
     public R list(@RequestParam(defaultValue = "1")Integer pageIndex,
                   @RequestParam(defaultValue = "10")Integer pageSize){
         return R.ok(userService.selectPage(new Page<>(pageIndex, pageSize)));
     }
 
-    @RequestMapping(value = "/add")
+    @RequestMapping(value = "/add/auth")
     @ResponseBody
     public R add(User user) {
         userService.insert(user);
         return R.ok();
     }
 
-	@RequestMapping(value = "/update")
+	@RequestMapping(value = "/update/auth")
     @ResponseBody
     public R update(User user){
         if (Cools.isEmpty(user) || null==user.getId()){

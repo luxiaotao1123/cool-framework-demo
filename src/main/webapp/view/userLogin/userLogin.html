@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>userLogin</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+</head>
+<body>
+<h1>UserLogin</h1>
+<table id="userLogin-table" lay-filter="test"></table>
+<script src="/static/layui/layui.js"></script>
+<script>
+    layui.use('table', function () {
+        var table = layui.table;
+        console.log(sessionStorage.getItem('token'));
+        // 表格加载
+        table.render({
+            elem: '#userLogin-table',
+            headers: {token: sessionStorage.getItem('token')},
+            url: '/userLogin/list/auth',
+            page: true,
+            cols: [[
+                {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
+                ,{field: 'userId', title: '用户编号', width:80}
+                ,{field: 'token', title: '凭证', width:80}
+                ,{field: 'createTime', title: '注册时间', width: 177, sort: true}
+            ]],
+            request: {
+                pageName: 'pageIndex',
+                pageSize: 'pageSize'
+            },
+            parseData: function (res) {
+                return {
+                    'code': res.code,
+                    'msg': res.msg,
+                    'count': res.data.total,
+                    'data': res.data.records
+                }
+            },
+            response: {
+                statusCode: 200
+            }
+        });
+    });
+</script>
+</body>
+</html>

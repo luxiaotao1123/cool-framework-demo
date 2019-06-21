@@ -45,75 +45,25 @@
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                 <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                     <li class="layui-nav-item layui-nav-itemed">
-                        <a class="" href="javascript:;">所有商品</a>
+                        <a href="/user">用户系统</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="javascript:;">列表一</a></dd>
-                            <dd><a href="javascript:;">列表二</a></dd>
-                            <dd><a href="javascript:;">列表三</a></dd>
-                            <dd><a href="">超链接</a></dd>
+                            <dd><a href="/user" target="main">人员信息</a></dd>
+                            <dd><a href="www.baidu.com" target="main">百度</a></dd>
+                            <dd><a href="/userLogin" target="main">凭证表</a></dd>
                         </dl>
                     </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">解决方案</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="javascript:;">列表一</a></dd>
-                            <dd><a href="javascript:;">列表二</a></dd>
-                            <dd><a href="">超链接</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item"><a href="">云市场</a></li>
-                    <li class="layui-nav-item"><a href="">发布商品</a></li>
                 </ul>
             </div>
         </div>
 
         <div class="layui-body">
-            <table id="user-table" lay-filter="test"></table>
+            <iframe name="main" frameborder="1" scrolling="auto" width="1200px" height="800px">
 
-
+            </iframe>
         </div>
-
-        <div class="layui-footer">
+            <div class="layui-footer">
         </div>
     </div>
 <script src="/static/layui/layui.js"></script>
-<script>
-    layui.use('table', function () {
-        var table = layui.table;
-
-        // 表格加载
-        table.render({
-            elem: '#user-table',
-            headers: {token: sessionStorage.getItem('token')},
-            url: '/auth/user/list',
-            page: true,
-            cols: [[
-                {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
-                ,{field: 'username', title: '用户名', width:80}
-                ,{field: 'mobile', title: '联系方式', width:80}
-                ,{field: 'password', title: '密码MD5值', width:80}
-                ,{field: 'createTime', title: '注册时间', width: 177, sort: true}
-                ,{field: 'status', title: '状态', width: 80, sort: true}
-            ]],
-            request: {
-                pageName: 'pageIndex',
-                pageSize: 'pageSize'
-            },
-            parseData: function (res) {
-                return {
-                    'code': res.code,
-                    'msg': res.msg,
-                    'count': res.data.total,
-                    'data': res.data.records
-                }
-            },
-            response: {
-                statusCode: 200
-
-            }
-        });
-        
-    });
-</script>
 </body>
 </html>

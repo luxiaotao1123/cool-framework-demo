@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>User</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+</head>
+<body>
+    <h1>User</h1>
+    <table id="user-table" lay-filter="test"></table>
+    <script src="/static/layui/layui.js"></script>
+    <script>
+        layui.use('table', function () {
+            var table = layui.table;
+            console.log(sessionStorage.getItem('token'));
+            // 表格加载
+            table.render({
+                elem: '#user-table',
+                headers: {token: sessionStorage.getItem('token')},
+                url: '/user/list/auth',
+                page: true,
+                cols: [[
+                    {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
+                    ,{field: 'username', title: '用户名', width:80}
+                    ,{field: 'mobile', title: '联系方式', width:80}
+                    ,{field: 'password', title: '密码MD5值', width:80}
+                    ,{field: 'createTime', title: '注册时间', width: 177, sort: true}
+                    ,{field: 'status', title: '状态', width: 80, sort: true}
+                ]],
+                request: {
+                    pageName: 'pageIndex',
+                    pageSize: 'pageSize'
+                },
+                parseData: function (res) {
+                    return {
+                        'code': res.code,
+                        'msg': res.msg,
+                        'count': res.data.total,
+                        'data': res.data.records
+                    }
+                },
+                response: {
+                    statusCode: 200
+                }
+            });
+        });
+    </script>
+</body>
+</html>

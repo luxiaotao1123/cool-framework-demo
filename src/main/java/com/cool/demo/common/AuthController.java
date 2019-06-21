@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class AuthController {
 
-    @RequestMapping("/auth")
+    @RequestMapping("/index")
     public String index(){
         return "index";
     }
