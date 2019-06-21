@@ -42,10 +42,9 @@
 
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
-                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-                <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-                    <li class="layui-nav-item layui-nav-itemed">
-                        <a href="/user">用户系统</a>
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">用户系统</a>
                         <dl class="layui-nav-child">
                             <dd><a href="/user" target="main">人员信息</a></dd>
                             <dd><a href="/userLogin" target="main">凭证表</a></dd>
@@ -56,12 +55,17 @@
         </div>
 
         <div class="layui-body">
-            <iframe name="main" frameborder="1" scrolling="auto" width="1200px" height="800px" />
+            <iframe name="main" frameborder="1" scrolling="auto" width="1200px" height="800px" ></iframe>
         </div>
 
         <div class="layui-footer">
         </div>
     </div>
 <script src="/static/layui/layui.js"></script>
+<script>
+    layui.use('element', function(){
+        var element = layui.element;
+    });
+</script>
 </body>
 </html>
