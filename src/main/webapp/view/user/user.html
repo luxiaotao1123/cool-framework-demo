@@ -27,10 +27,10 @@
                     ,{field: 'createTime', title: '注册时间', width: 177, sort: true}
                     ,{field: 'status', title: '状态', width: 80, sort: true}
                 ]],
-                request: {
-                    pageName: 'pageIndex',
-                    pageSize: 'pageSize'
-                },
+                // request: {
+                //     pageName: 'pageIndex',
+                //     limitName: 'pageSize'
+                // },
                 parseData: function (res) {
                     return {
                         'code': res.code,

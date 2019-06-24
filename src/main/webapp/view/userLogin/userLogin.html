@@ -25,10 +25,10 @@
                 ,{field: 'token', title: '凭证', width:80}
                 ,{field: 'createTime', title: '注册时间', width: 177, sort: true}
             ]],
-            request: {
-                pageName: 'pageIndex',
-                pageSize: 'pageSize'
-            },
+            // request: {
+            //     pageName: 'pageIndex',
+            //     pageSize: 'pageSize'
+            // },
             parseData: function (res) {
                 return {
                     'code': res.code,
