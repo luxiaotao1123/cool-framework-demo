@@ -12,7 +12,6 @@
 <script>
     layui.use('table', function () {
         var table = layui.table;
-        console.log(sessionStorage.getItem('token'));
         // 表格加载
         table.render({
             elem: '#userLogin-table',
@@ -25,10 +24,10 @@
                 ,{field: 'token', title: '凭证', width:80}
                 ,{field: 'createTime', title: '注册时间', width: 177, sort: true}
             ]],
-            // request: {
-            //     pageName: 'pageIndex',
-            //     pageSize: 'pageSize'
-            // },
+            request: {
+                pageName: 'curr',
+                pageSize: 'limit'
+            },
             parseData: function (res) {
                 return {
                     'code': res.code,

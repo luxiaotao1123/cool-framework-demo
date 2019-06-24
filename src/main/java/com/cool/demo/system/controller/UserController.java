@@ -32,9 +32,9 @@ public class UserController {
 
     @RequestMapping(value = "list/auth")
     @ResponseBody
-    public R list(@RequestParam(defaultValue = "1")Integer page,
+    public R list(@RequestParam(defaultValue = "1")Integer curr,
                   @RequestParam(defaultValue = "10")Integer limit){
-        return R.ok(userService.selectPage(new Page<>(page, limit)));
+        return R.ok(userService.selectPage(new Page<>(curr, limit)));
     }
 
     @RequestMapping(value = "/add/auth")
