@@ -21,6 +21,21 @@ public class AuthController {
         return "login";
     }
 
+    @RequestMapping("/demo")
+    public String demo(){
+        return "demo";
+    }
+
+    @RequestMapping("/index1")
+    public String index1(){
+        return "index1";
+    }
+
+    @RequestMapping("/hello")
+    public String hello(){
+        return "hello";
+    }
+
     @RequestMapping("/login.action")
     @ResponseBody
     public R loginAction(String username, String password){

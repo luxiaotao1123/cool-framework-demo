@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Cool管理系统</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <style>
+        /* <!--侧边导航栏--> */
+        .layui-side.layui-bg-black {
+            top: 0;
+            background-color: #33b7b1!important;
+        }
+        .layui-nav.layui-nav-tree {
+            background-color: #33b7b1!important;
+            color: white;
+        }
+        /* <!--内容主体--> */
+        .layui-layout-admin .layui-body {
+            top: 0;
+        }
+        .layui-tab-content .layui-tab-item.layui-show {
+            height: 800px;
+        }
+    </style>
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+
+        <!--侧边导航栏-->
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">用户系统</a>
+                        <dl class="layui-nav-child">
+                            <dd><a class="site-active" data-title="人员信息" data-url="/user" data-id="userInfo" target="main">人员信息</a></dd>
+                            <dd><a class="site-active" data-title="凭证表" data-url="/userLogin" data-id="userLoginInfo" target="main">凭证表</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!--内容主体-->
+        <div class="layui-body">
+            <!--选项卡-->
+            <div class="layui-tab layui-tab-card" lay-allowclose="true" lay-filter="cool-tab">
+                <ul class="layui-tab-title ">
+                    <li class="layui-this" lay-id="index">首页</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <iframe name="main" src="/hello" frameborder="0" scrolling="no" width="100%" height="100%" ></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+<script src="/static/layui/layui.js"></script>
+<script>
+    layui.use('element', function(){
+        var element = layui.element;
+        var $ = layui.jquery;
+
+        // 选项卡事件定义
+        var tabAction = {
+            tabAdd: function (id,name,url) {
+                element.tabAdd('cool-tab', {
+                    title: name,
+                    content: '<iframe data-frameid="'+id+'" scrolling="no" frameborder="0" src="'+url+'" style="width:100%;"></iframe>',
+                    id: id
+                });
+                element.render('tab');
+            },
+            tabChange: function(id) {
+                element.tabChange('cool-tab', id);
+            },
+            tabDelete: function (id) {
+                element.tabDelete("cool-tab", id);
+            }
+        };
+
+        // 监听侧边导航栏点击事件
+        $('.site-active').on('click', function () {
+            var site = $(this);
+            if ($(".layui-tab-title li[lay-id]").length > 0){
+                var exist = false;
+                $.each($('.layui-tab-title li[lay-id]'), function () {
+                    if ($(this).attr("lay-id") === site.attr("data-id")) {
+                        exist = true;
+                    }
+                });
+                if (exist === false){
+                    tabAction.tabAdd(site.attr("data-id"), site.attr("data-title"), site.attr("data-url"));
+                }
+            } else {
+                tabAction.tabAdd(site.attr("data-id"), site.attr("data-title"), site.attr("data-url"));
+            }
+            tabAction.tabChange(site.attr("data-id"));
+        });
+    });
+</script>
+</body>
+</html>
