@@ -9,23 +9,24 @@
     <style>
         /* <!--侧边导航栏--> */
         .layui-side.layui-bg-black {
+            position: absolute;
             top: 0;
-            /*background-color: #33b7b1!important;*/
         }
-        .layui-nav.layui-nav-tree {
-            /*background-color: #33b7b1!important;*/
-            /*color: white;*/
+        .layui-side.layui-bg-black .layui-side-scroll {
+            width: 200px;
         }
+
         /* <!--内容主体--> */
         .layui-layout-admin .layui-body {
+            position: absolute;
             top: 0;
             bottom: 0;
         }
         /*选项卡*/
         .layui-body .layui-tab.layui-tab-card {
             height: 100%;
-            margin: 0px;
-            border-width: 0px;
+            margin: 0;
+            border-width: 0;
         }
         /*选项卡标题*/
         .layui-tab-title {
@@ -33,12 +34,11 @@
         }
         /*选项卡内容*/
         .layui-tab-content {
-            /*height: 100%;*/
             position: absolute;
             top: 40px;
             bottom: 4px;
             width: 100%;
-            padding: 0px;
+            padding: 0;
         }
         .layui-tab-item.layui-show {
             height: 100%;
