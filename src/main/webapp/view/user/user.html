@@ -1,59 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
-    <title>User</title>
-    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
+    <style>
+        .layui-form.layui-border-box.layui-table-view{
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            top: 60px;
+
+        }
+        .layui-table-box{
+            margin-bottom: 20px;
+        }
+        .layui-table-view .layui-table {
+            width: 100%
+        }
+    </style>
 </head>
 <body>
-    <h1>User</h1>
-    <table id="user-table" lay-filter="test"></table>
-    <script src="/static/layui/layui.js"></script>
-    <script>
-        layui.use('table', function () {
-            var table = layui.table;
-            // 表格加载
-            table.render({
-                elem: '#user-table',
-                headers: {token: sessionStorage.getItem('token')},
-                url: '/user/list/auth',
-                page: true,
-                cols: [[
-                    {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
-                    ,{field: 'username', title: '用户名', width:80}
-                    ,{field: 'mobile', title: '联系方式', width:80}
-                    ,{field: 'password', title: '密码MD5值', width:80}
-                    ,{field: 'createTime', title: '注册时间', width: 177, sort: true}
-                    ,{field: 'status', title: '状态', width: 80, sort: true}
-                ]],
-                request: {
-                    pageName: 'curr',
-                    pageSize: 'limit'
-                },
-                parseData: function (res) {
-                    return {
-                        'code': res.code,
-                        'msg': res.msg,
-                        'count': res.data.total,
-                        'data': res.data.records
-                    }
-                },
-                response: {
-                    statusCode: 200
-                },
-                // done: function(res, curr, count){
-                //     //如果是异步请求数据方式，res即为你接口返回的信息。
-                //     //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
-                //     console.log(res);
-                //
-                //     //得到当前页码
-                //     console.log(curr);
-                //
-                //     //得到数据总量
-                //     console.log(count);
-                // }
-            });
+<table class="layui-hide" id="test"></table>
+
+<script src="/static/layui/layui.js" charset="utf-8"></script>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+
+        table.render({
+            elem: '#test',
+            headers: {token: sessionStorage.getItem('token')},
+            url: '/user/list/auth',
+            page: true,
+            cellMinWidth: 80,
+            cols: [[
+                {field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left'}
+                ,{field: 'username', align: 'center',title: '用户名'}
+                ,{field: 'mobile',align: 'center', title: '联系方式'}
+                ,{field: 'password', align: 'center',title: '密码MD5值'}
+                ,{field: 'createTime',align: 'center', title: '注册时间', sort: true}
+                ,{field: 'status', align: 'center',title: '状态', sort: true}
+            ]],
+            request: {
+                pageName: 'curr',
+                pageSize: 'limit'
+            },
+            parseData: function (res) {
+                return {
+                    'code': res.code,
+                    'msg': res.msg,
+                    'count': res.data.total,
+                    'data': res.data.records
+                }
+            },
+            response: {
+                statusCode: 200
+            }
+            // done: function(res, curr, count){
+            //     //如果是异步请求数据方式，res即为你接口返回的信息。
+            //     //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+            //     console.log(res);
+            //
+            //     //得到当前页码
+            //     console.log(curr);
+            //
+            //     //得到数据总量
+            //     console.log(count);
+            // }
         });
-    </script>
+    });
+</script>
 </body>
 </html>

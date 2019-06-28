@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9d219f9c-df70-46a9-b098-b9c9a55cd531" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/view/index1.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/view/index1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/view/user/user.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/view/user/user.html" afterDir="false" />
     </list>
     <list id="832a5646-c3ef-466e-b827-caefc7f772a3" name="nosub" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -38,11 +38,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/view/index1.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="37" column="25" lean-forward="true" selection-start-line="37" selection-start-column="25" selection-end-line="37" selection-end-column="25" />
+            <state relative-caret-position="547">
+              <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
               <folding>
                 <element signature="n#style#0;n#iframe#0;n#!!top" expanded="true" />
               </folding>
@@ -50,11 +50,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/view/user/user.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="25" column="14" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
+            <state relative-caret-position="452">
+              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
             </state>
           </provider>
         </entry>
@@ -107,6 +107,7 @@
       <find>tabAdd</find>
       <find>layui-tab-title</find>
       <find>lay-id</find>
+      <find>layui-nav-tree</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -156,13 +157,13 @@
         <option value="$PROJECT_DIR$/src/main/java/com/cool/demo/system/controller/UserController.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/view/userLogin/userLogin.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/cool/demo/system/controller/UserLoginController.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/view/user/user.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/view/demo.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/view/index.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/cool/demo/common/AuthController.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/view/hello.html" />
         <option value="$PROJECT_DIR$/src/main/resources/test.md" />
         <option value="$PROJECT_DIR$/src/main/webapp/view/index1.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/view/user/user.html" />
       </list>
     </option>
   </component>
@@ -263,15 +264,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cool-framework-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cool-framework-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
               <item name="view" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -282,11 +274,6 @@
               <item name="webapp" type="462c0819:PsiDirectoryNode" />
               <item name="view" type="462c0819:PsiDirectoryNode" />
               <item name="user" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cool-framework-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cool-framework-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="target" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -304,7 +291,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1561627486382" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1561656102178" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -449,7 +436,7 @@
       <workItem from="1561523644731" duration="5808000" />
       <workItem from="1561565926648" duration="14000" />
       <workItem from="1561567123310" duration="217000" />
-      <workItem from="1561598064379" duration="3211000" />
+      <workItem from="1561598064379" duration="7824000" />
     </task>
     <task id="LOCAL-00001" summary="#">
       <created>1560091017463</created>
@@ -633,17 +620,24 @@
       <option name="project" value="LOCAL" />
       <updated>1561548557373</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="#">
+      <created>1561627494523</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1561627494523</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="129859000" />
+    <option name="totallyTimeSpent" value="134472000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29756796" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29756796" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -654,7 +648,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.59156626" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.32771084" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.32771084" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -990,23 +984,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/test.md" />
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/view/index1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="37" column="25" lean-forward="true" selection-start-line="37" selection-start-column="25" selection-end-line="37" selection-end-column="25" />
-          <folding>
-            <element signature="n#style#0;n#iframe#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/view/user/user.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="14" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/view/hello.html">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -1023,6 +1000,23 @@
             <element signature="n#style#0;n#ul#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/view/index1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="547">
+          <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
+          <folding>
+            <element signature="n#style#0;n#iframe#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/view/user/user.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="452">
+          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
         </state>
       </provider>
     </entry>
