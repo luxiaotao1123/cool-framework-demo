@@ -13,38 +13,47 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/userLogin")
 public class UserLoginController {
 
     @Autowired
     private UserLoginService userLoginService;
 
-    @RequestMapping("")
+    @RequestMapping("/userLogin")
     public String index(){
         return "userLogin/userLogin";
     }
 
-    @RequestMapping(value = "/{id}/auth")
+    @RequestMapping("/userLogin_add")
+    public String add(){
+        return "userLogin/userLogin_add";
+    }
+
+    @RequestMapping("/userLogin_detail")
+    public String detail(){
+        return "userLogin/userLogin_detail";
+    }
+
+    @RequestMapping(value = "/userLogin/{id}/auth")
     @ResponseBody
     public R get(@PathVariable("id") Long id) {
         return R.ok(userLoginService.selectById(String.valueOf(id)));
     }
 
-    @RequestMapping(value = "list/auth")
+    @RequestMapping(value = "/userLogin/list/auth")
     @ResponseBody
     public R list(@RequestParam(defaultValue = "1")Integer curr,
                   @RequestParam(defaultValue = "10")Integer limit){
         return R.ok(userLoginService.selectPage(new Page<>(curr, limit)));
     }
 
-    @RequestMapping(value = "/add/auth")
+    @RequestMapping(value = "/userLogin/add/auth")
     @ResponseBody
     public R add(UserLogin userLogin) {
         userLoginService.insert(userLogin);
         return R.ok();
     }
 
-	@RequestMapping(value = "/update/auth")
+	@RequestMapping(value = "/userLogin/update/auth")
     @ResponseBody
     public R update(UserLogin userLogin){
         if (Cools.isEmpty(userLogin) || null==userLogin.getId()){
