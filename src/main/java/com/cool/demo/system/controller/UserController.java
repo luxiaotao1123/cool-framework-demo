@@ -24,13 +24,23 @@ public class UserController {
         return "user/user";
     }
 
+    @RequestMapping("/add")
+    public String add(){
+        return "user/user_add";
+    }
+
+    @RequestMapping("/detail")
+    public String detail(){
+        return "user/user_detail";
+    }
+
     @RequestMapping(value = "/{id}/auth")
     @ResponseBody
     public R get(@PathVariable("id") Long id) {
         return R.ok(userService.selectById(String.valueOf(id)));
     }
 
-    @RequestMapping(value = "list/auth")
+    @RequestMapping(value = "/list/auth")
     @ResponseBody
     public R list(@RequestParam(defaultValue = "1")Integer curr,
                   @RequestParam(defaultValue = "10")Integer limit){

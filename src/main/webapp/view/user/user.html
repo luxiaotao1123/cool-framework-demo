@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>layui</title>
+    <title>user</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -15,10 +15,13 @@
             border-width: 0;
         }
         .layui-table-box{
-            margin-bottom: 20px;
+            padding-bottom: 10px;
         }
         .layui-table-body.layui-table-main{
             overflow: hidden;
+        }
+        .layui-table-page{
+            border-width: 0;
         }
     </style>
 </head>
@@ -28,11 +31,12 @@
 
 <script type="text/html" id="toolbar">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">新增</button>
+        <button class="layui-btn layui-btn-sm" id="btn-add">新增</button>
     </div>
 </script>
 
 <script type="text/html" id="operate">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
@@ -42,6 +46,7 @@
     layui.use('table', function(){
         var table = layui.table;
         var $ = layui.jquery;
+        var layer = layui.layer;
 
         // 数据渲染
         table.render({
@@ -58,7 +63,7 @@
                 ,{field: 'mobile',align: 'center', title: '联系方式'}
                 ,{field: 'createTime',align: 'center', title: '注册时间', sort: true}
                 ,{field: 'status', align: 'center',title: '状态', sort: true}
-                ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
+                ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:190}
             ]],
             request: {
                 pageName: 'curr',
@@ -81,14 +86,19 @@
         table.on('tool(user)', function(obj){
             var data = obj.data;
             // console.log(obj);
+            // 查看
+            if(obj.event === 'detail'){
+                layer.msg('ID：'+ data.id + ' 的查看操作');
+            }
             // 删除
-            if(obj.event === 'del'){
+            else if(obj.event === 'del'){
                 layer.confirm('确定删除 '+data.id+' 吗', function(index){
                     obj.del();
                     layer.close(index);
                 });
+            }
             // 编辑
-            } else if(obj.event === 'edit'){
+            else if(obj.event === 'edit'){
                 layer.prompt({
                     formType: 2
                     ,value: data.email
@@ -100,6 +110,18 @@
                 });
             }
         });
+
+        // 新增
+        $('#btn-add').on('click', function () {
+            layer.open({
+                type: 2,
+                title: '新增',
+                maxmin: true,
+                area: ['420px', '330px'],
+                shadeClose: false, //点击遮罩关闭
+                content: '/user/add'
+            });
+        })
     });
 </script>
 </body>
