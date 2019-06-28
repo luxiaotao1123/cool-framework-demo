@@ -10,40 +10,55 @@
     <style>
         .layui-form.layui-border-box.layui-table-view{
             position: absolute;
-            left: 10px;
-            right: 10px;
-            top: 60px;
-
+            top: 40px;
+            width: 100%;
+            border-width: 0;
         }
         .layui-table-box{
             margin-bottom: 20px;
         }
-        .layui-table-view .layui-table {
-            width: 100%
+        .layui-table-body.layui-table-main{
+            overflow: hidden;
         }
     </style>
 </head>
 <body>
-<table class="layui-hide" id="test"></table>
+
+<table class="layui-hide" id="user" lay-filter="user"></table>
+
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">新增</button>
+    </div>
+</script>
+
+<script type="text/html" id="operate">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
 
 <script src="/static/layui/layui.js" charset="utf-8"></script>
 <script>
     layui.use('table', function(){
         var table = layui.table;
+        var $ = layui.jquery;
 
+        // 数据渲染
         table.render({
-            elem: '#test',
+            elem: '#user',
             headers: {token: sessionStorage.getItem('token')},
             url: '/user/list/auth',
             page: true,
-            cellMinWidth: 80,
+            toolbar: '#toolbar',
+            cellMinWidth: 50,
             cols: [[
-                {field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left'}
+                {type: 'checkbox', fixed: 'left'}
+                ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
                 ,{field: 'username', align: 'center',title: '用户名'}
                 ,{field: 'mobile',align: 'center', title: '联系方式'}
-                ,{field: 'password', align: 'center',title: '密码MD5值'}
                 ,{field: 'createTime',align: 'center', title: '注册时间', sort: true}
                 ,{field: 'status', align: 'center',title: '状态', sort: true}
+                ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
             ]],
             request: {
                 pageName: 'curr',
@@ -60,17 +75,30 @@
             response: {
                 statusCode: 200
             }
-            // done: function(res, curr, count){
-            //     //如果是异步请求数据方式，res即为你接口返回的信息。
-            //     //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
-            //     console.log(res);
-            //
-            //     //得到当前页码
-            //     console.log(curr);
-            //
-            //     //得到数据总量
-            //     console.log(count);
-            // }
+        });
+
+        //监听行工具事件
+        table.on('tool(user)', function(obj){
+            var data = obj.data;
+            // console.log(obj);
+            // 删除
+            if(obj.event === 'del'){
+                layer.confirm('确定删除 '+data.id+' 吗', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            // 编辑
+            } else if(obj.event === 'edit'){
+                layer.prompt({
+                    formType: 2
+                    ,value: data.email
+                }, function(value, index){
+                    obj.update({
+                        email: value
+                    });
+                    layer.close(index);
+                });
+            }
         });
     });
 </script>
