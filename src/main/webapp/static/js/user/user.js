@@ -1,12 +1,11 @@
 var pageCurr;
-var tableIdx;
 layui.use('table', function(){
     var table = layui.table;
     var $ = layui.jquery;
     var layer = layui.layer;
 
     // 数据渲染
-    tableIdx = table.render({
+    tableIns = table.render({
         elem: '#user',
         headers: {token: sessionStorage.getItem('token')},
         url: '/user/list/auth',
@@ -81,18 +80,18 @@ layui.use('table', function(){
     // 新增
     $('#btn-add').on('click', function () {
         layer.open({
-            type: 2,
+            type: 1,
             title: '新增',
             maxmin: true,
             area: ['420px', '330px'],
             shadeClose: false,
-            content: '/user_add'
+            content: $('#user-add')
         });
     });
 
     // 刷新
     $('#btn-refresh').on('click', function () {
-        tableIdx.reload({
+        tableIns.reload({
             page: {
                 curr: pageCurr
             }
@@ -109,6 +108,9 @@ layui.config({
     var store = layui.store;
 
     form.on('submit(add)', function () {
+        var index = layer.load(1, {
+            shade: [0.5,'#000'] //0.1透明度的背景
+        });
         var user = {
             username: $('#username').val(),
             mobile: $('#mobile').val(),
@@ -121,18 +123,21 @@ layui.config({
             method: 'POST',
             success: function (res) {
                 if (res.code === 200){
-                    parent.layer.close(parent.layer.getFrameIndex(window.name));
-                    console.log(pageCurr);
-                    // window.parent.location.reload();
-                    // tableIdx.reload({
-                    //     page: {
-                    //         curr: pageCurr
-                    //     }
-                    // });
+                    layer.closeAll();
+                    tableReload();
                 } else {
                     layer.alert(res.msg)
                 }
+                layer.close(index);
             }
         })
     });
 });
+
+function tableReload() {
+    tableIns.reload({
+        page: {
+            curr: pageCurr
+        }
+    });
+}
