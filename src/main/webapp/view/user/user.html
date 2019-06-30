@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>user</title>
@@ -7,23 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
-    <style>
-        .layui-form.layui-border-box.layui-table-view{
-            position: absolute;
-            top: 40px;
-            width: 100%;
-            border-width: 0;
-        }
-        .layui-table-box{
-            padding-bottom: 10px;
-        }
-        .layui-table-body.layui-table-main{
-            overflow: hidden;
-        }
-        .layui-table-page{
-            border-width: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/css/user/user.css" media="all">
 </head>
 <body>
 
@@ -32,6 +16,7 @@
 <script type="text/html" id="toolbar">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" id="btn-add">新增</button>
+        <button class="layui-btn layui-btn-sm" id="btn-refresh">刷新</button>
     </div>
 </script>
 
@@ -42,98 +27,6 @@
 </script>
 
 <script src="/static/layui/layui.js" charset="utf-8"></script>
-<script>
-    var pageCurr;
-    layui.use('table', function(){
-        var table = layui.table;
-        var $ = layui.jquery;
-        var layer = layui.layer;
-
-        // 数据渲染
-        var tableIdx = table.render({
-            elem: '#user',
-            headers: {token: sessionStorage.getItem('token')},
-            url: '/user/list/auth',
-            page: true,
-            toolbar: '#toolbar',
-            cellMinWidth: 50,
-            cols: [[
-                {type: 'checkbox', fixed: 'left'}
-                ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
-                ,{field: 'username', align: 'center',title: '用户名'}
-                ,{field: 'mobile',align: 'center', title: '联系方式'}
-                ,{field: 'createTime',align: 'center', title: '注册时间', sort: true}
-                ,{field: 'status', align: 'center',title: '状态', sort: true}
-                ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:190}
-            ]],
-            request: {
-                pageName: 'curr',
-                pageSize: 'limit'
-            },
-            parseData: function (res) {
-                return {
-                    'code': res.code,
-                    'msg': res.msg,
-                    'count': res.data.total,
-                    'data': res.data.records
-                }
-            },
-            response: {
-                statusCode: 200
-            },
-            done: function(res, curr, count) {
-                pageCurr=curr;
-            }
-        });
-
-        //监听行工具事件
-        table.on('tool(user)', function(obj){
-            var data = obj.data;
-            // console.log(obj);
-            // 查看
-            if(obj.event === 'detail'){
-                layer.msg('ID：'+ data.id + ' 的查看操作');
-            }
-            // 删除
-            else if(obj.event === 'del'){
-                layer.confirm('确定删除 '+data.id+' 吗', function(index){
-                    obj.del();
-                    layer.close(index);
-                });
-            }
-            // 编辑
-            else if(obj.event === 'edit'){
-                layer.prompt({
-                    formType: 2
-                    ,value: data.email
-                }, function(value, index){
-                    obj.update({
-                        email: value
-                    });
-                    layer.close(index);
-                });
-            }
-        });
-
-        // 新增
-        $('#btn-add').on('click', function () {
-            layer.open({
-                type: 2,
-                title: '新增',
-                maxmin: true,
-                area: ['420px', '330px'],
-                shadeClose: false,
-                content: '/user_add',
-                end: function () {
-                    tableIdx.reload({
-                        page: {
-                            curr: pageCurr
-                        }
-                    });
-                }
-            });
-        })
-    });
-</script>
+<script src="/static/js/user/user.js" charset="utf-8"></script>
 </body>
 </html>

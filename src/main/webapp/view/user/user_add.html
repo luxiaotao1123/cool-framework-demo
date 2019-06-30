@@ -7,9 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
-    <style>
-
-    </style>
 </head>
 <body>
 <form class="layui-form">
@@ -43,36 +40,6 @@
 </form>
 
 <script src="/static/layui/layui.js" charset="utf-8"></script>
-<script>
-    layui.config({
-        base: '/static/js/'
-    }).use(['form', 'layer', 'store'],function () {
-        var form = layui.form;
-        var layer = layui.layer;
-        var $ = layui.jquery;
-        var store = layui.store;
-
-        form.on('submit(add)', function () {
-            var user = {
-                username: $('#username').val(),
-                mobile: $('#mobile').val(),
-                password: $('#password').val(),
-                status: $('#status').val()
-            };
-            $.ajax({
-                url: store.uri + "/user/add/auth",
-                data: user,
-                method: 'POST',
-                success: function (res) {
-                    if (res.code === 200){
-                        parent.layer.close(parent.layer.getFrameIndex(window.name));
-                    } else {
-                        layer.alert(res.msg)
-                    }
-                }
-            })
-        });
-    })
-</script>
+<script src="/static/js/user/user.js" charset="utf-8"></script>
 </body>
 </html>

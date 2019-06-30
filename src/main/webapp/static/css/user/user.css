@@ -1,0 +1,15 @@
+.layui-form.layui-border-box.layui-table-view{
+    position: absolute;
+    top: 40px;
+    width: 100%;
+    border-width: 0;
+}
+.layui-table-box{
+    padding-bottom: 10px;
+}
+.layui-table-body.layui-table-main{
+    overflow: hidden;
+}
+.layui-table-page{
+    border-width: 0;
+}
