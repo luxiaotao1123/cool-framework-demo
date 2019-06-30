@@ -43,13 +43,14 @@
 
 <script src="/static/layui/layui.js" charset="utf-8"></script>
 <script>
+    var pageCurr;
     layui.use('table', function(){
         var table = layui.table;
         var $ = layui.jquery;
         var layer = layui.layer;
 
         // 数据渲染
-        table.render({
+        var tableIdx = table.render({
             elem: '#user',
             headers: {token: sessionStorage.getItem('token')},
             url: '/user/list/auth',
@@ -79,6 +80,9 @@
             },
             response: {
                 statusCode: 200
+            },
+            done: function(res, curr, count) {
+                pageCurr=curr;
             }
         });
 
@@ -118,8 +122,15 @@
                 title: '新增',
                 maxmin: true,
                 area: ['420px', '330px'],
-                shadeClose: false, //点击遮罩关闭
-                content: '/user_add'
+                shadeClose: false,
+                content: '/user_add',
+                end: function () {
+                    tableIdx.reload({
+                        page: {
+                            curr: pageCurr
+                        }
+                    });
+                }
             });
         })
     });
