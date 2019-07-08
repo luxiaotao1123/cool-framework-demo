@@ -12,7 +12,7 @@
 <body>
 
 <table class="layui-hide" id="user" lay-filter="user"></table>
-
+<!--<button class="layui-btn layui-btn-normal" onclick="add()">新增</button>-->
 <script type="text/html" id="toolbar">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" id="btn-add">新增</button>
@@ -26,10 +26,11 @@
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
-<script src="/static/layui/layui.js" charset="utf-8"></script>
-<script src="/static/js/user/user.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/static/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/user/user.js" charset="utf-8"></script>
 
-<div id="user-add" class="layer_self_wrap" style="width:500px;display:none;">
+<div id="data-add" class="layer_self_wrap" style="width:500px;display:none;">
     <form class="layui-form">
         <div class="layui-form-item">
             <label class="layui-form-label">用户名</label>

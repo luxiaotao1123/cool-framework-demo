@@ -37,14 +37,9 @@ layui.use('table', function(){
             statusCode: 200
         },
         done: function(res, curr, count) {
-            $("[data-field='status']").children().each(function(){
-                if($(this).text()==='1'){
-                    $(this).text("有效")
-                }else if($(this).text()==='3'){
-                    $(this).text("失效")
-                }
-            });
+            dataEscaping();
             pageCurr=curr;
+            toolBarBind();
         }
     });
 
@@ -77,26 +72,6 @@ layui.use('table', function(){
         }
     });
 
-    // 新增
-    $('#btn-add').on('click', function () {
-        layer.open({
-            type: 1,
-            title: '新增',
-            maxmin: true,
-            area: ['420px', '330px'],
-            shadeClose: false,
-            content: $('#user-add')
-        });
-    });
-
-    // 刷新
-    $('#btn-refresh').on('click', function () {
-        tableIns.reload({
-            page: {
-                curr: pageCurr
-            }
-        });
-    })
 });
 
 layui.config({
@@ -125,6 +100,9 @@ layui.config({
                 if (res.code === 200){
                     layer.closeAll();
                     tableReload();
+                    $("#data-add :input").each(function () {
+                        $(this).val("");
+                    });
                 } else {
                     layer.alert(res.msg)
                 }
@@ -134,10 +112,50 @@ layui.config({
     });
 });
 
+function toolBarBind() {
+    // 新增
+    $('#btn-add').on('click', function () {
+        layer.open({
+            type: 1,
+            title: '新增',
+            maxmin: true,
+            area: ['420px', '330px'],
+            shadeClose: false,
+            content: $('#data-add'),
+            success: function(){
+                $(".layui-layer-shade").remove();
+            }
+        });
+    });
+
+    // 刷新
+    $('#btn-refresh').on('click', function () {
+        tableIns.reload({
+            page: {
+                curr: pageCurr
+            }
+        });
+    })
+}
+
 function tableReload() {
     tableIns.reload({
         page: {
             curr: pageCurr
+        },
+        done: function () {
+            toolBarBind();
+            dataEscaping();
+        }
+    });
+}
+
+function dataEscaping() {
+    $("[data-field='status']").children().each(function(){
+        if($(this).text()==='1'){
+            $(this).text("有效")
+        }else if($(this).text()==='3'){
+            $(this).text("失效")
         }
     });
 }
