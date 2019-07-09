@@ -66,7 +66,7 @@ public class UserController {
     @RequestMapping(value = "/user/delete/auth")
     @ResponseBody
     public R delete(Integer[] ids){
-        if (ids.length == 0){
+        if (Cools.isEmpty(ids)){
             return R.error();
         }
         userService.deleteBatchIds(Arrays.asList(ids));
