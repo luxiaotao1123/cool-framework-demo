@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 @Controller
 public class UserController {
 
@@ -57,6 +60,16 @@ public class UserController {
             return R.error();
         }
         userService.updateById(user);
+        return R.ok();
+    }
+
+    @RequestMapping(value = "/user/delete/auth")
+    @ResponseBody
+    public R delete(Integer[] ids){
+        if (ids.length == 0){
+            return R.error();
+        }
+        userService.deleteBatchIds(Arrays.asList(ids));
         return R.ok();
     }
 }

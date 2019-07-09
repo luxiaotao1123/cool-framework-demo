@@ -1,8 +1,11 @@
 var pageCurr;
-layui.use('table', function(){
+layui.config({
+    base: '/static/js/'
+}).use('table', function(){
     var table = layui.table;
     var $ = layui.jquery;
     var layer = layui.layer;
+    var store = layui.store;
 
     // 数据渲染
     tableIns = table.render({
@@ -19,7 +22,7 @@ layui.use('table', function(){
             ,{field: 'mobile',align: 'center', title: '联系方式'}
             ,{field: 'createTime',align: 'center', title: '注册时间', sort: true}
             ,{field: 'status', align: 'center',title: '状态', sort: true}
-            ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:190}
+            ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
         ]],
         request: {
             pageName: 'curr',
@@ -43,10 +46,39 @@ layui.use('table', function(){
         }
     });
 
+    // 监听头工具栏事件
+    table.on('toolbar(user)', function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch(obj.event) {
+            case 'deleteData':
+                var data = checkStatus.data;
+                var ids=[];
+                data.map(function (track) {
+                    ids.push(track.id);
+                });
+                layer.confirm('确定删除选中的 '+ids.length+' 条数据吗', function(){
+                    $.ajax({
+                        url: store.uri + "/user/delete/auth",
+                        data: {ids: ids},
+                        method: 'POST',
+                        traditional:true,
+                        success: function (res) {
+                            if (res.code === 200){
+                                layer.closeAll();
+                                tableReload();
+                            } else {
+                                layer.alert(res.msg)
+                            }
+                        }
+                    })
+                });
+                break;
+        }
+    });
+
     //监听行工具事件
     table.on('tool(user)', function(obj){
         var data = obj.data;
-        // console.log(obj);
         // 查看
         if(obj.event === 'detail'){
             layer.msg('ID：'+ data.id + ' 的查看操作');
@@ -135,7 +167,8 @@ function toolBarBind() {
                 curr: pageCurr
             }
         });
-    })
+    });
+
 }
 
 function tableReload() {

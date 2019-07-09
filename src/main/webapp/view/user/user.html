@@ -12,18 +12,17 @@
 <body>
 
 <table class="layui-hide" id="user" lay-filter="user"></table>
-<!--<button class="layui-btn layui-btn-normal" onclick="add()">新增</button>-->
 <script type="text/html" id="toolbar">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" id="btn-add">新增</button>
+        <button class="layui-btn layui-btn-sm" id="btn-add" style="background: #007DDB">新增</button>
         <button class="layui-btn layui-btn-sm" id="btn-refresh">刷新</button>
+        <button class="layui-btn layui-btn-sm" id="btn-delete" lay-event="deleteData" style="background: #ff5722">删除</button>
     </div>
 </script>
 
 <script type="text/html" id="operate">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
 <script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
