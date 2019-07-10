@@ -1,6 +1,28 @@
+/*搜索栏*/
+.search-box{
+    padding: 20px 0
+}
+.layui-inline{
+    margin-bottom: 5px;
+    margin-right: 10px;
+}
+.layui-form-label{
+    padding: 9px 1px;
+    text-align: center;
+}
+
+/*头工具栏*/
+#btn-add{
+    background: #007DDB
+}
+#btn-delete{
+    background: #ff5722
+}
+
+/*表格*/
 .layui-form.layui-border-box.layui-table-view{
     position: absolute;
-    top: 40px;
+    top: 140px;
     width: 100%;
     border-width: 0;
 }

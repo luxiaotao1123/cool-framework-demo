@@ -56,22 +56,26 @@ layui.config({
                 data.map(function (track) {
                     ids.push(track.id);
                 });
-                layer.confirm('确定删除选中的 '+ids.length+' 条数据吗', function(){
-                    $.ajax({
-                        url: store.uri + "/user/delete/auth",
-                        data: {ids: ids},
-                        method: 'POST',
-                        traditional:true,
-                        success: function (res) {
-                            if (res.code === 200){
-                                layer.closeAll();
-                                tableReload();
-                            } else {
-                                layer.alert(res.msg)
+                if (ids.length === 0){
+                    layer.msg('请选择数据');
+                } else {
+                    layer.confirm('确定删除选中的 '+ids.length+' 条数据吗', function(){
+                        $.ajax({
+                            url: store.uri + "/user/delete/auth",
+                            data: {ids: ids},
+                            method: 'POST',
+                            traditional:true,
+                            success: function (res) {
+                                if (res.code === 200){
+                                    layer.closeAll();
+                                    tableReload();
+                                } else {
+                                    layer.alert(res.msg)
+                                }
                             }
-                        }
-                    })
-                });
+                        })
+                    });
+                }
                 break;
         }
     });
