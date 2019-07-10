@@ -1,11 +1,13 @@
 var pageCurr;
 layui.config({
     base: '/static/js/'
-}).use('table', function(){
+}).use(['table','laydate', 'form'], function(){
     var table = layui.table;
     var $ = layui.jquery;
     var layer = layui.layer;
     var store = layui.store;
+    var layDate = layui.laydate;
+    var form = layui.form;
 
     // 数据渲染
     tableIns = table.render({
@@ -59,7 +61,7 @@ layui.config({
                 if (ids.length === 0){
                     layer.msg('请选择数据');
                 } else {
-                    layer.confirm('确定删除选中的 '+ids.length+' 条数据吗', function(){
+                    layer.confirm('确定删除'+(ids.length===1?'此':ids.length)+'条数据吗', function(){
                         $.ajax({
                             url: store.uri + "/user/delete/auth",
                             data: {ids: ids},
@@ -80,7 +82,7 @@ layui.config({
         }
     });
 
-    //监听行工具事件
+    // 监听行工具事件
     table.on('tool(user)', function(obj){
         var data = obj.data;
         // 查看
@@ -108,8 +110,23 @@ layui.config({
         }
     });
 
+    // 搜索栏事件
+    form.on('submit(search)', function (data) {
+        console.log(data.field);
+    });
+
+
+    // 时间选择器
+    layDate.render({
+        elem: '#startTime'
+    });
+    layDate.render({
+        elem: '#endTime'
+    });
+
 });
 
+// 新增界面dom
 layui.config({
     base: '/static/js/'
 }).use(['form', 'layer', 'store'],function () {
@@ -191,7 +208,7 @@ function dataEscaping() {
     $("[data-field='status']").children().each(function(){
         if($(this).text()==='1'){
             $(this).text("有效")
-        }else if($(this).text()==='3'){
+        }else if($(this).text()==='2'){
             $(this).text("失效")
         }
     });
