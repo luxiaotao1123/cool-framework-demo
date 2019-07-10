@@ -142,6 +142,7 @@ layui.config({
     // 搜索栏事件
     form.on('submit(search)', function (data) {
         console.log(data.field);
+        tableReload(data.field);
     });
 
 
@@ -182,8 +183,9 @@ function toolBarBind() {
 
 }
 
-function tableReload() {
+function tableReload(data) {
     tableIns.reload({
+        where: data,
         page: {
             curr: pageCurr
         },

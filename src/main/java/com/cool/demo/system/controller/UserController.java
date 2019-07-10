@@ -1,5 +1,6 @@
 package com.cool.demo.system.controller;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.cool.demo.system.entity.User;
 import com.cool.demo.system.service.UserService;
@@ -41,8 +42,11 @@ public class UserController {
     @RequestMapping(value = "/user/list/auth")
     @ResponseBody
     public R list(@RequestParam(defaultValue = "1")Integer curr,
-                  @RequestParam(defaultValue = "10")Integer limit){
-        return R.ok(userService.selectPage(new Page<>(curr, limit)));
+                  @RequestParam(defaultValue = "10")Integer limit,
+                  User user){
+        EntityWrapper<User> wrapper = new EntityWrapper<>();
+        wrapper.setEntity(user);
+        return R.ok(userService.selectPage(new Page<>(curr, limit), wrapper));
     }
 
     @PostMapping(value = "/user/add/auth")
