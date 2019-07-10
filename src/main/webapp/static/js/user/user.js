@@ -1,7 +1,7 @@
 var pageCurr;
 layui.config({
     base: '/static/js/'
-}).use(['table','laydate', 'form'], function(){
+}).use(['table','laydate', 'form', 'store'], function(){
     var table = layui.table;
     var $ = layui.jquery;
     var layer = layui.layer;
@@ -110,31 +110,6 @@ layui.config({
         }
     });
 
-    // 搜索栏事件
-    form.on('submit(search)', function (data) {
-        console.log(data.field);
-    });
-
-
-    // 时间选择器
-    layDate.render({
-        elem: '#startTime'
-    });
-    layDate.render({
-        elem: '#endTime'
-    });
-
-});
-
-// 新增界面dom
-layui.config({
-    base: '/static/js/'
-}).use(['form', 'layer', 'store'],function () {
-    var form = layui.form;
-    var layer = layui.layer;
-    var $ = layui.jquery;
-    var store = layui.store;
-
     form.on('submit(add)', function () {
         var index = layer.load(1, {
             shade: [0.5,'#000'] //0.1透明度的背景
@@ -163,6 +138,21 @@ layui.config({
             }
         })
     });
+
+    // 搜索栏事件
+    form.on('submit(search)', function (data) {
+        console.log(data.field);
+    });
+
+
+    // 时间选择器
+    layDate.render({
+        elem: '#startTime'
+    });
+    layDate.render({
+        elem: '#endTime'
+    });
+
 });
 
 function toolBarBind() {
