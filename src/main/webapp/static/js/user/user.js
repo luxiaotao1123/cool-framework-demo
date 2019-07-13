@@ -79,6 +79,23 @@ layui.config({
                     });
                 }
                 break;
+            case 'addData':
+                clearFormVal('#detail');
+                // 新增
+                $('#btn-add').on('click', function () {
+                    layer.open({
+                        type: 1,
+                        title: '新增',
+                        maxmin: true,
+                        area: ['420px', '330px'],
+                        shadeClose: false,
+                        content: $('#data-add'),
+                        success: function(){
+                            $(".layui-layer-shade").remove();
+                        }
+                    });
+                });
+                break;
         }
     });
 
@@ -89,23 +106,19 @@ layui.config({
         if(obj.event === 'detail'){
             layer.msg('ID：'+ data.id + ' 的查看操作');
         }
-        // 删除
-        else if(obj.event === 'del'){
-            layer.confirm('确定删除 '+data.id+' 吗', function(index){
-                obj.del();
-                layer.close(index);
-            });
-        }
         // 编辑
         else if(obj.event === 'edit'){
-            layer.prompt({
-                formType: 2
-                ,value: data.email
-            }, function(value, index){
-                obj.update({
-                    email: value
-                });
-                layer.close(index);
+            layer.open({
+                type: 1,
+                title: '新增',
+                maxmin: true,
+                area: ['420px', '330px'],
+                shadeClose: false,
+                content: $('#data-add'),
+                success: function(){
+                    $(".layui-layer-shade").remove();
+                    setFormVal($('#detail'), data);
+                }
             });
         }
     });
@@ -141,10 +154,8 @@ layui.config({
 
     // 搜索栏事件
     form.on('submit(search)', function (data) {
-        console.log(data.field);
         tableReload(data.field);
     });
-
 
     // 时间选择器
     layDate.render({
@@ -157,20 +168,21 @@ layui.config({
 });
 
 function toolBarBind() {
-    // 新增
-    $('#btn-add').on('click', function () {
-        layer.open({
-            type: 1,
-            title: '新增',
-            maxmin: true,
-            area: ['420px', '330px'],
-            shadeClose: false,
-            content: $('#data-add'),
-            success: function(){
-                $(".layui-layer-shade").remove();
-            }
-        });
-    });
+    // clearFormVal('#detail');
+    // // 新增
+    // $('#btn-add').on('click', function () {
+    //     layer.open({
+    //         type: 1,
+    //         title: '新增',
+    //         maxmin: true,
+    //         area: ['420px', '330px'],
+    //         shadeClose: false,
+    //         content: $('#data-add'),
+    //         success: function(){
+    //             $(".layui-layer-shade").remove();
+    //         }
+    //     });
+    // });
 
     // 刷新
     $('#btn-refresh').on('click', function () {
@@ -204,4 +216,19 @@ function dataEscaping() {
             $(this).text("失效")
         }
     });
+}
+
+function setFormVal(el, data) {
+    for (var val in data) {
+        el.find(":input[id='" + val + "']").val(data[val]);
+    }
+}
+
+function clearFormVal(el) {
+    console.log('执行带我了');
+    $(':input', el)
+        .not(':button, :submit, :reset, :hidden')
+        .val('')
+        .removeAttr('checked')
+        .removeAttr('selected');
 }
