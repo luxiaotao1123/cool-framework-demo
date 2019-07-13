@@ -44,7 +44,6 @@ layui.config({
         done: function(res, curr, count) {
             dataEscaping();
             pageCurr=curr;
-            toolBarBind();
         }
     });
 
@@ -52,6 +51,27 @@ layui.config({
     table.on('toolbar(user)', function (obj) {
         var checkStatus = table.checkStatus(obj.config.id);
         switch(obj.event) {
+            case 'addData':
+                clearFormVal('#detail');
+                layer.open({
+                    type: 1,
+                    title: '新增',
+                    maxmin: true,
+                    area: ['420px', '330px'],
+                    shadeClose: false,
+                    content: $('#data-add'),
+                    success: function(){
+                        $(".layui-layer-shade").remove();
+                    }
+                });
+                break;
+            case 'refreshData':
+                tableIns.reload({
+                    page: {
+                        curr: pageCurr
+                    }
+                });
+                break;
             case 'deleteData':
                 var data = checkStatus.data;
                 var ids=[];
@@ -79,23 +99,6 @@ layui.config({
                     });
                 }
                 break;
-            case 'addData':
-                clearFormVal('#detail');
-                // 新增
-                $('#btn-add').on('click', function () {
-                    layer.open({
-                        type: 1,
-                        title: '新增',
-                        maxmin: true,
-                        area: ['420px', '330px'],
-                        shadeClose: false,
-                        content: $('#data-add'),
-                        success: function(){
-                            $(".layui-layer-shade").remove();
-                        }
-                    });
-                });
-                break;
         }
     });
 
@@ -104,7 +107,18 @@ layui.config({
         var data = obj.data;
         // 查看
         if(obj.event === 'detail'){
-            layer.msg('ID：'+ data.id + ' 的查看操作');
+            layer.open({
+                type: 1,
+                title: '新增',
+                maxmin: true,
+                area: ['420px', '330px'],
+                shadeClose: false,
+                content: $('#data-add'),
+                success: function(){
+                    $(".layui-layer-shade").remove();
+                    setFormVal($('#detail'), data);
+                }
+            });
         }
         // 编辑
         else if(obj.event === 'edit'){
@@ -167,34 +181,6 @@ layui.config({
 
 });
 
-function toolBarBind() {
-    // clearFormVal('#detail');
-    // // 新增
-    // $('#btn-add').on('click', function () {
-    //     layer.open({
-    //         type: 1,
-    //         title: '新增',
-    //         maxmin: true,
-    //         area: ['420px', '330px'],
-    //         shadeClose: false,
-    //         content: $('#data-add'),
-    //         success: function(){
-    //             $(".layui-layer-shade").remove();
-    //         }
-    //     });
-    // });
-
-    // 刷新
-    $('#btn-refresh').on('click', function () {
-        tableIns.reload({
-            page: {
-                curr: pageCurr
-            }
-        });
-    });
-
-}
-
 function tableReload(data) {
     tableIns.reload({
         where: data,
@@ -202,7 +188,6 @@ function tableReload(data) {
             curr: pageCurr
         },
         done: function () {
-            toolBarBind();
             dataEscaping();
         }
     });
@@ -225,9 +210,8 @@ function setFormVal(el, data) {
 }
 
 function clearFormVal(el) {
-    console.log('执行带我了');
     $(':input', el)
-        .not(':button, :submit, :reset, :hidden')
+        // .not(':button, :submit, :reset, :hidden')
         .val('')
         .removeAttr('checked')
         .removeAttr('selected');
