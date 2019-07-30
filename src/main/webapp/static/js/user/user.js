@@ -92,7 +92,6 @@ layui.config({
                             traditional:true,
                             success: function (res) {
                                 if (res.code === 200){
-                                    console.log(res);
                                     layer.closeAll();
                                     tableReload();
                                 } else {
@@ -219,7 +218,6 @@ function setFormVal(el, data) {
 
 function clearFormVal(el) {
     $(':input', el)
-        // .not(':button, :submit, :reset, :hidden')
         .val('')
         .removeAttr('checked')
         .removeAttr('selected');
