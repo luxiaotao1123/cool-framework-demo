@@ -7,59 +7,56 @@
     <link rel="stylesheet" href="/static/layui/css/layui.css">
     <link rel="stylesheet" href="/static/css/index.css">
     <style>
-        .layui-tab {
-            margin-left: 200px;
-            margin-top: 0;
+        /* <!--侧边导航栏--> */
+        .layui-side.layui-bg-black {
+            position: absolute;
+            top: 0;
+        }
+        .layui-side.layui-bg-black .layui-side-scroll {
+            width: 200px;
+        }
+
+        /* <!--内容主体--> */
+        .layui-layout-admin .layui-body {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+        }
+        /*选项卡*/
+        .layui-body .layui-tab.layui-tab-card {
+            height: 100%;
+            margin: 0;
+            border-width: 0;
+        }
+        /*选项卡标题*/
+        .layui-tab-title {
+            border-bottom-width: 0px;
+        }
+        /*选项卡内容*/
+        .layui-tab-content {
+            position: absolute;
+            top: 40px;
+            bottom: 4px;
+            width: 100%;
             padding: 0;
         }
-        .layui-tab-content {
-            padding: 0;
+        .layui-tab-item.layui-show {
+            height: 100%;
         }
     </style>
 </head>
 <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
-        <!--顶部-->
-        <div class="layui-header">
-            <div class="layui-logo">COOL</div>
-
-            <!--顶部左侧选项卡-->
-            <div class="layui-tab layui-tab-brief" lay-allowClose="true" lay-filter="docDemoTabBrief">
-                <ul class="layui-tab-title">
-                    <li class="layui-this">网站设置</li>
-                    <li>用户管理</li>
-                    <li>权限分配</li>
-                    <li>商品管理</li>
-                    <li>订单管理</li>
-                </ul>
-                <div class="layui-tab-content"></div>
-            </div>
-
-            <!--顶部右侧选项卡-->
-            <ul class="layui-nav layui-layout-right">
-                <li class="layui-nav-item">
-                    <a href="javascript:;">
-                        <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                        vincent
-                    </a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="">基本资料</a></dd>
-                        <dd><a href="">安全设置</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item"><a href="">退出</a></li>
-            </ul>
-        </div>
 
         <!--侧边导航栏-->
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
                 <ul class="layui-nav layui-nav-tree" lay-filter="test">
                     <li class="layui-nav-item">
-                        <a href="javascript:;">用户系统</a>
+                        <a>用户系统</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="/user" target="main">人员信息</a></dd>
-                            <dd><a href="/userLogin" target="main">凭证表</a></dd>
+                            <dd><a class="site-active" data-title="人员信息" data-url="/user" data-id="userInfo" target="main">人员信息</a></dd>
+                            <dd><a class="site-active" data-title="凭证表" data-url="/userLogin" data-id="userLoginInfo" target="main">凭证表</a></dd>
                         </dl>
                     </li>
                 </ul>
@@ -68,24 +65,63 @@
 
         <!--内容主体-->
         <div class="layui-body">
-            <iframe name="main" frameborder="1" scrolling="auto" width="100%" height="100%" ></iframe>
+            <!--选项卡-->
+            <div class="layui-tab layui-tab-card" lay-allowclose="true" lay-filter="cool-tab">
+                <ul class="layui-tab-title ">
+                    <li class="layui-this" lay-id="index">首页</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <iframe name="main" src="/hello" scrolling="auto" frameborder="0" width="100%" height="100%" ></iframe>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!--尾部-->
-        <div class="layui-footer">
-        </div>
     </div>
-<script src="/static/layui/layui.js"></script>
+<script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/static/layui/layui.js"></script>
 <script>
     layui.use('element', function(){
         var element = layui.element;
+        var $ = layui.jquery;
 
         // 选项卡事件定义
         var tabAction = {
-            tabAdd: function () {
-
+            tabAdd: function (id,name,url) {
+                element.tabAdd('cool-tab', {
+                    title: name,
+                    content: '<iframe data-frameid="'+id+'" scrolling="auto" frameborder="0" src="'+url+'" style="width:100%;height: 100%"></iframe>',
+                    id: id
+                });
+                element.render('tab');
+            },
+            tabChange: function(id) {
+                element.tabChange('cool-tab', id);
+            },
+            tabDelete: function (id) {
+                element.tabDelete("cool-tab", id);
             }
         };
+
+        // 监听侧边导航栏点击事件
+        $('.site-active').on('click', function () {
+            var site = $(this);
+            if ($(".layui-tab-title li[lay-id]").length > 0){
+                var exist = false;
+                $.each($('.layui-tab-title li[lay-id]'), function () {
+                    if ($(this).attr("lay-id") === site.attr("data-id")) {
+                        exist = true;
+                    }
+                });
+                if (exist === false){
+                    tabAction.tabAdd(site.attr("data-id"), site.attr("data-title"), site.attr("data-url"));
+                }
+            } else {
+                tabAction.tabAdd(site.attr("data-id"), site.attr("data-title"), site.attr("data-url"));
+            }
+            tabAction.tabChange(site.attr("data-id"));
+        });
     });
 </script>
 </body>
