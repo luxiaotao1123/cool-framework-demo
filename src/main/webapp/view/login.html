@@ -62,7 +62,6 @@
                 success: function (res) {
                     if (res.code === 200){
                         sessionStorage.setItem("token", res.data);
-                        console.log('tree');
                         window.location.href = store.uri + "/index";
                     } else {
                         layer.alert(res.msg)
