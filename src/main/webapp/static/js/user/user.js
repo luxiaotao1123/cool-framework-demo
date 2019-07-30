@@ -10,7 +10,7 @@ layui.config({
     var form = layui.form;
 
     // 数据渲染
-    var tableIns = table.render({
+    tableIns = table.render({
         elem: '#user',
         headers: {token: sessionStorage.getItem('token')},
         url: '/user/list/auth',
@@ -84,7 +84,7 @@ layui.config({
                     layer.confirm('确定删除'+(ids.length===1?'此':ids.length)+'条数据吗', function(){
                         $.ajax({
                             url: store.uri + "/user/delete/auth",
-                            header: {
+                            headers: {
                                 'token': sessionStorage.getItem('token')
                             },
                             data: {ids: ids},
@@ -92,6 +92,7 @@ layui.config({
                             traditional:true,
                             success: function (res) {
                                 if (res.code === 200){
+                                    console.log(res);
                                     layer.closeAll();
                                     tableReload();
                                 } else {
@@ -152,6 +153,9 @@ layui.config({
         };
         $.ajax({
             url: store.uri + "/user/add/auth",
+            headers: {
+                'token': sessionStorage.getItem('token')
+            },
             data: user,
             method: 'POST',
             success: function (res) {
