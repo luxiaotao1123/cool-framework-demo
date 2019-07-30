@@ -10,7 +10,7 @@ layui.config({
     var form = layui.form;
 
     // 数据渲染
-    tableIns = table.render({
+    var tableIns = table.render({
         elem: '#user',
         headers: {token: sessionStorage.getItem('token')},
         url: '/user/list/auth',
@@ -187,8 +187,9 @@ function tableReload(data) {
         page: {
             curr: pageCurr
         },
-        done: function () {
+        done: function (res, curr, count) {
             dataEscaping();
+            pageCurr=curr;
         }
     });
 }
