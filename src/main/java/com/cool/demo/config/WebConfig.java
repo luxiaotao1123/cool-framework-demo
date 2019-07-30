@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * Created by vincent on 2019-06-13
  */
-//@Configuration
+@Configuration
 public class WebConfig implements WebMvcConfigurer {
 
     @Autowired
@@ -17,7 +17,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(adminInterceptor)
-                .addPathPatterns("**/auth")
+                .addPathPatterns("home", "**/auth")
+                // 首页，登陆页，登录action
                 .excludePathPatterns("/index", "/","/login.action");
     }
 

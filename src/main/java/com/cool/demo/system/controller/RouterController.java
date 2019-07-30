@@ -19,4 +19,9 @@ public class RouterController {
         return "login";
     }
 
+    @RequestMapping("/home")
+    public String home(){
+        return "home";
+    }
+
 }
