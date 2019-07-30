@@ -1,15 +1,13 @@
-package com.cool.demo.common;
+package com.cool.demo.system.controller;
 
-import com.core.common.R;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Created by vincent on 2019-06-11
+ * Created by vincent on 2019-07-30
  */
 @Controller
-public class AuthController {
+public class RouterController {
 
     @RequestMapping("/index")
     public String index(){
@@ -34,16 +32,6 @@ public class AuthController {
     @RequestMapping("/hello")
     public String hello(){
         return "hello";
-    }
-
-    @RequestMapping("/login.action")
-    @ResponseBody
-    public R loginAction(String username, String password){
-        if (username.equals("admin") && password.equals("admin")){
-            return R.ok("sdadsa");
-        }else {
-            return R.error("密码错误");
-        }
     }
 
 }
