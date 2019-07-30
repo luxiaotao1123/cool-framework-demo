@@ -40,7 +40,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
         if (null == userLogin){
             return false;
         }
-        User user = userService.selectById(userLogin.getId());
+        User user = userService.selectById(userLogin.getUserId());
         String deToken = Cools.deTokn(token, user.getPassword());
         long timestamp = Long.parseLong(deToken.substring(0, 13));
         // 5分钟过期

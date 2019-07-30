@@ -17,9 +17,9 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(adminInterceptor)
-                .addPathPatterns("home", "**/auth")
+                .addPathPatterns("/**/auth")
                 // 首页，登陆页，登录action
-                .excludePathPatterns("/index", "/","/login.action");
+                .excludePathPatterns("/index","/","/login.action");
     }
 
 }
