@@ -84,6 +84,9 @@ layui.config({
                     layer.confirm('确定删除'+(ids.length===1?'此':ids.length)+'条数据吗', function(){
                         $.ajax({
                             url: store.uri + "/user/delete/auth",
+                            header: {
+                                'token': sessionStorage.getItem('token')
+                            },
                             data: {ids: ids},
                             method: 'POST',
                             traditional:true,
