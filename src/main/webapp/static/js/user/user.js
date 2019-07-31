@@ -144,7 +144,7 @@ layui.config({
         var index = layer.load(1, {
             shade: [0.5,'#000'] //0.1透明度的背景
         });
-        var user = {
+        var data = {
             username: $('#username').val(),
             mobile: $('#mobile').val(),
             password: $('#password').val(),
@@ -155,7 +155,7 @@ layui.config({
             headers: {
                 'token': sessionStorage.getItem('token')
             },
-            data: user,
+            data: data,
             method: 'POST',
             success: function (res) {
                 if (res.code === 200){
