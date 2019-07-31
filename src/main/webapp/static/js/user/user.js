@@ -42,7 +42,7 @@ layui.config({
             statusCode: 200
         },
         done: function(res, curr, count) {
-            dataEscaping();
+            enumConvert();
             pageCurr=curr;
         }
     });
@@ -194,17 +194,18 @@ function tableReload(data) {
             curr: pageCurr
         },
         done: function (res, curr, count) {
-            dataEscaping();
+            enumConvert();
             pageCurr=curr;
         }
     });
 }
 
-function dataEscaping() {
+function enumConvert() {
     $("[data-field='status']").children().each(function(){
         if($(this).text()==='1'){
             $(this).text("有效")
-        }else if($(this).text()==='2'){
+        }
+        if($(this).text()==='2'){
             $(this).text("失效")
         }
     });
