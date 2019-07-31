@@ -36,7 +36,7 @@ public class ResourceController {
                   Resource resource){
         EntityWrapper<Resource> wrapper = new EntityWrapper<>();
         wrapper.setEntity(resource);
-        return R.ok(resourceService.selectPage(new Page<>(curr, limit)));
+        return R.ok(resourceService.selectPage(new Page<>(curr, limit), wrapper));
     }
 
     @RequestMapping(value = "/resource/add/auth")
