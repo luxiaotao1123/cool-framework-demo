@@ -2,6 +2,7 @@ package com.cool.demo.common;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.core.common.BaseRes;
 import com.core.common.R;
 
@@ -17,7 +18,12 @@ public class Http {
         try (PrintWriter out = response.getWriter()) {
             response.setCharacterEncoding("utf-8");
             response.setContentType("application/json; charset=utf-8");
-            out.print(JSON.toJSONString(new R(baseRes)));
+            R r = new R(baseRes);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("total", "0");
+            jsonObject.put("record", "");
+            r.add(jsonObject);
+            out.print(JSON.toJSONString(r));
             out.flush();
         } catch (Exception e) {
             e.printStackTrace();
