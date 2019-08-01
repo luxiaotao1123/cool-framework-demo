@@ -39,6 +39,20 @@ public class ResourceController {
         return R.ok(resourceService.selectPage(new Page<>(curr, limit), wrapper));
     }
 
+    @RequestMapping(value = "/resource/edit/auth")
+    @ResponseBody
+    public R edit(Resource resource) {
+        if (Cools.isEmpty(resource)){
+            return R.error();
+        }
+        if (null == resource.getId()){
+            resourceService.insert(resource);
+        } else {
+            resourceService.updateById(resource);
+        }
+        return R.ok();
+    }
+
     @RequestMapping(value = "/resource/add/auth")
     @ResponseBody
     public R add(Resource resource) {

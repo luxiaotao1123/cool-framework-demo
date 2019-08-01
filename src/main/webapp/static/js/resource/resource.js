@@ -55,9 +55,7 @@ layui.config({
         var checkStatus = table.checkStatus(obj.config.id);
         switch(obj.event) {
             case 'addData':
-                var detailEl = $("#data-detail-submit");
-                detailEl.text("添加");
-                detailEl.attr("lay-filter", "add");
+                $("#data-detail-submit").text("添加");
                 clearFormVal('#detail');
                 layer.open({
                     type: 1,
@@ -133,12 +131,10 @@ layui.config({
         }
         // 编辑
         else if(obj.event === 'edit'){
-            var detailEl = $("#data-detail-submit");
-            detailEl.text("修改");
-            detailEl.attr("lay-filter", "update");
+            $("#data-detail-submit").text("修改");
             layer.open({
                 type: 1,
-                title: '新增',
+                title: '修改',
                 maxmin: true,
                 area: ['420px', '330px'],
                 shadeClose: false,
@@ -151,18 +147,20 @@ layui.config({
         }
     });
 
-    form.on('submit(add)', function () {
+    // 新增
+    form.on('submit(edit)', function () {
         var index = layer.load(1, {
             shade: [0.5,'#000'] //0.1透明度的背景
         });
         var data = {
+            id: $('#id').val(),
             name: $('#name').val(),
             url: $('#url').val(),
             status: $('#status').val(),
 
         };
         $.ajax({
-            url: store.uri + "/resource/add/auth",
+            url: store.uri + "/resource/edit/auth",
             headers: {
                 'token': sessionStorage.getItem('token')
             },
