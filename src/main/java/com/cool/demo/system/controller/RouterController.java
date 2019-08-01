@@ -14,7 +14,7 @@ public class RouterController {
         return "index";
     }
 
-    @RequestMapping("/")
+    @RequestMapping(value = {"/","/login"})
     public String login(){
         return "login";
     }
