@@ -7,13 +7,25 @@
     <link rel="stylesheet" href="/static/layui/css/layui.css">
     <link rel="stylesheet" href="/static/css/index.css">
     <style>
+
         /* <!--侧边导航栏--> */
-        .layui-side.layui-bg-black {
+        #person {
+            height: 100px;
+        }
+        #person-username {
+            position: absolute;
+            font-size: large;
+            top: 35px;
+            left: 70px;
+        }
+
+        .layui-side.layui-bg-black.layui-side-menu {
             position: absolute;
             top: 0;
+            z-index: 1;
         }
-        .layui-side.layui-bg-black .layui-side-scroll {
-            width: 200px;
+        .layui-side-scroll {
+            height: auto;
         }
 
         /* <!--内容主体--> */
@@ -21,6 +33,7 @@
             position: absolute;
             top: 0;
             bottom: 0;
+            z-index: -1;
         }
         /*选项卡*/
         .layui-body .layui-tab.layui-tab-card {
@@ -49,7 +62,10 @@
     <div class="layui-layout layui-layout-admin">
 
         <!--侧边导航栏-->
-        <div class="layui-side layui-bg-black">
+        <div class="layui-side layui-bg-black layui-side-menu">
+            <div id="person" lay-href="/index">
+                <span id="person-username">Cool</span>
+            </div>
             <div class="layui-side-scroll">
                 <ul class="layui-nav layui-nav-tree" lay-filter="test">
                     <li class="layui-nav-item">
@@ -86,6 +102,8 @@
     layui.use('element', function(){
         var element = layui.element;
         var $ = layui.jquery;
+
+        $('#person-username').text(sessionStorage.getItem('username'));
 
         // 选项卡事件定义
         var tabAction = {
