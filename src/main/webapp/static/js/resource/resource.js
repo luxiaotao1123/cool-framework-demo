@@ -61,7 +61,7 @@ layui.config({
                     type: 1,
                     title: '新增',
                     maxmin: true,
-                    area: ['420px', '330px'],
+                    area: [top.detailHeight, top.detailWidth],
                     shadeClose: false,
                     content: $('#data-detail'),
                     success: function(){
