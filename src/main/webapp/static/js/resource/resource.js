@@ -119,7 +119,7 @@ layui.config({
         if(obj.event === 'detail'){
             var layerIdx = layer.open({
                 type: 1,
-                title: '新增',
+                title: '查看',
                 maxmin: true,
                 area: [top.detailHeight, top.detailWidth],
                 shadeClose: false,
