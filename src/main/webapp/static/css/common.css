@@ -1,6 +1,7 @@
 /*搜索栏*/
 .search-box{
-    padding: 20px 0
+    padding: 20px 0;
+    height: auto;
 }
 .layui-inline{
     margin-bottom: 5px;
@@ -22,8 +23,9 @@
 
 /*表格*/
 .layui-form.layui-border-box.layui-table-view{
-    position: absolute;
-    top: 140px;
+    margin: 30px 0 0 0;
+    /*position: absolute;*/
+    /*top: 140px;*/
     width: 100%;
     border-width: 0;
 }
