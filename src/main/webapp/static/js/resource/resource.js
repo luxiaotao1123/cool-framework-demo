@@ -57,7 +57,7 @@ layui.config({
             case 'addData':
                 $("#data-detail-submit").text("添加");
                 clearFormVal('#detail');
-                layer.open({
+                var layerIdx = layer.open({
                     type: 1,
                     title: '新增',
                     maxmin: true,
@@ -68,6 +68,7 @@ layui.config({
                         $(".layui-layer-shade").remove();
                     }
                 });
+                detailScreen(layerIdx);
                 break;
             case 'refreshData':
                 tableIns.reload({
@@ -116,11 +117,11 @@ layui.config({
         var data = obj.data;
         // 查看
         if(obj.event === 'detail'){
-            layer.open({
+            var layerIdx = layer.open({
                 type: 1,
                 title: '新增',
                 maxmin: true,
-                area: ['420px', '330px'],
+                area: [top.detailHeight, top.detailWidth],
                 shadeClose: false,
                 content: $('#data-detail'),
                 success: function(){
@@ -128,15 +129,16 @@ layui.config({
                     setFormVal($('#detail'), data, form);
                 }
             });
+            detailScreen(layerIdx);
         }
         // 编辑
         else if(obj.event === 'edit'){
             $("#data-detail-submit").text("修改");
-            layer.open({
+            var layerIdx = layer.open({
                 type: 1,
                 title: '修改',
                 maxmin: true,
-                area: ['420px', '330px'],
+                area: [top.detailHeight, top.detailWidth],
                 shadeClose: false,
                 content: $('#data-detail'),
                 success: function(){
@@ -144,6 +146,7 @@ layui.config({
                     setFormVal($('#detail'), data, form);
                 }
             });
+            detailScreen(layerIdx);
         }
     });
 
@@ -238,4 +241,15 @@ function clearFormVal(el) {
         .val('')
         .removeAttr('checked')
         .removeAttr('selected');
+}
+
+function detailScreen(layerIdx) {
+    var height = $('#data-detail').height()+60;
+    if (height > ($(window).height()*0.9)) {
+        height = ($(window).height()*0.9);
+    }
+    layer.style(layerIdx, {
+        top: (($(window).height()-height)/2)+"px",
+        height: height+'px'
+    });
 }

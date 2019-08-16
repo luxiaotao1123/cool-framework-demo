@@ -8,11 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="/static/css/common.css" media="all">
-    <style>
-        #detail {
-            padding: 10px 0;
-        }
-    </style>
 </head>
 <body>
 
@@ -50,7 +45,7 @@
 <script type="text/javascript" src="/static/js/resource/resource.js" charset="utf-8"></script>
 
 <!-- 详情 -->
-<div id="data-detail" class="layer_self_wrap" style="width:500px;display:none;">
+<div id="data-detail" class="layer_self_wrap" style="display:none;">
     <form id="detail" class="layui-form">
         <div class="layui-inline" style="display:none">
             <label class="layui-form-label">编号</label>
@@ -58,20 +53,19 @@
                 <input id="id" class="layui-input" type="text" placeholder="编号">
             </div>
         </div>
-        <div class="layui-inline" style="float: left; width: 60%;">
+        <div class="layui-inline" style="float: left; width: 31%;">
             <label class="layui-form-label">名称</label>
             <div class="layui-input-inline">
                 <input id="name" class="layui-input" type="text" placeholder="名称">
             </div>
         </div>
-        <div class="layui-inline">
+        <div class="layui-inline" style="float: left; width: 31%;">
             <label class="layui-form-label">路径</label>
             <div class="layui-input-inline">
                 <input id="url" class="layui-input" type="text" placeholder="路径">
             </div>
         </div>
-
-        <div class="layui-inline">
+        <div class="layui-inline" style="float: left; width: 31%;">
             <label class="layui-form-label">状态</label>
             <div class="layui-input-inline">
                 <select id="status">

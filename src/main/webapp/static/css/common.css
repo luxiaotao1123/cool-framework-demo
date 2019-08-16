@@ -36,3 +36,16 @@
 .layui-table-page{
     border-width: 0;
 }
+
+/*详情*/
+#detail {
+    padding: 15px 0 0 0;
+}
+#detail .layui-inline {
+    margin-bottom: 15px;
+}
+#data-detail-submit {
+    display: block;
+    margin: 0 auto;
+    width: 60px;
+}
