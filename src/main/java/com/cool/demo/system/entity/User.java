@@ -13,20 +13,35 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 编号
+     */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
+    /**
+     * 账号
+     */
     private String username;
 
+    /**
+     * 联系方式
+     */
     private String mobile;
 
+    /**
+     * 密码
+     */
     private String password;
 
+    /**
+     * 注册时间
+     */
     @TableField("create_time")
     private Date createTime;
 
     /**
-     * 状态(1：启用  2：冻结  3：删除）
+     * 状态 1: 启用  2: 冻结  3: 删除  
      */
     private Integer status;
 

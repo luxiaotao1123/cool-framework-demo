@@ -11,20 +11,18 @@ layui.config({
 
     // 数据渲染
     tableIns = table.render({
-        elem: '#user',
+        elem: '#userLogin',
         headers: {token: sessionStorage.getItem('token')},
-        url: '/user/list/auth',
+        url: '/userLogin/list/auth',
         page: true,
         toolbar: '#toolbar',
         cellMinWidth: 50,
         cols: [[
             {type: 'checkbox', fixed: 'left'}
             ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
-            ,{field: 'username', align: 'center',title: '账号'}
-            ,{field: 'mobile', align: 'center',title: '联系方式'}
-            ,{field: 'password', align: 'center',title: '密码'}
-            ,{field: 'createTime', align: 'center',title: '注册时间'}
-            ,{field: 'status', align: 'center',title: '状态'}
+            ,{field: 'userId', align: 'center',title: '员工编号',event: 'User', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'token', align: 'center',title: '凭证值'}
+            ,{field: 'createTime', align: 'center',title: '添加时间'}
 
             ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
         ]],
@@ -53,7 +51,7 @@ layui.config({
     });
 
     // 监听头工具栏事件
-    table.on('toolbar(user)', function (obj) {
+    table.on('toolbar(userLogin)', function (obj) {
         var checkStatus = table.checkStatus(obj.config.id);
         switch(obj.event) {
             case 'addData':
@@ -63,7 +61,7 @@ layui.config({
                     maxmin: true,
                     area: [top.detailHeight, top.detailWidth],
                     shadeClose: false,
-                    content: '/user_detail',
+                    content: '/userLogin_detail',
                     success: function(layero, index){
                     	$(".layui-layer-shade").remove();
                     	clearFormVal(layer.getChildFrame('#detail', index));
@@ -90,7 +88,7 @@ layui.config({
                 } else {
                     layer.confirm('确定删除'+(ids.length===1?'此':ids.length)+'条数据吗', function(){
                         $.ajax({
-                            url: store.uri + "/user/delete/auth",
+                            url: store.uri + "/userLogin/delete/auth",
                             headers: {
                                 'token': sessionStorage.getItem('token')
                             },
@@ -115,7 +113,7 @@ layui.config({
     });
 
     // 监听行工具事件
-    table.on('tool(user)', function(obj){
+    table.on('tool(userLogin)', function(obj){
         var data = obj.data;
         switch (obj.event) {
             // 查看
@@ -126,7 +124,7 @@ layui.config({
                     maxmin: true,
                     area: [top.detailHeight, top.detailWidth],
                     shadeClose: false,
-                    content: '/user_detail',
+                    content: '/userLogin_detail',
                     success: function(layero, index){
                         detailScreen(index);
                         $(".layui-layer-shade").remove();
@@ -143,7 +141,7 @@ layui.config({
                     maxmin: true,
                     area: [top.detailHeight, top.detailWidth],
                     shadeClose: false,
-                    content: '/user_detail',
+                    content: '/userLogin_detail',
                     success: function(layero, index){
                         layer.getChildFrame('#data-detail-submit', index).text("修改");
                         detailScreen(index);
@@ -163,15 +161,13 @@ layui.config({
         });
         var data = {
             id: $('#id').val(),
-            username: $('#username').val(),
-            mobile: $('#mobile').val(),
-            password: $('#password').val(),
+            userId: $('#userId').val(),
+            token: $('#token').val(),
             createTime: $('#createTime').val(),
-            status: $('#status').val(),
 
         };
         $.ajax({
-            url: store.uri + "/user/edit/auth",
+            url: store.uri + "/userLogin/edit/auth",
             headers: {
                 'token': sessionStorage.getItem('token')
             },
@@ -227,17 +223,6 @@ function tableReload(data, child) {
 
 function enumConvert(child) {
 	var my$ = (child ? parent.$ : this.$);
-    my$("[data-field='status']").children().each(function(){
-        if(my$(this).text()==='1'){
-            my$(this).text("启用")
-        }
-        if(my$(this).text()==='2'){
-            my$(this).text("冻结")
-        }
-        if(my$(this).text()==='3'){
-            my$(this).text("删除")
-        }
-    });
 
 }
 

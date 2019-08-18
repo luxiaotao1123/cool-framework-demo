@@ -1,5 +1,6 @@
 package com.cool.demo.system.controller;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.cool.demo.system.entity.UserLogin;
 import com.cool.demo.system.service.UserLoginService;
@@ -7,10 +8,9 @@ import com.core.common.Cools;
 import com.core.common.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
 
 @Controller
 public class UserLoginController {
@@ -21,11 +21,6 @@ public class UserLoginController {
     @RequestMapping("/userLogin")
     public String index(){
         return "userLogin/userLogin";
-    }
-
-    @RequestMapping("/userLogin_add")
-    public String add(){
-        return "userLogin/userLogin_add";
     }
 
     @RequestMapping("/userLogin_detail")
@@ -42,8 +37,25 @@ public class UserLoginController {
     @RequestMapping(value = "/userLogin/list/auth")
     @ResponseBody
     public R list(@RequestParam(defaultValue = "1")Integer curr,
-                  @RequestParam(defaultValue = "10")Integer limit){
-        return R.ok(userLoginService.selectPage(new Page<>(curr, limit)));
+                  @RequestParam(defaultValue = "10")Integer limit,
+                  UserLogin userLogin){
+        EntityWrapper<UserLogin> wrapper = new EntityWrapper<>();
+        wrapper.setEntity(userLogin);
+        return R.ok(userLoginService.selectPage(new Page<>(curr, limit), wrapper));
+    }
+
+    @RequestMapping(value = "/userLogin/edit/auth")
+    @ResponseBody
+    public R edit(UserLogin userLogin) {
+        if (Cools.isEmpty(userLogin)){
+            return R.error();
+        }
+        if (null == userLogin.getId()){
+            userLoginService.insert(userLogin);
+        } else {
+            userLoginService.updateById(userLogin);
+        }
+        return R.ok();
     }
 
     @RequestMapping(value = "/userLogin/add/auth")
@@ -60,6 +72,16 @@ public class UserLoginController {
             return R.error();
         }
         userLoginService.updateById(userLogin);
+        return R.ok();
+    }
+
+    @RequestMapping(value = "/userLogin/delete/auth")
+    @ResponseBody
+    public R delete(Integer[] ids){
+        if (Cools.isEmpty(ids)){
+            return R.error();
+        }
+        userLoginService.deleteBatchIds(Arrays.asList(ids));
         return R.ok();
     }
 }

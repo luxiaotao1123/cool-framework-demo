@@ -44,7 +44,21 @@ public class UserController {
         return R.ok(userService.selectPage(new Page<>(curr, limit), wrapper));
     }
 
-    @PostMapping(value = "/user/add/auth")
+    @RequestMapping(value = "/user/edit/auth")
+    @ResponseBody
+    public R edit(User user) {
+        if (Cools.isEmpty(user)){
+            return R.error();
+        }
+        if (null == user.getId()){
+            userService.insert(user);
+        } else {
+            userService.updateById(user);
+        }
+        return R.ok();
+    }
+
+    @RequestMapping(value = "/user/add/auth")
     @ResponseBody
     public R add(User user) {
         userService.insert(user);

@@ -13,14 +13,26 @@ public class UserLogin implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 编号
+     */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
+    /**
+     * 员工编号
+     */
     @TableField("user_id")
     private Long userId;
 
+    /**
+     * 凭证值
+     */
     private String token;
 
+    /**
+     * 添加时间
+     */
     @TableField("create_time")
     private Date createTime;
 
