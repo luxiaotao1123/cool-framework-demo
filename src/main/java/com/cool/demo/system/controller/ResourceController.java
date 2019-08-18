@@ -23,6 +23,11 @@ public class ResourceController {
         return "resource/resource";
     }
 
+    @RequestMapping("/resource_detail")
+    public String detail(){
+        return "resource/resource_detail";
+    }
+
     @RequestMapping(value = "/resource/{id}/auth")
     @ResponseBody
     public R get(@PathVariable("id") Long id) {

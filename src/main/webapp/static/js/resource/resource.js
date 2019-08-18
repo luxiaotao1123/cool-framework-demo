@@ -45,7 +45,7 @@ layui.config({
             if (res.code === 403) {
                 parent.location.href = "/";
             }
-            enumConvert();
+            enumConvert(false);
             pageCurr=curr;
         }
     });
@@ -55,20 +55,21 @@ layui.config({
         var checkStatus = table.checkStatus(obj.config.id);
         switch(obj.event) {
             case 'addData':
-                $("#data-detail-submit").text("添加");
-                clearFormVal('#detail');
-                var layerIdx = layer.open({
-                    type: 1,
+                layer.open({
+                    type: 2,
                     title: '新增',
                     maxmin: true,
                     area: [top.detailHeight, top.detailWidth],
                     shadeClose: false,
-                    content: $('#data-detail'),
-                    success: function(){
+                    content: '/resource_detail',
+                    success: function(layero, index){
+                        clearFormVal(layer.getChildFrame('#detail', index));
+                        layer.getChildFrame('#data-detail-submit', index).text("添加");
                         $(".layui-layer-shade").remove();
+                        detailScreen(index);
                     }
                 });
-                detailScreen(layerIdx);
+
                 break;
             case 'refreshData':
                 tableIns.reload({
@@ -117,40 +118,42 @@ layui.config({
         var data = obj.data;
         // 查看
         if(obj.event === 'detail'){
-            var layerIdx = layer.open({
-                type: 1,
+            layer.open({
+                type: 2,
                 title: '查看',
                 maxmin: true,
                 area: [top.detailHeight, top.detailWidth],
                 shadeClose: false,
-                content: $('#data-detail'),
-                success: function(){
+                content: '/resource_detail',
+                success: function(layero, index){
                     $(".layui-layer-shade").remove();
-                    setFormVal($('#detail'), data, form);
+                    detailScreen(index);
+                    setFormVal(layer.getChildFrame('#detail', index), data);
+                    layero.find('iframe')[0].contentWindow.layui.form.render('select');
                 }
             });
-            detailScreen(layerIdx);
         }
         // 编辑
         else if(obj.event === 'edit'){
-            $("#data-detail-submit").text("修改");
-            var layerIdx = layer.open({
-                type: 1,
+            layer.open({
+                type: 2,
                 title: '修改',
                 maxmin: true,
                 area: [top.detailHeight, top.detailWidth],
                 shadeClose: false,
-                content: $('#data-detail'),
-                success: function(){
+                content: '/resource_detail',
+                success: function(layero, index){
+                    layer.getChildFrame('#data-detail-submit', index).text("修改");
                     $(".layui-layer-shade").remove();
-                    setFormVal($('#detail'), data, form);
+                    detailScreen(index);
+                    setFormVal(layer.getChildFrame('#detail', index), data);
+                    layero.find('iframe')[0].contentWindow.layui.form.render('select');
                 }
             });
-            detailScreen(layerIdx);
         }
     });
 
-    // 新增
+    // 数据修改动作
     form.on('submit(edit)', function () {
         var index = layer.load(1, {
             shade: [0.5,'#000'] //0.1透明度的背景
@@ -171,8 +174,8 @@ layui.config({
             method: 'POST',
             success: function (res) {
                 if (res.code === 200){
-                    layer.closeAll();
-                    tableReload();
+                    parent.layer.closeAll();
+                    tableReload(null, true);
                     $("#data-detail :input").each(function () {
                         $(this).val("");
                     });
@@ -201,8 +204,8 @@ layui.config({
 
 });
 
-function tableReload(data) {
-    tableIns.reload({
+function tableReload(data, child) {
+    (child ? parent.tableIns : tableIns).reload({
         where: data,
         page: {
             curr: pageCurr
@@ -211,29 +214,29 @@ function tableReload(data) {
             if (res.code === 403) {
                 parent.location.href = "/";
             }
-            enumConvert();
+            enumConvert(true);
             pageCurr=curr;
         }
     });
 }
 
-function enumConvert() {
-    $("[data-field='status']").children().each(function(){
-        if($(this).text()==='0'){
-            $(this).text("失效")
+function enumConvert(child) {
+    var my$ = (child ? parent.$ : this.$);
+    my$("[data-field='status']").children().each(function(){
+        if(my$(this).text()==='0'){
+            my$(this).text("失效")
         }
-        if($(this).text()==='1'){
-            $(this).text("有效")
+        if(my$(this).text()==='1'){
+            my$(this).text("有效")
         }
     });
 
 }
 
-function setFormVal(el, data, form) {
+function setFormVal(el, data) {
     for (var val in data) {
         el.find(":input[id='" + val + "']").val(data[val]);
     }
-    form.render('select');
 }
 
 function clearFormVal(el) {
@@ -243,13 +246,14 @@ function clearFormVal(el) {
         .removeAttr('selected');
 }
 
-function detailScreen(layerIdx) {
-    var height = $('#data-detail').height()+60;
+function detailScreen(index) {
+    var detail = layer.getChildFrame('#data-detail', index);
+    var height = detail.height()+60;
     if (height > ($(window).height()*0.9)) {
         height = ($(window).height()*0.9);
     }
-    layer.style(layerIdx, {
-        top: (($(window).height()-height)/2)+"px",
+    layer.style(index, {
+        top: (($(window).height()-height)/3)+"px",
         height: height+'px'
     });
 }
