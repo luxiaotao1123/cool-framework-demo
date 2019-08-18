@@ -1,4 +1,4 @@
-package com.cool.demo.system.controller;
+package com.cool.demo.common.web;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.cool.demo.system.entity.User;

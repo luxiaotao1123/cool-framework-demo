@@ -23,6 +23,11 @@ public class UserController {
         return "user/user";
     }
 
+    @RequestMapping("/user_detail")
+    public String detail(){
+        return "user/user_detail";
+    }
+
     @RequestMapping(value = "/user/{id}/auth")
     @ResponseBody
     public R get(@PathVariable("id") Long id) {

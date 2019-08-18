@@ -115,41 +115,42 @@ layui.config({
     // 监听行工具事件
     table.on('tool(resource)', function(obj){
         var data = obj.data;
-        // 查看
-        if(obj.event === 'detail'){
-            layer.open({
-                type: 2,
-                title: '查看',
-                maxmin: true,
-                area: [top.detailHeight, top.detailWidth],
-                shadeClose: false,
-                content: '/resource_detail',
-                success: function(layero, index){
-                	detailScreen(index);
-                    $(".layui-layer-shade").remove();
-                    setFormVal(layer.getChildFrame('#detail', index), data);
-                    layero.find('iframe')[0].contentWindow.layui.form.render('select');
-                }
-            });
-        }
-        // 编辑
-        else if(obj.event === 'edit'){
-            $("#data-detail-submit").text("修改");
-            layer.open({
-                type: 2,
-                title: '修改',
-                maxmin: true,
-                area: [top.detailHeight, top.detailWidth],
-                shadeClose: false,
-                content: '/resource_detail',
-                success: function(layero, index){
-                	layer.getChildFrame('#data-detail-submit', index).text("修改");
-                	detailScreen(index);
-                    $(".layui-layer-shade").remove();
-                    setFormVal(layer.getChildFrame('#detail', index), data);
-                    layero.find('iframe')[0].contentWindow.layui.form.render('select');
-                }
-            });
+        switch (obj.event) {
+            // 查看
+            case 'detail':
+                layer.open({
+                    type: 2,
+                    title: '查看',
+                    maxmin: true,
+                    area: [top.detailHeight, top.detailWidth],
+                    shadeClose: false,
+                    content: '/resource_detail',
+                    success: function(layero, index){
+                        detailScreen(index);
+                        $(".layui-layer-shade").remove();
+                        setFormVal(layer.getChildFrame('#detail', index), data);
+                        layero.find('iframe')[0].contentWindow.layui.form.render('select');
+                    }
+                });
+                break;
+            // 编辑
+            case 'edit':
+                layer.open({
+                    type: 2,
+                    title: '修改',
+                    maxmin: true,
+                    area: [top.detailHeight, top.detailWidth],
+                    shadeClose: false,
+                    content: '/resource_detail',
+                    success: function(layero, index){
+                        layer.getChildFrame('#data-detail-submit', index).text("修改");
+                        detailScreen(index);
+                        $(".layui-layer-shade").remove();
+                        setFormVal(layer.getChildFrame('#detail', index), data);
+                        layero.find('iframe')[0].contentWindow.layui.form.render('select');
+                    }
+                });
+                break;
         }
     });
 
