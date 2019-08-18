@@ -63,13 +63,12 @@ layui.config({
                     shadeClose: false,
                     content: '/resource_detail',
                     success: function(layero, index){
-                        clearFormVal(layer.getChildFrame('#detail', index));
+                    	$(".layui-layer-shade").remove();
+                    	clearFormVal(layer.getChildFrame('#detail', index));
                         layer.getChildFrame('#data-detail-submit', index).text("添加");
-                        $(".layui-layer-shade").remove();
                         detailScreen(index);
                     }
                 });
-
                 break;
             case 'refreshData':
                 tableIns.reload({
@@ -126,8 +125,8 @@ layui.config({
                 shadeClose: false,
                 content: '/resource_detail',
                 success: function(layero, index){
+                	detailScreen(index);
                     $(".layui-layer-shade").remove();
-                    detailScreen(index);
                     setFormVal(layer.getChildFrame('#detail', index), data);
                     layero.find('iframe')[0].contentWindow.layui.form.render('select');
                 }
@@ -135,6 +134,7 @@ layui.config({
         }
         // 编辑
         else if(obj.event === 'edit'){
+            $("#data-detail-submit").text("修改");
             layer.open({
                 type: 2,
                 title: '修改',
@@ -143,9 +143,9 @@ layui.config({
                 shadeClose: false,
                 content: '/resource_detail',
                 success: function(layero, index){
-                    layer.getChildFrame('#data-detail-submit', index).text("修改");
+                	layer.getChildFrame('#data-detail-submit', index).text("修改");
+                	detailScreen(index);
                     $(".layui-layer-shade").remove();
-                    detailScreen(index);
                     setFormVal(layer.getChildFrame('#detail', index), data);
                     layero.find('iframe')[0].contentWindow.layui.form.render('select');
                 }
@@ -221,7 +221,7 @@ function tableReload(data, child) {
 }
 
 function enumConvert(child) {
-    var my$ = (child ? parent.$ : this.$);
+	var my$ = (child ? parent.$ : this.$);
     my$("[data-field='status']").children().each(function(){
         if(my$(this).text()==='0'){
             my$(this).text("失效")
