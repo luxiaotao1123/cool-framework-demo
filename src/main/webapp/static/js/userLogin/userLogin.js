@@ -151,6 +151,37 @@ layui.config({
                     }
                 });
                 break;
+            case 'User':
+                layer.open({
+                    type: 2,
+                    title: '员工详情',
+                    maxmin: true,
+                    area: [top.detailHeight, top.detailWidth],
+                    shadeClose: false,
+                    content: 'user_detail',
+                    success: function(layero, index){
+                        $.ajax({
+                            url: store.uri + "/user/"+ data.userId +"/auth",
+                            headers: {'token': sessionStorage.getItem('token')},
+                            data: data,
+                            method: 'POST',
+                            success: function (res) {
+                                if (res.code === 200){
+                                    detailScreen(index);
+                                    $(".layui-layer-shade").remove();
+                                    setFormVal(layer.getChildFrame('#detail', index), res.data);
+                                    layero.find('iframe')[0].contentWindow.layui.form.render('select');
+                                } else if (res.code === 403){
+                                    parent.location.href = "/";
+                                }else {
+                                    layer.alert(res.msg)
+                                }
+                            }
+                        })
+                    }
+                });
+                break;
+
         }
     });
 
