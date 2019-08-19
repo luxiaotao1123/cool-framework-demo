@@ -1,12 +1,13 @@
 package com.cool.demo.system.entity;
 
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
-import java.util.Date;
-
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+import com.core.common.TimeUtils;
+
 import java.io.Serializable;
+import java.util.Date;
 
 @TableName("sys_user_login")
 public class UserLogin implements Serializable {
@@ -68,5 +69,8 @@ public class UserLogin implements Serializable {
         this.createTime = createTime;
     }
 
+    public String getCreateTime$(){
+        return TimeUtils.dateToStr(this.createTime, TimeUtils.yyyyMMddHHmmss_F);
+    }
 
 }

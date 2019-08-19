@@ -22,7 +22,7 @@ layui.config({
             ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
             ,{field: 'userId', align: 'center',title: '员工编号',event: 'User', style: 'text-decoration: underline;cursor:pointer'}
             ,{field: 'token', align: 'center',title: '凭证值'}
-            ,{field: 'createTime', align: 'center',title: '添加时间'}
+            ,{field: 'createTime$', align: 'center',title: '添加时间'}
 
             ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
         ]],
@@ -194,7 +194,7 @@ layui.config({
             id: $('#id').val(),
             userId: $('#userId').val(),
             token: $('#token').val(),
-            createTime: $('#createTime').val(),
+            createTime: top.strToDate($('#createTime\\$').val()),
 
         };
         $.ajax({
@@ -232,6 +232,10 @@ layui.config({
     });
     layDate.render({
         elem: '#endTime'
+    });
+    layDate.render({
+        elem: '#createTime\\$',
+        type: 'datetime'
     });
 
 });
