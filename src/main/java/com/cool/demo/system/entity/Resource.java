@@ -60,6 +60,18 @@ public class Resource implements Serializable {
         return status;
     }
 
+    public String getStatus$(){
+        if (null == this.status){ return null; }
+        switch (this.status){
+            case 0:
+                return "失效";
+            case 1:
+                return "有效";
+            default:
+                return null;
+        }
+    }
+
     public void setStatus(Integer status) {
         this.status = status;
     }
