@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-import com.core.common.TimeUtils;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @TableName("sys_user_login")
@@ -65,12 +65,13 @@ public class UserLogin implements Serializable {
         return createTime;
     }
 
+    public String getCreateTime$(){
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.createTime);
+    }
+
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
-    public String getCreateTime$(){
-        return TimeUtils.dateToStr(this.createTime, TimeUtils.yyyyMMddHHmmss_F);
-    }
 
 }

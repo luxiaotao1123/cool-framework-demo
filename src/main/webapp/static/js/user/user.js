@@ -23,7 +23,7 @@ layui.config({
             ,{field: 'username', align: 'center',title: '账号'}
             ,{field: 'mobile', align: 'center',title: '联系方式'}
             ,{field: 'password', align: 'center',title: '密码'}
-            ,{field: 'createTime', align: 'center',title: '注册时间'}
+            ,{field: 'createTime$', align: 'center',title: '注册时间'}
             ,{field: 'status', align: 'center',title: '状态'}
 
             ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
@@ -153,6 +153,7 @@ layui.config({
                     }
                 });
                 break;
+
         }
     });
 
@@ -166,7 +167,7 @@ layui.config({
             username: $('#username').val(),
             mobile: $('#mobile').val(),
             password: $('#password').val(),
-            createTime: $('#createTime').val(),
+            createTime: top.strToDate($('#createTime\\$').val()),
             status: $('#status').val(),
 
         };
@@ -201,11 +202,10 @@ layui.config({
 
     // 时间选择器
     layDate.render({
-        elem: '#startTime'
+        elem: '#createTime\\$',
+        type: 'datetime'
     });
-    layDate.render({
-        elem: '#endTime'
-    });
+
 
 });
 

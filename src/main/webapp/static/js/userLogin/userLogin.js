@@ -172,7 +172,7 @@ layui.config({
                                     setFormVal(layer.getChildFrame('#detail', index), res.data);
                                     layero.find('iframe')[0].contentWindow.layui.form.render('select');
                                 } else if (res.code === 403){
-                                    top.location.href = "/";
+                                    parent.location.href = "/";
                                 }else {
                                     layer.alert(res.msg)
                                 }
@@ -227,12 +227,6 @@ layui.config({
     });
 
     // 时间选择器
-    layDate.render({
-        elem: '#startTime'
-    });
-    layDate.render({
-        elem: '#endTime'
-    });
     layDate.render({
         elem: '#createTime\\$',
         type: 'datetime'
