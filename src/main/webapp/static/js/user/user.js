@@ -24,7 +24,7 @@ layui.config({
             ,{field: 'mobile', align: 'center',title: '联系方式'}
             ,{field: 'password', align: 'center',title: '密码'}
             ,{field: 'createTime$', align: 'center',title: '注册时间'}
-            ,{field: 'status', align: 'center',title: '状态'}
+            ,{field: 'status$', align: 'center',title: '状态'}
 
             ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
         ]],
@@ -47,7 +47,6 @@ layui.config({
             if (res.code === 403) {
                 top.location.href = "/";
             }
-            enumConvert(false);
             pageCurr=curr;
         }
     });
@@ -219,26 +218,9 @@ function tableReload(data, child) {
             if (res.code === 403) {
                 top.location.href = "/";
             }
-            enumConvert(true);
             pageCurr=curr;
         }
     });
-}
-
-function enumConvert(child) {
-	var my$ = (child ? parent.$ : this.$);
-    my$("[data-field='status']").children().each(function(){
-        if(my$(this).text()==='1'){
-            my$(this).text("启用")
-        }
-        if(my$(this).text()==='2'){
-            my$(this).text("冻结")
-        }
-        if(my$(this).text()==='3'){
-            my$(this).text("删除")
-        }
-    });
-
 }
 
 function setFormVal(el, data) {

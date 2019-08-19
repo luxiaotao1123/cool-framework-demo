@@ -94,6 +94,20 @@ public class User implements Serializable {
         return status;
     }
 
+    public String getStatus$(){
+        if (null == this.status){ return null; }
+        switch (this.status){
+            case 1:
+                return "启用";
+            case 2:
+                return "冻结";
+            case 3:
+                return "删除";
+            default:
+                return String.valueOf(this.status);
+        }
+    }
+
     public void setStatus(Integer status) {
         this.status = status;
     }

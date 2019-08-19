@@ -68,7 +68,7 @@ public class Resource implements Serializable {
             case 1:
                 return "有效";
             default:
-                return null;
+                return String.valueOf(this.status);
         }
     }
 

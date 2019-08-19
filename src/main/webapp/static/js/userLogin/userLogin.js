@@ -45,7 +45,6 @@ layui.config({
             if (res.code === 403) {
                 top.location.href = "/";
             }
-            enumConvert(false);
             pageCurr=curr;
         }
     });
@@ -232,6 +231,7 @@ layui.config({
         type: 'datetime'
     });
 
+
 });
 
 function tableReload(data, child) {
@@ -244,15 +244,9 @@ function tableReload(data, child) {
             if (res.code === 403) {
                 top.location.href = "/";
             }
-            enumConvert(true);
             pageCurr=curr;
         }
     });
-}
-
-function enumConvert(child) {
-	var my$ = (child ? parent.$ : this.$);
-
 }
 
 function setFormVal(el, data) {

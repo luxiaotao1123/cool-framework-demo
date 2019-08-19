@@ -22,7 +22,7 @@ layui.config({
             ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
             ,{field: 'name', align: 'center',title: '名称'}
             ,{field: 'url', align: 'center',title: '路径'}
-            ,{field: 'status', align: 'center',title: '状态'}
+            ,{field: 'status$', align: 'center',title: '状态'}
 
             ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
         ]],
@@ -45,7 +45,6 @@ layui.config({
             if (res.code === 403) {
                 top.location.href = "/";
             }
-            enumConvert(false);
             pageCurr=curr;
         }
     });
@@ -151,6 +150,7 @@ layui.config({
                     }
                 });
                 break;
+
         }
     });
 
@@ -196,12 +196,7 @@ layui.config({
     });
 
     // 时间选择器
-    layDate.render({
-        elem: '#startTime'
-    });
-    layDate.render({
-        elem: '#endTime'
-    });
+
 
 });
 
@@ -215,23 +210,9 @@ function tableReload(data, child) {
             if (res.code === 403) {
                 top.location.href = "/";
             }
-            enumConvert(true);
             pageCurr=curr;
         }
     });
-}
-
-function enumConvert(child) {
-	var my$ = (child ? parent.$ : this.$);
-    my$("[data-field='status']").children().each(function(){
-        if(my$(this).text()==='0'){
-            my$(this).text("失效")
-        }
-        if(my$(this).text()==='1'){
-            my$(this).text("有效")
-        }
-    });
-
 }
 
 function setFormVal(el, data) {
