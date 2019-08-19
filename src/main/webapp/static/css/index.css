@@ -1,0 +1,48 @@
+/* <!--侧边导航栏--> */
+#person {
+    height: 100px;
+}
+#person-username {
+    position: absolute;
+    font-size: large;
+    top: 35px;
+    left: 70px;
+}
+
+.layui-side.layui-bg-black.layui-side-menu {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+.layui-side-scroll {
+    height: auto;
+}
+
+/* <!--内容主体--> */
+.layui-layout-admin .layui-body {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+}
+/*选项卡*/
+.layui-body .layui-tab.layui-tab-card {
+    height: 100%;
+    margin: 0;
+    border-width: 0;
+}
+/*选项卡标题*/
+.layui-tab-title {
+    border-bottom-width: 0px;
+}
+/*选项卡内容*/
+.layui-tab-content {
+    position: absolute;
+    top: 40px;
+    bottom: 4px;
+    width: 100%;
+    padding: 0;
+}
+.layui-tab-item.layui-show {
+    height: 100%;
+}
