@@ -3,7 +3,7 @@ var detailHeight = '90%';
 // 详情窗口-宽度
 var detailWidth = '90%';
 
-
+// 时间 ==>> 字符串
 function dateToStr(date) {
     var time = new Date(date);
     var y = time.getFullYear();
@@ -17,6 +17,15 @@ function dateToStr(date) {
     m = m < 10 ? ("0" + m) : m;
     var s = time.getSeconds();
     s = s < 10 ? ("0" + s) : s;
-    var str = y + "-" + M + "-" + d + " " + h + ":" + m + ":" + s;
-    return str;
+    return y + "-" + M + "-" + d + " " + h + ":" + m + ":" + s;
+}
+
+// 字符串 ===>> 时间
+function strToDate(str) {
+    var t = Date.parse(str);
+    if (!isNaN(t)) {
+        return new Date(Date.parse(str.replace(/-/g, "/")));
+    } else {
+        return new Date();
+    }
 }
