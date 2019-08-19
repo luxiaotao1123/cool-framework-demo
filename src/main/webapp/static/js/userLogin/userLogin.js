@@ -43,7 +43,7 @@ layui.config({
         },
         done: function(res, curr, count) {
             if (res.code === 403) {
-                parent.location.href = "/";
+                top.location.href = "/";
             }
             enumConvert(false);
             pageCurr=curr;
@@ -100,7 +100,7 @@ layui.config({
                                     layer.closeAll();
                                     tableReload();
                                 } else if (res.code === 403){
-                                    parent.location.href = "/";
+                                    top.location.href = "/";
                                 } else {
                                     layer.alert(res.msg)
                                 }
@@ -172,7 +172,7 @@ layui.config({
                                     setFormVal(layer.getChildFrame('#detail', index), res.data);
                                     layero.find('iframe')[0].contentWindow.layui.form.render('select');
                                 } else if (res.code === 403){
-                                    parent.location.href = "/";
+                                    top.location.href = "/";
                                 }else {
                                     layer.alert(res.msg)
                                 }
@@ -212,7 +212,7 @@ layui.config({
                         $(this).val("");
                     });
                 } else if (res.code === 403){
-                    parent.location.href = "/";
+                    top.location.href = "/";
                 }else {
                     layer.alert(res.msg)
                 }
@@ -244,7 +244,7 @@ function tableReload(data, child) {
         },
         done: function (res, curr, count) {
             if (res.code === 403) {
-                parent.location.href = "/";
+                top.location.href = "/";
             }
             enumConvert(true);
             pageCurr=curr;
