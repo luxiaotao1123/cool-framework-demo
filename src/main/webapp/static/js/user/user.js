@@ -64,7 +64,6 @@ layui.config({
                     shadeClose: false,
                     content: '/user_detail',
                     success: function(layero, index){
-                    	$(".layui-layer-shade").remove();
                     	clearFormVal(layer.getChildFrame('#detail', index));
                         layer.getChildFrame('#data-detail-submit', index).text("添加");
                         detailScreen(index);
@@ -127,9 +126,10 @@ layui.config({
                     shadeClose: false,
                     content: '/user_detail',
                     success: function(layero, index){
-                        detailScreen(index);
-                        $(".layui-layer-shade").remove();
                         setFormVal(layer.getChildFrame('#detail', index), data);
+                        top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
+                        layer.getChildFrame('#data-detail-submit', index).hide();
+                        detailScreen(index);
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                     }
                 });
@@ -145,9 +145,9 @@ layui.config({
                     content: '/user_detail',
                     success: function(layero, index){
                         layer.getChildFrame('#data-detail-submit', index).text("修改");
-                        detailScreen(index);
-                        $(".layui-layer-shade").remove();
                         setFormVal(layer.getChildFrame('#detail', index), data);
+                        top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
+                        detailScreen(index);
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                     }
                 });
@@ -192,6 +192,11 @@ layui.config({
                 layer.close(index);
             }
         })
+    });
+
+    // 关闭动作
+    form.on('submit(close)', function () {
+        parent.layer.closeAll();
     });
 
     // 搜索栏事件
@@ -246,4 +251,5 @@ function detailScreen(index) {
         top: (($(window).height()-height)/3)+"px",
         height: height+'px'
     });
+    $(".layui-layer-shade").remove();
 }
