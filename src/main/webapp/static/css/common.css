@@ -46,8 +46,12 @@
 #detail .layui-inline {
     margin-bottom: 15px;
 }
-#data-detail-submit {
-    display: block;
-    margin: 0 auto;
-    width: 60px;
+#data-detail-btn {
+    padding-top: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#data-detail-btn.layui-btn-container .layui-btn{
+    margin-right: 30px;
 }
