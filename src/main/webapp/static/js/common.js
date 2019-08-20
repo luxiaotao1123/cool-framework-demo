@@ -29,3 +29,12 @@ function strToDate(str) {
         return new Date();
     }
 }
+
+/**
+ * disabled 属性转换
+ */
+function convertDisabled(el, param) {
+    el.each(function () {
+        $(this).attr("disabled", param);
+    });
+}
