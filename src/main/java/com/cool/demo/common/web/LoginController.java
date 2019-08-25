@@ -56,23 +56,21 @@ public class LoginController {
         List<Resource> oneLevel = resourceService.selectList(new EntityWrapper<Resource>().eq("level", 1).eq("status", 1));
         List<Resource> twoLevel = resourceService.selectList(new EntityWrapper<Resource>().eq("level", 2).eq("status", 1));
         Map<String, String> pNames = new HashMap<>();
-        for (Resource resource : oneLevel){
-            pNames.put(resource.getCode(), resource.getName());
-        }
+        oneLevel.forEach(resource -> pNames.put(resource.getCode(), resource.getName()));
         List<Map<String, Object>> result = new ArrayList<>();
         Set<String> set = new HashSet<>();
         for (Resource resource : twoLevel){
-            String pcode = resource.getPcode();
-            if (set.contains(pcode)){
-                for (Map map : result){
-                    if (map.get("menu").equals(pNames.get(pcode))){
+            String pCode = resource.getPcode();
+            if (set.contains(pCode)){
+                for (Map<String, Object> map : result){
+                    if (map.get("menu").equals(pNames.get(pCode))){
                         @SuppressWarnings("unchecked")
                         List<Resource> subMenu = (List<Resource>) map.get("subMenu");
                         subMenu.add(resource);
                     }
                 }
             } else {
-                set.add(pcode);
+                set.add(pCode);
                 Map<String, Object> map = new HashMap<>();
                 List<Resource> subMenu = new ArrayList<>();
                 subMenu.add(resource);
