@@ -18,14 +18,24 @@ public class Resource implements Serializable {
     private Long id;
 
     /**
-     * 名称
+     * 菜单编码
+     */
+    private String code;
+
+    /**
+     * 父级菜单
+     */
+    private String pcode;
+
+    /**
+     * 菜单名称
      */
     private String name;
 
     /**
-     * 路径
+     * 菜单等级 1: 一级菜单  2: 二级菜单  
      */
-    private String url;
+    private Integer level;
 
     /**
      * 状态 0: 失效  1: 有效  
@@ -40,6 +50,22 @@ public class Resource implements Serializable {
         this.id = id;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getPcode() {
+        return pcode;
+    }
+
+    public void setPcode(String pcode) {
+        this.pcode = pcode;
+    }
+
     public String getName() {
         return name;
     }
@@ -48,12 +74,24 @@ public class Resource implements Serializable {
         this.name = name;
     }
 
-    public String getUrl() {
-        return url;
+    public Integer getLevel() {
+        return level;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public String getLevel$(){
+        if (null == this.level){ return null; }
+        switch (this.level){
+            case 1:
+                return "一级菜单";
+            case 2:
+                return "二级菜单";
+            default:
+                return String.valueOf(this.level);
+        }
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 
     public Integer getStatus() {

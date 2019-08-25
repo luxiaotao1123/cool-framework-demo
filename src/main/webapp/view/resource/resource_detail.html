@@ -21,15 +21,31 @@
             </div>
         </div>
         <div class="layui-inline"  style="float: left; width: 31%;">
-            <label class="layui-form-label">名称</label>
+            <label class="layui-form-label">菜单编码</label>
             <div class="layui-input-inline">
-                <input id="name" class="layui-input" type="text" placeholder="名称">
+                <input id="code" class="layui-input" type="text" placeholder="菜单编码">
             </div>
         </div>
         <div class="layui-inline"  style="float: left; width: 31%;">
-            <label class="layui-form-label">路径</label>
+            <label class="layui-form-label">父级菜单</label>
             <div class="layui-input-inline">
-                <input id="url" class="layui-input" type="text" placeholder="路径">
+                <input id="pcode" class="layui-input" type="text" placeholder="父级菜单">
+            </div>
+        </div>
+        <div class="layui-inline"  style="float: left; width: 31%;">
+            <label class="layui-form-label">菜单名称</label>
+            <div class="layui-input-inline">
+                <input id="name" class="layui-input" type="text" placeholder="菜单名称">
+            </div>
+        </div>
+        <div class="layui-inline"  style="float: left; width: 31%;">
+            <label class="layui-form-label">菜单等级</label>
+            <div class="layui-input-inline">
+                <select id="level">
+                    <option value="" style="display: none"></option>
+                    <option value="1">一级菜单</option>
+                    <option value="2">二级菜单</option>
+                </select>
             </div>
         </div>
         <div class="layui-inline"  style="float: left; width: 31%;">

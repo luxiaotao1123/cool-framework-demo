@@ -16,13 +16,14 @@
                 <span id="person-username">Cool</span>
             </div>
             <div class="layui-side-scroll">
-                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <ul class="layui-nav layui-nav-tree">
                     <li class="layui-nav-item">
                         <a>用户系统</a>
+                        <dl class="layui-nav-child"></dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a>订单系统</a>
                         <dl class="layui-nav-child">
-                            <dd><a class="site-active" data-title="人员信息" data-url="/user" data-id="user" target="main">人员信息</a></dd>
-                            <dd><a class="site-active" data-title="凭证记录" data-url="/userLogin" data-id="userLogin" target="main">凭证记录</a></dd>
-                            <dd><a class="site-active" data-title="资源列表" data-url="/resource" data-id="resource" target="main">资源列表</a></dd>
                         </dl>
                     </li>
                 </ul>
@@ -49,6 +50,36 @@
 <script type="text/javascript" src="/static/js/common.js"></script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script>
+    $(function () {
+        $.ajax({
+            url: "/menu",
+            headers: {'token': sessionStorage.getItem('token')},
+            method: 'POST',
+            success: function (res) {
+                if (res.code === 200){
+                    var menuHtml = "";
+                    console.log(res.data);
+                    for (var i = 0; i < res.data.length; i++) {
+                        menuHtml += '<li class="layui-nav-item">\n';
+                        menuHtml += '<a>' + res.data[i].menu + '</a>\n';
+                        menuHtml += '<dl class="layui-nav-child"></dl>\n';
+
+                        menuHtml += ' </li>\n'
+                    }
+                    console.log(menuHtml);
+
+                    // for (var i = 0; i < res.data.length; i++){
+                    //     menuHtml += '<dd><a class="site-active" data-title="' + res.data[i].name + '" data-url="/' + res.data[i].code + '" data-id="' + res.data[i].code + '" target="main">' + res.data[i].name + '</a></dd>\n';
+                    // }
+                    // $('.layui-nav-child').append(menuHtml);
+                } else if (res.code === 403){
+                    top.location.href = "/";
+                }else {
+                    layer.alert(res.msg)
+                }
+            }
+        })
+    });
 
     layui.use('element', function(){
         var element = layui.element;
@@ -75,7 +106,7 @@
         };
 
         // 监听侧边导航栏点击事件
-        $('.site-active').on('click', function () {
+        $(document).on('click','.site-active', function () {
             var site = $(this);
             if ($(".layui-tab-title li[lay-id]").length > 0){
                 var exist = false;

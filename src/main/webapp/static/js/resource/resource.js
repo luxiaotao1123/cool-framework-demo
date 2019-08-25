@@ -20,8 +20,10 @@ layui.config({
         cols: [[
             {type: 'checkbox', fixed: 'left'}
             ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
-            ,{field: 'name', align: 'center',title: '名称'}
-            ,{field: 'url', align: 'center',title: '路径'}
+            ,{field: 'code', align: 'center',title: '菜单编码'}
+            ,{field: 'pcode', align: 'center',title: '父级菜单'}
+            ,{field: 'name', align: 'center',title: '菜单名称'}
+            ,{field: 'level$', align: 'center',title: '菜单等级'}
             ,{field: 'status$', align: 'center',title: '状态'}
 
             ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
@@ -161,8 +163,10 @@ layui.config({
         });
         var data = {
             id: $('#id').val(),
+            code: $('#code').val(),
+            pcode: $('#pcode').val(),
             name: $('#name').val(),
-            url: $('#url').val(),
+            level: $('#level').val(),
             status: $('#status').val(),
 
         };
