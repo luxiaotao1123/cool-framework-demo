@@ -15,6 +15,7 @@ layui.config({
         headers: {token: sessionStorage.getItem('token')},
         url: '/resource/list/auth',
         page: true,
+        limit: 16,
         toolbar: '#toolbar',
         cellMinWidth: 50,
         cols: [[
@@ -98,7 +99,7 @@ layui.config({
                             success: function (res) {
                                 if (res.code === 200){
                                     layer.closeAll();
-                                    tableReload();
+                                    tableReload(null, false);
                                 } else if (res.code === 403){
                                     top.location.href = "/";
                                 } else {
@@ -220,6 +221,15 @@ function tableReload(data, child) {
                 top.location.href = "/";
             }
             pageCurr=curr;
+            if (res.data.length === 0) {
+                tableIns.reload({
+                    where: data,
+                    page: {
+                        curr: pageCurr-1
+                    }
+                });
+                pageCurr -= 1;
+            }
         }
     });
 }
