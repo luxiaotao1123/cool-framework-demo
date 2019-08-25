@@ -21,9 +21,9 @@
             </div>
         </div>
         <div class="layui-inline"  style="float: left; width: 31%;">
-            <label class="layui-form-label">账号</label>
+            <label class="layui-form-label"><span class="not-null">*</span>账号</label>
             <div class="layui-input-inline">
-                <input id="username" class="layui-input" type="text" placeholder="账号">
+                <input id="username" class="layui-input" type="text" placeholder="账号" lay-verify="required">
             </div>
         </div>
         <div class="layui-inline"  style="float: left; width: 31%;">
@@ -39,15 +39,15 @@
             </div>
         </div>
         <div class="layui-inline"  style="float: left; width: 31%;">
-            <label class="layui-form-label">注册时间</label>
+            <label class="layui-form-label"><span class="not-null">*</span>注册时间</label>
             <div class="layui-input-inline">
-                <input id="createTime$" class="layui-input" type="text" placeholder="注册时间">
+                <input id="createTime$" class="layui-input" type="text" placeholder="注册时间" lay-verify="required">
             </div>
         </div>
         <div class="layui-inline"  style="float: left; width: 31%;">
-            <label class="layui-form-label">状态</label>
+            <label class="layui-form-label"><span class="not-null">*</span>状态</label>
             <div class="layui-input-inline">
-                <select id="status">
+                <select id="status" lay-verify="required">
                     <option value="" style="display: none"></option>
                     <option value="1">启用</option>
                     <option value="2">冻结</option>
