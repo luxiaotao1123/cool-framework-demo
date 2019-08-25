@@ -53,8 +53,8 @@ public class LoginController {
 
     @RequestMapping("/menu")
     public R menu(){
-        List<Resource> oneLevel = resourceService.selectList(new EntityWrapper<Resource>().eq("level", 1));
-        List<Resource> twoLevel = resourceService.selectList(new EntityWrapper<Resource>().eq("level", 2));
+        List<Resource> oneLevel = resourceService.selectList(new EntityWrapper<Resource>().eq("level", 1).eq("status", 1));
+        List<Resource> twoLevel = resourceService.selectList(new EntityWrapper<Resource>().eq("level", 2).eq("status", 1));
         Map<String, String> pNames = new HashMap<>();
         for (Resource resource : oneLevel){
             pNames.put(resource.getCode(), resource.getName());
