@@ -51,7 +51,7 @@ public class LoginController {
         return R.ok(token);
     }
 
-    @RequestMapping("/menu")
+    @RequestMapping("/menu/auth")
     public R menu(){
         List<Resource> oneLevel = resourceService.selectList(new EntityWrapper<Resource>().eq("level", 1).eq("status", 1));
         List<Resource> twoLevel = resourceService.selectList(new EntityWrapper<Resource>().eq("level", 2).eq("status", 1));

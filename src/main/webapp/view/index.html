@@ -46,7 +46,7 @@
 
         $(function () {
             $.ajax({
-                url: "/menu",
+                url: "/menu/auth",
                 headers: {'token': sessionStorage.getItem('token')},
                 method: 'POST',
                 success: function (res) {
