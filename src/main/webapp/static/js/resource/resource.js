@@ -12,7 +12,7 @@ layui.config({
     // 数据渲染
     tableIns = table.render({
         elem: '#resource',
-        headers: {token: sessionStorage.getItem('token')},
+        headers: {token: localStorage.getItem('token')},
         url: '/resource/list/auth',
         page: true,
         limit: 16,
@@ -91,7 +91,7 @@ layui.config({
                         $.ajax({
                             url: store.uri + "/resource/delete/auth",
                             headers: {
-                                'token': sessionStorage.getItem('token')
+                                'token': localStorage.getItem('token')
                             },
                             data: {ids: ids},
                             method: 'POST',
@@ -174,7 +174,7 @@ layui.config({
         $.ajax({
             url: store.uri + "/resource/edit/auth",
             headers: {
-                'token': sessionStorage.getItem('token')
+                'token': localStorage.getItem('token')
             },
             data: data,
             method: 'POST',

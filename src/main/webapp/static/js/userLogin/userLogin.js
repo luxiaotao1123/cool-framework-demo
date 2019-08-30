@@ -12,7 +12,7 @@ layui.config({
     // 数据渲染
     tableIns = table.render({
         elem: '#userLogin',
-        headers: {token: sessionStorage.getItem('token')},
+        headers: {token: localStorage.getItem('token')},
         url: '/userLogin/list/auth',
         page: true,
         limit: 16,
@@ -89,7 +89,7 @@ layui.config({
                         $.ajax({
                             url: store.uri + "/userLogin/delete/auth",
                             headers: {
-                                'token': sessionStorage.getItem('token')
+                                'token': localStorage.getItem('token')
                             },
                             data: {ids: ids},
                             method: 'POST',
@@ -162,7 +162,7 @@ layui.config({
                     success: function(layero, index){
                         $.ajax({
                             url: store.uri + "/user/"+ data.userId +"/auth",
-                            headers: {'token': sessionStorage.getItem('token')},
+                            headers: {'token': localStorage.getItem('token')},
                             data: data,
                             method: 'POST',
                             success: function (res) {
@@ -201,7 +201,7 @@ layui.config({
         $.ajax({
             url: store.uri + "/userLogin/edit/auth",
             headers: {
-                'token': sessionStorage.getItem('token')
+                'token': localStorage.getItem('token')
             },
             data: data,
             method: 'POST',

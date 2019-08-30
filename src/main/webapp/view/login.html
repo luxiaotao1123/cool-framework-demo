@@ -76,8 +76,8 @@
                 method: 'POST',
                 success: function (res) {
                     if (res.code === 200){
-                        sessionStorage.setItem("token", res.data);
-                        sessionStorage.setItem("username", user.username);
+                        localStorage.setItem("token", res.data);
+                        localStorage.setItem("username", user.username);
                         window.location.href = store.uri + "/index";
                     } else {
                         layer.alert(res.msg)

@@ -68,9 +68,10 @@
         $(function () {
             $.ajax({
                 url: "/menu/auth",
-                headers: {'token': sessionStorage.getItem('token')},
+                headers: {'token': localStorage.getItem('token')},
                 method: 'POST',
                 success: function (res) {
+                    console.log(res);
                     if (res.code === 200){
                         var menuHtml = "";
                         for (var i = 0; i < res.data.length; i++) {
@@ -85,7 +86,7 @@
                         $('#cool-menu-tree').append(menuHtml);
                         element.init();
                     } else if (res.code === 403){
-                        top.location.href = "/";
+                        top.location.href = "/login";
                     }else {
                         layer.alert(res.msg)
                     }
@@ -93,7 +94,7 @@
             })
         });
 
-        $('#person-username').text(sessionStorage.getItem('username'));
+        $('#person-username').text(localStorage.getItem('username'));
 
         // 选项卡事件定义
         var tabAction = {
