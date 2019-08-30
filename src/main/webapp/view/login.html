@@ -19,7 +19,7 @@
             <br><br>
             <input type="password" id="password" value="" placeholder="password" class="cool-input cool-row-3">
             <br><br>
-            <button class="cool-button-default" lay-submit="" lay-filter="login" type="button">登录</button>
+            <button id="login" class="cool-button-default" lay-submit="" lay-filter="login" type="button">登录</button>
         </div>
     </div>
     <ul class="bg-bubbles">
@@ -80,11 +80,17 @@
                         localStorage.setItem("username", user.username);
                         window.location.href = store.uri + "/index";
                     } else {
-                        layer.alert(res.msg)
+                        layer.msg(res.msg)
                     }
                 }
             });
             return false;
+        });
+
+        $('body').keydown(function () {
+            if (event.keyCode === 13) {
+                $("#login").click();
+            }
         });
 
     })
