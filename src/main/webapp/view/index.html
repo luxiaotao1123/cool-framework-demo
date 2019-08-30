@@ -6,6 +6,7 @@
     <title>Cool管理系统</title>
     <link rel="stylesheet" href="/static/layui/css/layui.css">
     <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="shortcut icon" href="/static/image/doge.png" type="image/x-icon"  id='in_icon'/>
 </head>
 <style>
 
@@ -133,6 +134,15 @@
             tabAction.tabChange(site.attr("data-id"));
         });
     });
+    var linkImg = document.getElementById('in_icon');
+    window.onfocus = function () {
+        document.title = 'Cool';
+        linkImg.href = '/static/image/doge.png'
+    };
+    window.onblur = function () {
+        document.title = '快回来~页面崩溃了';
+        linkImg.href = '/static/image/cry.gif'
+    };
 </script>
 </body>
 </html>

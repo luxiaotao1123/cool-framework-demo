@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>cool login</title>
+    <title>Cool</title>
     <link rel="stylesheet" href="/static/css/bg.css">
     <link rel="stylesheet" href="/static/css/cool.css">
+    <link rel="shortcut icon" href="/static/image/doge.png" type="image/x-icon"  id='in_icon'/>
 </head>
 
 <body>
@@ -93,6 +94,15 @@
             }
         });
 
-    })
+    });
+    var linkImg = document.getElementById('in_icon');
+    window.onfocus = function () {
+        document.title = 'Cool';
+        linkImg.href = '/static/image/doge.png'
+    };
+    window.onblur = function () {
+        document.title = '快回来~页面崩溃了';
+        linkImg.href = '/static/image/cry.gif'
+    };
 </script>
 </html>
