@@ -9,33 +9,26 @@
     <link rel="shortcut icon" href="/static/image/doge.png" type="image/x-icon"  id='in_icon'/>
 </head>
 <style>
-
-    .dropdown-list{background:red;}
-
     .dropdown-list dd {
     display: none;
     }
     .dropdown-list:hover dd {
      display: block;
     }
-
 </style>
-
 <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
 
         <!--侧边导航栏-->
         <div class="layui-side layui-bg-black layui-side-menu">
-            <div id="person" lay-href="/index">
-                <div style="text-align: center">
-                    <span id="person-username">Cool</span>
-                    <dl class="dropdown-list" style="display: inline-block">
-                        <dt>+</dt>
-                        <dd style="position: absolute;width: 100%;background: blue;left: 0px;">
-                            <a href="/">注销</a>
-                        </dd>
-                    </dl>
-                </div>
+            <div id="person" style="text-align: center">
+                <span id="person-username">请先登录</span>
+                <dl class="dropdown-list">
+                    <dt>+</dt>
+                    <dd class="dropdown-item">
+                        <a href="/">注销</a>
+                    </dd>
+                </dl>
             </div>
             <div class="layui-side-scroll">
                 <ul id="cool-menu-tree" class="layui-nav layui-nav-tree"></ul>
