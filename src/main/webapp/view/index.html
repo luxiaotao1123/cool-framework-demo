@@ -9,6 +9,13 @@
     <link rel="shortcut icon" href="/static/image/doge.png" type="image/x-icon"  id='in_icon'/>
 </head>
 <style>
+    .dropdown-list dt {
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid;
+        border-top-color: rgba(255,255,255,.7);
+        padding-top: 3px;
+    }
     .dropdown-list dd {
     display: none;
     }
@@ -24,10 +31,15 @@
             <div id="person" style="text-align: center">
                 <span id="person-username">请先登录</span>
                 <dl class="dropdown-list">
-                    <dt>+</dt>
+                    <dt>
+                    </dt>
+                    <dd class="dropdown-item">
+                        <a href="/">修改密码</a>
+                    </dd>
                     <dd class="dropdown-item">
                         <a href="/">注销</a>
                     </dd>
+
                 </dl>
             </div>
             <div class="layui-side-scroll">
