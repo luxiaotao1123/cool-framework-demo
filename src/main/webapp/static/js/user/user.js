@@ -24,6 +24,7 @@ layui.config({
             ,{field: 'username', align: 'center',title: '账号'}
             ,{field: 'mobile', align: 'center',title: '联系方式'}
             ,{field: 'password', align: 'center',title: '密码'}
+            ,{field: 'roleId', align: 'center',title: '角色编号'}
             ,{field: 'createTime$', align: 'center',title: '注册时间'}
             ,{field: 'status$', align: 'center',title: '状态'}
 
@@ -167,6 +168,7 @@ layui.config({
             username: $('#username').val(),
             mobile: $('#mobile').val(),
             password: $('#password').val(),
+            roleId: $('#roleId').val(),
             createTime: top.strToDate($('#createTime\\$').val()),
             status: $('#status').val(),
 
@@ -195,11 +197,6 @@ layui.config({
         })
     });
 
-    // 关闭动作
-    form.on('submit(close)', function () {
-        parent.layer.closeAll();
-    });
-
     // 搜索栏事件
     form.on('submit(search)', function (data) {
         tableReload(data.field);
@@ -212,6 +209,11 @@ layui.config({
     });
 
 
+});
+
+// 关闭动作
+$(document).on('click','#data-detail-close', function () {
+    parent.layer.closeAll();
 });
 
 function tableReload(data, child) {

@@ -222,11 +222,6 @@ layui.config({
         })
     });
 
-    // 关闭动作
-    form.on('submit(close)', function () {
-        parent.layer.closeAll();
-    });
-
     // 搜索栏事件
     form.on('submit(search)', function (data) {
         tableReload(data.field);
@@ -239,6 +234,11 @@ layui.config({
     });
 
 
+});
+
+// 关闭动作
+$(document).on('click','#data-detail-close', function () {
+    parent.layer.closeAll();
 });
 
 function tableReload(data, child) {
