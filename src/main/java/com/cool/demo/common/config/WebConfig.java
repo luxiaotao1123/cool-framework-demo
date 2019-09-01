@@ -1,4 +1,4 @@
-package com.cool.demo.config;
+package com.cool.demo.common.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

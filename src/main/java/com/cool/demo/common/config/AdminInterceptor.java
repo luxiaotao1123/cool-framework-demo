@@ -1,4 +1,4 @@
-package com.cool.demo.config;
+package com.cool.demo.common.config;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.cool.demo.common.Http;
