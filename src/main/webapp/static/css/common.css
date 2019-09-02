@@ -52,6 +52,11 @@
 #detail .layui-inline {
     margin: 10px 15px 15px 0;
 }
+#detail .layui-input-inline {
+    margin-right: 40px;
+    margin-left: 85px;
+    display: block;
+}
 .layui-bg-gray {
     margin-top: 40px;
 }
