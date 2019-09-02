@@ -40,14 +40,29 @@
 }
 
 /*详情*/
+#detail .layui-form-label{
+    font-size: 100%;
+    padding: 9px 0 9px 5px;
+    text-align: right;
+}
 #detail {
-    padding: 15px 0 0 0;
+    padding: 25px 0 15px 0;
+    margin: 0 20px 0 30px;
 }
 #detail .layui-inline {
-    margin-bottom: 15px;
+    margin: 10px 15px 15px 0;
+}
+.layui-bg-gray {
+    margin-top: 40px;
+}
+#prompt {
+    margin-top: 20px;
+    width: 90%;
+    text-indent: 40px;
+    color: #505050;
 }
 #data-detail-btn {
-    padding-top: 8px;
+    padding-top: 25px;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -20,26 +20,26 @@
                 <input id="id" class="layui-input" type="text" placeholder="编号">
             </div>
         </div>
-        <div class="layui-inline"  style="float: left; width: 31%;">
-            <label class="layui-form-label"><span class="not-null">*</span>菜单编码</label>
+        <div class="layui-inline"  style="width: 31%;">
+            <label class="layui-form-label"><span class="not-null">*</span>菜单编码：</label>
             <div class="layui-input-inline">
                 <input id="code" class="layui-input" type="text" placeholder="菜单编码" lay-verify="required">
             </div>
         </div>
-        <div class="layui-inline"  style="float: left; width: 31%;">
-            <label class="layui-form-label">父级菜单</label>
+        <div class="layui-inline"  style="width: 31%;">
+            <label class="layui-form-label">父级菜单：</label>
             <div class="layui-input-inline">
                 <input id="pcode" class="layui-input" type="text" placeholder="父级菜单">
             </div>
         </div>
-        <div class="layui-inline"  style="float: left; width: 31%;">
-            <label class="layui-form-label"><span class="not-null">*</span>菜单名称</label>
+        <div class="layui-inline"  style="width: 31%;">
+            <label class="layui-form-label"><span class="not-null">*</span>菜单名称：</label>
             <div class="layui-input-inline">
                 <input id="name" class="layui-input" type="text" placeholder="菜单名称" lay-verify="required">
             </div>
         </div>
-        <div class="layui-inline"  style="float: left; width: 31%;">
-            <label class="layui-form-label"><span class="not-null">*</span>菜单等级</label>
+        <div class="layui-inline"  style="width: 31%;">
+            <label class="layui-form-label"><span class="not-null">*</span>菜单等级：</label>
             <div class="layui-input-inline">
                 <select id="level" lay-verify="required">
                     <option value="" style="display: none"></option>
@@ -48,8 +48,8 @@
                 </select>
             </div>
         </div>
-        <div class="layui-inline"  style="float: left; width: 31%;">
-            <label class="layui-form-label"><span class="not-null">*</span>状态</label>
+        <div class="layui-inline"  style="width: 31%;">
+            <label class="layui-form-label"><span class="not-null">*</span>状态：</label>
             <div class="layui-input-inline">
                 <select id="status" lay-verify="required">
                     <option value="" style="display: none"></option>
@@ -59,9 +59,16 @@
             </div>
         </div>
 
+
+        <hr class="layui-bg-gray">
+
         <div id="data-detail-btn" class="layui-btn-container layui-form-item">
             <div id="data-detail-submit" type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="edit">编辑</div>
             <div id="data-detail-close" type="button" class="layui-btn" lay-submit lay-filter="close">关闭</div>
+        </div>
+
+        <div id="prompt">
+            温馨提示：请仔细填写相关信息，<span class="extrude"><span class="not-null">*</span> 为必填选项。</span>
         </div>
     </form>
 </div>

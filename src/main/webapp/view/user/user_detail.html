@@ -20,32 +20,38 @@
                 <input id="id" class="layui-input" type="text" placeholder="编号">
             </div>
         </div>
-        <div class="layui-inline"  style="float: left; width: 31%;">
-            <label class="layui-form-label"><span class="not-null">*</span>账号</label>
+        <div class="layui-inline"  style="width: 31%;">
+            <label class="layui-form-label"><span class="not-null">*</span>账号：</label>
             <div class="layui-input-inline">
                 <input id="username" class="layui-input" type="text" placeholder="账号" lay-verify="required">
             </div>
         </div>
-        <div class="layui-inline"  style="float: left; width: 31%;">
-            <label class="layui-form-label">联系方式</label>
+        <div class="layui-inline"  style="width: 31%;">
+            <label class="layui-form-label">联系方式：</label>
             <div class="layui-input-inline">
                 <input id="mobile" class="layui-input" type="text" placeholder="联系方式">
             </div>
         </div>
-        <div class="layui-inline"  style="float: left; width: 31%;">
-            <label class="layui-form-label">密码</label>
+        <div class="layui-inline"  style="width: 31%;">
+            <label class="layui-form-label">密码：</label>
             <div class="layui-input-inline">
                 <input id="password" class="layui-input" type="text" placeholder="密码">
             </div>
         </div>
-        <div class="layui-inline"  style="float: left; width: 31%;">
-            <label class="layui-form-label"><span class="not-null">*</span>注册时间</label>
+        <div class="layui-inline"  style="width: 31%;">
+            <label class="layui-form-label"><span class="not-null">*</span>角色编号：</label>
+            <div class="layui-input-inline">
+                <input id="roleId" class="layui-input" type="text" placeholder="角色编号" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width: 31%;">
+            <label class="layui-form-label"><span class="not-null">*</span>注册时间：</label>
             <div class="layui-input-inline">
                 <input id="createTime$" class="layui-input" type="text" placeholder="注册时间" lay-verify="required">
             </div>
         </div>
-        <div class="layui-inline"  style="float: left; width: 31%;">
-            <label class="layui-form-label"><span class="not-null">*</span>状态</label>
+        <div class="layui-inline"  style="width: 31%;">
+            <label class="layui-form-label"><span class="not-null">*</span>状态：</label>
             <div class="layui-input-inline">
                 <select id="status" lay-verify="required">
                     <option value="" style="display: none"></option>
@@ -56,9 +62,16 @@
             </div>
         </div>
 
+
+        <hr class="layui-bg-gray">
+
         <div id="data-detail-btn" class="layui-btn-container layui-form-item">
             <div id="data-detail-submit" type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="edit">编辑</div>
             <div id="data-detail-close" type="button" class="layui-btn" lay-submit lay-filter="close">关闭</div>
+        </div>
+
+        <div id="prompt">
+            温馨提示：请仔细填写相关信息，<span class="extrude"><span class="not-null">*</span> 为必填选项。</span>
         </div>
     </form>
 </div>
