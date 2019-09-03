@@ -122,9 +122,10 @@ layui.config({
                 $.each($('#search-box [name]').serializeArray(), function() {
                     exportData[this.name] = this.value;
                 });
-                var param = {};
-                param["user"] = exportData;
-                param["fields"] = fields;
+                var param = {
+                    'user': exportData,
+                    'fields': fields
+                };
                 $.ajax({
                     url: store.uri + "/user/export/auth",
                     headers: {'token': localStorage.getItem('token')},
@@ -134,8 +135,6 @@ layui.config({
                     method: 'POST',
                     success: function (res) {
                         if (res.code === 200) {
-                            console.log(titles);
-                            console.log(res.data);
                             table.exportFile(titles,res.data,'xls');
                         } else if (res.code === 403) {
                             top.location.href = "/";
