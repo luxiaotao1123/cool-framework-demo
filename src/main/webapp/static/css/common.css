@@ -1,5 +1,5 @@
 /*搜索栏*/
-.search-box{
+.layui-form.layui-card-header {
     padding: 20px 0;
     height: auto;
 }
@@ -14,14 +14,26 @@
 }
 
 /*头工具栏*/
+.layui-table-tool-temp {
+    padding-right: 70px;
+}
+.layui-btn .layui-icon {
+    margin: 1px 5px;
+}
 #btn-add{
     background: #007DDB
 }
 #btn-delete{
     background: #ff5722
 }
+#btn-export{
+    float: right;
+}
 
 /*表格*/
+div .layui-table-tool .layui-table-tool-self .layui-inline[title='导出']{
+    display: none;
+}
 .layui-form.layui-border-box.layui-table-view{
     margin: 30px 0 0 0;
     /*position: absolute;*/

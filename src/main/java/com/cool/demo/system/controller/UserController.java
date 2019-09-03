@@ -84,4 +84,13 @@ public class UserController {
         userService.deleteBatchIds(Arrays.asList(ids));
         return R.ok();
     }
+
+    @RequestMapping(value = "/user/export/auth")
+    @ResponseBody
+    public R export(User user){
+        EntityWrapper<User> wrapper = new EntityWrapper<>();
+        wrapper.setEntity(user);
+        return R.ok(userService.selectList(wrapper));
+    }
+
 }

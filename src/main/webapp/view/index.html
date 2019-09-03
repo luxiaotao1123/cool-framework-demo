@@ -77,7 +77,6 @@
                 headers: {'token': localStorage.getItem('token')},
                 method: 'POST',
                 success: function (res) {
-                    console.log(res);
                     if (res.code === 200){
                         var menuHtml = "";
                         for (var i = 0; i < res.data.length; i++) {

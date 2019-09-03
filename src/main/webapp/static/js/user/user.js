@@ -111,6 +111,29 @@ layui.config({
                     });
                 }
                 break;
+            case 'exportData':
+                var exportData = {};
+                $.each($('#search-box [name]').serializeArray(), function() {
+                    exportData[this.name] = this.value;
+                });
+                $.ajax({
+                    url: store.uri + "/user/export/auth",
+                    headers: {
+                        'token': localStorage.getItem('token')
+                    },
+                    data: exportData,
+                    method: 'POST',
+                    success: function (res) {
+                        if (res.code === 200) {
+                            table.exportFile(tableIns.config.id, res.data, 'xls');
+                        } else if (res.code === 403) {
+                            top.location.href = "/";
+                        } else {
+                            layer.alert(res.msg)
+                        }
+                    }
+                });
+                break;
         }
     });
 
