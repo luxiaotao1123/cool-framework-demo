@@ -110,17 +110,36 @@ layui.config({
                 }
                 break;
             case 'exportData':
+                var titles=[];
+                var fields=[];
+                obj.config.cols[0].map(function (col) {
+                    if (col.type === 'normal' && col.hide === false && col.toolbar == null) {
+                        titles.push(col.title);
+                        fields.push(col.field);
+                    }
+                });
                 var exportData = {};
                 $.each($('#search-box [name]').serializeArray(), function() {
                     exportData[this.name] = this.value;
                 });
+                var param = {};
+                param["user"] = exportData;
+                param["fields"] = fields;
                 $.ajax({
                     url: store.uri + "/user/export/auth",
                     headers: {'token': localStorage.getItem('token')},
-                    data: exportData,
+                    data: JSON.stringify(param),
+                    dataType:'json',
+                    contentType:'application/json;charset=UTF-8',
                     method: 'POST',
                     success: function (res) {
+                        console.log(res.data);
                         if (res.code === 200) {
+                            table.exportFile(['名字','性别','年龄'], [
+                                ['张三','男','20'],
+                                ['李四','女','18'],
+                                ['王五','女','19']
+                            ], 'xls');
                             table.exportFile(tableIns.config.id, res.data, 'xls');
                         } else if (res.code === 403) {
                             top.location.href = "/";
