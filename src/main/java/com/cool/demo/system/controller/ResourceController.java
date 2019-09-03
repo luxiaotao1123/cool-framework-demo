@@ -1,19 +1,22 @@
 package com.cool.demo.system.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.cool.demo.system.entity.Resource;
 import com.cool.demo.system.service.ResourceService;
 import com.core.common.Cools;
 import com.core.common.R;
+import com.core.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Controller
-public class ResourceController {
+public class ResourceController extends BaseController {
 
     @Autowired
     private ResourceService resourceService;
@@ -87,10 +90,12 @@ public class ResourceController {
 
     @RequestMapping(value = "/resource/export/auth")
     @ResponseBody
-    public R export(Resource resource){
+    public R export(@RequestBody JSONObject param){
+        List<String> fields = JSONObject.parseArray(param.getJSONArray("fields").toJSONString(), String.class);
         EntityWrapper<Resource> wrapper = new EntityWrapper<>();
-        wrapper.setEntity(resource);
-        return R.ok(resourceService.selectList(wrapper));
+        wrapper.setEntity(JSONObject.parseObject(param.getJSONObject("resource").toJSONString(), Resource.class));
+        List<Resource> list = resourceService.selectList(wrapper);
+        return R.ok(exportSupport(list, fields));
     }
 
 }

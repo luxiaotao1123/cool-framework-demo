@@ -1,19 +1,22 @@
 package com.cool.demo.system.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.cool.demo.system.entity.UserLogin;
 import com.cool.demo.system.service.UserLoginService;
 import com.core.common.Cools;
 import com.core.common.R;
+import com.core.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Controller
-public class UserLoginController {
+public class UserLoginController extends BaseController {
 
     @Autowired
     private UserLoginService userLoginService;
@@ -87,10 +90,12 @@ public class UserLoginController {
 
     @RequestMapping(value = "/userLogin/export/auth")
     @ResponseBody
-    public R export(UserLogin userLogin){
+    public R export(@RequestBody JSONObject param){
+        List<String> fields = JSONObject.parseArray(param.getJSONArray("fields").toJSONString(), String.class);
         EntityWrapper<UserLogin> wrapper = new EntityWrapper<>();
-        wrapper.setEntity(userLogin);
-        return R.ok(userLoginService.selectList(wrapper));
+        wrapper.setEntity(JSONObject.parseObject(param.getJSONObject("userLogin").toJSONString(), UserLogin.class));
+        List<UserLogin> list = userLoginService.selectList(wrapper);
+        return R.ok(exportSupport(list, fields));
     }
 
 }

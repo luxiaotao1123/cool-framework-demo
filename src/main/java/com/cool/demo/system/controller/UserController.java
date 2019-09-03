@@ -90,7 +90,7 @@ public class UserController extends BaseController {
 
     @RequestMapping(value = "/user/export/auth")
     @ResponseBody
-    public R export(@RequestBody JSONObject param) {
+    public R export(@RequestBody JSONObject param){
         List<String> fields = JSONObject.parseArray(param.getJSONArray("fields").toJSONString(), String.class);
         EntityWrapper<User> wrapper = new EntityWrapper<>();
         wrapper.setEntity(JSONObject.parseObject(param.getJSONObject("user").toJSONString(), User.class));
