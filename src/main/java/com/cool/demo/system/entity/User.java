@@ -2,9 +2,9 @@ package com.cool.demo.system.entity;
 
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotations.TableField;
 import java.text.SimpleDateFormat
 ;import java.util.Date;
-import com.baomidou.mybatisplus.annotations.TableField;
 
 import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
@@ -34,6 +34,12 @@ public class User implements Serializable {
      * 密码
      */
     private String password;
+
+    /**
+     * 角色编号
+     */
+    @TableField("role_id")
+    private Long roleId;
 
     /**
      * 注册时间
@@ -76,6 +82,14 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
     public Date getCreateTime() {

@@ -8,6 +8,7 @@
         <result column="username" property="username" />
         <result column="mobile" property="mobile" />
         <result column="password" property="password" />
+        <result column="role_id" property="roleId" />
         <result column="create_time" property="createTime" />
         <result column="status" property="status" />
 

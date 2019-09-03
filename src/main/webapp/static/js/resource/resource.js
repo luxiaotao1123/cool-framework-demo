@@ -90,9 +90,7 @@ layui.config({
                     layer.confirm('确定删除'+(ids.length===1?'此':ids.length)+'条数据吗', function(){
                         $.ajax({
                             url: store.uri + "/resource/delete/auth",
-                            headers: {
-                                'token': localStorage.getItem('token')
-                            },
+                            headers: {'token': localStorage.getItem('token')},
                             data: {ids: ids},
                             method: 'POST',
                             traditional:true,
@@ -109,6 +107,27 @@ layui.config({
                         })
                     });
                 }
+                break;
+            case 'exportData':
+                var exportData = {};
+                $.each($('#search-box [name]').serializeArray(), function() {
+                    exportData[this.name] = this.value;
+                });
+                $.ajax({
+                    url: store.uri + "/resource/export/auth",
+                    headers: {'token': localStorage.getItem('token')},
+                    data: exportData,
+                    method: 'POST',
+                    success: function (res) {
+                        if (res.code === 200) {
+                            table.exportFile(tableIns.config.id, res.data, 'xls');
+                        } else if (res.code === 403) {
+                            top.location.href = "/";
+                        } else {
+                            layer.alert(res.msg)
+                        }
+                    }
+                });
                 break;
         }
     });
@@ -173,9 +192,7 @@ layui.config({
         };
         $.ajax({
             url: store.uri + "/resource/edit/auth",
-            headers: {
-                'token': localStorage.getItem('token')
-            },
+            headers: {'token': localStorage.getItem('token')},
             data: data,
             method: 'POST',
             success: function (res) {

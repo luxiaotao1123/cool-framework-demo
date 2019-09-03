@@ -12,7 +12,7 @@
 <body>
 
 <!-- 搜索栏 -->
-<div class="layui-form layui-card-header search-box">
+<div id="search-box" class="layui-form layui-card-header">
     <div class="layui-inline">
         <label class="layui-form-label">编号</label>
         <div class="layui-input-inline">
@@ -32,6 +32,7 @@
         <button class="layui-btn layui-btn-sm" id="btn-add" lay-event="addData">新增</button>
         <button class="layui-btn layui-btn-sm" id="btn-refresh" lay-event="refreshData">刷新</button>
         <button class="layui-btn layui-btn-sm" id="btn-delete" lay-event="deleteData">删除</button>
+        <button class="layui-btn layui-btn-primary layui-btn-sm" id="btn-export" lay-event="exportData">导出</button>
     </div>
 </script>
 
