@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.cool.demo.common.MapConvert;
 import com.cool.demo.system.entity.User;
 import com.cool.demo.system.service.UserService;
 import com.core.common.Cools;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 
 @Controller
@@ -89,28 +92,74 @@ public class UserController {
 
     @RequestMapping(value = "/user/export/auth", method = RequestMethod.POST)
     @ResponseBody
-    public R export(@RequestBody JSONObject param){
+    public R export(@RequestBody JSONObject param) throws InvocationTargetException, IllegalAccessException {
         List<String> fields = JSONObject.parseArray(param.getJSONArray("fields").toJSONString(), String.class);
-        ListIterator<String> fieldsIterator = fields.listIterator();
-        while (fieldsIterator.hasNext()){
-            String field = fieldsIterator.next();
-            if (field.endsWith("$")){
-                fieldsIterator.set(field.substring(0, field.length() - 1));
-            }
-        }
+//        ListIterator<String> fieldsIterator = fields.listIterator();
+//        while (fieldsIterator.hasNext()){
+//            String field = fieldsIterator.next();
+//            if (field.endsWith("$")){
+//                fieldsIterator.set(field.substring(0, field.length() - 1));
+//            }
+//        }
+//
+//        EntityWrapper<User> wrapper = new EntityWrapper<>();
+//        wrapper.setEntity(JSON.parseObject(param.getJSONObject("user").toJSONString(), User.class));
+//        List<Map<String, Object>> list = userService.selectMaps(wrapper);
+//        List<List<Object>> result = new ArrayList<>();
+//        for (Map<String, Object> map : list){
+//            JSONObject jsonObject = new JSONObject(map);
+//            User user = JSON.toJavaObject(jsonObject, User.class);
+//            Map map1 = JSON.parseObject(JSON.toJSONString(user), Map.class);
+//            Iterator<Map.Entry<String, Object>> iterator = map1.entrySet().iterator();
+//            List<Object> node = new ArrayList<>();
+//            while (iterator.hasNext()){
+//                Map.Entry<String, Object> entry = iterator.next();
+//                if (!fields.contains(entry.getKey())){
+//                    iterator.remove();
+//                    continue;
+//                }
+//                node.add(entry.getValue());
+//            }
+//            result.add(node);
+//        }
+//        return R.ok(result);
+
+//        EntityWrapper<User> wrapper = new EntityWrapper<>();
+//        wrapper.setEntity(JSON.parseObject(param.getJSONObject("user").toJSONString(), User.class));
+//        List<User> list = userService.selectList(wrapper);
+//        List<List<Object>> result = new ArrayList<>();
+//        for (User user : list){
+//            LinkedHashMap map = JSON.parseObject(JSON.toJSONString(user), LinkedHashMap.class);
+//            Iterator<Map.Entry<String, Object>> iterator = map.entrySet().iterator();
+//            List<Object> node = new ArrayList<>();
+//            while (iterator.hasNext()){
+//                Map.Entry<String, Object> entry = iterator.next();
+//                if (!fields.contains(entry.getKey())){
+//                    iterator.remove();
+//                    continue;
+//                }
+//                node.add(entry.getValue());
+//            }
+//            result.add(node);
+//        }
+//        return R.ok(result);
+
+
         EntityWrapper<User> wrapper = new EntityWrapper<>();
         wrapper.setEntity(JSON.parseObject(param.getJSONObject("user").toJSONString(), User.class));
-        List<Map<String, Object>> list = userService.selectMaps(wrapper);
+        List<User> list = userService.selectList(wrapper);
         List<List<Object>> result = new ArrayList<>();
-        for (Map<String, Object> map : list){
-            Iterator<Map.Entry<String, Object>> iterator = map.entrySet().iterator();
+        Method[] methods = list.get(0).getClass().getMethods();
+        for (User user : list){
             List<Object> node = new ArrayList<>();
-            while (iterator.hasNext()){
-                Map.Entry<String, Object> entry = iterator.next();
-                if (!fields.contains(entry.getKey())){
-                    iterator.remove();
+            for (String field : fields){
+                for (Method method : methods) {
+                    if (("get" + field).toLowerCase().equals(method.getName().toLowerCase())) {
+                        Object val = method.invoke(user);
+                        node.add(val);
+                        break;
+                    }
                 }
-                node.add(entry.getValue());
             }
             result.add(node);
         }

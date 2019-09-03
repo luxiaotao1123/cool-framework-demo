@@ -133,14 +133,10 @@ layui.config({
                     contentType:'application/json;charset=UTF-8',
                     method: 'POST',
                     success: function (res) {
-                        console.log(res.data);
                         if (res.code === 200) {
-                            table.exportFile(['名字','性别','年龄'], [
-                                ['张三','男','20'],
-                                ['李四','女','18'],
-                                ['王五','女','19']
-                            ], 'xls');
-                            table.exportFile(tableIns.config.id, res.data, 'xls');
+                            console.log(titles);
+                            console.log(res.data);
+                            table.exportFile(titles,res.data,'xls');
                         } else if (res.code === 403) {
                             top.location.href = "/";
                         } else {
