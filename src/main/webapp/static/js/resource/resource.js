@@ -101,7 +101,7 @@ layui.config({
                                 } else if (res.code === 403){
                                     top.location.href = "/";
                                 } else {
-                                    layer.alert(res.msg)
+                                    layer.msg(res.msg)
                                 }
                             }
                         })
@@ -138,7 +138,7 @@ layui.config({
                         } else if (res.code === 403) {
                             top.location.href = "/";
                         } else {
-                            layer.alert(res.msg)
+                            layer.msg(res.msg)
                         }
                     }
                 });
@@ -219,7 +219,7 @@ layui.config({
                 } else if (res.code === 403){
                     top.location.href = "/";
                 }else {
-                    layer.alert(res.msg)
+                    layer.msg(res.msg)
                 }
                 layer.close(index);
             }
@@ -252,7 +252,7 @@ function tableReload(data, child) {
                 top.location.href = "/";
             }
             pageCurr=curr;
-            if (res.data.length === 0 && count !==0) {
+            if (res.data.length === 0 && count !== 0) {
                 tableIns.reload({
                     where: data,
                     page: {

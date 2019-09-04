@@ -1,18 +1,12 @@
 package com.cool.demo.common;
 
-public enum CodeRes {
+import com.core.common.BaseRes;
 
-    OK(200, "操作成功"),
-    DENIED(403, "无权限"),
-    ERROR(500, "服务器错误"),
-    ;
+public interface CodeRes extends BaseRes {
 
-    public int code;
-    public String des;
-
-    CodeRes(final int code, final String des) {
-        this.code = code;
-        this.des = des;
-    }
+    // user
+    String USER_10001 = "10001-账号不存在";
+    String USER_10002 = "10002-账号已被禁用";
+    String USER_10003 = "10003-密码错误";
 
 }

@@ -97,7 +97,7 @@ layui.config({
                                 } else if (res.code === 403){
                                     top.location.href = "/";
                                 } else {
-                                    layer.alert(res.msg)
+                                    layer.msg(res.msg)
                                 }
                             }
                         })
@@ -129,12 +129,13 @@ layui.config({
                     contentType:'application/json;charset=UTF-8',
                     method: 'POST',
                     success: function (res) {
+                        console.log(res);
                         if (res.code === 200) {
                             table.exportFile(titles,res.data,'xls');
                         } else if (res.code === 403) {
                             top.location.href = "/";
                         } else {
-                            layer.alert(res.msg)
+                            layer.msg(res.msg)
                         }
                     }
                 });
@@ -211,7 +212,7 @@ layui.config({
                 } else if (res.code === 403){
                     top.location.href = "/";
                 }else {
-                    layer.alert(res.msg)
+                    layer.msg(res.msg)
                 }
                 layer.close(index);
             }

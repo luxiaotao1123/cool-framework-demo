@@ -1,6 +1,7 @@
 package com.cool.demo.common.web;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.cool.demo.common.CodeRes;
 import com.cool.demo.system.entity.Resource;
 import com.cool.demo.system.entity.User;
 import com.cool.demo.system.entity.UserLogin;
@@ -34,13 +35,13 @@ public class LoginController {
         userWrapper.eq("mobile", username);
         User user = userService.selectOne(userWrapper);
         if (Cools.isEmpty(user)){
-            return R.error("账号不存在");
+            return R.parse(CodeRes.USER_10001);
         }
         if (user.getStatus()!=1){
-            return R.error("账号已被禁用");
+            return R.parse(CodeRes.USER_10002);
         }
         if (!user.getPassword().equals(password)){
-            return R.error("密码错误");
+            return R.parse(CodeRes.USER_10003);
         }
         String token = Cools.enToken(System.currentTimeMillis() + username, password);
         userLoginService.delete(new EntityWrapper<UserLogin>().eq("user_id", user.getId()));
