@@ -24,7 +24,7 @@ layui.config({
             ,{field: 'username', align: 'center',title: '账号'}
             ,{field: 'mobile', align: 'center',title: '联系方式'}
             ,{field: 'password', align: 'center',title: '密码'}
-            ,{field: 'roleId', align: 'center',title: '角色编号'}
+            ,{field: 'roleId', align: 'center',title: '角色编号',event: 'Role', style: 'text-decoration: underline;cursor:pointer'}
             ,{field: 'createTime$', align: 'center',title: '注册时间'}
             ,{field: 'status$', align: 'center',title: '状态'}
 
@@ -184,6 +184,37 @@ layui.config({
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
                         detailScreen(index);
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
+                    }
+                });
+                break;
+            case 'Role':
+                layer.open({
+                    type: 2,
+                    title: '角色详情',
+                    maxmin: true,
+                    area: [top.detailHeight, top.detailWidth],
+                    shadeClose: false,
+                    content: 'role_detail',
+                    success: function(layero, index){
+                        $.ajax({
+                            url: store.uri + "/role/"+ data.roleId +"/auth",
+                            headers: {'token': localStorage.getItem('token')},
+                            data: data,
+                            method: 'POST',
+                            success: function (res) {
+                                if (res.code === 200){
+                                    setFormVal(layer.getChildFrame('#detail', index), res.data);
+                                    top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
+                                    layer.getChildFrame('#data-detail-submit', index).hide();
+                                    detailScreen(index);
+                                    layero.find('iframe')[0].contentWindow.layui.form.render('select');
+                                } else if (res.code === 403){
+                                    parent.location.href = "/";
+                                }else {
+                                    layer.alert(res.msg)
+                                }
+                            }
+                        })
                     }
                 });
                 break;
