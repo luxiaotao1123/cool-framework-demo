@@ -283,7 +283,7 @@ function tableReload(data, child) {
                 top.location.href = "/";
             }
             pageCurr=curr;
-            if (res.data.length === 0) {
+            if (res.data.length === 0 && count !==0) {
                 tableIns.reload({
                     where: data,
                     page: {
