@@ -12,8 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class UserController extends BaseController {
@@ -41,9 +40,12 @@ public class UserController extends BaseController {
     @ResponseBody
     public R list(@RequestParam(defaultValue = "1")Integer curr,
                   @RequestParam(defaultValue = "10")Integer limit,
-                  User user){
+                  @RequestParam Map<String, Object> param){
+        excludePage(param);
         EntityWrapper<User> wrapper = new EntityWrapper<>();
-        wrapper.setEntity(user);
+        for (Map.Entry<String, Object> entry : param.entrySet()){
+            wrapper.eq(entry.getKey(), entry.getValue());
+        }
         return R.ok(userService.selectPage(new Page<>(curr, limit), wrapper));
     }
 
