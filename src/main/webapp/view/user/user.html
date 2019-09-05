@@ -14,29 +14,29 @@
 <!-- 搜索栏 -->
 <div id="search-box" class="layui-form layui-card-header">
     <div class="layui-inline">
-        <label class="layui-form-label">编号</label>
+        <label class="layui-form-label">编　　号：</label>
         <div class="layui-input-inline">
             <input class="layui-input" type="text" name="id" placeholder="请输入" autocomplete="off">
         </div>
     </div>
     <div class="layui-inline">
-        <label class="layui-form-label">账号</label>
+        <label class="layui-form-label">账　　号：</label>
         <div class="layui-input-inline">
             <input class="layui-input" type="text" name="username" placeholder="请输入" autocomplete="off">
         </div>
     </div>
     <div class="layui-inline">
-        <label class="layui-form-label">注册时间</label>
+        <label class="layui-form-label">注册时间：</label>
         <div class="layui-input-inline">
             <input class="layui-input" type="text" id="create_time>" name="create_time>" placeholder="请输入开始时间" autocomplete="off">
         </div>
-        至
+        -
         <div class="layui-input-inline">
             <input class="layui-input" type="text" id="create_time<" name="create_time<" placeholder="请输入结束时间" autocomplete="off">
         </div>
     </div>
     <div class="layui-inline">
-        <label class="layui-form-label">状态</label>
+        <label class="layui-form-label">状　　态：</label>
         <div class="layui-input-inline">
             <select id="status" name="status">
                 <option value="" style="display: none"></option>
@@ -46,10 +46,18 @@
             </select>
         </div>
     </div>
-    <!-- 待添加 -->
     <div class="layui-inline">
-        <button class="layui-btn" lay-submit lay-filter="search">搜索</button>
+        <label class="layui-form-label">手 机 号：</label>
+        <div class="layui-input-inline">
+            <input class="layui-input" type="text" name="mobile" placeholder="请输入" autocomplete="off">
+        </div>
     </div>
+    <!-- 待添加 -->
+    <div id="data-search-btn" class="layui-btn-container layui-form-item">
+        <button class="layui-btn layui-btn-primary layui-btn-radius" lay-submit lay-filter="search">搜索</button>
+        <button class="layui-btn layui-btn-primary layui-btn-radius" lay-submit lay-filter="reset">重置</button>
+    </div>
+
 </div>
 
 <!-- 表格 -->
