@@ -93,7 +93,7 @@ layui.config({
                             success: function (res) {
                                 if (res.code === 200){
                                     layer.closeAll();
-                                    tableReload(null, false);
+                                    tableReload(false);
                                 } else if (res.code === 403){
                                     top.location.href = "/";
                                 } else {
@@ -129,7 +129,6 @@ layui.config({
                     contentType:'application/json;charset=UTF-8',
                     method: 'POST',
                     success: function (res) {
-                        console.log(res);
                         if (res.code === 200) {
                             table.exportFile(titles,res.data,'xls');
                         } else if (res.code === 403) {
@@ -205,7 +204,7 @@ layui.config({
             success: function (res) {
                 if (res.code === 200){
                     parent.layer.closeAll();
-                    tableReload(null, true);
+                    tableReload(true);
                     $("#data-detail :input").each(function () {
                         $(this).val("");
                     });
@@ -221,7 +220,7 @@ layui.config({
 
     // 搜索栏事件
     form.on('submit(search)', function (data) {
-        tableReload(data.field);
+        tableReload(false);
     });
 
     // 时间选择器
@@ -234,9 +233,13 @@ $(document).on('click','#data-detail-close', function () {
     parent.layer.closeAll();
 });
 
-function tableReload(data, child) {
+function tableReload(child) {
+    var searchData = {};
+    $.each($('#search-box [name]').serializeArray(), function() {
+        searchData[this.name] = this.value;
+    });
     (child ? parent.tableIns : tableIns).reload({
-        where: data,
+        where: searchData,
         page: {
             curr: pageCurr
         },
@@ -245,9 +248,9 @@ function tableReload(data, child) {
                 top.location.href = "/";
             }
             pageCurr=curr;
-            if (res.data.length === 0 && count !==0) {
+            if (res.data.length === 0 && count !== 0) {
                 tableIns.reload({
-                    where: data,
+                    where: searchData,
                     page: {
                         curr: pageCurr-1
                     }
