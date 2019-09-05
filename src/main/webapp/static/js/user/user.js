@@ -277,14 +277,7 @@ layui.config({
         elem: '#createTime\\$',
         type: 'datetime'
     });
-    layDate.render({
-        elem: '#create_time\\>',
-        type: 'datetime'
-    });
-    layDate.render({
-        elem: '#create_time\\<',
-        type: 'datetime'
-    });
+
 
 });
 
@@ -346,3 +339,9 @@ function detailScreen(index) {
     });
     $(".layui-layer-shade").remove();
 }
+
+$('body').keydown(function () {
+    if (event.keyCode === 13) {
+        $("#search").click();
+    }
+});

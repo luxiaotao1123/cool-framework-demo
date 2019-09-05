@@ -3,7 +3,6 @@ package com.cool.demo.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.cool.demo.common.utils.DateUtils;
 import com.cool.demo.system.entity.User;
 import com.cool.demo.system.service.UserService;
 import com.core.common.Cools;
@@ -13,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class UserController extends BaseController {
@@ -47,13 +44,7 @@ public class UserController extends BaseController {
         excludePage(param);
         EntityWrapper<User> wrapper = new EntityWrapper<>();
         for (Map.Entry<String, Object> entry : param.entrySet()){
-            if (entry.getKey().endsWith(">")) {
-                wrapper.ge(Cools.deleteChar(entry.getKey()), DateUtils.convert(String.valueOf(entry.getValue())));
-            } else if (entry.getKey().endsWith("<")) {
-                wrapper.le(Cools.deleteChar(entry.getKey()), DateUtils.convert(String.valueOf(entry.getValue())));
-            } else {
-                wrapper.eq(entry.getKey(), entry.getValue());
-            }
+            wrapper.eq(entry.getKey(), entry.getValue());
         }
         return R.ok(userService.selectPage(new Page<>(curr, limit), wrapper));
     }
