@@ -261,6 +261,7 @@ layui.config({
 
     // 搜索栏事件
     form.on('submit(search)', function (data) {
+        pageCurr = 1;
         tableReload(false);
     });
 
@@ -269,7 +270,14 @@ layui.config({
         elem: '#createTime\\$',
         type: 'datetime'
     });
-
+    layDate.render({
+        elem: '#create_time\\>',
+        type: 'datetime'
+    });
+    layDate.render({
+        elem: '#create_time\\<',
+        type: 'datetime'
+    });
 
 });
 
