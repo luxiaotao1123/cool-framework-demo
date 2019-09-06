@@ -3,6 +3,7 @@ package com.cool.demo.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.cool.demo.common.utils.DateUtils;
 import com.cool.demo.system.entity.UserLogin;
 import com.cool.demo.system.service.UserLoginService;
 import com.core.common.Cools;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class UserLoginController extends BaseController {
@@ -41,10 +43,23 @@ public class UserLoginController extends BaseController {
     @ResponseBody
     public R list(@RequestParam(defaultValue = "1")Integer curr,
                   @RequestParam(defaultValue = "10")Integer limit,
-                  UserLogin userLogin){
+                  @RequestParam Map<String, Object> param){
+        excludeTrash(param);
         EntityWrapper<UserLogin> wrapper = new EntityWrapper<>();
-        wrapper.setEntity(userLogin);
+        convert(param, wrapper);
         return R.ok(userLoginService.selectPage(new Page<>(curr, limit), wrapper));
+    }
+
+    private void convert(Map<String, Object> map, EntityWrapper wrapper){
+        for (Map.Entry<String, Object> entry : map.entrySet()){
+            if (entry.getKey().endsWith(">")) {
+                wrapper.ge(Cools.deleteChar(entry.getKey()), DateUtils.convert(String.valueOf(entry.getValue())));
+            } else if (entry.getKey().endsWith("<")) {
+                wrapper.le(Cools.deleteChar(entry.getKey()), DateUtils.convert(String.valueOf(entry.getValue())));
+            } else {
+                wrapper.eq(entry.getKey(), entry.getValue());
+            }
+        }
     }
 
     @RequestMapping(value = "/userLogin/edit/auth")
@@ -93,7 +108,8 @@ public class UserLoginController extends BaseController {
     public R export(@RequestBody JSONObject param){
         List<String> fields = JSONObject.parseArray(param.getJSONArray("fields").toJSONString(), String.class);
         EntityWrapper<UserLogin> wrapper = new EntityWrapper<>();
-        wrapper.setEntity(JSONObject.parseObject(param.getJSONObject("userLogin").toJSONString(), UserLogin.class));
+        Map<String, Object> map = excludeTrash(param.getJSONObject("userLogin"));
+        convert(map, wrapper);
         List<UserLogin> list = userLoginService.selectList(wrapper);
         return R.ok(exportSupport(list, fields));
     }

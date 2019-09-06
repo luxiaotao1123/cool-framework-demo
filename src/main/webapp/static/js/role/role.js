@@ -218,8 +218,16 @@ layui.config({
         })
     });
 
-    // 搜索栏事件
+    // 搜索栏搜索事件
     form.on('submit(search)', function (data) {
+        pageCurr = 1;
+        tableReload(false);
+    });
+
+    // 搜索栏重置事件
+    form.on('submit(reset)', function (data) {
+        pageCurr = 1;
+        clearFormVal($('#search-box'));
         tableReload(false);
     });
 
@@ -286,3 +294,9 @@ function detailScreen(index) {
     });
     $(".layui-layer-shade").remove();
 }
+
+$('body').keydown(function () {
+    if (event.keyCode === 13) {
+        $("#search").click();
+    }
+});

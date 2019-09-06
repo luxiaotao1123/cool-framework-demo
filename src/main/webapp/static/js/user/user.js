@@ -277,14 +277,18 @@ layui.config({
         elem: '#createTime\\$',
         type: 'datetime'
     });
+    // 时间选择器
     layDate.render({
         elem: '#create_time\\>',
         type: 'datetime'
     });
+
+    // 时间选择器
     layDate.render({
         elem: '#create_time\\<',
         type: 'datetime'
     });
+
 
 
 });
