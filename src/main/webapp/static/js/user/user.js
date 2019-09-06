@@ -277,6 +277,14 @@ layui.config({
         elem: '#createTime\\$',
         type: 'datetime'
     });
+    layDate.render({
+        elem: '#create_time\\>',
+        type: 'datetime'
+    });
+    layDate.render({
+        elem: '#create_time\\<',
+        type: 'datetime'
+    });
 
 
 });
