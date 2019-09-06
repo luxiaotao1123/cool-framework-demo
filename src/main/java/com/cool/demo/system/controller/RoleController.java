@@ -57,7 +57,7 @@ public class RoleController extends BaseController {
             } else if (entry.getKey().endsWith("<")) {
                 wrapper.le(Cools.deleteChar(entry.getKey()), DateUtils.convert(String.valueOf(entry.getValue())));
             } else {
-                wrapper.eq(entry.getKey(), entry.getValue());
+                wrapper.like(entry.getKey(), String.valueOf(entry.getValue()));
             }
         }
     }
