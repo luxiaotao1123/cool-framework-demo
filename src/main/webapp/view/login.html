@@ -16,9 +16,9 @@
         <div class="cool-center">
             <h3>车辆管理系统</h3>
             <br>
-            <input id="username" value="" placeholder="username"  class="cool-input cool-row-3">
+            <input id="mobile" value="" placeholder="手机号"  class="cool-input cool-row-3">
             <br><br>
-            <input type="password" id="password" value="" placeholder="password" class="cool-input cool-row-3">
+            <input type="password" id="password" value="" placeholder="密码" class="cool-input cool-row-3">
             <br><br>
             <button id="login" class="cool-button-default" lay-submit="" lay-filter="login" type="button">登录</button>
         </div>
@@ -54,9 +54,9 @@
             $ = layui.jquery;
 
         form.verify({
-            username: function (val) {
+            mobile: function (val) {
                 if (val === "") {
-                    return "请输入账号";
+                    return "请输入手机号";
                 }
             },
             password: function (val) {
@@ -68,7 +68,7 @@
 
         form.on('submit(login)', function (data) {
             var user = {
-                username: $("#username").val(),
+                mobile: $("#mobile").val(),
                 password: $("#password").val()
             };
             $.ajax({
@@ -77,8 +77,8 @@
                 method: 'POST',
                 success: function (res) {
                     if (res.code === 200){
-                        localStorage.setItem("token", res.data);
-                        localStorage.setItem("username", user.username);
+                        localStorage.setItem("token", res.data.token);
+                        localStorage.setItem("username", res.data.username);
                         window.location.href = store.uri + "/index";
                     } else {
                         layer.msg(res.msg)

@@ -30,9 +30,9 @@ public class LoginController {
     private ResourceService resourceService;
 
     @RequestMapping("/login.action")
-    public R loginAction(String username, String password){
+    public R loginAction(String mobile, String password){
         EntityWrapper<User> userWrapper = new EntityWrapper<>();
-        userWrapper.eq("mobile", username);
+        userWrapper.eq("mobile", mobile);
         User user = userService.selectOne(userWrapper);
         if (Cools.isEmpty(user)){
             return R.parse(CodeRes.USER_10001);
@@ -43,13 +43,16 @@ public class LoginController {
         if (!user.getPassword().equals(password)){
             return R.parse(CodeRes.USER_10003);
         }
-        String token = Cools.enToken(System.currentTimeMillis() + username, password);
+        String token = Cools.enToken(System.currentTimeMillis() + mobile, password);
         userLoginService.delete(new EntityWrapper<UserLogin>().eq("user_id", user.getId()));
         UserLogin userLogin = new UserLogin();
         userLogin.setUserId(user.getId());
         userLogin.setToken(token);
         userLoginService.insert(userLogin);
-        return R.ok(token);
+        Map<String, Object> res = new HashMap<>();
+        res.put("username", user.getUsername());
+        res.put("token", token);
+        return R.ok(res);
     }
 
     @RequestMapping("/menu/auth")
