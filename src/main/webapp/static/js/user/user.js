@@ -67,7 +67,7 @@ layui.config({
                     content: '/user_detail',
                     success: function(layero, index){
                     	clearFormVal(layer.getChildFrame('#detail', index));
-                        layer.getChildFrame('#data-detail-submit', index).text("添加");
+                        // layer.getChildFrame('#data-detail-submit', index).text("添加");
                         detailScreen(index);
                     }
                 });
@@ -179,7 +179,7 @@ layui.config({
                     shadeClose: false,
                     content: '/user_detail',
                     success: function(layero, index){
-                        layer.getChildFrame('#data-detail-submit', index).text("修改");
+                        // layer.getChildFrame('#data-detail-submit', index).text("修改");
                         setFormVal(layer.getChildFrame('#detail', index), data);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
                         detailScreen(index);
