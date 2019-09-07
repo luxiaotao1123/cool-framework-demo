@@ -5,12 +5,31 @@
     <title>Title</title>
 </head>
 <style>
-    h1 {
+    p {
         text-align: center;
+        font-size: 100px;
     }
 </style>
-<body>
-<h1>Welcome to</h1>
-<h1>嘉善</h1>
+<body id="body" onload="high()">
+<p>Welcome to</p>
+<p>嘉善</p>
 </body>
+<script >
+    var flag = false;
+    function high()
+    {
+        if(flag)
+        {
+            window.document.getElementById("body").style.background="red";
+            flag = false;
+        }
+        else
+        {
+            window.document.getElementById("body").style.background="blue";
+            flag = true;
+        }
+        setTimeout("high()",100)
+    }
+
+</script>
 </html>
