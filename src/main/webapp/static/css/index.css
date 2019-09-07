@@ -16,6 +16,14 @@
     background: blue;
     left: 0;
 }
+/*侧边菜单栏*/
+#cool-menu-tree li {
+    /*text-decoration: underline;*/
+    cursor:pointer;
+}
+.site-active {
+    text-indent: 1em;
+}
 
 .layui-side.layui-bg-black.layui-side-menu {
     position: absolute;
