@@ -86,4 +86,24 @@ public class LoginController {
         return R.ok(result);
     }
 
+    @RequestMapping("/power/auth")
+    public R power(){
+        List<Resource> oneLevels = resourceService.selectList(new EntityWrapper<Resource>().eq("level", 1).eq("status", 1));
+        List<Map> result = new ArrayList<>();
+        for (Resource oneLevel : oneLevels){
+            Map<String, Object> oneLevelMap = new HashMap<>();
+            oneLevelMap.put("title", oneLevel.getName());
+            List<Resource> twoLevels = resourceService.selectList(new EntityWrapper<Resource>().eq("pcode", oneLevel.getCode()).eq("status", 1));
+            List<Map> twoLevelsList = new ArrayList<>();
+            oneLevelMap.put("children", twoLevelsList);
+            for (Resource twoLevel : twoLevels){
+                Map<String, Object> twoLevelMap = new HashMap<>();
+                twoLevelMap.put("title", twoLevel.getName());
+                twoLevelsList.add(twoLevelMap);
+            }
+            result.add(oneLevelMap);
+        }
+        return R.ok(result);
+    }
+
 }
