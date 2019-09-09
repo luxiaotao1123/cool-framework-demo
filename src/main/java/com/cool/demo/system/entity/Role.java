@@ -18,6 +18,11 @@ public class Role implements Serializable {
     private Long id;
 
     /**
+     * 编码
+     */
+    private String code;
+
+    /**
      * 名称
      */
     private String name;
@@ -28,6 +33,14 @@ public class Role implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(final String code) {
+        this.code = code;
     }
 
     public String getName() {

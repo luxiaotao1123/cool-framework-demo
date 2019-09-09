@@ -37,6 +37,7 @@ layui.use(['table','laydate', 'form'], function(){
         cols: [[
             {type: 'checkbox', fixed: 'left'}
             ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
+            ,{field: 'code', align: 'center',title: '编码'}
             ,{field: 'name', align: 'center',title: '名称'}
 
             ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:180}

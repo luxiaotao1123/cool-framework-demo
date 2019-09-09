@@ -72,9 +72,6 @@ public class AuthController extends BaseController {
             return R.ok();
         }
         List<Resource> twoLevel = resourceService.selectList(new EntityWrapper<Resource>().in("id", resourceIds).eq("level", 2).eq("status", 1));
-        if (user.getRoleId()==1){
-            twoLevel = resourceService.selectList(new EntityWrapper<Resource>().eq("level", 2).eq("status", 1));
-        }
         Map<String, String> pNames = new HashMap<>();
         oneLevel.forEach(resource -> pNames.put(resource.getCode(), resource.getName()));
         List<Map<String, Object>> result = new ArrayList<>();
@@ -132,7 +129,9 @@ public class AuthController extends BaseController {
         List<String> result = new ArrayList<>();
         for (RoleResource roleResource : roleResources){
             Resource resource = resourceService.selectById(roleResource.getResourceId());
-            result.add(resource.getCode());
+            if (resource.getLevel() == 2){
+                result.add(resource.getCode());
+            }
         }
         return R.ok(result);
     }
