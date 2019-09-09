@@ -1,13 +1,33 @@
 var pageCurr;
+var roleId;
+var powerTreeData;
+$(function (){
+    $.ajax({
+        url: "/power/list/auth",
+        headers: {'token': localStorage.getItem('token')},
+        method: 'GET',
+        success: function (res) {
+            if (res.code === 200){
+                powerTreeData = res.data;
+            } else if (res.code === 403){
+                top.location.href = "/";
+            } else {
+                layer.msg(res.msg)
+            }
+        }
+    })
+});
+
 layui.config({
     base: '/static/js/'
-}).use(['table','laydate', 'form', 'store'], function(){
+}).use(['table','laydate', 'form', 'store','tree'], function(){
     var table = layui.table;
-    var $ = layui.jquery;
     var layer = layui.layer;
     var store = layui.store;
     var layDate = layui.laydate;
     var form = layui.form;
+    var tree = layui.tree;
+    var $ = layui.jquery;
 
     // 数据渲染
     tableIns = table.render({
@@ -23,7 +43,7 @@ layui.config({
             ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
             ,{field: 'name', align: 'center',title: '名称'}
 
-            ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
+            ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:180}
         ]],
         request: {
             pageName: 'curr',
@@ -182,6 +202,34 @@ layui.config({
                     }
                 });
                 break;
+            // 权限
+            case 'power':
+                roleId = data.id;
+                layer.open({
+                    type: 2,
+                    title: data.name + '权限分配',
+                    maxmin: true,
+                    area: [top.detailHeight/2, top.detailWidth],
+                    shadeClose: false,
+                    content: 'role_power_detail',
+                    success: function(layero, index){
+                        $.ajax({
+                            url: store.uri + "/role/"+ data.id +"/auth",
+                            headers: {'token': localStorage.getItem('token')},
+                            data: data,
+                            method: 'POST',
+                            success: function (res) {
+                                if (res.code === 200){
+                                } else if (res.code === 403){
+                                    parent.location.href = "/";
+                                }else {
+                                    layer.msg(res.msg)
+                                }
+                            }
+                        })
+                    }
+                });
+                break;
 
         }
     });
@@ -232,7 +280,6 @@ layui.config({
     });
 
     // 时间选择器
-
 
 });
 
