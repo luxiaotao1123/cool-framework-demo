@@ -63,9 +63,15 @@ public class AuthController extends BaseController {
 
     @RequestMapping("/menu/auth")
     public R menu(){
+        User user = userService.selectById(getUserId());
         List<Resource> oneLevel = resourceService.selectList(new EntityWrapper<Resource>().eq("level", 1).eq("status", 1));
-        List<Resource> twoLevel = resourceService.selectList(new EntityWrapper<Resource>().eq("level", 2).eq("status", 1));
-        Long userId = getUserId();
+        List<RoleResource> roleResources = roleResourceService.selectList(new EntityWrapper<RoleResource>().eq("role_id", user.getRoleId()));
+        List<Long> resourceIds = new ArrayList<>();
+        roleResources.forEach(roleResource -> resourceIds.add(roleResource.getResourceId()));
+        if (resourceIds.isEmpty()){
+            return R.ok();
+        }
+        List<Resource> twoLevel = resourceService.selectList(new EntityWrapper<Resource>().in("id", resourceIds).eq("level", 2).eq("status", 1));
         Map<String, String> pNames = new HashMap<>();
         oneLevel.forEach(resource -> pNames.put(resource.getCode(), resource.getName()));
         List<Map<String, Object>> result = new ArrayList<>();
