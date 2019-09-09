@@ -24,4 +24,8 @@ public class RouterController {
         return "home";
     }
 
+    @RequestMapping("/role_power_detail")
+    public String powerDetail(){
+        return "role/role_power_detail";
+    }
 }
