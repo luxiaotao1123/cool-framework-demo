@@ -21,7 +21,7 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'username', align: 'center',title: '账号'}
             ,{field: 'mobile', align: 'center',title: '手机号'}
             ,{field: 'password', align: 'center',title: '密码'}
-            ,{field: 'roleId', align: 'center',title: '角色',event: 'Role', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'roleName', align: 'center',title: '角色',event: 'Role', style: 'text-decoration: underline;cursor:pointer'}
             ,{field: 'createTime$', align: 'center',title: '注册时间'}
             ,{field: 'status$', align: 'center',title: '状态'}
 
