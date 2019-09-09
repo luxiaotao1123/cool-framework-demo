@@ -222,6 +222,7 @@ layui.use(['table','laydate', 'form'], function(){
         });
         var data = {
             id: $('#id').val(),
+            code: $('#code').val(),
             name: $('#name').val(),
 
         };
