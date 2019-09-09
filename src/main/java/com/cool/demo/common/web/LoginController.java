@@ -93,12 +93,14 @@ public class LoginController {
         for (Resource oneLevel : oneLevels){
             Map<String, Object> oneLevelMap = new HashMap<>();
             oneLevelMap.put("title", oneLevel.getName());
+            oneLevelMap.put("id", oneLevel.getCode());
             List<Resource> twoLevels = resourceService.selectList(new EntityWrapper<Resource>().eq("pcode", oneLevel.getCode()).eq("status", 1));
             List<Map> twoLevelsList = new ArrayList<>();
             oneLevelMap.put("children", twoLevelsList);
             for (Resource twoLevel : twoLevels){
                 Map<String, Object> twoLevelMap = new HashMap<>();
                 twoLevelMap.put("title", twoLevel.getName());
+                twoLevelMap.put("id", twoLevel.getCode());
                 twoLevelsList.add(twoLevelMap);
             }
             result.add(oneLevelMap);
