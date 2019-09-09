@@ -23,7 +23,7 @@ public class Resource implements Serializable {
     private String code;
 
     /**
-     * 父级菜单
+     * 父级菜单编码
      */
     private String pcode;
 

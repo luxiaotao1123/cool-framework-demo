@@ -1,11 +1,8 @@
 var pageCurr;
-layui.config({
-    base: '/static/js/'
-}).use(['table','laydate', 'form', 'store'], function(){
+layui.use(['table','laydate', 'form'], function(){
     var table = layui.table;
     var $ = layui.jquery;
     var layer = layui.layer;
-    var store = layui.store;
     var layDate = layui.laydate;
     var form = layui.form;
 
@@ -22,9 +19,9 @@ layui.config({
             {type: 'checkbox', fixed: 'left'}
             ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
             ,{field: 'username', align: 'center',title: '账号'}
-            ,{field: 'mobile', align: 'center',title: '联系方式'}
+            ,{field: 'mobile', align: 'center',title: '手机号'}
             ,{field: 'password', align: 'center',title: '密码'}
-            ,{field: 'roleId', align: 'center',title: '角色编号',event: 'Role', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'roleId', align: 'center',title: '角色',event: 'Role', style: 'text-decoration: underline;cursor:pointer'}
             ,{field: 'createTime$', align: 'center',title: '注册时间'}
             ,{field: 'status$', align: 'center',title: '状态'}
 
@@ -62,12 +59,11 @@ layui.config({
                     type: 2,
                     title: '新增',
                     maxmin: true,
-                    area: [top.detailHeight, top.detailWidth],
+                    area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
                     content: '/user_detail',
                     success: function(layero, index){
                     	clearFormVal(layer.getChildFrame('#detail', index));
-                        // layer.getChildFrame('#data-detail-submit', index).text("添加");
                         detailScreen(index);
                     }
                 });
@@ -90,7 +86,7 @@ layui.config({
                 } else {
                     layer.confirm('确定删除'+(ids.length===1?'此':ids.length)+'条数据吗', function(){
                         $.ajax({
-                            url: store.uri + "/user/delete/auth",
+                            url: "/user/delete/auth",
                             headers: {'token': localStorage.getItem('token')},
                             data: {ids: ids},
                             method: 'POST',
@@ -127,7 +123,7 @@ layui.config({
                     'fields': fields
                 };
                 $.ajax({
-                    url: store.uri + "/user/export/auth",
+                    url: "/user/export/auth",
                     headers: {'token': localStorage.getItem('token')},
                     data: JSON.stringify(param),
                     dataType:'json',
@@ -157,7 +153,7 @@ layui.config({
                     type: 2,
                     title: '查看',
                     maxmin: true,
-                    area: [top.detailHeight, top.detailWidth],
+                    area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
                     content: '/user_detail',
                     success: function(layero, index){
@@ -175,11 +171,10 @@ layui.config({
                     type: 2,
                     title: '修改',
                     maxmin: true,
-                    area: [top.detailHeight, top.detailWidth],
+                    area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
                     content: '/user_detail',
                     success: function(layero, index){
-                        // layer.getChildFrame('#data-detail-submit', index).text("修改");
                         setFormVal(layer.getChildFrame('#detail', index), data);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
                         detailScreen(index);
@@ -190,14 +185,14 @@ layui.config({
             case 'Role':
                 layer.open({
                     type: 2,
-                    title: '角色详情',
+                    title: '详情',
                     maxmin: true,
                     area: [top.detailHeight, top.detailWidth],
                     shadeClose: false,
                     content: 'role_detail',
                     success: function(layero, index){
                         $.ajax({
-                            url: store.uri + "/role/"+ data.roleId +"/auth",
+                            url: "/role/"+ data.roleId +"/auth",
                             headers: {'token': localStorage.getItem('token')},
                             data: data,
                             method: 'POST',
@@ -211,7 +206,7 @@ layui.config({
                                 } else if (res.code === 403){
                                     parent.location.href = "/";
                                 }else {
-                                    layer.alert(res.msg)
+                                    layer.msg(res.msg)
                                 }
                             }
                         })
@@ -238,7 +233,7 @@ layui.config({
 
         };
         $.ajax({
-            url: store.uri + "/user/edit/auth",
+            url: "/user/edit/auth",
             headers: {'token': localStorage.getItem('token')},
             data: data,
             method: 'POST',
@@ -277,18 +272,6 @@ layui.config({
         elem: '#createTime\\$',
         type: 'datetime'
     });
-    // 时间选择器
-    layDate.render({
-        elem: '#create_time\\>',
-        type: 'datetime'
-    });
-
-    // 时间选择器
-    layDate.render({
-        elem: '#create_time\\<',
-        type: 'datetime'
-    });
-
 
 
 });

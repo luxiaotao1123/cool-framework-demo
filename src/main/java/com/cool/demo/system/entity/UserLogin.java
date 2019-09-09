@@ -21,7 +21,7 @@ public class UserLogin implements Serializable {
     private Long id;
 
     /**
-     * 员工编号
+     * 员工
      */
     @TableField("user_id")
     private Long userId;

@@ -23,7 +23,7 @@ import java.util.*;
  * Created by vincent on 2019-07-30
  */
 @RestController
-public class LoginController {
+public class AuthController {
 
     @Autowired
     private UserService userService;

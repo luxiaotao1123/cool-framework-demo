@@ -1,11 +1,8 @@
 var pageCurr;
-layui.config({
-    base: '/static/js/'
-}).use(['table','laydate', 'form', 'store'], function(){
+layui.use(['table','laydate', 'form'], function(){
     var table = layui.table;
     var $ = layui.jquery;
     var layer = layui.layer;
-    var store = layui.store;
     var layDate = layui.laydate;
     var form = layui.form;
 
@@ -21,7 +18,7 @@ layui.config({
         cols: [[
             {type: 'checkbox', fixed: 'left'}
             ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
-            ,{field: 'userId', align: 'center',title: '员工编号',event: 'User', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'userId', align: 'center',title: '员工',event: 'User', style: 'text-decoration: underline;cursor:pointer'}
             ,{field: 'token', align: 'center',title: '凭证值'}
             ,{field: 'createTime$', align: 'center',title: '添加时间'}
 
@@ -59,12 +56,11 @@ layui.config({
                     type: 2,
                     title: '新增',
                     maxmin: true,
-                    area: [top.detailHeight, top.detailWidth],
+                    area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
                     content: '/userLogin_detail',
                     success: function(layero, index){
                     	clearFormVal(layer.getChildFrame('#detail', index));
-                        layer.getChildFrame('#data-detail-submit', index).text("添加");
                         detailScreen(index);
                     }
                 });
@@ -87,7 +83,7 @@ layui.config({
                 } else {
                     layer.confirm('确定删除'+(ids.length===1?'此':ids.length)+'条数据吗', function(){
                         $.ajax({
-                            url: store.uri + "/userLogin/delete/auth",
+                            url: "/userLogin/delete/auth",
                             headers: {'token': localStorage.getItem('token')},
                             data: {ids: ids},
                             method: 'POST',
@@ -124,7 +120,7 @@ layui.config({
                     'fields': fields
                 };
                 $.ajax({
-                    url: store.uri + "/userLogin/export/auth",
+                    url: "/userLogin/export/auth",
                     headers: {'token': localStorage.getItem('token')},
                     data: JSON.stringify(param),
                     dataType:'json',
@@ -154,7 +150,7 @@ layui.config({
                     type: 2,
                     title: '查看',
                     maxmin: true,
-                    area: [top.detailHeight, top.detailWidth],
+                    area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
                     content: '/userLogin_detail',
                     success: function(layero, index){
@@ -172,11 +168,10 @@ layui.config({
                     type: 2,
                     title: '修改',
                     maxmin: true,
-                    area: [top.detailHeight, top.detailWidth],
+                    area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
                     content: '/userLogin_detail',
                     success: function(layero, index){
-                        layer.getChildFrame('#data-detail-submit', index).text("修改");
                         setFormVal(layer.getChildFrame('#detail', index), data);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
                         detailScreen(index);
@@ -187,14 +182,14 @@ layui.config({
             case 'User':
                 layer.open({
                     type: 2,
-                    title: '员工详情',
+                    title: '详情',
                     maxmin: true,
                     area: [top.detailHeight, top.detailWidth],
                     shadeClose: false,
                     content: 'user_detail',
                     success: function(layero, index){
                         $.ajax({
-                            url: store.uri + "/user/"+ data.userId +"/auth",
+                            url: "/user/"+ data.userId +"/auth",
                             headers: {'token': localStorage.getItem('token')},
                             data: data,
                             method: 'POST',
@@ -208,7 +203,7 @@ layui.config({
                                 } else if (res.code === 403){
                                     parent.location.href = "/";
                                 }else {
-                                    layer.alert(res.msg)
+                                    layer.msg(res.msg)
                                 }
                             }
                         })
@@ -232,7 +227,7 @@ layui.config({
 
         };
         $.ajax({
-            url: store.uri + "/userLogin/edit/auth",
+            url: "/userLogin/edit/auth",
             headers: {'token': localStorage.getItem('token')},
             data: data,
             method: 'POST',

@@ -26,7 +26,7 @@ public class User implements Serializable {
     private String username;
 
     /**
-     * 联系方式
+     * 手机号
      */
     private String mobile;
 
@@ -36,7 +36,7 @@ public class User implements Serializable {
     private String password;
 
     /**
-     * 角色编号
+     * 角色
      */
     @TableField("role_id")
     private Long roleId;

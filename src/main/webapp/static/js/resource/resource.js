@@ -1,11 +1,8 @@
 var pageCurr;
-layui.config({
-    base: '/static/js/'
-}).use(['table','laydate', 'form', 'store'], function(){
+layui.use(['table','laydate', 'form'], function(){
     var table = layui.table;
     var $ = layui.jquery;
     var layer = layui.layer;
-    var store = layui.store;
     var layDate = layui.laydate;
     var form = layui.form;
 
@@ -22,7 +19,7 @@ layui.config({
             {type: 'checkbox', fixed: 'left'}
             ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
             ,{field: 'code', align: 'center',title: '菜单编码'}
-            ,{field: 'pcode', align: 'center',title: '父级菜单'}
+            ,{field: 'pcode', align: 'center',title: '父级菜单编码'}
             ,{field: 'name', align: 'center',title: '菜单名称'}
             ,{field: 'level$', align: 'center',title: '菜单等级'}
             ,{field: 'status$', align: 'center',title: '状态'}
@@ -61,12 +58,11 @@ layui.config({
                     type: 2,
                     title: '新增',
                     maxmin: true,
-                    area: [top.detailHeight, top.detailWidth],
+                    area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
                     content: '/resource_detail',
                     success: function(layero, index){
                     	clearFormVal(layer.getChildFrame('#detail', index));
-                        layer.getChildFrame('#data-detail-submit', index).text("添加");
                         detailScreen(index);
                     }
                 });
@@ -89,7 +85,7 @@ layui.config({
                 } else {
                     layer.confirm('确定删除'+(ids.length===1?'此':ids.length)+'条数据吗', function(){
                         $.ajax({
-                            url: store.uri + "/resource/delete/auth",
+                            url: "/resource/delete/auth",
                             headers: {'token': localStorage.getItem('token')},
                             data: {ids: ids},
                             method: 'POST',
@@ -126,7 +122,7 @@ layui.config({
                     'fields': fields
                 };
                 $.ajax({
-                    url: store.uri + "/resource/export/auth",
+                    url: "/resource/export/auth",
                     headers: {'token': localStorage.getItem('token')},
                     data: JSON.stringify(param),
                     dataType:'json',
@@ -156,7 +152,7 @@ layui.config({
                     type: 2,
                     title: '查看',
                     maxmin: true,
-                    area: [top.detailHeight, top.detailWidth],
+                    area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
                     content: '/resource_detail',
                     success: function(layero, index){
@@ -174,11 +170,10 @@ layui.config({
                     type: 2,
                     title: '修改',
                     maxmin: true,
-                    area: [top.detailHeight, top.detailWidth],
+                    area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
                     content: '/resource_detail',
                     success: function(layero, index){
-                        layer.getChildFrame('#data-detail-submit', index).text("修改");
                         setFormVal(layer.getChildFrame('#detail', index), data);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
                         detailScreen(index);
@@ -205,7 +200,7 @@ layui.config({
 
         };
         $.ajax({
-            url: store.uri + "/resource/edit/auth",
+            url: "/resource/edit/auth",
             headers: {'token': localStorage.getItem('token')},
             data: data,
             method: 'POST',

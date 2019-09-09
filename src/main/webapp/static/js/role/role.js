@@ -18,16 +18,12 @@ $(function (){
     })
 });
 
-layui.config({
-    base: '/static/js/'
-}).use(['table','laydate', 'form', 'store','tree'], function(){
+layui.use(['table','laydate', 'form'], function(){
     var table = layui.table;
+    var $ = layui.jquery;
     var layer = layui.layer;
-    var store = layui.store;
     var layDate = layui.laydate;
     var form = layui.form;
-    var tree = layui.tree;
-    var $ = layui.jquery;
 
     // 数据渲染
     tableIns = table.render({
@@ -77,12 +73,11 @@ layui.config({
                     type: 2,
                     title: '新增',
                     maxmin: true,
-                    area: [top.detailHeight, top.detailWidth],
+                    area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
                     content: '/role_detail',
                     success: function(layero, index){
                     	clearFormVal(layer.getChildFrame('#detail', index));
-                        layer.getChildFrame('#data-detail-submit', index).text("添加");
                         detailScreen(index);
                     }
                 });
@@ -105,7 +100,7 @@ layui.config({
                 } else {
                     layer.confirm('确定删除'+(ids.length===1?'此':ids.length)+'条数据吗', function(){
                         $.ajax({
-                            url: store.uri + "/role/delete/auth",
+                            url: "/role/delete/auth",
                             headers: {'token': localStorage.getItem('token')},
                             data: {ids: ids},
                             method: 'POST',
@@ -142,7 +137,7 @@ layui.config({
                     'fields': fields
                 };
                 $.ajax({
-                    url: store.uri + "/role/export/auth",
+                    url: "/role/export/auth",
                     headers: {'token': localStorage.getItem('token')},
                     data: JSON.stringify(param),
                     dataType:'json',
@@ -172,7 +167,7 @@ layui.config({
                     type: 2,
                     title: '查看',
                     maxmin: true,
-                    area: [top.detailHeight, top.detailWidth],
+                    area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
                     content: '/role_detail',
                     success: function(layero, index){
@@ -190,11 +185,10 @@ layui.config({
                     type: 2,
                     title: '修改',
                     maxmin: true,
-                    area: [top.detailHeight, top.detailWidth],
+                    area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
                     content: '/role_detail',
                     success: function(layero, index){
-                        layer.getChildFrame('#data-detail-submit', index).text("修改");
                         setFormVal(layer.getChildFrame('#detail', index), data);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
                         detailScreen(index);
@@ -202,34 +196,20 @@ layui.config({
                     }
                 });
                 break;
-            // 权限
             case 'power':
                 roleId = data.id;
                 layer.open({
                     type: 2,
-                    title: data.name + '权限分配',
+                    title: data.name + ' 权限分配',
                     maxmin: true,
                     area: [top.detailHeight/2, top.detailWidth],
                     shadeClose: false,
                     content: 'role_power_detail',
                     success: function(layero, index){
-                        $.ajax({
-                            url: store.uri + "/role/"+ data.id +"/auth",
-                            headers: {'token': localStorage.getItem('token')},
-                            data: data,
-                            method: 'POST',
-                            success: function (res) {
-                                if (res.code === 200){
-                                } else if (res.code === 403){
-                                    parent.location.href = "/";
-                                }else {
-                                    layer.msg(res.msg)
-                                }
-                            }
-                        })
                     }
                 });
                 break;
+
 
         }
     });
@@ -245,7 +225,7 @@ layui.config({
 
         };
         $.ajax({
-            url: store.uri + "/role/edit/auth",
+            url: "/role/edit/auth",
             headers: {'token': localStorage.getItem('token')},
             data: data,
             method: 'POST',
@@ -280,6 +260,7 @@ layui.config({
     });
 
     // 时间选择器
+
 
 });
 
