@@ -47,10 +47,9 @@
 <script>
     layui.config({
         base: '/static/js/'
-    }).use(['form','layer','store'],function () {
+    }).use(['form','layer'],function () {
         var form = layui.form,
             layer = layui.layer,
-            store = layui.store,
             $ = layui.jquery;
 
         form.verify({
@@ -72,14 +71,14 @@
                 password: $("#password").val()
             };
             $.ajax({
-                url: store.uri + "/login.action",
+                url: "/login.action",
                 data: user,
                 method: 'POST',
                 success: function (res) {
                     if (res.code === 200){
                         localStorage.setItem("token", res.data.token);
                         localStorage.setItem("username", res.data.username);
-                        window.location.href = store.uri + "/index";
+                        window.location.href = "/index";
                     } else {
                         layer.msg(res.msg)
                     }
