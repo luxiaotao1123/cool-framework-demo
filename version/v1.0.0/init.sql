@@ -65,7 +65,7 @@ CREATE TABLE `sys_role_resource` (
 ) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4;
 
 BEGIN;
-INSERT INTO `sys_role_resource` VALUES ('58', '1', '2'), ('59', '1', '3'), ('60', '1', '4'), ('61', '1', '5'), ('62', '1', '7'), ('63', '1', '8');
+INSERT INTO `sys_role_resource` VALUES ('58', '1', '2'), ('59', '1', '3'), ('60', '1', '4'), ('61', '1', '5');
 COMMIT;
 
 -- ----------------------------

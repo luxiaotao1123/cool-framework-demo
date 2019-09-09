@@ -129,8 +129,10 @@ public class AuthController extends BaseController {
         List<String> result = new ArrayList<>();
         for (RoleResource roleResource : roleResources){
             Resource resource = resourceService.selectById(roleResource.getResourceId());
-            if (resource.getLevel() == 2){
-                result.add(resource.getCode());
+            if (!Cools.isEmpty(resource)){
+                if (resource.getLevel() == 2){
+                    result.add(resource.getCode());
+                }
             }
         }
         return R.ok(result);

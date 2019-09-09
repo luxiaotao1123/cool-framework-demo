@@ -79,14 +79,16 @@
                 success: function (res) {
                     if (res.code === 200){
                         var menuHtml = "";
-                        for (var i = 0; i < res.data.length; i++) {
-                            menuHtml += '<li class="layui-nav-item">\n';
-                            menuHtml += '<a>' + res.data[i].menu + '</a>\n';
-                            menuHtml += '<dl class="layui-nav-child">\n';
-                            for (var j = 0; j < res.data[i].subMenu.length; j++) {
-                                menuHtml += '<dd><a class="site-active" data-title="' + res.data[i].subMenu[j].name + '" data-url="/' + res.data[i].subMenu[j].code + '" data-id="' + res.data[i].subMenu[j].code + '" target="main">' + res.data[i].subMenu[j].name + '</a></dd>\n'
+                        if (res.data != null){
+                            for (var i = 0; i < res.data.length; i++) {
+                                menuHtml += '<li class="layui-nav-item">\n';
+                                menuHtml += '<a>' + res.data[i].menu + '</a>\n';
+                                menuHtml += '<dl class="layui-nav-child">\n';
+                                for (var j = 0; j < res.data[i].subMenu.length; j++) {
+                                    menuHtml += '<dd><a class="site-active" data-title="' + res.data[i].subMenu[j].name + '" data-url="/' + res.data[i].subMenu[j].code + '" data-id="' + res.data[i].subMenu[j].code + '" target="main">' + res.data[i].subMenu[j].name + '</a></dd>\n'
+                                }
+                                menuHtml += '</dl>\n</li>\n';
                             }
-                            menuHtml += '</dl>\n</li>\n';
                         }
                         $('#cool-menu-tree').append(menuHtml);
                         element.init();
