@@ -1,6 +1,7 @@
 package com.cool.demo.common.web;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.cool.demo.common.BaseController;
 import com.cool.demo.common.CodeRes;
 import com.cool.demo.system.entity.Resource;
 import com.cool.demo.system.entity.RoleResource;
@@ -23,7 +24,7 @@ import java.util.*;
  * Created by vincent on 2019-07-30
  */
 @RestController
-public class AuthController {
+public class AuthController extends BaseController {
 
     @Autowired
     private UserService userService;
@@ -64,6 +65,7 @@ public class AuthController {
     public R menu(){
         List<Resource> oneLevel = resourceService.selectList(new EntityWrapper<Resource>().eq("level", 1).eq("status", 1));
         List<Resource> twoLevel = resourceService.selectList(new EntityWrapper<Resource>().eq("level", 2).eq("status", 1));
+        Long userId = getUserId();
         Map<String, String> pNames = new HashMap<>();
         oneLevel.forEach(resource -> pNames.put(resource.getCode(), resource.getName()));
         List<Map<String, Object>> result = new ArrayList<>();

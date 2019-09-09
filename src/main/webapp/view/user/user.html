@@ -19,6 +19,33 @@
             <input class="layui-input" type="text" name="id" placeholder="请输入" autocomplete="off">
         </div>
     </div>
+    <div class="layui-inline">
+        <label class="layui-form-label">账　　号：</label>
+        <div class="layui-input-inline">
+            <input class="layui-input" type="text" name="username" placeholder="请输入" autocomplete="off">
+        </div>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label">注册时间：</label>
+        <div class="layui-input-inline">
+            <input class="layui-input" type="text" id="create_time>" name="create_time>" placeholder="请输入开始时间" autocomplete="off">
+        </div>
+        -
+        <div class="layui-input-inline">
+            <input class="layui-input" type="text" id="create_time<" name="create_time<" placeholder="请输入结束时间" autocomplete="off">
+        </div>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label">状　　态：</label>
+        <div class="layui-input-inline">
+            <select id="status" name="status">
+                <option value="" style="display: none"></option>
+                <option value="1">启用</option>
+                <option value="2">冻结</option>
+                <option value="3">删除</option>
+            </select>
+        </div>
+    </div>
     <!-- 待添加 -->
     <div id="data-search-btn" class="layui-btn-container layui-form-item">
         <button id="search" class="layui-btn layui-btn-primary layui-btn-radius" lay-submit lay-filter="search">搜索</button>

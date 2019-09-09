@@ -53,6 +53,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
             Http.response(response, BaseRes.DENIED);
             return false;
         }
+        request.setAttribute("userId", user.getId());
         return true;
     }
 
