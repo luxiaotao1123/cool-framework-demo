@@ -19,6 +19,26 @@
             <input class="layui-input" type="text" name="id" placeholder="请输入" autocomplete="off">
         </div>
     </div>
+    <div class="layui-inline">
+        <label class="layui-form-label">菜单等级：</label>
+        <div class="layui-input-inline">
+            <select name="level">
+                <option value="" style="display: none"></option>
+                <option value="1">一级菜单</option>
+                <option value="2">二级菜单</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label">状　　态：</label>
+        <div class="layui-input-inline">
+            <select name="status">
+                <option value="" style="display: none"></option>
+                <option value="0">失效</option>
+                <option value="1">有效</option>
+            </select>
+        </div>
+    </div>
     <!-- 待添加 -->
     <div id="data-search-btn" class="layui-btn-container layui-form-item">
         <button id="search" class="layui-btn layui-btn-primary layui-btn-radius" lay-submit lay-filter="search">搜索</button>
