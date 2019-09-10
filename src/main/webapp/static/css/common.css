@@ -69,6 +69,7 @@ div .layui-table-tool .layui-table-tool-self .layui-inline[title='导出']{
 
 /*详情*/
 #detail .layui-form-label{
+    white-space: nowrap;
     font-size: 100%;
     padding: 9px 0 9px 5px;
     text-align: right;
