@@ -38,5 +38,4 @@ public class SpringUtils implements ApplicationContextAware {
 		return getApplicationContext().getBean(name);
 	}
 
-
 }
