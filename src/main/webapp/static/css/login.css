@@ -1,31 +1,83 @@
-html{
-    height: 100%;
-    /*background-color: gainsboro;*/
+@media screen and (min-width: 1200px) {
+    .cool-container {
+        width: 1170px;
+    }
+}
+@media screen and (min-width: 992px) {
+    .cool-container {
+        width: 970px;
+    }
 }
 
-body{
-    text-align:center;
+@media screen and (min-width: 768px) {
+    .cool-container {
+        width: 750px;
+    }
+}
+.clearfix:after {
+    clear: both;
+}
+.cool-row-3{
+    width: 33% !important
 }
 
-#login-frame {
-    width: 300px;
-    height: 200px;
-    /*margin: 0 auto;*/
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin: -100px 0 0 -150px;
+.cool-container{
+    position: relative;
+    height: 400px;
+    z-index: 10;
+    top: 20%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
 }
-
-
-/**
-加黑边框 border:1px solid #000;
-position：absolute这个是绝对定位； 它不会随着窗口大小变化，只是固定在一个特定的坐标轴上面
-position：relative是相对定位 它可以随窗口大小变化。但大小仍然不会变。
-
-
-
-
-
-
- */
+.cool-center{
+    text-align: center;
+    
+}
+.cool-input{
+    display: inline-block;
+    width: 100%;
+    height: 32px;
+    line-height: 1.5;
+    padding: 4px 7px;
+    font-size: 12px;
+    border: 1px solid #dddee1;
+    border-radius: 4px;
+    color: #495060;
+    background-color: #fff;
+    background-image: none;
+    position: relative;
+    cursor: text;
+    transition: border .2s ease-in-out,background .2s ease-in-out,box-shadow .2s ease-in-out;
+}
+.cool-button-default{
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    line-height: 1.5;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: 6px 15px;
+    font-size: 12px;
+    border-radius: 4px;
+    transition: color .2s linear,background-color .2s linear,border .2s linear;
+    color: #495060;
+    background-color: #f7f7f7;
+    border-color: #dddee1;
+}
+.cool-button-default:hover{
+    color: #57a3f3;
+    background-color: #fff;
+    border-color: #57a3f3;
+}
