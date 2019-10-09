@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by vincent on 2019-09-09
  */
-public class BaseController extends AbstractBaseController {
+public class BaseController extends AbstractBaseController implements CodeRes {
 
     @Autowired
     protected HttpServletRequest request;
