@@ -50,11 +50,11 @@ function convertDisabled(el, param) {
 function autoLoad(val) {
     var inputDomVal = document.querySelector("input[data-key="+val+"]").value;
     var selectDom = document.querySelector("select[data-key="+val+"Select]");
-
+    selectDom.length = 0;
+    selectDom.style.display='none';
     if (isEmpty(inputDomVal)){
         return;
     }
-    selectDom.length = 0;
     $.ajax({
         url: "/"+val+"/auth",
         headers: {'token': localStorage.getItem('token')},
