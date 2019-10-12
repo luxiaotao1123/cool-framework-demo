@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class RoleController extends BaseController {
@@ -117,6 +115,25 @@ public class RoleController extends BaseController {
         convert(map, wrapper);
         List<Role> list = roleService.selectList(wrapper);
         return R.ok(exportSupport(list, fields));
+    }
+
+    @RequestMapping(value = "/roleQuery/auth")
+    @ResponseBody
+    public R query(String condition) {
+        if (Cools.isEmpty(condition)){
+            return R.parse(EMPTY);
+        }
+        EntityWrapper<Role> wrapper = new EntityWrapper<>();
+        wrapper.like("name", condition).or().like("code", condition);
+        List<Role> roles = roleService.selectList(wrapper);
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Role role : roles){
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", role.getId());
+            map.put("value", role.getName());
+            result.add(map);
+        }
+        return R.ok(result);
     }
 
 }
