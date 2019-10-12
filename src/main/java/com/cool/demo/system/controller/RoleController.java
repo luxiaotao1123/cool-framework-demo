@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.cool.demo.common.BaseController;
 import com.cool.demo.system.entity.Role;
 import com.cool.demo.system.service.RoleService;
+import com.core.common.BaseRes;
 import com.core.common.Cools;
 import com.core.common.DateUtils;
 import com.core.common.R;
@@ -121,7 +122,7 @@ public class RoleController extends BaseController {
     @ResponseBody
     public R query(String condition) {
         if (Cools.isEmpty(condition)){
-            return R.parse(EMPTY);
+            return R.parse(BaseRes.EMPTY);
         }
         EntityWrapper<Role> wrapper = new EntityWrapper<>();
         wrapper.like("name", condition).or().like("code", condition);
