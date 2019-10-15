@@ -5,6 +5,8 @@
 }
 #search-box {
     margin-left: 10px;
+    z-index: 999;
+    position: relative;
 }
 #search-box .layui-inline{
     margin-bottom: 10px;
