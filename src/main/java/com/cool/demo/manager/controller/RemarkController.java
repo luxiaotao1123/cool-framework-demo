@@ -3,10 +3,10 @@ package com.cool.demo.manager.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.core.common.DateUtils;
 import com.cool.demo.manager.entity.Remark;
 import com.cool.demo.manager.service.RemarkService;
 import com.core.common.Cools;
-import com.core.common.DateUtils;
 import com.core.common.R;
 import com.core.controller.AbstractBaseController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,9 +115,6 @@ public class RemarkController extends AbstractBaseController {
     @RequestMapping(value = "/remarkQuery/auth")
     @ResponseBody
     public R query(String condition) {
-//        if (Cools.isEmpty(condition)){
-//            return R.parse(BaseRes.EMPTY);
-//        }
         EntityWrapper<Remark> wrapper = new EntityWrapper<>();
         wrapper.like("content", condition);
         List<Remark> list = remarkService.selectList(wrapper);

@@ -47,6 +47,10 @@ public class BaseData implements Serializable {
         return remarkId;
     }
 
+    public void setRemarkId(Long remarkId) {
+        this.remarkId = remarkId;
+    }
+
     public String getRemarkContent(){
         RemarkService service = SpringUtils.getBean(RemarkService.class);
         Remark remark = service.selectById(this.remarkId);
@@ -54,10 +58,6 @@ public class BaseData implements Serializable {
             return remark.getContent();
         }
         return null;
-    }
-
-    public void setRemarkId(Long remarkId) {
-        this.remarkId = remarkId;
     }
 
     public Date getCreateTime() {

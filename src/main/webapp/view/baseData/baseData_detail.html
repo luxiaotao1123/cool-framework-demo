@@ -27,7 +27,7 @@
                 <input id="remarkId" class="layui-input" type="text" placeholder="备注信息" lay-verify="required" style="display: none">
                 <input id="remarkContent" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="备注信息" onfocus=this.blur()>
                 <div class="cool-auto-complete-window">
-                    <input class="cool-auto-complete-window-input" data-key="remarkQuery" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                    <input class="cool-auto-complete-window-input" data-key="remarkQuery" onchange="confirmed(this.getAttribute('data-key'))">
                     <select class="cool-auto-complete-window-select" data-key="remarkQuerySelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
                     </select>
                 </div>

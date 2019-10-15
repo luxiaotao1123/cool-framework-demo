@@ -303,8 +303,7 @@ function tableReload(child) {
 
 function setFormVal(el, data) {
     for (var val in data) {
-        var dom = el.find(":input[id='" + val + "']");
-        dom.val(data[val]);
+        el.find(":input[id='" + val + "']").val(data[val]);
     }
 }
 

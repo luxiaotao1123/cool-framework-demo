@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.core.common.DateUtils;
 import com.cool.demo.manager.entity.BaseData;
 import com.cool.demo.manager.service.BaseDataService;
-import com.core.common.BaseRes;
 import com.core.common.Cools;
 import com.core.common.R;
 import com.core.controller.AbstractBaseController;
@@ -116,17 +115,14 @@ public class BaseDataController extends AbstractBaseController {
     @RequestMapping(value = "/baseDataQuery/auth")
     @ResponseBody
     public R query(String condition) {
-        if (Cools.isEmpty(condition)){
-            return R.parse(BaseRes.EMPTY);
-        }
         EntityWrapper<BaseData> wrapper = new EntityWrapper<>();
-//       wrapper.like("condition", condition).or().like("condition", condition);
+        wrapper.like("id", condition);
         List<BaseData> list = baseDataService.selectList(wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
         for (BaseData baseData : list){
             Map<String, Object> map = new HashMap<>();
             map.put("id", baseData.getId());
-//            map.put("value", baseData.getId());
+            map.put("value", baseData.getId());
             result.add(map);
         }
         return R.ok(result);
