@@ -19,6 +19,7 @@ function autoShow(id) {
     if (cacw.style.display === "none" || cacw.style.display === ""){
         cacw.style.display = "block";
         var cacwi = cacw.getElementsByClassName("cool-auto-complete-window-input")[0];
+        cacwi.focus();
         autoLoad(cacwi.getAttribute('data-key'));
     }else {
         cacw.style.display = "none";
