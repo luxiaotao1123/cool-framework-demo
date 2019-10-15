@@ -31,6 +31,11 @@ public class RoleController extends AbstractBaseController {
         return "role/role_detail";
     }
 
+    @RequestMapping("/role_power_detail")
+    public String powerDetail(){
+        return "role/role_power_detail";
+    }
+
     @RequestMapping(value = "/role/{id}/auth")
     @ResponseBody
     public R get(@PathVariable("id") Long id) {
