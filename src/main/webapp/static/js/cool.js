@@ -1,48 +1,19 @@
-// 详情窗口-高度
-var detailHeight = '90%';
-// 详情窗口-宽度
-var detailWidth = '90%';
 
-// 非空判断
-function isEmpty(obj){
-    return typeof obj == "undefined" || obj == null || obj === "";
-}
-
-// 时间 ==>> 字符串
-function dateToStr(date) {
-    var time = new Date(date);
-    var y = time.getFullYear();
-    var M = time.getMonth() + 1;
-    M = M < 10 ? ("0" + M) : M;
-    var d = time.getDate();
-    d = d < 10 ? ("0" + d) : d;
-    var h = time.getHours();
-    h = h < 10 ? ("0" + h) : h;
-    var m = time.getMinutes();
-    m = m < 10 ? ("0" + m) : m;
-    var s = time.getSeconds();
-    s = s < 10 ? ("0" + s) : s;
-    return y + "-" + M + "-" + d + " " + h + ":" + m + ":" + s;
-}
-
-// 字符串 ===>> 时间
-function strToDate(str) {
-    var t = Date.parse(str);
-    if (!isNaN(t)) {
-        return new Date(Date.parse(str.replace(/-/g, "/")));
-    } else {
-        return new Date();
+/**
+ * 搜索自动补全 -- div
+ */
+function autoShow(id) {
+    var cac = document.getElementById(id).parentNode;
+    var cacw = cac.getElementsByClassName("cool-auto-complete-window")[0];
+    if (cacw.style.display === "none" || cacw.style.display === ""){
+        cacw.style.display = "block";
+        var cacwi = cacw.getElementsByClassName("cool-auto-complete-window-input")[0];
+        autoLoad(cacwi.getAttribute('data-key'));
+    }else {
+        cacw.style.display = "none";
     }
 }
 
-/**
- * disabled 属性转换
- */
-function convertDisabled(el, param) {
-    el.each(function () {
-        $(this).attr("disabled", param);
-    });
-}
 
 /**
  * 搜索自动补全 -- input
@@ -51,10 +22,10 @@ function autoLoad(val) {
     var inputDomVal = document.querySelector("input[data-key="+val+"]").value;
     var selectDom = document.querySelector("select[data-key="+val+"Select]");
     selectDom.length = 0;
+    var defaultOption = new Option("取消选择", "");
+    defaultOption.title = "";
+    selectDom.appendChild(defaultOption);
     selectDom.style.display='none';
-    // if (isEmpty(inputDomVal)){
-    //     return;
-    // }
     $.ajax({
         url: "/"+val+"/auth",
         headers: {'token': localStorage.getItem('token')},
@@ -67,7 +38,7 @@ function autoLoad(val) {
                 for (var i=0;i<list.length;i++){
                     var option = new Option(list[i].value, i);
                     option.title = list[i].id;
-                    selectDom.options[i] = option;
+                    selectDom.options[i+1] = option;
                 }
                 if(list.length>0){
                     selectDom.style.display='block';
@@ -94,7 +65,21 @@ function confirmed(val){
         inputDom.focus();
         selectDom.css("display","none");
     });
+
+    // 修饰字段
+    var cacw = inputDom.parent();
+    cacw.css("display", "none");
+    var cacd = cacw.parent().find(".cool-auto-complete-div");
+    // id字段
     var realDom = $("#" + val.substring(0,val.length - 11) + "Id");
-    realDom.val($("option:selected").attr("title"));
-    inputDom.val($("option:selected").html());
+    var html = $("option:selected").html();
+    if (html === "取消选择"){
+        cacd.val("");
+        realDom.val("");
+    } else {
+        cacd.val($("option:selected").html());
+        realDom.val($("option:selected").attr("title"));
+    }
+
+
 }

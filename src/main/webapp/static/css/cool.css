@@ -3,8 +3,20 @@
     display: none;
 }
 
-.cool-auto-complete-select {
+.cool-auto-complete-div {
+    cursor: pointer;
+}
+
+.cool-auto-complete-window {
     width: 100%;
     display: none;
     position: absolute;
+}
+
+.cool-auto-complete-window-input {
+    width: 100%;
+}
+
+.cool-auto-complete-window-select {
+    width: 100%;
 }
