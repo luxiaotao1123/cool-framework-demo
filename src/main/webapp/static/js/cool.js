@@ -50,11 +50,7 @@ function autoLoad(val) {
                     option.title = list[i].id;
                     selectDom.options[i+1] = option;
                 }
-                if(list.length>0){
-                    selectDom.style.display='block';
-                }else{
-                    selectDom.style.display='none';
-                }
+                selectDom.style.display='block';
             } else if (res.code === 403){
                 top.location.href = "/";
             } else {
