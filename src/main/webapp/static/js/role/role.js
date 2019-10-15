@@ -1,23 +1,4 @@
 var pageCurr;
-var roleId;
-var powerTreeData;
-$(function (){
-    $.ajax({
-        url: "/power/list/auth",
-        headers: {'token': localStorage.getItem('token')},
-        method: 'GET',
-        success: function (res) {
-            if (res.code === 200){
-                powerTreeData = res.data;
-            } else if (res.code === 403){
-                top.location.href = "/";
-            } else {
-                layer.msg(res.msg)
-            }
-        }
-    })
-});
-
 layui.use(['table','laydate', 'form'], function(){
     var table = layui.table;
     var $ = layui.jquery;
@@ -40,7 +21,7 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'code', align: 'center',title: '编码'}
             ,{field: 'name', align: 'center',title: '名称'}
 
-            ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:180}
+            ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
         ]],
         request: {
             pageName: 'curr',
@@ -155,6 +136,19 @@ layui.use(['table','laydate', 'form'], function(){
                     }
                 });
                 break;
+            case 'power':
+                roleId = data.id;
+                layer.open({
+                    type: 2,
+                    title: data.name + ' 权限分配',
+                    maxmin: true,
+                    area: [top.detailWidth/2, top.detailHeight],
+                    shadeClose: false,
+                    content: 'role_power_detail',
+                    success: function(layero, index){
+                    }
+                });
+                break;
         }
     });
 
@@ -197,20 +191,6 @@ layui.use(['table','laydate', 'form'], function(){
                     }
                 });
                 break;
-            case 'power':
-                roleId = data.id;
-                layer.open({
-                    type: 2,
-                    title: data.name + ' 权限分配',
-                    maxmin: true,
-                    area: [top.detailWidth/2, top.detailHeight],
-                    shadeClose: false,
-                    content: 'role_power_detail',
-                    success: function(layero, index){
-                    }
-                });
-                break;
-
 
         }
     });

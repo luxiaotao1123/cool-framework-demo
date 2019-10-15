@@ -3,22 +3,20 @@ package com.cool.demo.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.cool.demo.common.BaseController;
+import com.core.common.DateUtils;
 import com.cool.demo.system.entity.Resource;
 import com.cool.demo.system.service.ResourceService;
 import com.core.common.Cools;
-import com.core.common.DateUtils;
 import com.core.common.R;
+import com.core.controller.AbstractBaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
-public class ResourceController extends BaseController {
+public class ResourceController extends AbstractBaseController {
 
     @Autowired
     private ResourceService resourceService;
@@ -112,6 +110,22 @@ public class ResourceController extends BaseController {
         convert(map, wrapper);
         List<Resource> list = resourceService.selectList(wrapper);
         return R.ok(exportSupport(list, fields));
+    }
+
+    @RequestMapping(value = "/resourceQuery/auth")
+    @ResponseBody
+    public R query(String condition) {
+        EntityWrapper<Resource> wrapper = new EntityWrapper<>();
+        wrapper.like("code", condition);
+        List<Resource> list = resourceService.selectList(wrapper);
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Resource resource : list){
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", resource.getId());
+            map.put("value", resource.getCode());
+            result.add(map);
+        }
+        return R.ok(result);
     }
 
 }

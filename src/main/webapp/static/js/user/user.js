@@ -272,14 +272,7 @@ layui.use(['table','laydate', 'form'], function(){
         elem: '#createTime\\$',
         type: 'datetime'
     });
-    layDate.render({
-        elem: '#create_time\\>',
-        type: 'datetime'
-    });
-    layDate.render({
-        elem: '#create_time\\<',
-        type: 'datetime'
-    });
+
 
 });
 

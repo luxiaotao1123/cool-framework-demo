@@ -3,22 +3,20 @@ package com.cool.demo.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.cool.demo.common.BaseController;
+import com.core.common.DateUtils;
 import com.cool.demo.system.entity.User;
 import com.cool.demo.system.service.UserService;
 import com.core.common.Cools;
-import com.core.common.DateUtils;
 import com.core.common.R;
+import com.core.controller.AbstractBaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
-public class UserController extends BaseController {
+public class UserController extends AbstractBaseController {
 
     @Autowired
     private UserService userService;
@@ -112,6 +110,22 @@ public class UserController extends BaseController {
         convert(map, wrapper);
         List<User> list = userService.selectList(wrapper);
         return R.ok(exportSupport(list, fields));
+    }
+
+    @RequestMapping(value = "/userQuery/auth")
+    @ResponseBody
+    public R query(String condition) {
+        EntityWrapper<User> wrapper = new EntityWrapper<>();
+        wrapper.like("username", condition);
+        List<User> list = userService.selectList(wrapper);
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (User user : list){
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", user.getId());
+            map.put("value", user.getUsername());
+            result.add(map);
+        }
+        return R.ok(result);
     }
 
 }

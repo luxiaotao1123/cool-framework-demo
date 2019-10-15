@@ -12,8 +12,8 @@ public class CodeBuilder {
         generator.url="localhost:3306/cool";
         generator.username="root";
         generator.password="xltys1995";
-        generator.table="man_base_data";
-        generator.packagePath="com.cool.demo.manager";
+        generator.table="sys_user_login";
+        generator.packagePath="com.cool.demo.system";
         generator.build();
     }
 

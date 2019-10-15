@@ -3,13 +3,12 @@ package com.cool.demo.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.cool.demo.common.BaseController;
+import com.core.common.DateUtils;
 import com.cool.demo.system.entity.Role;
 import com.cool.demo.system.service.RoleService;
-import com.core.common.BaseRes;
 import com.core.common.Cools;
-import com.core.common.DateUtils;
 import com.core.common.R;
+import com.core.controller.AbstractBaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @Controller
-public class RoleController extends BaseController {
+public class RoleController extends AbstractBaseController {
 
     @Autowired
     private RoleService roleService;
@@ -30,11 +29,6 @@ public class RoleController extends BaseController {
     @RequestMapping("/role_detail")
     public String detail(){
         return "role/role_detail";
-    }
-
-    @RequestMapping("/role_power_detail")
-    public String powerDetail(){
-        return "role/role_power_detail";
     }
 
     @RequestMapping(value = "/role/{id}/auth")
@@ -121,14 +115,11 @@ public class RoleController extends BaseController {
     @RequestMapping(value = "/roleQuery/auth")
     @ResponseBody
     public R query(String condition) {
-        if (Cools.isEmpty(condition)){
-            return R.parse(BaseRes.EMPTY);
-        }
         EntityWrapper<Role> wrapper = new EntityWrapper<>();
-        wrapper.like("name", condition).or().like("code", condition);
-        List<Role> roles = roleService.selectList(wrapper);
+        wrapper.like("name", condition);
+        List<Role> list = roleService.selectList(wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
-        for (Role role : roles){
+        for (Role role : list){
             Map<String, Object> map = new HashMap<>();
             map.put("id", role.getId());
             map.put("value", role.getName());

@@ -21,27 +21,15 @@
         </div>
     </div>
     <div class="layui-inline">
-        <label class="layui-form-label">手 机 号：</label>
-        <div class="layui-input-inline">
-            <input class="layui-input" type="text" name="mobile" placeholder="请输入" autocomplete="off">
-        </div>
-    </div>
-    <div class="layui-inline">
-        <label class="layui-form-label">注册时间：</label>
-        <div class="layui-input-inline">
-            <input class="layui-input" type="text" id="create_time>" name="create_time>" placeholder="请输入开始时间" autocomplete="off">
-        </div>
-        -
-        <div class="layui-input-inline">
-            <input class="layui-input" type="text" id="create_time<" name="create_time<" placeholder="请输入结束时间" autocomplete="off">
-        </div>
-    </div>
-    <div class="layui-inline">
         <label class="layui-form-label">角　　色：</label>
         <div class="layui-input-inline cool-auto-complete">
-            <input class="layui-input" name="role_id" data-key="roleQuery" onkeyup="autoLoad(this.getAttribute('data-key'))" type="text" placeholder="请输入" autocomplete="off">
-            <select class="cool-auto-complete-select" data-key="roleQuerySelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
-            </select>
+            <input id="roleId" class="layui-input" name="role_id" type="text" placeholder="请输入" autocomplete="off" style="display: none">
+            <input id="roleName" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="备注信息" onfocus=this.blur()>
+            <div class="cool-auto-complete-window">
+                <input class="cool-auto-complete-window-input" data-key="roleQuery" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                <select class="cool-auto-complete-window-select" data-key="roleQuerySelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                </select>
+            </div>
         </div>
     </div>
 
@@ -72,6 +60,7 @@
 <script type="text/javascript" src="/static/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript" src="/static/js/user/user.js" charset="utf-8"></script>
 <script type="text/javascript" src="/static/js/common.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/cool.js" charset="utf-8"></script>
 
 <iframe id="detail-iframe" scrolling="auto" style="display:none;"></iframe>
 

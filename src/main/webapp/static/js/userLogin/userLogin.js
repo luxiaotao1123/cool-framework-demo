@@ -18,7 +18,7 @@ layui.use(['table','laydate', 'form'], function(){
         cols: [[
             {type: 'checkbox', fixed: 'left'}
             ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
-            ,{field: 'userId', align: 'center',title: '员工',event: 'User', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'userUsername', align: 'center',title: '员工',event: 'User', style: 'text-decoration: underline;cursor:pointer'}
             ,{field: 'token', align: 'center',title: '凭证值'}
             ,{field: 'createTime$', align: 'center',title: '添加时间'}
 

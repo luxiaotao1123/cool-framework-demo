@@ -2,9 +2,12 @@ package com.cool.demo.system.entity;
 
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.enums.IdType;
+import com.core.common.SpringUtils;
+import com.cool.demo.system.service.UserService;
 import com.baomidou.mybatisplus.annotations.TableField;
-import java.text.SimpleDateFormat
-;import java.util.Date;
+import java.text.SimpleDateFormat;
+import com.core.common.Cools;
+import java.util.Date;
 
 import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
@@ -49,6 +52,14 @@ public class UserLogin implements Serializable {
         return userId;
     }
 
+    public String getUserUsername(){
+        UserService service = SpringUtils.getBean(UserService.class);
+        User user = service.selectById(this.userId);
+        if (!Cools.isEmpty(user)){
+            return user.getUsername();
+        }
+        return null;
+    }
     public void setUserId(Long userId) {
         this.userId = userId;
     }
@@ -66,6 +77,9 @@ public class UserLogin implements Serializable {
     }
 
     public String getCreateTime$(){
+        if (Cools.isEmpty(this.createTime)){
+            return "";
+        }
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.createTime);
     }
 

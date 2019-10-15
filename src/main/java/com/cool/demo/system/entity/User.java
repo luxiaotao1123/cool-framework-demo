@@ -1,16 +1,16 @@
 package com.cool.demo.system.entity;
 
-import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-import com.cool.demo.system.service.RoleService;
-import com.core.common.Cools;
 import com.core.common.SpringUtils;
-
-import java.io.Serializable;
+import com.cool.demo.system.service.RoleService;
+import com.baomidou.mybatisplus.annotations.TableField;
 import java.text.SimpleDateFormat;
+import com.core.common.Cools;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotations.TableName;
+import java.io.Serializable;
 
 @TableName("sys_user")
 public class User implements Serializable {
@@ -91,17 +91,16 @@ public class User implements Serializable {
         return roleId;
     }
 
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
-
     public String getRoleName(){
-        RoleService roleService = SpringUtils.getBean(RoleService.class);
-        Role role = roleService.selectById(this.roleId);
+        RoleService service = SpringUtils.getBean(RoleService.class);
+        Role role = service.selectById(this.roleId);
         if (!Cools.isEmpty(role)){
             return role.getName();
         }
         return null;
+    }
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
     public Date getCreateTime() {
@@ -109,6 +108,9 @@ public class User implements Serializable {
     }
 
     public String getCreateTime$(){
+        if (Cools.isEmpty(this.createTime)){
+            return "";
+        }
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.createTime);
     }
 

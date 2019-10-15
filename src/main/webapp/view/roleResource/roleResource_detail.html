@@ -22,21 +22,15 @@
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">
-            <label class="layui-form-label"><span class="not-null">*</span>备注信息：</label>
-            <div class="layui-input-inline cool-auto-complete">
-                <input id="remarkId" class="layui-input" type="text" placeholder="备注信息" lay-verify="required" style="display: none">
-                <input id="remarkContent" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="备注信息" onfocus=this.blur()>
-                <div class="cool-auto-complete-window">
-                    <input class="cool-auto-complete-window-input" data-key="remarkQuery" onchange="confirmed(this.getAttribute('data-key'))">
-                    <select class="cool-auto-complete-window-select" data-key="remarkQuerySelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
-                    </select>
-                </div>
+            <label class="layui-form-label"><span class="not-null">*</span>角　　色：</label>
+            <div class="layui-input-inline">
+                <input id="roleId" class="layui-input" type="text" placeholder="角色" lay-verify="required" >
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">
-            <label class="layui-form-label"><span class="not-null">*</span>创建时间：</label>
+            <label class="layui-form-label"><span class="not-null">*</span>资　　源：</label>
             <div class="layui-input-inline">
-                <input id="createTime$" class="layui-input" type="text" placeholder="创建时间" lay-verify="required" >
+                <input id="resourceId" class="layui-input" type="text" placeholder="资源" lay-verify="required" >
             </div>
         </div>
 
@@ -56,7 +50,7 @@
 </body>
 <script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/static/layui/layui.js" charset="utf-8"></script>
-<script type="text/javascript" src="/static/js/baseData/baseData.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/roleResource/roleResource.js" charset="utf-8"></script>
 <script type="text/javascript" src="/static/js/common.js" charset="utf-8"></script>
 <script type="text/javascript" src="/static/js/cool.js" charset="utf-8"></script>
 </html>

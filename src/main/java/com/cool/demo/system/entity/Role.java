@@ -39,7 +39,7 @@ public class Role implements Serializable {
         return code;
     }
 
-    public void setCode(final String code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

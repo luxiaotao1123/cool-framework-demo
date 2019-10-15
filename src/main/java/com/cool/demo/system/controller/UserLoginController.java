@@ -3,22 +3,20 @@ package com.cool.demo.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.cool.demo.common.BaseController;
+import com.core.common.DateUtils;
 import com.cool.demo.system.entity.UserLogin;
 import com.cool.demo.system.service.UserLoginService;
 import com.core.common.Cools;
-import com.core.common.DateUtils;
 import com.core.common.R;
+import com.core.controller.AbstractBaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
-public class UserLoginController extends BaseController {
+public class UserLoginController extends AbstractBaseController {
 
     @Autowired
     private UserLoginService userLoginService;
@@ -112,6 +110,22 @@ public class UserLoginController extends BaseController {
         convert(map, wrapper);
         List<UserLogin> list = userLoginService.selectList(wrapper);
         return R.ok(exportSupport(list, fields));
+    }
+
+    @RequestMapping(value = "/userLoginQuery/auth")
+    @ResponseBody
+    public R query(String condition) {
+        EntityWrapper<UserLogin> wrapper = new EntityWrapper<>();
+        wrapper.like("token", condition);
+        List<UserLogin> list = userLoginService.selectList(wrapper);
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (UserLogin userLogin : list){
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", userLogin.getId());
+            map.put("value", userLogin.getToken());
+            result.add(map);
+        }
+        return R.ok(result);
     }
 
 }

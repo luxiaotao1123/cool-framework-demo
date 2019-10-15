@@ -8,9 +8,9 @@ layui.use(['table','laydate', 'form'], function(){
 
     // 数据渲染
     tableIns = table.render({
-        elem: '#remark',
+        elem: '#roleResource',
         headers: {token: localStorage.getItem('token')},
-        url: '/remark/list/auth',
+        url: '/roleResource/list/auth',
         page: true,
         limit: 16,
         toolbar: '#toolbar',
@@ -18,9 +18,8 @@ layui.use(['table','laydate', 'form'], function(){
         cols: [[
             {type: 'checkbox', fixed: 'left'}
             ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
-            ,{field: 'content', align: 'center',title: '文本内容'}
-            ,{field: 'createTime$', align: 'center',title: '创建时间'}
-            ,{field: 'status$', align: 'center',title: '状态'}
+            ,{field: 'roleId', align: 'center',title: '角色'}
+            ,{field: 'resourceId', align: 'center',title: '资源'}
 
             ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
         ]],
@@ -48,7 +47,7 @@ layui.use(['table','laydate', 'form'], function(){
     });
 
     // 监听头工具栏事件
-    table.on('toolbar(remark)', function (obj) {
+    table.on('toolbar(roleResource)', function (obj) {
         var checkStatus = table.checkStatus(obj.config.id);
         switch(obj.event) {
             case 'addData':
@@ -58,7 +57,7 @@ layui.use(['table','laydate', 'form'], function(){
                     maxmin: true,
                     area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
-                    content: '/remark_detail',
+                    content: '/roleResource_detail',
                     success: function(layero, index){
                     	clearFormVal(layer.getChildFrame('#detail', index));
                         detailScreen(index);
@@ -83,7 +82,7 @@ layui.use(['table','laydate', 'form'], function(){
                 } else {
                     layer.confirm('确定删除'+(ids.length===1?'此':ids.length)+'条数据吗', function(){
                         $.ajax({
-                            url: "/remark/delete/auth",
+                            url: "/roleResource/delete/auth",
                             headers: {'token': localStorage.getItem('token')},
                             data: {ids: ids},
                             method: 'POST',
@@ -116,11 +115,11 @@ layui.use(['table','laydate', 'form'], function(){
                     exportData[this.name] = this.value;
                 });
                 var param = {
-                    'remark': exportData,
+                    'roleResource': exportData,
                     'fields': fields
                 };
                 $.ajax({
-                    url: "/remark/export/auth",
+                    url: "/roleResource/export/auth",
                     headers: {'token': localStorage.getItem('token')},
                     data: JSON.stringify(param),
                     dataType:'json',
@@ -141,7 +140,7 @@ layui.use(['table','laydate', 'form'], function(){
     });
 
     // 监听行工具事件
-    table.on('tool(remark)', function(obj){
+    table.on('tool(roleResource)', function(obj){
         var data = obj.data;
         switch (obj.event) {
             // 查看
@@ -152,7 +151,7 @@ layui.use(['table','laydate', 'form'], function(){
                     maxmin: true,
                     area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
-                    content: '/remark_detail',
+                    content: '/roleResource_detail',
                     success: function(layero, index){
                         setFormVal(layer.getChildFrame('#detail', index), data);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
@@ -170,7 +169,7 @@ layui.use(['table','laydate', 'form'], function(){
                     maxmin: true,
                     area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
-                    content: '/remark_detail',
+                    content: '/roleResource_detail',
                     success: function(layero, index){
                         setFormVal(layer.getChildFrame('#detail', index), data);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
@@ -190,13 +189,12 @@ layui.use(['table','laydate', 'form'], function(){
         });
         var data = {
             id: $('#id').val(),
-            content: $('#content').val(),
-            createTime: top.strToDate($('#createTime\\$').val()),
-            status: $('#status').val(),
+            roleId: $('#roleId').val(),
+            resourceId: $('#resourceId').val(),
 
         };
         $.ajax({
-            url: "/remark/edit/auth",
+            url: "/roleResource/edit/auth",
             headers: {'token': localStorage.getItem('token')},
             data: data,
             method: 'POST',
@@ -231,10 +229,6 @@ layui.use(['table','laydate', 'form'], function(){
     });
 
     // 时间选择器
-    layDate.render({
-        elem: '#createTime\\$',
-        type: 'datetime'
-    });
 
 
 });
