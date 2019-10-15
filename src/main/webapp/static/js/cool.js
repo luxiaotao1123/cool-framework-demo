@@ -14,7 +14,6 @@ function autoShow(id) {
     }
 }
 
-
 /**
  * 搜索自动补全 -- input
  */
