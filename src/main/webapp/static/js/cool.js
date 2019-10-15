@@ -1,3 +1,14 @@
+/**
+ * 搜索自动补全 -- 局外点击取消显示
+ */
+$(function(){
+    $(document).on("click",function(e){
+        if(!$(e.target).parents(".cool-auto-complete").length){
+            $(".cool-auto-complete-window").hide();
+        }
+    });
+});
+
 
 /**
  * 搜索自动补全 -- div
@@ -79,6 +90,5 @@ function confirmed(val){
         cacd.val($("option:selected").html());
         realDom.val($("option:selected").attr("title"));
     }
-
-
+    inputDom.val("");
 }
