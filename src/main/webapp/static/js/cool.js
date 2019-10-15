@@ -1,5 +1,5 @@
 /**
- * 搜索自动补全 -- 局外点击取消显示
+ * 搜索自动补全 -- 局外点击隐藏
  */
 $(function(){
     $(document).on("click",function(e){
