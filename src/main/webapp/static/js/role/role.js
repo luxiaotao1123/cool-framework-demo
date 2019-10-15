@@ -1,4 +1,23 @@
 var pageCurr;
+var roleId;
+var powerTreeData;
+$(function (){
+    $.ajax({
+        url: "/power/list/auth",
+        headers: {'token': localStorage.getItem('token')},
+        method: 'GET',
+        success: function (res) {
+            if (res.code === 200){
+                powerTreeData = res.data;
+            } else if (res.code === 403){
+                top.location.href = "/";
+            } else {
+                layer.msg(res.msg)
+            }
+        }
+    })
+});
+
 layui.use(['table','laydate', 'form'], function(){
     var table = layui.table;
     var $ = layui.jquery;
