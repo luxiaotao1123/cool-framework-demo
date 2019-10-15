@@ -13,7 +13,6 @@ public class CodeBuilder {
         generator.username="root";
         generator.password="xltys1995";
         generator.table="man_base_data";
-//        generator.table="man_remark";
         generator.packagePath="com.cool.demo.manager";
         generator.build();
     }
