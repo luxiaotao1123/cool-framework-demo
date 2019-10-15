@@ -155,19 +155,6 @@ layui.use(['table','laydate', 'form'], function(){
                     }
                 });
                 break;
-            case 'power':
-                roleId = data.id;
-                layer.open({
-                    type: 2,
-                    title: data.name + ' 权限分配',
-                    maxmin: true,
-                    area: [top.detailWidth/2, top.detailHeight],
-                    shadeClose: false,
-                    content: 'role_power_detail',
-                    success: function(layero, index){
-                    }
-                });
-                break;
         }
     });
 
@@ -210,7 +197,19 @@ layui.use(['table','laydate', 'form'], function(){
                     }
                 });
                 break;
-
+            case 'power':
+                roleId = data.id;
+                layer.open({
+                    type: 2,
+                    title: data.name + ' 权限分配',
+                    maxmin: true,
+                    area: [top.detailWidth/2, top.detailHeight],
+                    shadeClose: false,
+                    content: 'role_power_detail',
+                    success: function(layero, index){
+                    }
+                });
+                break;
         }
     });
 
