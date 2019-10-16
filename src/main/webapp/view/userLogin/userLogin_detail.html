@@ -27,7 +27,7 @@
                 <input id="userId" class="layui-input" type="text" placeholder="员工" lay-verify="required" style="display: none">
                 <input id="userUsername" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="员工" onfocus=this.blur()>
                 <div class="cool-auto-complete-window">
-                    <input class="cool-auto-complete-window-input" data-key="userQuery" onchange="confirmed(this.getAttribute('data-key'))">
+                    <input class="cool-auto-complete-window-input" data-key="userQuery" onkeyup="autoLoad(this.getAttribute('data-key'))">>
                     <select class="cool-auto-complete-window-select" data-key="userQuerySelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
                     </select>
                 </div>
