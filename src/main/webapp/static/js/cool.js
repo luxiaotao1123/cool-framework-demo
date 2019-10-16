@@ -79,13 +79,14 @@ function confirmed(val){
     var cacd = cacw.parent().find(".cool-auto-complete-div");
     // id字段
     var realDom = $("#" + val.substring(0,val.length - 11) + "Id");
-    var html = $("option:selected").html();
+    var selectOptionDom = selectDom.find("option:selected");
+    var html = selectOptionDom.html();
     if (html === "取消选择"){
         cacd.val("");
         realDom.val("");
     } else {
-        cacd.val($("option:selected").html());
-        realDom.val($("option:selected").attr("title"));
+        cacd.val(selectOptionDom.html());
+        realDom.val(selectOptionDom.attr("title"));
     }
     inputDom.val("");
 }
