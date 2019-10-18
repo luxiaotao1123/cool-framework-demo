@@ -109,3 +109,9 @@ div .layui-table-tool .layui-table-tool-self .layui-inline[title='导出']{
 .not-null {
     color:red;
 }
+
+/*图片*/
+.cool-img {
+    width: 200px;
+    height: 200px;
+}

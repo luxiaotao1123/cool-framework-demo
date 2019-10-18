@@ -90,3 +90,8 @@ function confirmed(val){
     }
     inputDom.val("");
 }
+
+function reviewImg(src) {
+    window.open().document.write("<img src="+src+" />");
+}
+
