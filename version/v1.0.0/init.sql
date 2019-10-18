@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user` (
                           `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
                           `username` varchar(255) NOT NULL COMMENT '账号',
-                          `mobile` varchar(32) DEFAULT NULL COMMENT '手机号*',
+                          `mobile` varchar(32) DEFAULT NULL COMMENT '手机号(*)',
                           `password` varchar(255) DEFAULT NULL COMMENT '密码',
                           `role_id` bigint(20) NOT NULL COMMENT '角色[sys_role]',
                           `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
@@ -27,7 +27,7 @@ DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role` (
                           `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
                           `code` varchar(255) NOT NULL COMMENT '编码',
-                          `name` varchar(255) NOT NULL COMMENT '名称*',
+                          `name` varchar(255) NOT NULL COMMENT '名称(*)',
                           PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
@@ -41,7 +41,7 @@ COMMIT;
 DROP TABLE IF EXISTS `sys_resource`;
 CREATE TABLE `sys_resource` (
                               `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
-                              `code` varchar(255) NOT NULL COMMENT '菜单编码*',
+                              `code` varchar(255) NOT NULL COMMENT '菜单编码(*)',
                               `pcode` varchar(255) DEFAULT NULL COMMENT '父级菜单编码',
                               `name` varchar(255) NOT NULL COMMENT '菜单名称',
                               `level` int(11) NOT NULL COMMENT '菜单等级{1:一级菜单,2:二级菜单}',
@@ -75,7 +75,7 @@ DROP TABLE IF EXISTS `sys_user_login`;
 CREATE TABLE `sys_user_login` (
                                 `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
                                 `user_id` bigint(20) NOT NULL COMMENT '员工[sys_user]',
-                                `token` varchar(255) NOT NULL COMMENT '凭证值*',
+                                `token` varchar(255) NOT NULL COMMENT '凭证值(*)',
                                 `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
                                 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=203 DEFAULT CHARSET=utf8mb4;
