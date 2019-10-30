@@ -117,9 +117,9 @@ public class UserController extends AbstractBaseController {
     public R query(String condition) {
         EntityWrapper<User> wrapper = new EntityWrapper<>();
         wrapper.like("username", condition);
-        List<User> list = userService.selectList(wrapper);
+        Page<User> page = userService.selectPage(new Page<>(0, 10), wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
-        for (User user : list){
+        for (User user : page.getRecords()){
             Map<String, Object> map = new HashMap<>();
             map.put("id", user.getId());
             map.put("value", user.getUsername());

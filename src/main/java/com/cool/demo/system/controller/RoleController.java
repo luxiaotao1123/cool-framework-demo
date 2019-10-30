@@ -122,9 +122,9 @@ public class RoleController extends AbstractBaseController {
     public R query(String condition) {
         EntityWrapper<Role> wrapper = new EntityWrapper<>();
         wrapper.like("name", condition);
-        List<Role> list = roleService.selectList(wrapper);
+        Page<Role> page = roleService.selectPage(new Page<>(0, 10), wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
-        for (Role role : list){
+        for (Role role : page.getRecords()){
             Map<String, Object> map = new HashMap<>();
             map.put("id", role.getId());
             map.put("value", role.getName());

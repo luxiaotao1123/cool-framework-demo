@@ -117,9 +117,9 @@ public class UserLoginController extends AbstractBaseController {
     public R query(String condition) {
         EntityWrapper<UserLogin> wrapper = new EntityWrapper<>();
         wrapper.like("token", condition);
-        List<UserLogin> list = userLoginService.selectList(wrapper);
+        Page<UserLogin> page = userLoginService.selectPage(new Page<>(0, 10), wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
-        for (UserLogin userLogin : list){
+        for (UserLogin userLogin : page.getRecords()){
             Map<String, Object> map = new HashMap<>();
             map.put("id", userLogin.getId());
             map.put("value", userLogin.getToken());
