@@ -143,7 +143,7 @@ public class AuthController extends BaseController {
         roleResourceService.delete(new EntityWrapper<RoleResource>().eq("role_id", roleId));
         if (!Cools.isEmpty(powers)){
             for (String power : powers) {
-                Resource resource = resourceService.selectOne(new EntityWrapper<Resource>().eq("code", power));
+                Resource resource = resourceService.selectOne(new EntityWrapper<Resource>().eq("code", power).eq("level", 2));
                 RoleResource roleResource = new RoleResource();
                 roleResource.setRoleId(roleId);
                 roleResource.setResourceId(resource.getId());
