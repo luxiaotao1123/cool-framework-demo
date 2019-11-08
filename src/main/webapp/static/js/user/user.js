@@ -106,38 +106,41 @@ layui.use(['table','laydate', 'form'], function(){
                 }
                 break;
             case 'exportData':
-                var titles=[];
-                var fields=[];
-                obj.config.cols[0].map(function (col) {
-                    if (col.type === 'normal' && col.hide === false && col.toolbar == null) {
-                        titles.push(col.title);
-                        fields.push(col.field);
-                    }
-                });
-                var exportData = {};
-                $.each($('#search-box [name]').serializeArray(), function() {
-                    exportData[this.name] = this.value;
-                });
-                var param = {
-                    'user': exportData,
-                    'fields': fields
-                };
-                $.ajax({
-                    url: "/user/export/auth",
-                    headers: {'token': localStorage.getItem('token')},
-                    data: JSON.stringify(param),
-                    dataType:'json',
-                    contentType:'application/json;charset=UTF-8',
-                    method: 'POST',
-                    success: function (res) {
-                        if (res.code === 200) {
-                            table.exportFile(titles,res.data,'xls');
-                        } else if (res.code === 403) {
-                            top.location.href = "/";
-                        } else {
-                            layer.msg(res.msg)
+                layer.confirm('确定导出Excel吗', function() {
+                    var titles = [];
+                    var fields = [];
+                    obj.config.cols[0].map(function (col) {
+                        if (col.type === 'normal' && col.hide === false && col.toolbar == null) {
+                            titles.push(col.title);
+                            fields.push(col.field);
                         }
-                    }
+                    });
+                    var exportData = {};
+                    $.each($('#search-box [name]').serializeArray(), function () {
+                        exportData[this.name] = this.value;
+                    });
+                    var param = {
+                        'user': exportData,
+                        'fields': fields
+                    };
+                    $.ajax({
+                        url: "/user/export/auth",
+                        headers: {'token': localStorage.getItem('token')},
+                        data: JSON.stringify(param),
+                        dataType: 'json',
+                        contentType: 'application/json;charset=UTF-8',
+                        method: 'POST',
+                        success: function (res) {
+                            layer.closeAll();
+                            if (res.code === 200) {
+                                table.exportFile(titles, res.data, 'xls');
+                            } else if (res.code === 403) {
+                                top.location.href = "/";
+                            } else {
+                                layer.msg(res.msg)
+                            }
+                        }
+                    });
                 });
                 break;
         }
