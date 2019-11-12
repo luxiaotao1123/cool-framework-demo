@@ -9,3 +9,6 @@ spring:
     view:
       prefix: view/
       suffix: .html
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
