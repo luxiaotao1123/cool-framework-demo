@@ -3,7 +3,7 @@
 /.classpath
 /.project
 .idea/
-.idea/*
+.idea/**
 /*/.iml
 *.iml
 *.class
