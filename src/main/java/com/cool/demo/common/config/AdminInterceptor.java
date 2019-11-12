@@ -48,7 +48,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
         User user = userService.selectById(userLogin.getUserId());
         String deToken = Cools.deTokn(token, user.getPassword());
         long timestamp = Long.parseLong(deToken.substring(0, 13));
-        // 5分钟过期
+        // 1天后过期
         if (System.currentTimeMillis() - timestamp > 86400000){
             Http.response(response, BaseRes.DENIED);
             return false;
