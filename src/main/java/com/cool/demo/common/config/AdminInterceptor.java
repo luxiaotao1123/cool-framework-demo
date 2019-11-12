@@ -34,6 +34,8 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
         if (handler instanceof org.springframework.web.servlet.resource.ResourceHttpRequestHandler) {
             return true;
         }
+        // 跨域设置
+        // response.setHeader("Access-Control-Allow-Origin", "*");
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         return check(request, response, handlerMethod);
     }
