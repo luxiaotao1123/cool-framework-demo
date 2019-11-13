@@ -28,4 +28,15 @@ public class RouterController {
     public String error404(){
         return "404";
     }
+
+    @RequestMapping("/password")
+    public String changePassword(){
+        return "password";
+    }
+
+    @RequestMapping("/detail")
+    public String userDetail(){
+        return "detail";
+    }
+
 }
