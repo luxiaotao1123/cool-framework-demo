@@ -7,8 +7,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
+    <style>
+    </style>
 </head>
-<body id="body" >
-<p>Welcome to</p>
+<body id="body">
+<div style="padding: 15px">
+    <fieldset class="layui-elem-field">
+        <legend>个人资料</legend>
+        <div class="layui-card-header">设置我的资料</div>
+        <div class="layui-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label">账号名</label>
+                <div class="layui-input-inline">
+                    <input id="username" class="layui-input" type="text" placeholder="请输入" lay-verify="required">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">手机号</label>
+                <div class="layui-input-inline">
+                    <input id="mobile" class="layui-input" type="text" placeholder="请输入" lay-verify="required">
+                </div>
+            </div>
+        </div>
+        <div type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="edit">确认修改</div>
+    </fieldset>
+</div>
 </body>
 </html>
