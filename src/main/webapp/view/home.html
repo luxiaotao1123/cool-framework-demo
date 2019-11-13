@@ -2,34 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
 </head>
 <style>
-    p {
-        text-align: center;
-        font-size: 100px;
+    .cool-home-top.layui-card {
+        display: inline-block;
+        width: 31%;
     }
 </style>
 <body id="body" >
-<p>Welcome to</p>
-<p>嘉善</p>
+<div id="container">
+    <!--头部数据-->
+    <div class="cool-home-top layui-card">
+        <div class="layui-card-header">访问量</div>
+        <div class="layui-card-body">
+            <p>999999</p>
+        </div>
+    </div>
+    <div class="cool-home-top layui-card">
+        <div class="layui-card-header">活跃数</div>
+        <div class="layui-card-body">
+            <p>999999</p>
+        </div>
+    </div>
+    <div class="cool-home-top layui-card">
+        <div class="layui-card-header">文件上传数</div>
+        <div class="layui-card-body">
+            <p>999999</p>
+        </div>
+    </div>
+    <!--统计数据-->
+    <div class="cool-home-stats layui-card">
+        <div class="layui-card-header">平台统计</div>
+        <div class="layui-card-body">
+            <p>999999</p>
+        </div>
+    </div>
+</div>
 </body>
 <script >
-    var flag = false;
-    function high()
-    {
-        if(flag)
-        {
-            window.document.getElementById("body").style.background="red";
-            flag = false;
-        }
-        else
-        {
-            window.document.getElementById("body").style.background="blue";
-            flag = true;
-        }
-        setTimeout("high()",100)
-    }
 
 </script>
 </html>
