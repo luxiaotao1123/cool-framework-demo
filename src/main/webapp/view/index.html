@@ -8,14 +8,6 @@
     <link rel="stylesheet" href="/static/css/index.css">
     <link rel="shortcut icon" href="/static/image/doge.png" type="image/x-icon"  id='in_icon'/>
 </head>
-<style>
-    #person:hover dd {
-        display: block;
-    }
-    #person dt a{
-        color:#999;
-    }
-</style>
 <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
 
@@ -24,10 +16,9 @@
             <div id="person">
                 <span id="person-username">请先登录</span>
                 <dl class="dropdown-list">
-                    <dt></dt>
+                    <dt id="arrow"></dt>
                     <dd class="dropdown-item">
                         <ul>
-                            <li><a href="/password">修改密码</a></li>
                             <li><a href="/">注销</a></li>
                         </ul>
                     </dd>

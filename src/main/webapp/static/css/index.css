@@ -19,6 +19,12 @@
     width: 100%;
     left: 0;
 }
+#person:hover dd {
+    display: block;
+}
+#person:hover dt {
+    transform: rotate(180deg) translate(0, 4px);
+}
 /*小箭头*/
 .dropdown-list dt {
     border-left: 6px solid transparent;
@@ -35,11 +41,8 @@
     position: absolute;
     line-height: 32px;
     display: none;
-    padding-top: 10px;
+    padding-top: 3px;
     z-index:999;
-}
-.dropdown-list:hover dt {
-    transform: rotate(180deg) translate(0, 4px);
 }
 .dropdown-item ul {
     width:80%;
@@ -51,6 +54,9 @@
 .dropdown-item ul li a {
     color:#555;
 }
+
+
+
 
 /*侧边菜单栏*/
 #cool-menu-tree li {
