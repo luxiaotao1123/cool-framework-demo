@@ -1,6 +1,9 @@
-/* <!--侧边导航栏--> */
+/* 用户功能栏*/
 #person {
+    position: relative;
+    z-index:2;
     margin: 40px 0;
+    text-align: center
 }
 #person-username {
     font-size: large;
@@ -11,11 +14,44 @@
     display: inline-block
 }
 .dropdown-item {
+    background:transparent;
     position: absolute;
     width: 100%;
-    background: blue;
     left: 0;
 }
+/*小箭头*/
+.dropdown-list dt {
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid;
+    border-top-color: rgba(255,255,255,.7);
+    padding-top: 3px;
+}
+/*选项*/
+#person dd {
+    top: 100%;
+    left: 0;
+    width:100%;
+    position: absolute;
+    line-height: 32px;
+    display: none;
+    padding-top: 10px;
+    z-index:999;
+}
+.dropdown-list:hover dt {
+    transform: rotate(180deg) translate(0, 4px);
+}
+.dropdown-item ul {
+    width:80%;
+    margin:0 auto;
+    background:#222;
+    box-shadow: 0 0 5px rgba(200,200,200,0.03);
+    border-radius: 5px;
+}
+.dropdown-item ul li a {
+    color:#555;
+}
+
 /*侧边菜单栏*/
 #cool-menu-tree li {
     cursor:pointer;
