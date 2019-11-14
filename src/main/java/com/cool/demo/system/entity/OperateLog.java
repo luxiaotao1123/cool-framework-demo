@@ -2,6 +2,8 @@ package com.cool.demo.system.entity;
 
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.enums.IdType;
+import com.core.common.SpringUtils;
+import com.cool.demo.system.service.UserService;
 import com.baomidou.mybatisplus.annotations.TableField;
 import java.text.SimpleDateFormat;
 import com.core.common.Cools;
@@ -73,6 +75,14 @@ public class OperateLog implements Serializable {
         return userId;
     }
 
+    public String getUserUsername(){
+        UserService service = SpringUtils.getBean(UserService.class);
+        User user = service.selectById(this.userId);
+        if (!Cools.isEmpty(user)){
+            return user.getUsername();
+        }
+        return null;
+    }
     public void setUserId(Long userId) {
         this.userId = userId;
     }
