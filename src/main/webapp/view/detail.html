@@ -36,19 +36,19 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">账号名</label>
                     <div class="layui-input-inline">
-                        <input id="username" class="layui-input" type="text" placeholder="请输入" lay-verify="required">
+                        <input id="username" class="layui-input" type="text" placeholder="请输入" autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">手机号</label>
                     <div class="layui-input-inline">
-                        <input id="mobile" class="layui-input" type="text" placeholder="请输入" lay-verify="required">
+                        <input id="mobile" class="layui-input" type="text" placeholder="请输入" autocomplete="off">
                     </div>
                     <div class="layui-form-mid layui-word-aux">一般用于后台登入</div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                        <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="edit">确认修改</button>
+                        <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="save">确认修改</button>
                     </div>
                 </div>
             </div>
@@ -56,4 +56,36 @@
     </fieldset>
 </div>
 </body>
+<script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
+<script src="/static/layui/layui.js"></script>
+<script>
+    layui.use(['form'], function(){
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.jquery;
+
+        form.on('submit(save)', function (data) {
+            console.log(data);
+            var user = {
+                mobile: $("#mobile").val(),
+                password: $("#password").val()
+            };
+            $.ajax({
+                url: "/login.action",
+                data: user,
+                method: 'POST',
+                success: function (res) {
+                    if (res.code === 200){
+                        localStorage.setItem("token", res.data.token);
+                        localStorage.setItem("username", res.data.username);
+                        window.location.href = "/index";
+                    } else {
+                        layer.msg(res.msg)
+                    }
+                }
+            });
+            return false;
+        });
+    });
+</script>
 </html>
