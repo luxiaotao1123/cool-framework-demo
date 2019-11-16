@@ -45,6 +45,7 @@ public class ResourceController extends AbstractBaseController {
         excludeTrash(param);
         EntityWrapper<Resource> wrapper = new EntityWrapper<>();
         convert(param, wrapper);
+        wrapper.orderBy("id", false);
         return R.ok(resourceService.selectPage(new Page<>(curr, limit), wrapper));
     }
 

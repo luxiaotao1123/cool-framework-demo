@@ -50,6 +50,7 @@ public class RoleController extends AbstractBaseController {
         excludeTrash(param);
         EntityWrapper<Role> wrapper = new EntityWrapper<>();
         convert(param, wrapper);
+        wrapper.orderBy("id", false);
         return R.ok(roleService.selectPage(new Page<>(curr, limit), wrapper));
     }
 

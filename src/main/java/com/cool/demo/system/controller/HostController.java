@@ -45,6 +45,7 @@ public class HostController extends AbstractBaseController {
         excludeTrash(param);
         EntityWrapper<Host> wrapper = new EntityWrapper<>();
         convert(param, wrapper);
+        wrapper.orderBy("id", false);
         return R.ok(hostService.selectPage(new Page<>(curr, limit), wrapper));
     }
 

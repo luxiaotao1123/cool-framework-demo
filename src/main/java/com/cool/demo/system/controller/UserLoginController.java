@@ -45,6 +45,7 @@ public class UserLoginController extends AbstractBaseController {
         excludeTrash(param);
         EntityWrapper<UserLogin> wrapper = new EntityWrapper<>();
         convert(param, wrapper);
+        wrapper.orderBy("id", false);
         return R.ok(userLoginService.selectPage(new Page<>(curr, limit), wrapper));
     }
 

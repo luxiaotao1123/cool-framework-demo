@@ -45,6 +45,7 @@ public class OperateLogController extends AbstractBaseController {
         excludeTrash(param);
         EntityWrapper<OperateLog> wrapper = new EntityWrapper<>();
         convert(param, wrapper);
+        wrapper.orderBy("id", false);
         return R.ok(operateLogService.selectPage(new Page<>(curr, limit), wrapper));
     }
 

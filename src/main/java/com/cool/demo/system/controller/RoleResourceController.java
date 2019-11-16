@@ -45,6 +45,7 @@ public class RoleResourceController extends AbstractBaseController {
         excludeTrash(param);
         EntityWrapper<RoleResource> wrapper = new EntityWrapper<>();
         convert(param, wrapper);
+        wrapper.orderBy("id", false);
         return R.ok(roleResourceService.selectPage(new Page<>(curr, limit), wrapper));
     }
 

@@ -45,6 +45,7 @@ public class UserController extends AbstractBaseController {
         excludeTrash(param);
         EntityWrapper<User> wrapper = new EntityWrapper<>();
         convert(param, wrapper);
+        wrapper.orderBy("id", false);
         return R.ok(userService.selectPage(new Page<>(curr, limit), wrapper));
     }
 
