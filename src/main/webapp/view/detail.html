@@ -33,6 +33,12 @@
         <legend>设置我的资料</legend>
         <div class="layui-card-body">
             <div class="layui-form">
+                <div class="layui-form-item" style="display: none">
+                    <label class="layui-form-label">账号名</label>
+                    <div class="layui-input-inline">
+                        <input id="id" class="layui-input" type="text" placeholder="请输入" autocomplete="off">
+                    </div>
+                </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">账号名</label>
                     <div class="layui-input-inline">
@@ -64,25 +70,50 @@
             layer = layui.layer,
             $ = layui.jquery;
 
-        form.on('submit(save)', function (data) {
-            console.log(data);
-            var user = {
-                mobile: $("#mobile").val(),
-                password: $("#password").val()
-            };
-            $.ajax({
-                url: "/login.action",
-                data: user,
-                method: 'POST',
-                success: function (res) {
-                    if (res.code === 200){
-                        localStorage.setItem("token", res.data.token);
-                        localStorage.setItem("username", res.data.username);
-                        window.location.href = "/index";
-                    } else {
-                        layer.msg(res.msg)
-                    }
+        // 初始化表单数据
+        $.ajax({
+            url: "/user/detail/auth",
+            headers: {'token': localStorage.getItem('token')},
+            method: 'POST',
+            success: function (res) {
+                if (res.code === 200){
+                    var user = res.data;
+                    $('#id').val(user.id);
+                    $('#username').val(user.username);
+                    $('#mobile').val(user.mobile);
+                } else if (res.code === 403){
+                    top.location.href = "/";
+                } else {
+                    layer.msg(res.msg);
                 }
+            }
+        });
+
+        // 保存修改
+        form.on('submit(save)', function (data) {
+            var user = {
+                id: $('#id').val(),
+                username: $('#username').val(),
+                mobile: $("#mobile").val(),
+            };
+            layer.confirm('确定修改资料吗？', function(){
+                $.ajax({
+                    url: "/user/update/auth",
+                    headers: {'token': localStorage.getItem('token')},
+                    data: user,
+                    method: 'POST',
+                    success: function (res) {
+                        if (res.code === 200){
+                            layer.msg(res.msg);
+                            localStorage.setItem("username", user.username);
+                            parent.$('#person-username').text(localStorage.getItem('username'));
+                        } else if (res.code === 403){
+                            top.location.href = "/";
+                        } else {
+                            layer.msg(res.msg);
+                        }
+                    }
+                });
             });
             return false;
         });

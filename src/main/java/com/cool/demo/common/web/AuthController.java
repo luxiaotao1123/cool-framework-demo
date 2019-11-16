@@ -61,6 +61,12 @@ public class AuthController extends BaseController {
         return R.ok(res);
     }
 
+    @RequestMapping("/user/detail/auth")
+    public R userDetail(){
+        User user = userService.selectById(getUserId());
+        return R.ok(user);
+    }
+
     @RequestMapping("/menu/auth")
     public R menu(){
         User user = userService.selectById(getUserId());
