@@ -40,6 +40,7 @@
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
                         <iframe name="main" src="/home" scrolling="auto" frameborder="0" width="100%" height="100%" ></iframe>
+
                     </div>
                 </div>
             </div>
@@ -55,6 +56,10 @@
         var $ = layui.jquery;
 
         $(function () {
+            if ("" === localStorage.getItem('token')){
+                top.location.href = "/login";
+            }
+
             $.ajax({
                 url: "/menu/auth",
                 headers: {'token': localStorage.getItem('token')},
