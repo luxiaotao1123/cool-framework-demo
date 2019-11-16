@@ -32,7 +32,7 @@
     <fieldset class="layui-elem-field">
         <legend>设置我的资料</legend>
         <div class="layui-card-body">
-            <div class="layui-form">
+            <div id="person-detail" class="layui-form">
                 <div class="layui-form-item" style="display: none">
                     <label class="layui-form-label">账号名</label>
                     <div class="layui-input-inline">
@@ -51,6 +51,13 @@
                         <input id="mobile" class="layui-input" type="text" placeholder="请输入" autocomplete="off">
                     </div>
                     <div class="layui-form-mid layui-word-aux">一般用于后台登入</div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">注册时间</label>
+                    <div class="layui-input-inline">
+                        <input id="createTime$" class="layui-input" type="text" placeholder="请输入" autocomplete="off" disabled="disabled">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">无法修改</div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
@@ -78,9 +85,9 @@
             success: function (res) {
                 if (res.code === 200){
                     var user = res.data;
-                    $('#id').val(user.id);
-                    $('#username').val(user.username);
-                    $('#mobile').val(user.mobile);
+                    for (var val in user) {
+                        $('#person-detail').find(":input[id='" + val + "']").val(user[val]);
+                    }
                 } else if (res.code === 403){
                     top.location.href = "/";
                 } else {
@@ -95,6 +102,7 @@
                 id: $('#id').val(),
                 username: $('#username').val(),
                 mobile: $("#mobile").val(),
+                createTime: top.strToDate($('#createTime\\$').val()),
             };
             layer.confirm('确定修改资料吗？', function(){
                 $.ajax({
