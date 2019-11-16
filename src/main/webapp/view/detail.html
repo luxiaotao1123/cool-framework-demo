@@ -68,6 +68,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">密码</label>
                     <div class="layui-input-inline">
+                        <input id="password" class="layui-input" type="text" placeholder="请输入" autocomplete="off" style="display: none">
                         <button id="update-password" class="layui-btn layui-btn-primary" lay-submit lay-filter="save">
                             <i class="layui-icon">&#xe620;</i>
                             修改密码
@@ -119,6 +120,20 @@
         });
 
         // 修改密码
+        $(document).on('click','#update-password', function () {
+            layer.open({
+                type: 2,
+                title: '修改密码',
+                maxmin: true,
+                area: ['350px', '310px'],
+                offset: ['120px', '50px'],
+                shadeClose: false,
+                content: '/password',
+                success: function(layero, index){
+
+                }
+            })
+        });
 
 
         // 保存修改
