@@ -12,7 +12,7 @@ public class CodeBuilder {
         generator.url="localhost:3306/cool";
         generator.username="root";
         generator.password="xltys1995";
-        generator.table="sys_operate_log";
+        generator.table="sys_host";
         generator.packagePath="com.cool.demo.system";
         generator.build();
     }
