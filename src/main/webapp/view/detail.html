@@ -25,6 +25,12 @@
         .layui-input-block {
             margin-left: 90px;
         }
+        #update-password {
+            padding: 0 20px 0 15px;
+        }
+        .layui-btn .layui-icon {
+            margin-right: 0;
+        }
     </style>
 </head>
 <body id="body">
@@ -34,10 +40,17 @@
         <div class="layui-card-body">
             <div id="person-detail" class="layui-form">
                 <div class="layui-form-item" style="display: none">
-                    <label class="layui-form-label">账号名</label>
+                    <label class="layui-form-label">编号</label>
                     <div class="layui-input-inline">
                         <input id="id" class="layui-input" type="text" placeholder="请输入" autocomplete="off">
                     </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">角色</label>
+                    <div class="layui-input-inline">
+                        <input id="roleName" class="layui-input" type="text" placeholder="请输入" autocomplete="off" disabled="disabled">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">当前角色不可更改为其它角色</div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">账号名</label>
@@ -50,14 +63,23 @@
                     <div class="layui-input-inline">
                         <input id="mobile" class="layui-input" type="text" placeholder="请输入" autocomplete="off">
                     </div>
-                    <div class="layui-form-mid layui-word-aux">一般用于后台登入</div>
+                    <div class="layui-form-mid layui-word-aux">重要！一般用于后台登入</div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-inline">
+                        <button id="update-password" class="layui-btn layui-btn-primary" lay-submit lay-filter="save">
+                            <i class="layui-icon">&#xe620;</i>
+                            修改密码
+                        </button>
+                    </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">注册时间</label>
                     <div class="layui-input-inline">
                         <input id="createTime$" class="layui-input" type="text" placeholder="请输入" autocomplete="off" disabled="disabled">
                     </div>
-                    <div class="layui-form-mid layui-word-aux">无法修改</div>
+                    <div class="layui-form-mid layui-word-aux">不可修改</div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
@@ -96,13 +118,15 @@
             }
         });
 
+        // 修改密码
+
+
         // 保存修改
         form.on('submit(save)', function (data) {
             var user = {
                 id: $('#id').val(),
                 username: $('#username').val(),
                 mobile: $("#mobile").val(),
-                createTime: top.strToDate($('#createTime\\$').val()),
             };
             layer.confirm('确定修改资料吗？', function(){
                 $.ajax({
