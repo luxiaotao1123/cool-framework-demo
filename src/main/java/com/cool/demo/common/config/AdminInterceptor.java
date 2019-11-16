@@ -58,30 +58,36 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
     }
 
     private boolean check(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) throws IOException, ServletException {
-        String token = request.getHeader("token");
-        UserLogin userLogin = userLoginService.selectOne(new EntityWrapper<UserLogin>().eq("token", token));
-        if (null == userLogin){
+        try {
+            String token = request.getHeader("token");
+            UserLogin userLogin = userLoginService.selectOne(new EntityWrapper<UserLogin>().eq("token", token));
+            if (null == userLogin){
+                Http.response(response, BaseRes.DENIED);
+                return false;
+            }
+            User user = userService.selectById(userLogin.getUserId());
+            String deToken = Cools.deTokn(token, user.getPassword());
+            long timestamp = Long.parseLong(deToken.substring(0, 13));
+            // 1天后过期
+            if (System.currentTimeMillis() - timestamp > 86400000){
+                Http.response(response, BaseRes.DENIED);
+                return false;
+            }
+            // 操作日志
+            OperateLog operateLog = new OperateLog();
+            operateLog.setAction(request.getRequestURI());
+            operateLog.setIp(request.getRemoteAddr());
+            operateLog.setUserId(user.getId());
+            operateLog.setRequest(JSON.toJSONString(request.getParameterMap()));
+            // 请求缓存
+            request.setAttribute("userId", user.getId());
+            request.setAttribute("operateLog", operateLog);
+            return true;
+        } catch (Exception e){
             Http.response(response, BaseRes.DENIED);
             return false;
         }
-        User user = userService.selectById(userLogin.getUserId());
-        String deToken = Cools.deTokn(token, user.getPassword());
-        long timestamp = Long.parseLong(deToken.substring(0, 13));
-        // 1天后过期
-        if (System.currentTimeMillis() - timestamp > 86400000){
-            Http.response(response, BaseRes.DENIED);
-            return false;
-        }
-        // 操作日志
-        OperateLog operateLog = new OperateLog();
-        operateLog.setAction(request.getRequestURI());
-        operateLog.setIp(request.getRemoteAddr());
-        operateLog.setUserId(user.getId());
-        operateLog.setRequest(JSON.toJSONString(request.getParameterMap()));
-        // 请求缓存
-        request.setAttribute("userId", user.getId());
-        request.setAttribute("operateLog", operateLog);
-        return true;
+
     }
 
 }
