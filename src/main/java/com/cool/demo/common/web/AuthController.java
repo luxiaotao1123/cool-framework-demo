@@ -1,7 +1,6 @@
 package com.cool.demo.common.web;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.cool.demo.common.BaseController;
 import com.cool.demo.common.CodeRes;
 import com.cool.demo.system.entity.Resource;
 import com.cool.demo.system.entity.RoleResource;

@@ -2,7 +2,7 @@ package com.cool.demo.common.config;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.cool.demo.common.Http;
+import com.cool.demo.common.utils.Http;
 import com.cool.demo.system.entity.OperateLog;
 import com.cool.demo.system.entity.User;
 import com.cool.demo.system.entity.UserLogin;

@@ -1,4 +1,4 @@
-package com.cool.demo.common;
+package com.cool.demo.common.web;
 
 import com.core.controller.AbstractBaseController;
 import org.springframework.beans.factory.annotation.Autowired;

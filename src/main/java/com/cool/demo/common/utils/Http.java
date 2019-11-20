@@ -1,4 +1,4 @@
-package com.cool.demo.common;
+package com.cool.demo.common.utils;
 
 
 import com.alibaba.fastjson.JSON;
