@@ -31,8 +31,18 @@ function strToDate(str) {
     if (!isNaN(t)) {
         return new Date(Date.parse(str.replace(/-/g, "/")));
     } else {
-        return new Date();
+        return null;
     }
+}
+
+// 清理对象null值
+function reObject(data) {
+    for (var obj in data) {
+        if (data[obj]===null){
+            delete data[obj];
+        }
+    }
+    return data;
 }
 
 /**
