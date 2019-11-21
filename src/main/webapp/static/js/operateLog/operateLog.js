@@ -186,35 +186,39 @@ layui.use(['table','laydate', 'form'], function(){
                 });
                 break;
             case 'User':
-                layer.open({
-                    type: 2,
-                    title: '详情',
-                    maxmin: true,
-                    area: [top.detailHeight, top.detailWidth],
-                    shadeClose: false,
-                    content: 'user_detail',
-                    success: function(layero, index){
-                        $.ajax({
-                            url: "/user/"+ data.userId +"/auth",
-                            headers: {'token': localStorage.getItem('token')},
-                            data: data,
-                            method: 'POST',
-                            success: function (res) {
-                                if (res.code === 200){
-                                    setFormVal(layer.getChildFrame('#detail', index), res.data, true);
-                                    top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
-                                    layer.getChildFrame('#data-detail-submit', index).hide();
-                                    detailScreen(index);
-                                    layero.find('iframe')[0].contentWindow.layui.form.render('select');
-                                } else if (res.code === 403){
-                                    parent.location.href = "/";
-                                }else {
-                                    layer.msg(res.msg)
+                var param = top.reObject(data).userId;
+                if (param === undefined) {
+                    layer.msg("无数据");
+                } else {
+                    layer.open({
+                        type: 2,
+                        title: '详情',
+                        maxmin: true,
+                        area: [top.detailHeight, top.detailWidth],
+                        shadeClose: false,
+                        content: 'user_detail',
+                        success: function(layero, index){
+                            $.ajax({
+                                url: "/user/"+ param +"/auth",
+                                headers: {'token': localStorage.getItem('token')},
+                                method: 'GET',
+                                success: function (res) {
+                                    if (res.code === 200){
+                                        setFormVal(layer.getChildFrame('#detail', index), res.data, true);
+                                        top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
+                                        layer.getChildFrame('#data-detail-submit', index).hide();
+                                        detailScreen(index);
+                                        layero.find('iframe')[0].contentWindow.layui.form.render('select');
+                                    } else if (res.code === 403){
+                                        parent.location.href = "/";
+                                    }else {
+                                        layer.msg(res.msg)
+                                    }
                                 }
-                            }
-                        })
-                    }
-                });
+                            })
+                        }
+                    });
+                }
                 break;
 
         }
