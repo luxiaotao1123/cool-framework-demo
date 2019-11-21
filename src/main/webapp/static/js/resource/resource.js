@@ -18,10 +18,11 @@ layui.use(['table','laydate', 'form'], function(){
         cols: [[
             {type: 'checkbox', fixed: 'left'}
             ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
-            ,{field: 'code', align: 'center',title: '菜单编码'}
-            ,{field: 'pcode', align: 'center',title: '父级菜单编码'}
+            // ,{field: 'code', align: 'center',title: '菜单编码'}
             ,{field: 'name', align: 'center',title: '菜单名称'}
+            ,{field: 'resourceName', align: 'center',title: '父级菜单',event: 'Resource', style: 'text-decoration: underline;cursor:pointer'}
             ,{field: 'level$', align: 'center',title: '菜单等级'}
+            // ,{field: 'sort', align: 'center',title: '排序'}
             ,{field: 'status$', align: 'center',title: '状态'}
 
             ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
@@ -159,7 +160,7 @@ layui.use(['table','laydate', 'form'], function(){
                     shadeClose: false,
                     content: '/resource_detail',
                     success: function(layero, index){
-                        setFormVal(layer.getChildFrame('#detail', index), data);
+                        setFormVal(layer.getChildFrame('#detail', index), data, true);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
                         layer.getChildFrame('#data-detail-submit', index).hide();
                         detailScreen(index);
@@ -177,12 +178,47 @@ layui.use(['table','laydate', 'form'], function(){
                     shadeClose: false,
                     content: '/resource_detail',
                     success: function(layero, index){
-                        setFormVal(layer.getChildFrame('#detail', index), data);
+                        setFormVal(layer.getChildFrame('#detail', index), data, false);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
                         detailScreen(index);
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                     }
                 });
+                break;
+            case 'Resource':
+                var param = top.reObject(data).resourceId;
+                if (param === undefined) {
+                    layer.msg("无数据");
+                } else {
+                   layer.open({
+                       type: 2,
+                       title: '父级详情',
+                       maxmin: true,
+                       area: [top.detailHeight, top.detailWidth],
+                       shadeClose: false,
+                       content: 'resource_detail',
+                       success: function(layero, index){
+                           $.ajax({
+                               url: "/resource/"+ param +"/auth",
+                               headers: {'token': localStorage.getItem('token')},
+                               method: 'GET',
+                               success: function (res) {
+                                   if (res.code === 200){
+                                       setFormVal(layer.getChildFrame('#detail', index), res.data, true);
+                                       top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
+                                       layer.getChildFrame('#data-detail-submit', index).hide();
+                                       detailScreen(index);
+                                       layero.find('iframe')[0].contentWindow.layui.form.render('select');
+                                   } else if (res.code === 403){
+                                       parent.location.href = "/";
+                                   }else {
+                                       layer.msg(res.msg)
+                                   }
+                               }
+                           })
+                       }
+                   });
+                }
                 break;
 
         }
@@ -196,9 +232,10 @@ layui.use(['table','laydate', 'form'], function(){
         var data = {
             id: $('#id').val(),
             code: $('#code').val(),
-            pcode: $('#pcode').val(),
             name: $('#name').val(),
+            resourceId: $('#resourceId').val(),
             level: $('#level').val(),
+            sort: $('#sort').val(),
             status: $('#status').val(),
 
         };
@@ -275,9 +312,20 @@ function tableReload(child) {
     });
 }
 
-function setFormVal(el, data) {
+function setFormVal(el, data, showImg) {
     for (var val in data) {
-        el.find(":input[id='" + val + "']").val(data[val]);
+        var find = el.find(":input[id='" + val + "']");
+        find.val(data[val]);
+        if (showImg){
+            var next = find.next();
+            if (next.get(0)){
+                if (next.get(0).localName === "img") {
+                    find.hide();
+                    next.attr("src", data[val]);
+                    next.show();
+                }
+            }
+        }
     }
 }
 

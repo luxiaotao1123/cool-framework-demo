@@ -62,44 +62,37 @@ public class AuthController extends BaseController {
 
     @RequestMapping("/user/detail/auth")
     public R userDetail(){
-        User user = userService.selectById(getUserId());
-        return R.ok(user);
+        return R.ok(userService.selectById(getUserId()));
     }
 
     @RequestMapping("/menu/auth")
     public R menu(){
-        User user = userService.selectById(getUserId());
-        List<Resource> oneLevel = resourceService.selectList(new EntityWrapper<Resource>().eq("level", 1).eq("status", 1));
+        User user = userService.selectById(1);
+        // 获取所有一级菜单
+        List<Resource> oneLevel = resourceService.selectList(new EntityWrapper<Resource>().eq("level", 1).eq("status", 1).orderBy("sort"));
+        // 获取当前用户的所有二级菜单
         List<RoleResource> roleResources = roleResourceService.selectList(new EntityWrapper<RoleResource>().eq("role_id", user.getRoleId()));
         List<Long> resourceIds = new ArrayList<>();
         roleResources.forEach(roleResource -> resourceIds.add(roleResource.getResourceId()));
         if (resourceIds.isEmpty()){
             return R.ok();
         }
-        List<Resource> twoLevel = resourceService.selectList(new EntityWrapper<Resource>().in("id", resourceIds).eq("level", 2).eq("status", 1));
-        Map<String, String> pNames = new HashMap<>();
-        oneLevel.forEach(resource -> pNames.put(resource.getCode(), resource.getName()));
+        List<Resource> twoLevel = resourceService.selectList(new EntityWrapper<Resource>().in("id", resourceIds).eq("level", 2).eq("status", 1).orderBy("sort"));
         List<Map<String, Object>> result = new ArrayList<>();
-        Set<String> set = new HashSet<>();
-        for (Resource resource : twoLevel){
-            String pCode = resource.getPcode();
-            if (set.contains(pCode)){
-                for (Map<String, Object> map : result){
-                    if (map.get("menu").equals(pNames.get(pCode))){
-                        @SuppressWarnings("unchecked")
-                        List<Resource> subMenu = (List<Resource>) map.get("subMenu");
-                        subMenu.add(resource);
-                    }
+        for (Resource menu : oneLevel) {
+            Map<String, Object> map = new HashMap<>();
+            List<Resource> subMenu = new ArrayList<>();
+            Iterator<Resource> iterator = twoLevel.iterator();
+            while (iterator.hasNext()) {
+                Resource resource = iterator.next();
+                if (resource.getResourceId().equals(menu.getId())) {
+                    subMenu.add(resource);
+                    iterator.remove();
                 }
-            } else {
-                set.add(pCode);
-                Map<String, Object> map = new HashMap<>();
-                List<Resource> subMenu = new ArrayList<>();
-                subMenu.add(resource);
-                map.put("menu", pNames.get(resource.getPcode()));
-                map.put("subMenu", subMenu);
-                result.add(map);
             }
+            map.put("menu", menu.getName());
+            map.put("subMenu", subMenu);
+            result.add(map);
         }
         return R.ok(result);
     }
@@ -113,7 +106,7 @@ public class AuthController extends BaseController {
             oneLevelMap.put("title", oneLevel.getName());
             oneLevelMap.put("id", oneLevel.getCode());
             oneLevelMap.put("spread", true);
-            List<Resource> twoLevels = resourceService.selectList(new EntityWrapper<Resource>().eq("pcode", oneLevel.getCode()).eq("status", 1));
+            List<Resource> twoLevels = resourceService.selectList(new EntityWrapper<Resource>().eq("resource_id", oneLevel.getId()).eq("status", 1));
             List<Map> twoLevelsList = new ArrayList<>();
             oneLevelMap.put("children", twoLevelsList);
             for (Resource twoLevel : twoLevels){

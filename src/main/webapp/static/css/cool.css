@@ -12,6 +12,7 @@
     display: none;
     position: absolute;
     line-height: normal;
+    z-index: 999;
 }
 
 .cool-auto-complete-window-input {

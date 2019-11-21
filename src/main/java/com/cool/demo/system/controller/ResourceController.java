@@ -117,13 +117,14 @@ public class ResourceController extends AbstractBaseController {
     @ResponseBody
     public R query(String condition) {
         EntityWrapper<Resource> wrapper = new EntityWrapper<>();
-        wrapper.like("code", condition);
+        wrapper.like("name", condition);
+        wrapper.eq("level", 1);
         Page<Resource> page = resourceService.selectPage(new Page<>(0, 10), wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
         for (Resource resource : page.getRecords()){
             Map<String, Object> map = new HashMap<>();
             map.put("id", resource.getId());
-            map.put("value", resource.getCode());
+            map.put("value", resource.getName());
             result.add(map);
         }
         return R.ok(result);

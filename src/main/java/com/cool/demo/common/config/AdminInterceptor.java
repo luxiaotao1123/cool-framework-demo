@@ -3,12 +3,8 @@ package com.cool.demo.common.config;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.cool.demo.common.utils.Http;
-import com.cool.demo.system.entity.OperateLog;
-import com.cool.demo.system.entity.User;
-import com.cool.demo.system.entity.UserLogin;
-import com.cool.demo.system.service.OperateLogService;
-import com.cool.demo.system.service.UserLoginService;
-import com.cool.demo.system.service.UserService;
+import com.cool.demo.system.entity.*;
+import com.cool.demo.system.service.*;
 import com.core.common.BaseRes;
 import com.core.common.Cools;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +31,10 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
     private UserLoginService userLoginService;
     @Autowired
     private OperateLogService operateLogService;
+//    @Autowired
+//    private PermissionService permissionService;
+//    @Autowired
+//    private RolePermissionService rolePermissionService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -73,6 +73,11 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
                 Http.response(response, BaseRes.DENIED);
                 return false;
             }
+            // 权限校验
+//            if (!limit(request.getRequestURI(), user)) {
+//                Http.response(response, BaseRes.LIMIT);
+//                return false;
+//            }
             // 操作日志
             OperateLog operateLog = new OperateLog();
             operateLog.setAction(request.getRequestURI());
@@ -89,5 +94,21 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
         }
 
     }
+
+//    /**
+//     * 权限拦截
+//     * @return false:无权限;   true:认证通过
+//     */
+//    private boolean limit(String action, User user) {
+//        Permission permission = new Permission();
+//        permission.setAction(action);
+//        permission.setStatus((short) 1);
+//        Permission one = permissionService.selectOne(new EntityWrapper<>(permission));
+//        if (!Cools.isEmpty(one)) {
+//            RolePermission rolePermission = rolePermissionService.selectOne(new EntityWrapper<>(new RolePermission(user.getRoleId(), permission.getId())));
+//            return !Cools.isEmpty(rolePermission);
+//        }
+//        return true;
+//    }
 
 }

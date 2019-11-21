@@ -22,21 +22,27 @@
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">
-            <label class="layui-form-label"><span class="not-null">*</span>菜单编码*：</label>
+            <label class="layui-form-label"><span class="not-null">*</span>菜单编码：</label>
             <div class="layui-input-inline">
-                <input id="code" class="layui-input" type="text" placeholder="菜单编码*" lay-verify="required" >
-            </div>
-        </div>
-        <div class="layui-inline"  style="width:31%;">
-            <label class="layui-form-label" style="font-size: x-small">父级菜单编码：</label>
-            <div class="layui-input-inline">
-                <input id="pcode" class="layui-input" type="text" placeholder="父级菜单编码">
+                <input id="code" class="layui-input" type="text" placeholder="菜单编码" lay-verify="required" >
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">
             <label class="layui-form-label"><span class="not-null">*</span>菜单名称：</label>
             <div class="layui-input-inline">
                 <input id="name" class="layui-input" type="text" placeholder="菜单名称" lay-verify="required" >
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">父级菜单：</label>
+            <div class="layui-input-inline cool-auto-complete">
+                <input id="resourceId" class="layui-input" type="text" placeholder="父级菜单" style="display: none">
+                <input id="resourceName" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="父级菜单" onfocus=this.blur()>
+                <div class="cool-auto-complete-window">
+                    <input class="cool-auto-complete-window-input" data-key="resourceQuery" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                    <select class="cool-auto-complete-window-select" data-key="resourceQuerySelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                    </select>
+                </div>
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">
@@ -50,12 +56,18 @@
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">排　　序：</label>
+            <div class="layui-input-inline">
+                <input id="sort" class="layui-input" type="text" placeholder="排序">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
             <label class="layui-form-label"><span class="not-null">*</span>状　　态：</label>
             <div class="layui-input-inline">
                 <select id="status" lay-verify="required">
                     <option value="" style="display: none"></option>
-                    <option value="0">失效</option>
-                    <option value="1">有效</option>
+                    <option value="1">正常</option>
+                    <option value="0">禁用</option>
                 </select>
             </div>
         </div>
