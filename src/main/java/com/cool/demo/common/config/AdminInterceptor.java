@@ -31,10 +31,10 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
     private UserLoginService userLoginService;
     @Autowired
     private OperateLogService operateLogService;
-//    @Autowired
-//    private PermissionService permissionService;
-//    @Autowired
-//    private RolePermissionService rolePermissionService;
+    @Autowired
+    private PermissionService permissionService;
+    @Autowired
+    private RolePermissionService rolePermissionService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -74,10 +74,10 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
                 return false;
             }
             // 权限校验
-//            if (!limit(request.getRequestURI(), user)) {
-//                Http.response(response, BaseRes.LIMIT);
-//                return false;
-//            }
+            if (!limit(request.getRequestURI(), user)) {
+                Http.response(response, BaseRes.LIMIT);
+                return false;
+            }
             // 操作日志
             OperateLog operateLog = new OperateLog();
             operateLog.setAction(request.getRequestURI());
@@ -95,20 +95,20 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
 
     }
 
-//    /**
-//     * 权限拦截
-//     * @return false:无权限;   true:认证通过
-//     */
-//    private boolean limit(String action, User user) {
-//        Permission permission = new Permission();
-//        permission.setAction(action);
-//        permission.setStatus((short) 1);
-//        Permission one = permissionService.selectOne(new EntityWrapper<>(permission));
-//        if (!Cools.isEmpty(one)) {
-//            RolePermission rolePermission = rolePermissionService.selectOne(new EntityWrapper<>(new RolePermission(user.getRoleId(), permission.getId())));
-//            return !Cools.isEmpty(rolePermission);
-//        }
-//        return true;
-//    }
+    /**
+     * 权限拦截
+     * @return false:无权限;   true:认证通过
+     */
+    private boolean limit(String action, User user) {
+        Permission permission = new Permission();
+        permission.setAction(action);
+        permission.setStatus((short) 1);
+        Permission one = permissionService.selectOne(new EntityWrapper<>(permission));
+        if (!Cools.isEmpty(one)) {
+            RolePermission rolePermission = rolePermissionService.selectOne(new EntityWrapper<>(new RolePermission(user.getRoleId(), permission.getId())));
+            return !Cools.isEmpty(rolePermission);
+        }
+        return true;
+    }
 
 }
