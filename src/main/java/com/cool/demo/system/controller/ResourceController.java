@@ -68,6 +68,9 @@ public class ResourceController extends AbstractBaseController {
             return R.error();
         }
         if (null == resource.getId()){
+            if (resource.getSort() == null){
+                resource.setSort(999);
+            }
             resourceService.insert(resource);
         } else {
             resourceService.updateById(resource);
