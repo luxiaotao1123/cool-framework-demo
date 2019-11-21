@@ -24,7 +24,7 @@
         <div class="layui-inline"  style="width:31%;">
             <label class="layui-form-label"><span class="not-null">*</span>账　　号：</label>
             <div class="layui-input-inline">
-                <input id="username" class="layui-input" type="text" placeholder="账号*" lay-verify="required" >
+                <input id="username" class="layui-input" type="text" placeholder="账号" lay-verify="required" >
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">
@@ -41,8 +41,14 @@
         </div>
         <div class="layui-inline"  style="width:31%;">
             <label class="layui-form-label"><span class="not-null">*</span>角　　色：</label>
-            <div class="layui-input-inline">
-                <input id="roleId" class="layui-input" type="text" placeholder="角色" lay-verify="required" >
+            <div class="layui-input-inline cool-auto-complete">
+                <input id="roleId" class="layui-input" type="text" placeholder="角色" lay-verify="required"  style="display: none">
+                <input id="roleName" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="角色" onfocus=this.blur()>
+                <div class="cool-auto-complete-window">
+                    <input class="cool-auto-complete-window-input" data-key="roleQuery" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                    <select class="cool-auto-complete-window-select" data-key="roleQuerySelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                    </select>
+                </div>
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">
