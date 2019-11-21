@@ -236,7 +236,7 @@ layui.use(['table','laydate', 'form'], function(){
         $.ajax({
             url: "/userLogin/edit/auth",
             headers: {'token': localStorage.getItem('token')},
-            data: data,
+            data: top.reObject(data),
             method: 'POST',
             success: function (res) {
                 if (res.code === 200){
