@@ -14,9 +14,9 @@ import java.io.PrintWriter;
 public class Http {
 
     public static void response(HttpServletResponse response, String baseRes){
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("application/json; charset=utf-8");
         try (PrintWriter out = response.getWriter()) {
-            response.setCharacterEncoding("utf-8");
-            response.setContentType("application/json; charset=utf-8");
             R r = R.parse(baseRes);
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("total", "0");
