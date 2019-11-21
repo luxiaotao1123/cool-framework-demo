@@ -65,7 +65,7 @@ public class AuthController extends BaseController {
 
     @RequestMapping("/menu/auth")
     public R menu(){
-        User user = userService.selectById(1);
+        User user = userService.selectById(getUserId());
         // 获取所有一级菜单
         List<Resource> oneLevel = resourceService.selectList(new EntityWrapper<Resource>().eq("level", 1).eq("status", 1).orderBy("sort"));
         // 获取当前用户的所有二级菜单
