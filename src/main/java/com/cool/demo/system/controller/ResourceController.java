@@ -56,7 +56,7 @@ public class ResourceController extends AbstractBaseController {
             } else if (entry.getKey().endsWith("<")) {
                 wrapper.le(Cools.deleteChar(entry.getKey()), DateUtils.convert(String.valueOf(entry.getValue())));
             } else {
-                wrapper.like(entry.getKey(), String.valueOf(entry.getValue()));
+                wrapper.eq(entry.getKey(), String.valueOf(entry.getValue()));
             }
         }
     }
@@ -121,13 +121,12 @@ public class ResourceController extends AbstractBaseController {
     public R query(String condition) {
         EntityWrapper<Resource> wrapper = new EntityWrapper<>();
         wrapper.like("name", condition);
-        wrapper.eq("level", 1);
         Page<Resource> page = resourceService.selectPage(new Page<>(0, 10), wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
         for (Resource resource : page.getRecords()){
             Map<String, Object> map = new HashMap<>();
             map.put("id", resource.getId());
-            map.put("value", resource.getName());
+            map.put("value", resource.getName().concat("(").concat(resource.getLevel$().substring(0, 2).concat(")")));
             result.add(map);
         }
         return R.ok(result);
