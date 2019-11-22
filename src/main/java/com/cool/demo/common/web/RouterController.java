@@ -2,7 +2,6 @@ package com.cool.demo.common.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created by vincent on 2019-07-30
@@ -40,9 +39,4 @@ public class RouterController {
         return "detail";
     }
 
-    @RequestMapping("permission/test/auth")
-    @ResponseBody
-    public String permissionTest(){
-        return "Success";
-    }
 }
