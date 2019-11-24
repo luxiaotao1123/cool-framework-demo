@@ -18,6 +18,7 @@ layui.use(['table','laydate', 'form'], function(){
         cols: [[
             {type: 'checkbox', fixed: 'left'}
             ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
+            ,{field: 'hostName', align: 'center',title: '授权商户',event: 'Host', style: 'text-decoration: underline;cursor:pointer'}
             ,{field: 'username', align: 'center',title: '账号'}
             ,{field: 'mobile', align: 'center',title: '手机号'}
             ,{field: 'password', align: 'center',title: '密码'}
@@ -220,7 +221,41 @@ layui.use(['table','laydate', 'form'], function(){
                     });
                 }
                 break;
-
+            case 'Host':
+                var param = top.reObject(data).hostId;
+                if (param === undefined) {
+                    layer.msg("无数据");
+                } else {
+                    layer.open({
+                        type: 2,
+                        title: '详情',
+                        maxmin: true,
+                        area: [top.detailHeight, top.detailWidth],
+                        shadeClose: false,
+                        content: 'host_detail',
+                        success: function(layero, index){
+                            $.ajax({
+                                url: "/host/"+ param +"/auth",
+                                headers: {'token': localStorage.getItem('token')},
+                                method: 'GET',
+                                success: function (res) {
+                                    if (res.code === 200){
+                                        setFormVal(layer.getChildFrame('#detail', index), res.data);
+                                        top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
+                                        layer.getChildFrame('#data-detail-submit', index).hide();
+                                        detailScreen(index);
+                                        layero.find('iframe')[0].contentWindow.layui.form.render('select');
+                                    } else if (res.code === 403){
+                                        parent.location.href = "/";
+                                    }else {
+                                        layer.msg(res.msg)
+                                    }
+                                }
+                            })
+                        }
+                    });
+                }
+                break;
         }
     });
 
@@ -231,6 +266,7 @@ layui.use(['table','laydate', 'form'], function(){
         });
         var data = {
             id: $('#id').val(),
+            hostId: $('#hostId').val(),
             username: $('#username').val(),
             mobile: $('#mobile').val(),
             password: $('#password').val(),

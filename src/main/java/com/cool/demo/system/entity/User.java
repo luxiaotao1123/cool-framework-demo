@@ -1,16 +1,17 @@
 package com.cool.demo.system.entity;
 
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.enums.IdType;
-import com.core.common.SpringUtils;
-import com.cool.demo.system.service.RoleService;
 import com.baomidou.mybatisplus.annotations.TableField;
-import java.text.SimpleDateFormat;
-import com.core.common.Cools;
-import java.util.Date;
-
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+import com.cool.demo.system.service.HostService;
+import com.cool.demo.system.service.RoleService;
+import com.core.common.Cools;
+import com.core.common.SpringUtils;
+
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @TableName("sys_user")
 public class User implements Serializable {
@@ -22,6 +23,12 @@ public class User implements Serializable {
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
+
+    /**
+     * 授权商户
+     */
+    @TableField("host_id")
+    private Long hostId;
 
     /**
      * 账号
@@ -67,6 +74,23 @@ public class User implements Serializable {
         return username;
     }
 
+    public Long getHostId() {
+        return hostId;
+    }
+
+    public String getHostName() {
+        HostService service = SpringUtils.getBean(HostService.class);
+        Host host = service.selectById(this.hostId);
+        if (!Cools.isEmpty(host)){
+            return host.getName();
+        }
+        return null;
+    }
+
+    public void setHostId(Long hostId) {
+        this.hostId = hostId;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -99,6 +123,7 @@ public class User implements Serializable {
         }
         return null;
     }
+
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }

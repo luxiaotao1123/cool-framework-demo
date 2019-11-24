@@ -22,6 +22,18 @@
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label"><span class="not-null">*</span>授权商户：</label>
+            <div class="layui-input-inline cool-auto-complete">
+                <input id="hostId" class="layui-input" type="text" placeholder="授权商户" lay-verify="required"  style="display: none">
+                <input id="hostName" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="授权商户" onfocus=this.blur()>
+                <div class="cool-auto-complete-window">
+                    <input class="cool-auto-complete-window-input" data-key="hostQuery" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                    <select class="cool-auto-complete-window-select" data-key="hostQuerySelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
             <label class="layui-form-label"><span class="not-null">*</span>账　　号：</label>
             <div class="layui-input-inline">
                 <input id="username" class="layui-input" type="text" placeholder="账号" lay-verify="required" >
