@@ -9,6 +9,10 @@ spring:
     view:
       prefix: view/
       suffix: .html
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 2048MB
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
