@@ -24,5 +24,13 @@ aliyun:
     bucket: luxiaotao
     endpoint: https://luxiaotao.oss-cn-hangzhou.aliyuncs.com/
 
+#qcc:
+#  key: 85e307162aff40f09a06665b24f8ab5c
+#  secret: 0A21643AFF0A7F7600B94659C8997433
+
+qcc:
+  key: 05f08937dc524c03b1d5ca1be2cbf317
+  secret: CE8B4FF92CDB2B297E1E4B6E5FE4624A
+
 logging:
   path: /stock/out/logs

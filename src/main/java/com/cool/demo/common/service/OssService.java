@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 
@@ -15,7 +15,7 @@ import java.io.InputStream;
  * 阿里云OSS服务类
  * Created by vincent on 2019-11-26
  */
-@Component("ossService")
+@Service("ossService")
 public class OssService {
 
     private static Logger log = LoggerFactory.getLogger(OssService.class);

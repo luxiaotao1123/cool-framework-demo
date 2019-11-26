@@ -21,6 +21,8 @@
         <fastjson.version>1.2.58</fastjson.version>
         <easyexcel.version>2.0.5</easyexcel.version>
         <lombok.version>1.16.20</lombok.version>
+        <okHttp3.version>3.10.0</okHttp3.version>
+        <aliyun.oss.version>2.8.3</aliyun.oss.version>
     </properties>
 
     <dependencies>
@@ -61,7 +63,12 @@
         <dependency>
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
-            <version>2.8.3</version>
+            <version>${aliyun.oss.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>${okHttp3.version}</version>
         </dependency>
     </dependencies>
 
