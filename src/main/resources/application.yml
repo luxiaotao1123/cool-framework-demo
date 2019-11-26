@@ -17,5 +17,12 @@ spring:
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
 
+aliyun:
+  oss:
+    id: LTAInTU3Y03Dkd9S
+    secret: kCZQjAl6rLRJD3gZUGvpfqk5shKP88
+    bucket: luxiaotao
+    endpoint: https://luxiaotao.oss-cn-hangzhou.aliyuncs.com/
+
 logging:
   path: /stock/out/logs
