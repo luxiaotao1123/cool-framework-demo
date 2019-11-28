@@ -179,105 +179,103 @@
     });
 
     var myChart = echarts.init(document.getElementById('echarts'));
-    // 指定图表的配置项和数据
-    var dataAxis = ['点', '击', '柱', '子', '或', '者', '两', '指', '在', '触', '屏', '上', '滑', '动', '能', '够', '自', '动', '缩', '放'];
-    var data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
-    var yMax = 500;
-    var dataShadow = [];
-
-    for (var i = 0; i < data.length; i++) {
-        dataShadow.push(yMax);
-    }
-
     option = {
         title: {
-            text: '',
-            subtext: 'Feature Sample: Gradient Color, Shadow, Click Zoom'
+            // subtext: '堆叠区域图'
         },
-        xAxis: {
-            data: dataAxis,
-            axisLabel: {
-                inside: true,
-                textStyle: {
-                    color: '#fff'
-                }
-            },
-            axisTick: {
-                show: false
-            },
-            axisLine: {
-                show: false
-            },
-            z: 10
-        },
-        yAxis: {
-            axisLine: {
-                show: false
-            },
-            axisTick: {
-                show: false
-            },
-            axisLabel: {
-                textStyle: {
-                    color: '#999'
+        // 提示框组件
+        tooltip : {
+            // 坐标轴触发
+            trigger: 'axis',
+            // 坐标轴指示器
+            axisPointer: {
+                // 十字准星指示器
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
                 }
             }
         },
-        dataZoom: [
+        // 图表上方的组件集合
+        legend: {
+            data:[{name:'邮件营销'},'联盟广告','视频广告','直接访问','搜索引擎']
+        },
+        // 工具栏
+        toolbox: {
+            feature: {
+                // 保存为图片
+                // saveAsImage: {}
+            }
+        },
+        // 图表的样式
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        // x轴
+        xAxis : [
             {
-                type: 'inside'
+                type : 'category',
+                // 坐标轴两边留白策略
+                boundaryGap : false,
+                data : ['周一','周二','周三','周四','周五','周六','周日']
             }
         ],
-        series: [
-            { // For shadow
-                type: 'bar',
-                itemStyle: {
-                    normal: {color: 'rgba(0,0,0,0.05)'}
-                },
-                barGap:'-100%',
-                barCategoryGap:'40%',
-                data: dataShadow,
-                animation: false
+        // y轴
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        // 数据
+        series : [
+            {
+                name:'邮件营销',
+                type:'line',
+                stack: '总量',
+                areaStyle: {},
+                data:[120, 132, 101, 134, 90, 230, 210]
             },
             {
-                type: 'bar',
-                itemStyle: {
+                name:'联盟广告',
+                type:'line',
+                stack: '总量',
+                areaStyle: {},
+                data:[220, 182, 191, 234, 290, 330, 310]
+            },
+            {
+                name:'视频广告',
+                type:'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data:[150, 232, 201, 154, 190, 330, 410]
+            },
+            {
+                name:'直接访问',
+                type:'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data:[320, 332, 301, 334, 390, 330, 320]
+            },
+            {
+                name:'搜索引擎',
+                type:'line',
+                stack: '总量',
+                // 数据
+                label: {
                     normal: {
-                        color: new echarts.graphic.LinearGradient(
-                            0, 0, 0, 1,
-                            [
-                                {offset: 0, color: '#83bff6'},
-                                {offset: 0.5, color: '#188df0'},
-                                {offset: 1, color: '#188df0'}
-                            ]
-                        )
-                    },
-                    emphasis: {
-                        color: new echarts.graphic.LinearGradient(
-                            0, 0, 0, 1,
-                            [
-                                {offset: 0, color: '#2378f7'},
-                                {offset: 0.7, color: '#2378f7'},
-                                {offset: 1, color: '#83bff6'}
-                            ]
-                        )
+                        show: true,
+                        position: 'top'
                     }
                 },
-                data: data
+                areaStyle: {normal: {}},
+                data:[820, 932, 901, 934, 1290, 1330, 1320]
             }
         ]
     };
 
-    // Enable data zoom when user click bar.
-    var zoomSize = 6;
-    myChart.on('click', function (params) {
-        console.log(dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)]);
-        myChart.dispatchAction({
-            type: 'dataZoom',
-            startValue: dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)],
-            endValue: dataAxis[Math.min(params.dataIndex + zoomSize / 2, data.length - 1)]
-        });
-    });
     if (option && typeof option === "object") {
         myChart.setOption(option, true);
     }
