@@ -14,6 +14,8 @@
 <style>
     html {
         height: 100%;
+        color: #666;
+        background: #fbfbfb;
     }
     body {
         height: 100%;
@@ -62,19 +64,39 @@
 
     /*主体*/
     .cool-home-stats {
-        padding: 18px;
-        width: 95%;
-        margin-top: 30px;
+        padding: 5px 1px;
+        width: 98%;
+        margin-top: 15px;
         border-radius: 5px;
         box-shadow: 0 0 3px rgba(0,0,0,.1);
     }
+    .cool-home-stats .layui-card-body {
+        height: auto;
+    }
+    .cool-btn-group {
+        float: right;
+    }
 
     #echarts {
+        width: 66.66666667%;
         display: inline-block;
+        vertical-align:top
     }
     /*进度条*/
     #progress {
+        width: 33.33333333%;
+        height: 400px;
         display: inline-block;
+        vertical-align:top
+    }
+    .cool-card-list {
+        padding: 15px;
+    }
+    .cool-card-list p {
+        padding-bottom: 10px;
+        font-size: 20px;
+        color: #666;
+        line-height: 24px;
     }
 </style>
 <body id="body" >
@@ -103,20 +125,45 @@
     </div>
     <!--统计数据-->
     <div class="cool-home-stats layui-card">
-        <!--报表-->
-        <div id="echarts" style="width: 600px;height:400px;"></div>
-        <!--进度-->
-        <div id="progress">
-            <div class="layui-progress layui-progress-big">
-                <div class="layui-progress-bar" lay-percent="30%"></div>
+        <div class="layui-card-header">
+            数据概览
+            <div class="layui-btn-group cool-btn-group">
+                <a href="javascript:;" class="layui-btn layui-btn-primary layui-btn-xs">去年</a>
+                <a href="javascript:;" class="layui-btn layui-btn-primary layui-btn-xs">今年</a>
             </div>
-
-            <div class="layui-progress layui-progress-big">
-                <div class="layui-progress-bar layui-bg-orange" lay-percent="50%"></div>
-            </div>
-
-            <div class="layui-progress layui-progress-big" lay-showPercent="true">
-                <div class="layui-progress-bar layui-bg-blue" lay-percent="80%"></div>
+        </div>
+        <div class="layui-card-body">
+            <!--报表-->
+            <div id="echarts" style="width: 600px;height:400px;"></div>
+            <!--进度-->
+            <div id="progress">
+                <div class="cool-card-list">
+                    <p>月访问数</p>
+                    <span>同上期增长</span>
+                    <div class="layui-progress layui-progress-big">
+                        <div class="layui-progress-bar" lay-percent="30%">
+                            <span class="layui-progress-text">30%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cool-card-list">
+                    <p>月活跃数</p>
+                    <span>同上期增长</span>
+                    <div class="layui-progress layui-progress-big">
+                        <div class="layui-progress-bar" lay-percent="40%">
+                            <span class="layui-progress-text">40%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cool-card-list">
+                    <p>月收入</p>
+                    <span>同上期增长</span>
+                    <div class="layui-progress layui-progress-big">
+                        <div class="layui-progress-bar" lay-percent="80%">
+                            <span class="layui-progress-text">80%</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -130,6 +177,7 @@
     $(window).resize(function () {
         // $(".cool-home-top").css("width", "33%")
     });
+
     var myChart = echarts.init(document.getElementById('echarts'));
     // 指定图表的配置项和数据
     var dataAxis = ['点', '击', '柱', '子', '或', '者', '两', '指', '在', '触', '屏', '上', '滑', '动', '能', '够', '自', '动', '缩', '放'];
@@ -143,7 +191,7 @@
 
     option = {
         title: {
-            text: '访问量',
+            text: '',
             subtext: 'Feature Sample: Gradient Color, Shadow, Click Zoom'
         },
         xAxis: {
@@ -230,6 +278,8 @@
             endValue: dataAxis[Math.min(params.dataIndex + zoomSize / 2, data.length - 1)]
         });
     });
-    myChart.setOption(option);
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
 </script>
 </html>
