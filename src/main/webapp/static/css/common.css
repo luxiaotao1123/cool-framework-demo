@@ -116,3 +116,21 @@ div .layui-table-tool .layui-table-tool-self .layui-inline[title='导出']{
     width: 200px;
     height: 200px;
 }
+
+
+
+/*
+    布局
+ */
+.col:empty{min-height:32px;height: inherit;z-index:1;position:relative;box-sizing: border-box;}
+.col:empty:after{
+    z-index:0;display:flex;align-items: center;justify-content: center;
+    clear: both;content:attr(title);position:absolute;
+    background:rgba(0,0,0,0.04);top:2px;left:2px;right:2px;bottom:2px;
+    text-align:center;color:rgba(0,0,0,0.1); border-radius: inherit;
+}
+.col{
+    height: inherit;
+}
+
+

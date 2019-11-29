@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/css/common.css" media="all">
     <script type="text/javascript" src="/static/layui/layui.js"></script>
     <script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="/static/js/echarts/echarts.min.js"></script>
@@ -78,13 +79,14 @@
     }
 
     #echarts {
+        height:400px;
         width: 66.66666667%;
         display: inline-block;
         vertical-align:top
     }
     /*进度条*/
     #progress {
-        width: 33.33333333%;
+        width: 30%;
         height: 400px;
         display: inline-block;
         vertical-align:top
@@ -98,6 +100,7 @@
         color: #666;
         line-height: 24px;
     }
+
 </style>
 <body id="body" >
 <div id="container">
@@ -123,6 +126,8 @@
             <p class="cool-home-top-total">总收入<span class="cool-home-top-count-span">88万<i class="layui-inline layui-icon layui-icon-dollar"></i></span></p>
         </div>
     </div>
+
+
     <!--统计数据-->
     <div class="cool-home-stats layui-card">
         <div class="layui-card-header">
@@ -134,7 +139,7 @@
         </div>
         <div class="layui-card-body">
             <!--报表-->
-            <div id="echarts" style="width: 600px;height:400px;"></div>
+            <div id="echarts"></div>
             <!--进度-->
             <div id="progress">
                 <div class="cool-card-list">
@@ -167,6 +172,7 @@
             </div>
         </div>
     </div>
+
 </div>
 </body>
 <script >
