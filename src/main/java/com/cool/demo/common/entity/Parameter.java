@@ -45,7 +45,8 @@ public class Parameter {
                 data.put(config.getCode(), JSON.parse(config.getValue()));
             }
         }
-        return Cools.conver(data, Parameter.class);
+        instance = Cools.conver(data, Parameter.class);
+        return instance;
     }
 
 }

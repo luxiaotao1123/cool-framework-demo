@@ -1,8 +1,10 @@
 package com.cool.demo.system.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.cool.demo.common.entity.Parameter;
 import com.core.common.DateUtils;
 import com.cool.demo.system.entity.Config;
 import com.cool.demo.system.service.ConfigService;
@@ -67,6 +69,11 @@ public class ConfigController extends AbstractBaseController {
         if (Cools.isEmpty(config)){
             return R.error();
         }
+        if (config.getType() == 2){
+            if (!checkJson(config.getValue())){
+                return R.error("json解析失败");
+            }
+        }
         if (null == config.getId()){
             configService.insert(config);
         } else {
@@ -78,6 +85,11 @@ public class ConfigController extends AbstractBaseController {
     @RequestMapping(value = "/config/add/auth")
     @ResponseBody
     public R add(Config config) {
+        if (config.getType() == 2){
+            if (!checkJson(config.getValue())){
+                return R.error("json解析失败");
+            }
+        }
         configService.insert(config);
         return R.ok();
     }
@@ -87,6 +99,11 @@ public class ConfigController extends AbstractBaseController {
     public R update(Config config){
         if (Cools.isEmpty(config) || null==config.getId()){
             return R.error();
+        }
+        if (config.getType() == 2){
+            if (!checkJson(config.getValue())){
+                return R.error("json解析失败");
+            }
         }
         configService.updateById(config);
         return R.ok();
@@ -127,6 +144,35 @@ public class ConfigController extends AbstractBaseController {
             result.add(map);
         }
         return R.ok(result);
+    }
+
+    /**
+     * 刷新配置
+     */
+    @RequestMapping(value = "/config/refresh/auth")
+    @ResponseBody
+    public R refresh(){
+        Parameter parameter;
+        try {
+            parameter = Parameter.reset();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.error();
+        }
+        if (Cools.isEmpty(parameter)){
+            return R.error();
+        }
+        return R.ok();
+    }
+
+
+    private static boolean checkJson(String val){
+        Object parse = null;
+        try {
+            parse = JSON.parse(val);
+        } catch (Exception ignore){
+        }
+        return parse != null;
     }
 
 }
