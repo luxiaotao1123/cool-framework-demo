@@ -36,7 +36,7 @@ public class Parameter {
 	 */
 	public static Parameter reset() {
         ConfigService configService = SpringUtils.getBean(ConfigService.class);
-        List<Config> configs = configService.selectList(new EntityWrapper<>());
+        List<Config> configs = configService.selectList(new EntityWrapper<Config>().eq("status", "1"));
         Map<String, Object> data = new HashMap<>();
         for (Config config : configs) {
             if (config.getType() == 1) {
