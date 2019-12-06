@@ -5,4 +5,6 @@ import com.baomidou.mybatisplus.service.IService;
 
 public interface OperateLogService extends IService<OperateLog> {
 
+    int selectCountByCurrentWeek();
+
 }

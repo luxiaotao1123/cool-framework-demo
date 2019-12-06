@@ -5,4 +5,6 @@ import com.baomidou.mybatisplus.service.IService;
 
 public interface UserLoginService extends IService<UserLogin> {
 
+    int selectCountByCurrentWeek();
+
 }
