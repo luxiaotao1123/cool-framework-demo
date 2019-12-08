@@ -38,7 +38,7 @@ public class HomeController {
         result.put("logTotal", logTotal);
         result.put("logWeek", logWeek);
         result.put("userTotal", userTotal);
-        result.put("live", Arith.multiplys(0, Arith.divides(2, loginWeek, userTotal), 100));
+        result.put("live", Arith.multiplys(0, Arith.divides(2, loginWeek, userTotal), 100)+"%");
         return R.ok(result);
     }
 
