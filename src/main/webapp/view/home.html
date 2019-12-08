@@ -181,7 +181,25 @@
 </body>
 <script >
     layui.use('element', function(){
-        var element = layui.element;
+        var element = layui.element,
+            layer = layui.layer,
+            $ = layui.jquery;
+
+        $.ajax({
+            url: "/home/top",
+            // data: user,
+            method: 'POST',
+            success: function (res) {
+                if (res.code === 200){
+                    console.log(res);
+                } else if (res.code === 403){
+                    top.location.href = "/";
+                } else {
+                    layer.msg(res.msg);
+                }
+            }
+        });
+
     });
 
     $(window).resize(function () {
