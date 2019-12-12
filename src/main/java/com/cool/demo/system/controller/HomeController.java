@@ -60,7 +60,7 @@ public class HomeController {
 
 
         Map<String, Object> result = new HashMap<>();
-        result.put("report", convert(report, statsType, 2));
+        result.put("visits", convert(report, statsType, 2));
         return R.ok(result);
     }
 

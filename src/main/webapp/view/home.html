@@ -153,8 +153,8 @@
         <div class="layui-card-header">
             数据概览
             <div class="layui-btn-group cool-btn-group">
-                <a href="javascript:" class="layui-btn layui-btn-primary layui-btn-xs">去年</a>
-                <a href="javascript:" class="layui-btn layui-btn-primary layui-btn-xs">今年</a>
+                <a href="javascript:void(0);" onclick="initVisits(2)" class="layui-btn layui-btn-primary layui-btn-xs">本月</a>
+                <a href="javascript:void(0);" onclick="initVisits(1)" class="layui-btn layui-btn-primary layui-btn-xs">本年</a>
             </div>
         </div>
         <div class="layui-card-body">
@@ -201,49 +201,9 @@
             layer = layui.layer,
             $ = layui.jquery;
 
-        // 顶部
-        $.ajax({
-            url: "/home/top",
-            method: 'POST',
-            success: function (res) {
-                if (res.code === 200){
-                    $('#logWeek').text(res.data.logWeek);
-                    $('#logTotal').text(res.data.logTotal);
-                    $('#userTotal').text(res.data.userTotal);
-                    $('#live').text(res.data.live);
-                } else if (res.code === 403){
-                    top.location.href = "/";
-                } else {
-                    layer.msg(res.msg);
-                }
-            }
-        });
+       initTop();
+       initVisits(1);
 
-        // 报表
-        var reportView = option;
-        var xAxisDate = [];
-        var seriesDate=[];
-        $.ajax({
-            url: "/home/report",
-            data: {type: 1},
-            method: 'POST',
-            success: function (res) {
-                if (res.code === 200){
-                    var json = res.data.report;
-                    for (var i = 0; i < json.length; i++) {
-                        xAxisDate[i]=json[i].node;
-                        seriesDate[i]=json[i].val;
-                    }
-                    reportView.xAxis[0].data=xAxisDate;
-                    reportView.series[0].data=seriesDate;
-                    myChart.setOption(reportView, true)
-                } else if (res.code === 403){
-                    top.location.href = "/";
-                } else {
-                    layer.msg(res.msg);
-                }
-            }
-        });
     });
 
 
@@ -308,7 +268,7 @@
                     areaStyle: {normal: {}},
                     label: {
                         normal: {
-                            show: true,
+                            // show: true,
                             position: 'top'
                         }
                     },
@@ -319,6 +279,54 @@
 
     if (option && typeof option === "object") {
         myChart.setOption(option, true);
+    }
+
+    // 顶部加载
+    function initTop() {
+        $.ajax({
+            url: "/home/top",
+            method: 'POST',
+            success: function (res) {
+                if (res.code === 200){
+                    $('#logWeek').text(res.data.logWeek);
+                    $('#logTotal').text(res.data.logTotal);
+                    $('#userTotal').text(res.data.userTotal);
+                    $('#live').text(res.data.live);
+                } else if (res.code === 403){
+                    top.location.href = "/";
+                } else {
+                    layer.msg(res.msg);
+                }
+            }
+        });
+    }
+
+    // 访问量报表加载
+    function initVisits(type) {
+        var reportView = option;
+        var xAxisDate = [];
+        var seriesDate=[];
+        $.ajax({
+            url: "/home/report",
+            data: {type: type},
+            method: 'POST',
+            success: function (res) {
+                if (res.code === 200){
+                    var json = res.data.visits;
+                    for (var i = 0; i < json.length; i++) {
+                        xAxisDate[i]=json[i].node;
+                        seriesDate[i]=json[i].val;
+                    }
+                    reportView.xAxis[0].data=xAxisDate;
+                    reportView.series[0].data=seriesDate;
+                    myChart.setOption(reportView, true)
+                } else if (res.code === 403){
+                    top.location.href = "/";
+                } else {
+                    layer.msg(res.msg);
+                }
+            }
+        });
     }
 </script>
 </html>
