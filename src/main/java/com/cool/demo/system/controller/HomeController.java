@@ -28,33 +28,42 @@ public class HomeController {
     private UserLoginService userLoginService;
 
     @RequestMapping("/top")
-    public R top(@RequestParam("type")Integer type){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
+    public R top(){
         int logTotal = operateLogService.selectCount(new EntityWrapper<>());
         int logWeek = operateLogService.selectCountByCurrentWeek();
         int userTotal = userService.selectCount(new EntityWrapper<>());
         int loginWeek = userLoginService.selectCountByCurrentWeek();
-
-        List<Map<String, Object>> report;
-        StatsType statsType = StatsType.get(type);
-        if (type == 1) {
-            report = operateLogService.getReport(calendar.get(Calendar.YEAR), null);
-            report = fill(report, statsType.start, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-        } else {
-            report = operateLogService.getReport(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1);
-            report = fill(report, statsType.start, statsType.end);
-        }
-
 
         Map<String, Object> result = new HashMap<>();
         result.put("logTotal", logTotal);
         result.put("logWeek", logWeek);
         result.put("userTotal", userTotal);
         result.put("live", Arith.multiplys(0, Arith.divides(2, loginWeek, userTotal), 100)+"%");
+        return R.ok(result);
+    }
+
+
+    @RequestMapping("/report")
+    public R top(@RequestParam(defaultValue = "1", value = "type", required = false)Integer type){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+
+        List<Map<String, Object>> report;
+        StatsType statsType = StatsType.get(type);
+        if (type == 1) {
+            report = operateLogService.getReport(calendar.get(Calendar.YEAR), null);
+            report = fill(report, statsType.start, statsType.end);
+        } else {
+            report = operateLogService.getReport(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1);
+            report = fill(report, statsType.start, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        }
+
+
+        Map<String, Object> result = new HashMap<>();
         result.put("report", convert(report, statsType, 2));
         return R.ok(result);
     }
+
 
     /**
      * 自动补零
@@ -103,8 +112,8 @@ public class HomeController {
 
     enum StatsType{
 
-        MONTH(1,1, 30),
-        YEAR(2,1, 12),
+        YEAR(1,1, 12),
+        MONTH(2,1, 30),
         ;
 
         int id;
