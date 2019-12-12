@@ -202,7 +202,7 @@
             $ = layui.jquery;
 
        initTop();
-       initVisits(1);
+       initVisits(2);
 
     });
 
@@ -265,7 +265,16 @@
                     name:'访问量',
                     type:'line',
                     stack: '总量',
-                    areaStyle: {normal: {}},
+                    areaStyle: {
+                        normal: {
+                            color: '#33CC99'
+                        }
+                    },
+                    lineStyle: {
+                        normal: {
+                            color: '#33CC99'
+                        }
+                    },
                     label: {
                         normal: {
                             // show: true,
