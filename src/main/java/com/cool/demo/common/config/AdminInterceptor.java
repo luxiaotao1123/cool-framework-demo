@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.cool.demo.common.utils.Http;
 import com.cool.demo.system.entity.*;
 import com.cool.demo.system.service.*;
+import com.core.annotations.ManagerAuth;
 import com.core.common.BaseRes;
 import com.core.common.Cools;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Method;
 
 /**
  * Created by vincent on 2019-06-13
@@ -44,6 +46,13 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
         // 跨域设置
         // response.setHeader("Access-Control-Allow-Origin", "*");
         HandlerMethod handlerMethod = (HandlerMethod) handler;
+        Method method = handlerMethod.getMethod();
+        if (method.isAnnotationPresent(ManagerAuth.class)){
+            ManagerAuth annotation = method.getAnnotation(ManagerAuth.class);
+            if (annotation.value().equals(ManagerAuth.Auth.CHECK)){
+                // todo
+            }
+        }
         return check(request, response, handlerMethod);
     }
 
