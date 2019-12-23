@@ -46,6 +46,13 @@
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
         </dependency>
+        <dependency>
+            <groupId>ding</groupId>
+            <artifactId>ding</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/taobao-sdk-java-auto_1479188381469-20191219.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <build>
