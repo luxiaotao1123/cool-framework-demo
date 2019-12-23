@@ -17,7 +17,7 @@ import java.util.List;
  * Created by vincent on 2019-12-20
  */
 @Service
-public class DingService {
+public class DingTalkService {
 
     private static final String APP_KEY = "";
 
