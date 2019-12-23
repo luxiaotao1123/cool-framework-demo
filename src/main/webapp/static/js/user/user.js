@@ -271,6 +271,7 @@ layui.use(['table','laydate', 'form'], function(){
             mobile: $('#mobile').val(),
             password: $('#password').val(),
             roleId: $('#roleId').val(),
+            dingId: $('#dingId').val(),
             createTime: top.strToDate($('#createTime\\$').val()),
             status: $('#status').val(),
 

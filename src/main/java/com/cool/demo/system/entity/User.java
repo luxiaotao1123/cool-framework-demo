@@ -52,6 +52,12 @@ public class User implements Serializable {
     private Long roleId;
 
     /**
+     * 钉钉编号
+     */
+    @TableField("ding_id")
+    private String dingId;
+
+    /**
      * 注册时间
      */
     @TableField("create_time")
@@ -109,6 +115,14 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getDingId() {
+        return dingId;
+    }
+
+    public void setDingId(String dingId) {
+        this.dingId = dingId;
     }
 
     public Long getRoleId() {
