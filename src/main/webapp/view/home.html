@@ -23,21 +23,19 @@
         font: 14px Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;
     }
     #container {
-        margin-left: 15px;
         margin-top: 10px;
         padding: 15px;
         height: 100%;
     }
-    .cool-home-top.layui-card {
-        margin: 0 3px;
-        display: inline-block;
-        width: 32%;
+
+    .col.layui-card {
+        margin: 0 2px 0 2px;
+        width: 33.01%;
         border-radius: 5px;
         box-shadow: 0 0 3px rgba(0,0,0,.1);
     }
-    .layui-card-body {
-        padding: 15px;
-        height: 75px;
+    .layui-btn-group.cool-btn-group {
+        float: right;
     }
     .layui-badge {
         float: right;
@@ -63,34 +61,24 @@
         margin-left: 3px;
     }
 
-    /*主体*/
-    .cool-home-stats {
-        padding: 5px 1px;
-        width: 98%;
+    #container-content {
+        width: 99.8%;
         margin-top: 15px;
         border-radius: 5px;
         box-shadow: 0 0 3px rgba(0,0,0,.1);
+        height: 500px;
     }
-    .cool-home-stats .layui-card-body {
-        padding: 35px 15px 0px 15px;
-        height: auto;
-    }
-    .cool-btn-group {
-        float: right;
-    }
-
     /*折线图*/
     #echarts {
         height:400px;
-        width: 66.66666667%;
+        width: 100%;
         display: inline-block;
         vertical-align:top
     }
     /*进度条*/
     #progress {
         padding-top: 60px;
-        padding-left: 15px;
-        width: 30%;
+        width: 100%;
         height: 400px;
         display: inline-block;
         vertical-align:top
@@ -108,88 +96,103 @@
 </style>
 <body id="body" >
 <div id="container">
+
     <!--头部数据-->
-    <div class="cool-home-top layui-card">
-        <div class="layui-card-header">访问量<span class="layui-badge layui-bg-blue">周</span></div>
-        <div class="layui-card-body">
-            <p id="logWeek" class="cool-home-top-count">999999</p>
-            <p class="cool-home-top-total">
-                总访问量
-                <span class="cool-home-top-count-span">
+    <div id="container-top">
+        <div class="layui-row">
+            <div class="layui-col-md4 col layui-card">
+                <div class="layui-card-header">访问量<span class="layui-badge layui-bg-blue">周</span></div>
+                <div class="layui-card-body">
+                    <p id="logWeek" class="cool-home-top-count">999999</p>
+                    <p class="cool-home-top-total">
+                        总访问量
+                        <span class="cool-home-top-count-span">
                     <span id="logTotal" >
                         88万
                     </span>
                     <i class="layui-inline layui-icon layui-icon-flag"></i>
                 </span>
-            </p>
-        </div>
-    </div>
-    <div class="cool-home-top layui-card">
-        <div class="layui-card-header">用户量<span class="layui-badge layui-bg-yellow">总</span></div>
-        <div class="layui-card-body">
-            <p id="userTotal" class="cool-home-top-count">999999</p>
-            <p class="cool-home-top-total">
-                活跃度
-                <span class="cool-home-top-count-span">
+                    </p>
+                </div>
+            </div>
+            <div class="layui-col-md4 col layui-card">
+                <div class="layui-card-header">用户量<span class="layui-badge layui-bg-yellow">总</span></div>
+                <div class="layui-card-body">
+                    <p id="userTotal" class="cool-home-top-count">999999</p>
+                    <p class="cool-home-top-total">
+                        活跃度
+                        <span class="cool-home-top-count-span">
                     <span id="live" >
                         15%
                     </span>
                     <i class="layui-inline layui-icon layui-icon-face-smile"></i>
                 </span>
-            </p>
+                    </p>
+                </div>
+            </div>
+            <div class="layui-col-md4 col layui-card">
+                <div class="layui-card-header">收入<span class="layui-badge layui-bg-green">年</span></div>
+                <div class="layui-card-body">
+                    <p class="cool-home-top-count">999999</p>
+                    <p class="cool-home-top-total">总收入<span class="cool-home-top-count-span">88万<i class="layui-inline layui-icon layui-icon-dollar"></i></span></p>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="cool-home-top layui-card">
-        <div class="layui-card-header">收入<span class="layui-badge layui-bg-green">年</span></div>
-        <div class="layui-card-body">
-            <p class="cool-home-top-count">999999</p>
-            <p class="cool-home-top-total">总收入<span class="cool-home-top-count-span">88万<i class="layui-inline layui-icon layui-icon-dollar"></i></span></p>
-        </div>
-    </div>
-
 
     <!--统计数据-->
-    <div class="cool-home-stats layui-card">
+    <div id="container-content" class="layui-card">
         <div class="layui-card-header">
-            数据概览
-            <div class="layui-btn-group cool-btn-group">
-                <a href="javascript:void(0);" onclick="initVisits(2)" class="layui-btn layui-btn-primary layui-btn-xs">本月</a>
-                <a href="javascript:void(0);" onclick="initVisits(1)" class="layui-btn layui-btn-primary layui-btn-xs">本年</a>
+            <div class="layui-row">
+                <div class="layui-col-md6 col">数据概览</div>
+                <div class="layui-col-md6 col">
+                    <div class="layui-btn-group cool-btn-group">
+                        <a href="javascript:void(0);" onclick="initVisits(2)" class="layui-btn layui-btn-primary layui-btn-xs">本月</a>
+                        <a href="javascript:void(0);" onclick="initVisits(1)" class="layui-btn layui-btn-primary layui-btn-xs">本年</a>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="layui-card-body">
-            <!--报表-->
-            <div id="echarts"></div>
-            <!--进度-->
-            <div id="progress">
-                <div class="cool-card-list">
-                    <p>月访问数</p>
-                    <span>同上期增长</span>
-                    <div class="layui-progress layui-progress-big">
-                        <div class="layui-progress-bar" lay-percent="30%">
-                            <span class="layui-progress-text">30%</span>
-                        </div>
-                    </div>
+            <div class="layui-row ">
+                <!--报表-->
+                <div class="layui-col-md8 col">
+                    <div id="echarts"></div>
                 </div>
-                <div class="cool-card-list">
-                    <p>月活跃数</p>
-                    <span>同上期增长</span>
-                    <div class="layui-progress layui-progress-big">
-                        <div class="layui-progress-bar" lay-percent="40%">
-                            <span class="layui-progress-text">40%</span>
+                <!--进度-->
+                <div class="layui-col-md4 col">
+                    <div id="progress">
+                        <div class="cool-card-list">
+                            <p>月访问数</p>
+                            <span>同上期增长</span>
+                            <div class="layui-progress layui-progress-big">
+                                <div class="layui-progress-bar" lay-percent="30%">
+                                    <span class="layui-progress-text">30%</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="cool-card-list">
-                    <p>月收入</p>
-                    <span>同上期增长</span>
-                    <div class="layui-progress layui-progress-big">
-                        <div class="layui-progress-bar" lay-percent="80%">
-                            <span class="layui-progress-text">80%</span>
+                        <div class="cool-card-list">
+                            <p>月活跃数</p>
+                            <span>同上期增长</span>
+                            <div class="layui-progress layui-progress-big">
+                                <div class="layui-progress-bar" lay-percent="40%">
+                                    <span class="layui-progress-text">40%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cool-card-list">
+                            <p>月收入</p>
+                            <span>同上期增长</span>
+                            <div class="layui-progress layui-progress-big">
+                                <div class="layui-progress-bar" lay-percent="80%">
+                                    <span class="layui-progress-text">80%</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
