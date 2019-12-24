@@ -88,7 +88,10 @@ public class UserController extends AbstractBaseController {
         if (Cools.isEmpty(user) || null==user.getId()){
             return R.error();
         }
-        userService.updateById(user);
+        User entity = userService.selectById(user.getId());
+        entity.setUsername(user.getUsername());
+        entity.setMobile(user.getMobile());
+        userService.updateById(entity);
         return R.ok();
     }
 
