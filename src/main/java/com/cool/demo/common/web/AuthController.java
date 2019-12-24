@@ -112,22 +112,10 @@ public class AuthController extends BaseController {
             List<Resource> twoLevels = resourceService.selectList(new EntityWrapper<Resource>().eq("resource_id", oneLevel.getId()).eq("level", 2).eq("status", 1).orderBy("sort"));
 
             for (Resource twoLevel : twoLevels){
-//                List<Map> threeLevelsList = new ArrayList<>();
                 Map<String, Object> twoLevelMap = new HashMap<>();
                 twoLevelMap.put("title", twoLevel.getName());
                 twoLevelMap.put("id", twoLevel.getCode());
                 twoLevelMap.put("spread", true);
-//                twoLevelMap.put("children", threeLevelsList);
-//                List<Permission> permissions = permissionService.selectList(new EntityWrapper<Permission>().eq("resource_id", twoLevel.getId()).eq("status", 1));
-
-//                // 功能操作
-//                for (Permission permission : permissions) {
-//                    Map<String, Object> threeLevel = new HashMap<>();
-//                    threeLevel.put("title", permission.getName().concat("(功能)"));
-//                    threeLevel.put("id", permission.getAction());
-//                    threeLevel.put("spread", true);
-//                    threeLevelsList.add(threeLevel);
-//                }
                 twoLevelsList.add(twoLevelMap);
             }
             result.add(oneLevelMap);
