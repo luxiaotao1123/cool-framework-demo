@@ -12,7 +12,7 @@ public class CodeBuilder {
         generator.url="localhost:3306/hl";
         generator.username="root";
         generator.password="xltys1995";
-        generator.table="man_area";
+        generator.table="man_item";
         generator.packagePath="com.cool.demo.manager";
         generator.build();
     }

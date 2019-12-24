@@ -24,14 +24,14 @@
         <div class="layui-inline"  style="width:31%;">
             <label class="layui-form-label"><span class="not-null">*</span>检查内容：</label>
             <div class="layui-input-inline">
-                <input id="name" class="layui-input" type="text" placeholder="检查内容" lay-verify="required" >
+                <input id="name" class="layui-input" type="text" lay-verify="required" >
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">
             <label class="layui-form-label" style="font-size: x-small">上级检查内容：</label>
             <div class="layui-input-inline cool-auto-complete">
-                <input id="itemId" class="layui-input" type="text" placeholder="上级检查内容" style="display: none">
-                <input id="itemName" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="上级检查内容" onfocus=this.blur()>
+                <input id="itemId" class="layui-input" type="text" style="display: none">
+                <input id="itemName" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入..." onfocus=this.blur()>
                 <div class="cool-auto-complete-window">
                     <input class="cool-auto-complete-window-input" data-key="itemQuery" onkeyup="autoLoad(this.getAttribute('data-key'))">
                     <select class="cool-auto-complete-window-select" data-key="itemQuerySelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
@@ -52,7 +52,7 @@
         <div class="layui-inline"  style="width:31%;">
             <label class="layui-form-label">排　　序：</label>
             <div class="layui-input-inline">
-                <input id="sort" class="layui-input" type="text" placeholder="排序">
+                <input id="sort" class="layui-input" type="text">
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">
@@ -71,20 +71,20 @@
         <div class="layui-inline"  style="width:31%;">
             <label class="layui-form-label"><span class="not-null">*</span>添加时间：</label>
             <div class="layui-input-inline">
-                <input id="createTime$" class="layui-input" type="text" placeholder="添加时间" lay-verify="required"  autocomplete="off">
+                <input id="createTime$" class="layui-input" type="text" lay-verify="required"  autocomplete="off">
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">
             <label class="layui-form-label">修改时间：</label>
             <div class="layui-input-inline">
-                <input id="updateTime$" class="layui-input" type="text" placeholder="修改时间" autocomplete="off">
+                <input id="updateTime$" class="layui-input" type="text" autocomplete="off">
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">
             <label class="layui-form-label">操作用户：</label>
             <div class="layui-input-inline cool-auto-complete">
-                <input id="editor" class="layui-input" type="text" placeholder="操作用户" style="display: none">
-                <input id="userUsername" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="操作用户" onfocus=this.blur()>
+                <input id="editor" class="layui-input" type="text" style="display: none">
+                <input id="userUsername" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入..." onfocus=this.blur()>
                 <div class="cool-auto-complete-window">
                     <input class="cool-auto-complete-window-input" data-key="userQuery" onkeyup="autoLoad(this.getAttribute('data-key'))">
                     <select class="cool-auto-complete-window-select" data-key="userQuerySelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">

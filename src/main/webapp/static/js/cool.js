@@ -77,8 +77,8 @@ function confirmed(val){
     var cacw = inputDom.parent();
     cacw.css("display", "none");
     var cacd = cacw.parent().find(".cool-auto-complete-div");
+    var realDom = cacd.prev();
     // id字段
-    var realDom = $("#" + val.substring(0,val.length - 11) + "Id");
     var selectOptionDom = selectDom.find("option:selected");
     var html = selectOptionDom.html();
     if (html === "取消选择"){
