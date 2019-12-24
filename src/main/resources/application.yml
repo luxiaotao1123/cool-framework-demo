@@ -15,6 +15,8 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
+  global-config:
+    field-strategy: 0
 
 logging:
   path: /stock/out/logs
