@@ -1,4 +1,7 @@
 /* 用户功能栏*/
+.layui-side.layui-bg-black.layui-side-menu::-webkit-scrollbar {
+    width: 0 !important
+}
 #person {
     position: relative;
     z-index:2;
