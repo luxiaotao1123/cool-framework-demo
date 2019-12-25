@@ -23,8 +23,8 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'sort', align: 'center',title: '排序'}
             ,{field: 'level$', align: 'center',title: '区域等级'}
             ,{field: 'createTime$', align: 'center',title: '添加时间'}
-            ,{field: 'updateTime$', align: 'center',title: '修改时间'}
-            ,{field: 'userUsername', align: 'center',title: '操作用户',event: 'User', style: 'text-decoration: underline;cursor:pointer'}
+            // ,{field: 'updateTime$', align: 'center',title: '修改时间'}
+            // ,{field: 'userUsername', align: 'center',title: '操作用户',event: 'User', style: 'text-decoration: underline;cursor:pointer'}
             ,{field: 'status$', align: 'center',title: '状态'}
 
             ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}

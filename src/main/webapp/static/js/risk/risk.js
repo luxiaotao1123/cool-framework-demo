@@ -8,9 +8,9 @@ layui.use(['table','laydate', 'form'], function(){
 
     // 数据渲染
     tableIns = table.render({
-        elem: '#item',
+        elem: '#risk',
         headers: {token: localStorage.getItem('token')},
-        url: '/item/list/auth',
+        url: '/risk/list/auth',
         page: true,
         limit: 16,
         toolbar: '#toolbar',
@@ -18,14 +18,15 @@ layui.use(['table','laydate', 'form'], function(){
         cols: [[
             {type: 'checkbox', fixed: 'left'}
             ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
-            ,{field: 'name', align: 'center',title: '检查内容'}
-            ,{field: 'itemName', align: 'center',title: '上级检查内容',event: 'Item', style: 'text-decoration: underline;cursor:pointer'}
-            ,{field: 'must$', align: 'center',title: '是否必查'}
-            ,{field: 'sort', align: 'center',title: '排序'}
-            ,{field: 'level$', align: 'center',title: '检查项等级'}
+            ,{field: 'taskId$', align: 'center',title: '所属检查任务',event: 'taskId', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'itemId$', align: 'center',title: '所属检查项',event: 'itemId', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'userId$', align: 'center',title: '发布用户',event: 'userId', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'content', align: 'center',title: '隐患描述'}
+            ,{field: 'img', align: 'center',title: '图片集合'}
+            ,{field: 'state$', align: 'center',title: '隐患状态'}
+            ,{field: 'memo', align: 'center',title: '备注'}
             ,{field: 'createTime$', align: 'center',title: '添加时间'}
             // ,{field: 'updateTime$', align: 'center',title: '修改时间'}
-            // ,{field: 'userUsername', align: 'center',title: '操作用户',event: 'User', style: 'text-decoration: underline;cursor:pointer'}
             ,{field: 'status$', align: 'center',title: '状态'}
 
             ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
@@ -54,7 +55,7 @@ layui.use(['table','laydate', 'form'], function(){
     });
 
     // 监听头工具栏事件
-    table.on('toolbar(item)', function (obj) {
+    table.on('toolbar(risk)', function (obj) {
         var checkStatus = table.checkStatus(obj.config.id);
         switch(obj.event) {
             case 'addData':
@@ -64,7 +65,7 @@ layui.use(['table','laydate', 'form'], function(){
                     maxmin: true,
                     area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
-                    content: '/item_detail',
+                    content: '/risk_detail',
                     success: function(layero, index){
                     	clearFormVal(layer.getChildFrame('#detail', index));
                         detailScreen(index);
@@ -89,7 +90,7 @@ layui.use(['table','laydate', 'form'], function(){
                 } else {
                     layer.confirm('确定删除'+(ids.length===1?'此':ids.length)+'条数据吗', function(){
                         $.ajax({
-                            url: "/item/delete/auth",
+                            url: "/risk/delete/auth",
                             headers: {'token': localStorage.getItem('token')},
                             data: {ids: ids},
                             method: 'POST',
@@ -123,11 +124,11 @@ layui.use(['table','laydate', 'form'], function(){
                         exportData[this.name] = this.value;
                     });
                     var param = {
-                        'item': exportData,
+                        'risk': exportData,
                         'fields': fields
                     };
                     $.ajax({
-                        url: "/item/export/auth",
+                        url: "/risk/export/auth",
                         headers: {'token': localStorage.getItem('token')},
                         data: JSON.stringify(param),
                         dataType:'json',
@@ -150,7 +151,7 @@ layui.use(['table','laydate', 'form'], function(){
     });
 
     // 监听行工具事件
-    table.on('tool(item)', function(obj){
+    table.on('tool(risk)', function(obj){
         var data = obj.data;
         switch (obj.event) {
             // 查看
@@ -161,7 +162,7 @@ layui.use(['table','laydate', 'form'], function(){
                     maxmin: true,
                     area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
-                    content: '/item_detail',
+                    content: '/risk_detail',
                     success: function(layero, index){
                         setFormVal(layer.getChildFrame('#detail', index), data, true);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
@@ -179,7 +180,7 @@ layui.use(['table','laydate', 'form'], function(){
                     maxmin: true,
                     area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
-                    content: '/item_detail',
+                    content: '/risk_detail',
                     success: function(layero, index){
                         setFormVal(layer.getChildFrame('#detail', index), data, false);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
@@ -188,14 +189,49 @@ layui.use(['table','laydate', 'form'], function(){
                     }
                 });
                 break;
-            case 'Item':
+            case 'taskId':
+                var param = top.reObject(data).taskId;
+                if (param === undefined) {
+                    layer.msg("无数据");
+                } else {
+                   layer.open({
+                       type: 2,
+                       title: '所属检查详情',
+                       maxmin: true,
+                       area: [top.detailHeight, top.detailWidth],
+                       shadeClose: false,
+                       content: 'task_detail',
+                       success: function(layero, index){
+                           $.ajax({
+                               url: "/task/"+ param +"/auth",
+                               headers: {'token': localStorage.getItem('token')},
+                               method: 'GET',
+                               success: function (res) {
+                                   if (res.code === 200){
+                                       setFormVal(layer.getChildFrame('#detail', index), res.data, true);
+                                       top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
+                                       layer.getChildFrame('#data-detail-submit', index).hide();
+                                       detailScreen(index);
+                                       layero.find('iframe')[0].contentWindow.layui.form.render('select');
+                                   } else if (res.code === 403){
+                                       parent.location.href = "/";
+                                   }else {
+                                       layer.msg(res.msg)
+                                   }
+                               }
+                           })
+                       }
+                   });
+                }
+                break;
+            case 'itemId':
                 var param = top.reObject(data).itemId;
                 if (param === undefined) {
                     layer.msg("无数据");
                 } else {
                    layer.open({
                        type: 2,
-                       title: '上级检查详情',
+                       title: '所属检详情',
                        maxmin: true,
                        area: [top.detailHeight, top.detailWidth],
                        shadeClose: false,
@@ -223,14 +259,14 @@ layui.use(['table','laydate', 'form'], function(){
                    });
                 }
                 break;
-            case 'User':
-                var param = top.reObject(data).editor;
+            case 'userId':
+                var param = top.reObject(data).userId;
                 if (param === undefined) {
                     layer.msg("无数据");
                 } else {
                    layer.open({
                        type: 2,
-                       title: '操作详情',
+                       title: '发布详情',
                        maxmin: true,
                        area: [top.detailHeight, top.detailWidth],
                        shadeClose: false,
@@ -269,19 +305,20 @@ layui.use(['table','laydate', 'form'], function(){
         });
         var data = {
             id: $('#id').val(),
-            name: $('#name').val(),
+            taskId: $('#taskId').val(),
             itemId: $('#itemId').val(),
-            must: $('#must').val(),
-            sort: $('#sort').val(),
-            level: $('#level').val(),
+            userId: $('#userId').val(),
+            content: $('#content').val(),
+            img: $('#img').val(),
+            state: $('#state').val(),
+            memo: $('#memo').val(),
             createTime: top.strToDate($('#createTime\\$').val()),
             updateTime: top.strToDate($('#updateTime\\$').val()),
-            editor: $('#editor').val(),
             status: $('#status').val(),
 
         };
         $.ajax({
-            url: "/item/edit/auth",
+            url: "/risk/edit/auth",
             headers: {'token': localStorage.getItem('token')},
             data: top.reObject(data),
             method: 'POST',
