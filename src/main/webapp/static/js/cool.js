@@ -38,7 +38,7 @@ function autoLoad(val) {
     selectDom.appendChild(defaultOption);
     selectDom.style.display='none';
     $.ajax({
-        url: "/"+val+"/auth",
+        url: "/"+getForeignKeyQuery(val)+"/auth",
         headers: {'token': localStorage.getItem('token')},
         data: {condition: inputDomVal},
         method: 'POST',
@@ -95,3 +95,13 @@ function reviewImg(src) {
     window.open().document.write("<img src="+src+" />");
 }
 
+/**
+ * 截取By之前的字符串
+ */
+function getForeignKeyQuery(str) {
+    var index = str.indexOf('By');
+    if (index !== -1){
+        return str.substring(0, index);
+    }
+    return str;
+}

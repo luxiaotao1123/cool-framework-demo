@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cool.demo.manager.mapper.TaskMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cool.demo.manager.entity.Task">
+        <id column="id" property="id" />
+        <result column="uuid" property="uuid" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="leader" property="leader" />
+        <result column="members" property="members" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="state" property="state" />
+        <result column="sponsor" property="sponsor" />
+        <result column="memo" property="memo" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="editor" property="editor" />
+        <result column="status" property="status" />
+
+    </resultMap>
+
+</mapper>
