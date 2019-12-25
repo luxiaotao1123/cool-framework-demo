@@ -38,7 +38,7 @@ function autoLoad(val) {
     selectDom.appendChild(defaultOption);
     selectDom.style.display='none';
     $.ajax({
-        url: "/"+val+"/auth",
+        url: "/"+getForeignKeyQuery(val)+"/auth",
         headers: {'token': localStorage.getItem('token')},
         data: {condition: inputDomVal},
         method: 'POST',
@@ -78,6 +78,7 @@ function confirmed(val){
     cacw.css("display", "none");
     var cacd = cacw.parent().find(".cool-auto-complete-div");
     var realDom = cacd.prev();
+    // id字段
     var selectOptionDom = selectDom.find("option:selected");
     var html = selectOptionDom.html();
     if (html === "取消选择"){
@@ -94,3 +95,13 @@ function reviewImg(src) {
     window.open().document.write("<img src="+src+" />");
 }
 
+/**
+ * 截取By之前的字符串
+ */
+function getForeignKeyQuery(str) {
+    var index = str.indexOf('By');
+    if (index !== -1){
+        return str.substring(0, index);
+    }
+    return str;
+}
