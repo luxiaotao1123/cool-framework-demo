@@ -48,7 +48,7 @@
             <label class="layui-form-label"><span class="not-null">*</span>检查组长：</label>
             <div class="layui-input-inline cool-auto-complete">
                 <input id="leader" class="layui-input" type="text" lay-verify="required"  style="display: none">
-                <input id="leaderClick" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入..." onfocus=this.blur()>
+                <input id="leader$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入..." onfocus=this.blur()>
                 <div class="cool-auto-complete-window">
                     <input class="cool-auto-complete-window-input" data-key="userQueryByleader" onkeyup="autoLoad(this.getAttribute('data-key'))">
                     <select class="cool-auto-complete-window-select" data-key="userQueryByleaderSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
@@ -90,7 +90,7 @@
             <label class="layui-form-label"><span class="not-null">*</span>发起用户：</label>
             <div class="layui-input-inline cool-auto-complete">
                 <input id="sponsor" class="layui-input" type="text" lay-verify="required"  style="display: none">
-                <input id="sponsorClick" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入..." onfocus=this.blur()>
+                <input id="sponsor$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入..." onfocus=this.blur()>
                 <div class="cool-auto-complete-window">
                     <input class="cool-auto-complete-window-input" data-key="userQueryBysponsor" onkeyup="autoLoad(this.getAttribute('data-key'))">
                     <select class="cool-auto-complete-window-select" data-key="userQueryBysponsorSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">

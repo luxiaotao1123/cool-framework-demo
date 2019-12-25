@@ -184,7 +184,7 @@ public class Task implements Serializable {
         return leader;
     }
 
-    public String getUserUsername(){
+    public String getLeader$(){
         UserService service = SpringUtils.getBean(UserService.class);
         User user = service.selectById(this.leader);
         if (!Cools.isEmpty(user)){
@@ -263,14 +263,14 @@ public class Task implements Serializable {
         return sponsor;
     }
 
-//    public String getUserUsername(){
-//        UserService service = SpringUtils.getBean(UserService.class);
-//        User user = service.selectById(this.sponsor);
-//        if (!Cools.isEmpty(user)){
-//            return user.getUsername();
-//        }
-//        return null;
-//    }
+    public String getSponsor$(){
+        UserService service = SpringUtils.getBean(UserService.class);
+        User user = service.selectById(this.sponsor);
+        if (!Cools.isEmpty(user)){
+            return user.getUsername();
+        }
+        return null;
+    }
 
     public void setSponsor(Long sponsor) {
         this.sponsor = sponsor;

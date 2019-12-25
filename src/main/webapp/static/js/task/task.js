@@ -21,12 +21,12 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'uuid', align: 'center',title: '任务编号'}
             ,{field: 'name', align: 'center',title: '任务名称'}
             ,{field: 'type$', align: 'center',title: '检查方式'}
-            ,{field: 'userUsername', align: 'center',title: '检查组长',event: 'User', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'leader$', align: 'center',title: '检查组长',event: 'leader', style: 'text-decoration: underline;cursor:pointer'}
             ,{field: 'members', align: 'center',title: '工作组员'}
             ,{field: 'startTime$', align: 'center',title: '开始时间'}
             ,{field: 'endTime$', align: 'center',title: '结束时间'}
             ,{field: 'state$', align: 'center',title: '任务状态'}
-            ,{field: 'userUsername', align: 'center',title: '发起用户',event: 'User', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'sponsor$', align: 'center',title: '发起用户',event: 'sponsor', style: 'text-decoration: underline;cursor:pointer'}
             ,{field: 'memo', align: 'center',title: '备注'}
             ,{field: 'createTime$', align: 'center',title: '添加时间'}
             ,{field: 'updateTime$', align: 'center',title: '修改时间'}
@@ -193,7 +193,7 @@ layui.use(['table','laydate', 'form'], function(){
                     }
                 });
                 break;
-            case 'User':
+            case 'leader':
                 var param = top.reObject(data).leader;
                 if (param === undefined) {
                     layer.msg("无数据");
@@ -228,7 +228,7 @@ layui.use(['table','laydate', 'form'], function(){
                    });
                 }
                 break;
-            case 'User':
+            case 'sponsor':
                 var param = top.reObject(data).sponsor;
                 if (param === undefined) {
                     layer.msg("无数据");
