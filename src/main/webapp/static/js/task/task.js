@@ -29,8 +29,8 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'sponsor$', align: 'center',title: '发起用户',event: 'sponsor', style: 'text-decoration: underline;cursor:pointer'}
             ,{field: 'memo', align: 'center',title: '备注'}
             ,{field: 'createTime$', align: 'center',title: '添加时间'}
-            ,{field: 'updateTime$', align: 'center',title: '修改时间'}
-            ,{field: 'editor', align: 'center',title: '操作用户'}
+            // ,{field: 'updateTime$', align: 'center',title: '修改时间'}
+            // ,{field: 'editor', align: 'center',title: '操作用户'}
             ,{field: 'status$', align: 'center',title: '状态'}
 
             ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
