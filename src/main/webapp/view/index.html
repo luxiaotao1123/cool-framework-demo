@@ -130,6 +130,9 @@
     $(document).on('click','#logout',function () {
        localStorage.removeItem("token");
     });
+    document.addEventListener("DOMContentLoaded", function(){
+        document.body.style.display = "block";
+    });
     // var linkImg = document.getElementById('in_icon');
     // window.onfocus = function () {
     //     document.title = 'Cool';
