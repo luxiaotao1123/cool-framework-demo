@@ -87,7 +87,7 @@
             <input id="mobile" class="layui-input" type="text" name="mobile" lay-verify="mobile" placeholder="用户名">
         </div>
         <div class="layui-form-item">
-            <label class="layui-icon layui-icon-username layadmin-user-login-icon"></label>
+            <label class="layui-icon layui-icon-password layadmin-user-login-icon"></label>
             <input id="password" class="layui-input" type="password" name="password" lay-verify="password" placeholder="密码">
         </div>
     </div>
@@ -132,7 +132,7 @@
                         localStorage.setItem("username", res.data.username);
                         window.location.href = "/index";
                     } else {
-                        layer.msg(res.msg)
+                        layer.msg(res.msg, {offset: '200px'});
                     }
                 }
             });
