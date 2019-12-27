@@ -50,10 +50,10 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
         if (method.isAnnotationPresent(ManagerAuth.class)){
             ManagerAuth annotation = method.getAnnotation(ManagerAuth.class);
             if (annotation.value().equals(ManagerAuth.Auth.CHECK)){
-                // todo
+                return check(request, response, handlerMethod);
             }
         }
-        return check(request, response, handlerMethod);
+        return true;
     }
 
     @Override
