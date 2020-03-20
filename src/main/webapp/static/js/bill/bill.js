@@ -25,7 +25,7 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'boxer', align: 'center',title: '装箱员'}
             ,{field: 'status$', align: 'center',title: '状态'}
 
-            ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
+            ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:180}
         ]],
         request: {
             pageName: 'curr',
@@ -184,6 +184,13 @@ layui.use(['table','laydate', 'form'], function(){
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                     }
                 });
+                break;
+            // 打印
+            case 'print':
+                console.log(data);
+                $('#contain').css("display", "block");
+                $('#contain').print();
+                $('#contain').css("display", "none");
                 break;
 
         }

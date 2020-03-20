@@ -10,6 +10,18 @@
     <link rel="stylesheet" href="/static/css/cool.css" media="all">
     <link rel="stylesheet" href="/static/css/common.css" media="all">
 </head>
+<style>
+
+    #contain {
+        margin: 30px;
+    }
+    .layui-col-md3.col {
+        border: 1px solid #000;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+    }
+</style>
 <body>
 
 <!-- 搜索栏 -->
@@ -42,6 +54,7 @@
 <script type="text/html" id="operate">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="print">打印</a>
 </script>
 
 <script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
@@ -49,8 +62,36 @@
 <script type="text/javascript" src="/static/js/bill/bill.js" charset="utf-8"></script>
 <script type="text/javascript" src="/static/js/common.js" charset="utf-8"></script>
 <script type="text/javascript" src="/static/js/cool.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/jquery/jQuery.print.js"></script>
 
 <iframe id="detail-iframe" scrolling="auto" style="display:none;"></iframe>
+
+<div id="contain" style="display: none">
+    <div class="layui-row">
+        <div class="layui-col-md3 col">客 户</div>
+        <div class="layui-col-md3 col"></div>
+        <div class="layui-col-md3 col">胶种颜色</div>
+        <div class="layui-col-md3 col"></div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-col-md3 col">型号打字</div>
+        <div class="layui-col-md3 col"></div>
+        <div class="layui-col-md3 col">数量</div>
+        <div class="layui-col-md3 col"></div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-col-md3 col">生产日期</div>
+        <div class="layui-col-md3 col"></div>
+        <div class="layui-col-md3 col">装箱检验号</div>
+        <div class="layui-col-md3 col"></div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-col-md3 col">产品批号</div>
+        <div class="layui-col-md3 col"></div>
+        <div class="layui-col-md3 col">箱号</div>
+        <div class="layui-col-md3 col"></div>
+    </div>
+</div>
 
 </body>
 </html>
