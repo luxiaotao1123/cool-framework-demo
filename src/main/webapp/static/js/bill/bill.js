@@ -210,7 +210,7 @@ layui.use(['table','laydate', 'form'], function(){
                             $('#boxCheck').html(bill.boxCheck);
                             $('#boxNumber').html(bill.boxNumber);
 
-                            $('#qrcode').attr('src', "http://localhost/bill/qrcode?id=" + bill.id);
+                            $('#qrcode').attr('src', "/bill/qrcode?id=" + bill.id);
 
                             $('#box').css("display", "block");
                             $('#box').print();
