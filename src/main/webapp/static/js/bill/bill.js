@@ -20,14 +20,17 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
             ,{field: 'seq', align: 'center',title: '批次号'}
             ,{field: 'number', align: 'center',title: '顺序号'}
+            ,{field: 'customer', align: 'center',title: '客户'}
             ,{field: 'modelType', align: 'center',title: '型号打字'}
             ,{field: 'amount', align: 'center',title: '数量'}
+            ,{field: 'unit', align: 'center',title: '每箱数量'}
             ,{field: 'color', align: 'center',title: '颜色'}
             ,{field: 'boxCheck', align: 'center',title: '装箱检验号'}
             ,{field: 'boxNumber', align: 'center',title: '箱号'}
             ,{field: 'boxer', align: 'center',title: '装箱员'}
             ,{field: 'createTime$', align: 'center',title: '生产日期'}
             ,{field: 'status$', align: 'center',title: '状态'}
+
             ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:180}
         ]],
         request: {
@@ -188,12 +191,40 @@ layui.use(['table','laydate', 'form'], function(){
                     }
                 });
                 break;
+            // 打印
             case 'print':
-                console.log(data);
-                $('#box').css("display", "block");
-                $('#box').print();
-                $('#box').css("display", "none");
+                $.ajax({
+                    url: "/bill/print",
+                    headers: {'token': localStorage.getItem('token')},
+                    data: {id: data.id},
+                    method: 'POST',
+                    success: function (res) {
+                        if (res.code === 200) {
+                            var bill = res.data;
+                            $('#customer').html(bill.customer);
+                            $('#color').html(bill.color);
+                            $('#modelType').html(bill.modelType);
+                            $('#amount').html(bill.amount);
+                            $('#createTime').html(bill.createTime$);
+                            $('#seq').html(bill.seq);
+                            $('#boxCheck').html(bill.boxCheck);
+                            $('#boxNumber').html(bill.boxNumber);
+
+                            $('#qrcode').attr('src', "http://localhost/bill/qrcode?id=" + bill.id);
+
+                            $('#box').css("display", "block");
+                            $('#box').print();
+                            $('#box').css("display", "none");
+                        } else if (res.code === 403) {
+                            top.location.href = "/";
+                        } else {
+                            layer.msg(res.msg)
+                        }
+                    }
+                });
+
                 break;
+
 
         }
     });
@@ -207,8 +238,10 @@ layui.use(['table','laydate', 'form'], function(){
             id: $('#id').val(),
             seq: $('#seq').val(),
             number: $('#number').val(),
+            customer: $('#customer').val(),
             modelType: $('#modelType').val(),
             amount: $('#amount').val(),
+            unit: $('#unit').val(),
             color: $('#color').val(),
             boxCheck: $('#boxCheck').val(),
             boxNumber: $('#boxNumber').val(),

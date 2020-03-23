@@ -3,6 +3,8 @@ package com.cool.demo.manager.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.cool.demo.common.CodeRes;
+import com.cool.demo.common.utils.QrCode;
 import com.core.common.DateUtils;
 import com.cool.demo.manager.entity.Bill;
 import com.cool.demo.manager.service.BillService;
@@ -14,6 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.*;
 
 @Controller
@@ -140,9 +146,25 @@ public class BillController extends AbstractBaseController {
     @RequestMapping(value = "bill/print")
     @ResponseBody
     @ManagerAuth
-    public R print() {
+    public R print(@RequestParam("id")String id) {
+        Bill bill = billService.selectById(id);
+        if (null == bill) {
+            return R.parse(CodeRes.EMPTY);
+        }
+        return R.ok(bill);
+    }
 
 
+    @RequestMapping(value = "bill/qrcode")
+    @ResponseBody
+//    @ManagerAuth
+    public R qrcode(@RequestParam("id")String id, HttpServletResponse response) throws Exception {
+        BufferedImage img = QrCode.createImg(String.valueOf(id));
+        if (!ImageIO.write(img, "jpg", response.getOutputStream())) {
+            throw new IOException("Could not write an image of format jpg");
+        }
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
         return R.ok();
     }
 

@@ -20,10 +20,10 @@ public class QrCode {
     private static final String CHARSET = "utf-8";
     private static final String FORMAT_NAME = "JPG";
     // 二维码尺寸
-    private static final int QRCODE_SIZE = 300;
+    private static final int QRCODE_SIZE = 120;
 
 
-    private static BufferedImage createImg(String content) throws WriterException {
+    public static BufferedImage createImg(String content) throws WriterException {
         ConcurrentHashMap hints = new ConcurrentHashMap();
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
         hints.put(EncodeHintType.CHARACTER_SET, CHARSET);

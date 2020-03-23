@@ -24,6 +24,9 @@
         line-height: 50px;
         text-align: center;
     }
+    #qrcode {
+        margin: 20px;
+    }
 </style>
 <body>
 
@@ -74,30 +77,37 @@
     <table id="contain">
         <tr>
             <td width="20%" align="right" scope="col">客户</td>
-            <td width="30%" align="left" scope="col">&nbsp;</td>
+            <td id="customer" width="30%" align="left" scope="col"></td>
             <td width="20%" align="right" scope="col">颜色</td>
-            <td width="30%" align="left" scope="col">&nbsp;</td>
+            <td id="color" width="30%" align="left" scope="col">&nbsp;</td>
         </tr>
         <tr>
             <td align="right">型号打字</td>
-            <td align="left">&nbsp;</td>
+            <td id="modelType" align="left">&nbsp;</td>
             <td align="right">数量</td>
-            <td align="left">&nbsp;</td>
+            <td id="amount" align="left">&nbsp;</td>
         </tr>
         <tr>
             <td align="right">生产日期</td>
-            <td align="left">&nbsp;</td>
-            <td align="right">装检验号</td>
-            <td align="left">&nbsp;</td>
+            <td id="createTime" align="left">&nbsp;</td>
+            <td colspan="2" rowspan="4" align="right"><img id="qrcode"></td>
         </tr>
         <tr>
             <td align="right">产品批号</td>
-            <td align="left">&nbsp;</td>
+            <td id="seq" align="left">&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="right">装检验号</td>
+            <td id="boxCheck" align="left">&nbsp;</td>
+        </tr>
+        <tr>
             <td align="right">箱号</td>
-            <td align="left">&nbsp;</td>
+            <td id="boxNumber" align="left">&nbsp;</td>
         </tr>
     </table>
 </div>
+
+
 
 </body>
 </html>

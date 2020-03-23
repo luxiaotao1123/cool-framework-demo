@@ -31,6 +31,11 @@ public class Bill implements Serializable {
     private String number;
 
     /**
+     * 客户
+     */
+    private String customer;
+
+    /**
      * 型号打字
      */
     @TableField("model_type")
@@ -40,6 +45,11 @@ public class Bill implements Serializable {
      * 数量
      */
     private Integer amount;
+
+    /**
+     * 每箱数量
+     */
+    private Integer unit;
 
     /**
      * 颜色
@@ -76,11 +86,13 @@ public class Bill implements Serializable {
 
     public Bill() {}
 
-    public Bill(String seq,String number,String modelType,Integer amount,String color,String boxCheck,String boxNumber,String boxer,Date createTime,Short status) {
+    public Bill(String seq,String number,String customer,String modelType,Integer amount,Integer unit,String color,String boxCheck,String boxNumber,String boxer,Date createTime,Short status) {
         this.seq = seq;
         this.number = number;
+        this.customer = customer;
         this.modelType = modelType;
         this.amount = amount;
+        this.unit = unit;
         this.color = color;
         this.boxCheck = boxCheck;
         this.boxNumber = boxNumber;
@@ -92,8 +104,10 @@ public class Bill implements Serializable {
 //    Bill bill = new Bill(
 //            null,    // 批次号[非空]
 //            null,    // 顺序号[非空]
+//            null,    // 客户
 //            null,    // 型号打字
 //            null,    // 数量[非空]
+//            null,    // 每箱数量[非空]
 //            null,    // 颜色[非空]
 //            null,    // 装箱检验号[非空]
 //            null,    // 箱号
@@ -126,6 +140,14 @@ public class Bill implements Serializable {
         this.number = number;
     }
 
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
+
     public String getModelType() {
         return modelType;
     }
@@ -140,6 +162,14 @@ public class Bill implements Serializable {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public Integer getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Integer unit) {
+        this.unit = unit;
     }
 
     public String getColor() {

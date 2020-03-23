@@ -20,3 +20,10 @@ mybatis-plus:
 
 logging:
   path: /stock/out/logs
+
+aliyun:
+  oss:
+    id: LTAI4Fn8Yw8peptpBEXJBMH8
+    secret: aVjPgr54wPqkqcsCoFoZKLegmDZF6e
+    bucket: ddbb
+    endpoint: http://oss-cn-hangzhou.aliyuncs.com
