@@ -201,16 +201,19 @@ layui.use(['table','laydate', 'form'], function(){
                     success: function (res) {
                         if (res.code === 200) {
                             var bill = res.data;
-                            $('#customer').html(bill.customer);
-                            $('#color').html(bill.color);
-                            $('#modelType').html(bill.modelType);
-                            $('#amount').html(bill.amount);
-                            $('#createTime').html(bill.createTime$);
-                            $('#seq').html(bill.seq);
-                            $('#boxCheck').html(bill.boxCheck);
-                            $('#boxNumber').html(bill.boxNumber);
 
-                            $('#qrcode').attr('src', "/bill/qrcode?id=" + bill.id);
+                            //通过模板定义的id获取模板
+                            var tpl   =  $("#newsListTemplate").html();
+                            //预编译模板
+                            var template = Handlebars.compile(tpl);
+
+                            //传入需要填充的数据匹配
+                            var html = template(bill);
+                            console.log(bill);
+                            //插入模板到ul中
+                            $("#box").html(html);
+
+                            $('.qrcode').attr('src', "/bill/qrcode?id=" + bill.id);
 
                             $('#box').css("display", "block");
                             $('#box').print();

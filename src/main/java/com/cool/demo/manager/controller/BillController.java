@@ -151,7 +151,28 @@ public class BillController extends AbstractBaseController {
         if (null == bill) {
             return R.parse(CodeRes.EMPTY);
         }
-        return R.ok(bill);
+        List<Bill> list = new ArrayList<>();
+        int i = bill.getAmount() / bill.getUnit();
+        for (int j = 0; j<i; j++){
+            Bill item = new Bill(
+                    bill.getSeq(),    // 批次号[非空]
+                    bill.getNumber(),    // 顺序号[非空]
+                    bill.getCustomer(),    // 客户
+                    bill.getModelType(),    // 型号打字
+                    bill.getUnit(),    // 数量[非空]
+                    bill.getUnit(),    // 每箱数量[非空]
+                    bill.getColor(),    // 颜色[非空]
+                    bill.getBoxCheck(),    // 装箱检验号[非空]
+                    bill.getBoxNumber(),    // 箱号
+                    bill.getBoxer(),    // 装箱员[非空]
+                    new Date(),    // 生产日期
+                                (short) 1    // 状态[非空]
+            );
+            list.add(item);
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("list", list);
+        return R.ok(map);
     }
 
 
