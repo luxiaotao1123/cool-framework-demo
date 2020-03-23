@@ -202,18 +202,10 @@ layui.use(['table','laydate', 'form'], function(){
                         if (res.code === 200) {
                             var bill = res.data;
 
-                            //通过模板定义的id获取模板
                             var tpl   =  $("#newsListTemplate").html();
-                            //预编译模板
                             var template = Handlebars.compile(tpl);
-
-                            //传入需要填充的数据匹配
                             var html = template(bill);
-                            console.log(bill);
-                            //插入模板到ul中
                             $("#box").html(html);
-
-                            $('.qrcode').attr('src', "/bill/qrcode?id=" + bill.id);
 
                             $('#box').css("display", "block");
                             $('#box').print();

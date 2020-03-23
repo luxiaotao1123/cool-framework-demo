@@ -151,7 +151,7 @@ public class BillController extends AbstractBaseController {
         if (null == bill) {
             return R.parse(CodeRes.EMPTY);
         }
-        List<Bill> list = new ArrayList<>();
+        List<Object> list = new ArrayList<>();
         int i = bill.getAmount() / bill.getUnit();
         for (int j = 0; j<i; j++){
             Bill item = new Bill(
@@ -166,9 +166,14 @@ public class BillController extends AbstractBaseController {
                     bill.getBoxNumber(),    // 箱号
                     bill.getBoxer(),    // 装箱员[非空]
                     new Date(),    // 生产日期
-                                (short) 1    // 状态[非空]
+                    (short) 1    // 状态[非空]
             );
-            list.add(item);
+            item.setId(bill.getId());
+            Map<String, Object> map = Cools.conver(item);
+            map.put("qrCodeUrl", "/bill/qrcode?id="+j);
+            map.put("createTime$", bill.getCreateTime$());
+            list.add(map);
+
         }
         Map<String, Object> map = new HashMap<>();
         map.put("list", list);
