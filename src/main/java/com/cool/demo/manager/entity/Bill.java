@@ -2,6 +2,9 @@ package com.cool.demo.manager.entity;
 
 import com.core.common.Cools;import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotations.TableField;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
@@ -28,6 +31,12 @@ public class Bill implements Serializable {
     private String number;
 
     /**
+     * 型号打字
+     */
+    @TableField("model_type")
+    private String modelType;
+
+    /**
      * 数量
      */
     private Integer amount;
@@ -38,9 +47,27 @@ public class Bill implements Serializable {
     private String color;
 
     /**
+     * 装箱检验号
+     */
+    @TableField("box_check")
+    private String boxCheck;
+
+    /**
+     * 箱号
+     */
+    @TableField("box_number")
+    private String boxNumber;
+
+    /**
      * 装箱员
      */
     private String boxer;
+
+    /**
+     * 生产日期
+     */
+    @TableField("create_time")
+    private Date createTime;
 
     /**
      * 状态 1: 已录入  2: 已装箱  3: 已出库  
@@ -49,21 +76,29 @@ public class Bill implements Serializable {
 
     public Bill() {}
 
-    public Bill(String seq,String number,Integer amount,String color,String boxer,Short status) {
+    public Bill(String seq,String number,String modelType,Integer amount,String color,String boxCheck,String boxNumber,String boxer,Date createTime,Short status) {
         this.seq = seq;
         this.number = number;
+        this.modelType = modelType;
         this.amount = amount;
         this.color = color;
+        this.boxCheck = boxCheck;
+        this.boxNumber = boxNumber;
         this.boxer = boxer;
+        this.createTime = createTime;
         this.status = status;
     }
 
 //    Bill bill = new Bill(
 //            null,    // 批次号[非空]
 //            null,    // 顺序号[非空]
+//            null,    // 型号打字
 //            null,    // 数量[非空]
 //            null,    // 颜色[非空]
+//            null,    // 装箱检验号[非空]
+//            null,    // 箱号
 //            null,    // 装箱员[非空]
+//            null,    // 生产日期
 //            null    // 状态[非空]
 //    );
 
@@ -91,6 +126,14 @@ public class Bill implements Serializable {
         this.number = number;
     }
 
+    public String getModelType() {
+        return modelType;
+    }
+
+    public void setModelType(String modelType) {
+        this.modelType = modelType;
+    }
+
     public Integer getAmount() {
         return amount;
     }
@@ -107,12 +150,43 @@ public class Bill implements Serializable {
         this.color = color;
     }
 
+    public String getBoxCheck() {
+        return boxCheck;
+    }
+
+    public void setBoxCheck(String boxCheck) {
+        this.boxCheck = boxCheck;
+    }
+
+    public String getBoxNumber() {
+        return boxNumber;
+    }
+
+    public void setBoxNumber(String boxNumber) {
+        this.boxNumber = boxNumber;
+    }
+
     public String getBoxer() {
         return boxer;
     }
 
     public void setBoxer(String boxer) {
         this.boxer = boxer;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public String getCreateTime$(){
+        if (Cools.isEmpty(this.createTime)){
+            return "";
+        }
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.createTime);
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Short getStatus() {

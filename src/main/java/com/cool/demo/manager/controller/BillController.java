@@ -137,4 +137,13 @@ public class BillController extends AbstractBaseController {
         return R.ok(result);
     }
 
+    @RequestMapping(value = "bill/print")
+    @ResponseBody
+    @ManagerAuth
+    public R print() {
+
+
+        return R.ok();
+    }
+
 }

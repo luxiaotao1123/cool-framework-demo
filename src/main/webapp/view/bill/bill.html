@@ -12,12 +12,15 @@
 </head>
 <style>
 
-    #contain {
+    #box {
         margin: 30px;
     }
-    .layui-col-md3.col {
+    #contain {
         border: 1px solid #000;
-        height: 50px;
+        width: 100%;
+    }
+    #contain td {
+        border: 1px solid #000;
         line-height: 50px;
         text-align: center;
     }
@@ -66,31 +69,34 @@
 
 <iframe id="detail-iframe" scrolling="auto" style="display:none;"></iframe>
 
-<div id="contain" style="display: none">
-    <div class="layui-row">
-        <div class="layui-col-md3 col">客 户</div>
-        <div class="layui-col-md3 col"></div>
-        <div class="layui-col-md3 col">胶种颜色</div>
-        <div class="layui-col-md3 col"></div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-col-md3 col">型号打字</div>
-        <div class="layui-col-md3 col"></div>
-        <div class="layui-col-md3 col">数量</div>
-        <div class="layui-col-md3 col"></div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-col-md3 col">生产日期</div>
-        <div class="layui-col-md3 col"></div>
-        <div class="layui-col-md3 col">装箱检验号</div>
-        <div class="layui-col-md3 col"></div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-col-md3 col">产品批号</div>
-        <div class="layui-col-md3 col"></div>
-        <div class="layui-col-md3 col">箱号</div>
-        <div class="layui-col-md3 col"></div>
-    </div>
+
+<div id="box" style="display: none">
+    <table id="contain">
+        <tr>
+            <td width="20%" align="right" scope="col">客户</td>
+            <td width="30%" align="left" scope="col">&nbsp;</td>
+            <td width="20%" align="right" scope="col">颜色</td>
+            <td width="30%" align="left" scope="col">&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="right">型号打字</td>
+            <td align="left">&nbsp;</td>
+            <td align="right">数量</td>
+            <td align="left">&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="right">生产日期</td>
+            <td align="left">&nbsp;</td>
+            <td align="right">装检验号</td>
+            <td align="left">&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="right">产品批号</td>
+            <td align="left">&nbsp;</td>
+            <td align="right">箱号</td>
+            <td align="left">&nbsp;</td>
+        </tr>
+    </table>
 </div>
 
 </body>
