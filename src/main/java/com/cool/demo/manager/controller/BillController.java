@@ -175,15 +175,12 @@ public class BillController extends AbstractBaseController {
             list.add(map);
 
         }
-        Map<String, Object> map = new HashMap<>();
-        map.put("list", list);
-        return R.ok(map);
+        return R.ok(Cools.add("list", list));
     }
 
 
     @RequestMapping(value = "bill/qrcode")
     @ResponseBody
-//    @ManagerAuth
     public R qrcode(@RequestParam("id")String id, HttpServletResponse response) throws Exception {
         BufferedImage img = QrCode.createImg(String.valueOf(id));
         if (!ImageIO.write(img, "jpg", response.getOutputStream())) {
