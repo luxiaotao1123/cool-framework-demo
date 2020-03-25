@@ -41,16 +41,21 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
         if (handler instanceof org.springframework.web.servlet.resource.ResourceHttpRequestHandler) {
             return true;
         }
-        // 跨域设置
-        // response.setHeader("Access-Control-Allow-Origin", "*");
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
-        Method method = handlerMethod.getMethod();
-        if (method.isAnnotationPresent(ManagerAuth.class)){
-            ManagerAuth annotation = method.getAnnotation(ManagerAuth.class);
-            if (annotation.value().equals(ManagerAuth.Auth.CHECK)){
-                return check(request, response);
+
+        // 跨域
+        cors(response);
+
+        if (handler instanceof HandlerMethod) {
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
+            Method method = handlerMethod.getMethod();
+            if (method.isAnnotationPresent(ManagerAuth.class)){
+                ManagerAuth annotation = method.getAnnotation(ManagerAuth.class);
+                if (annotation.value().equals(ManagerAuth.Auth.CHECK)){
+                    return check(request, response);
+                }
             }
         }
+
         return true;
     }
 
@@ -116,6 +121,19 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
             return !Cools.isEmpty(rolePermission);
         }
         return true;
+    }
+
+    /**
+     * 跨域
+     */
+    private void cors(HttpServletResponse response){
+        // 跨域设置
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Methods", "*");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type,Access-Token");
+        response.setHeader("Access-Control-Expose-Headers", "*");
+
     }
 
 }
