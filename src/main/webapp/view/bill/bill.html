@@ -13,20 +13,19 @@
 <style>
 
     #box {
-        margin: 30px;
+
     }
     .contain {
         border: 1px solid #000;
         width: 100%;
-        margin-bottom: 20px;
     }
     .contain td {
         border: 1px solid #000;
-        line-height: 50px;
+        line-height: 46px;
         text-align: center;
     }
     .qrcode {
-        margin: 20px;
+        margin: 3px;
     }
 </style>
 <body>
@@ -74,43 +73,47 @@
 
 <iframe id="detail-iframe" scrolling="auto" style="display:none;"></iframe>
 
-<div id="box" style="display: none">
+<div id="box" style="display: block">
 </div>
 
 
 </body>
 <script type="text/template" id="newsListTemplate">
     {{#each list}}
-    <table class="contain">
-        <tr>
-            <td width="20%" align="right" scope="col">客户</td>
-            <td class="customer" width="30%" align="left" scope="col">{{this.customer}}</td>
-            <td width="20%" align="right" scope="col">颜色</td>
-            <td class="color" width="30%" align="left" scope="col">{{this.color}}</td>
-        </tr>
-        <tr>
-            <td align="right">型号打字</td>
-            <td class="modelType" align="left">{{this.modelType}}</td>
-            <td align="right">数量</td>
-            <td class="amount" align="left">{{this.amount}}</td>
-        </tr>
-        <tr>
-            <td align="right">生产日期</td>
-            <td class="createTime" align="left">{{this.createTime$}}</td>
-            <td colspan="2" rowspan="4" align="right"><img class="qrcode" src="{{this.qrCodeUrl}}"></td>
-        </tr>
-        <tr>
-            <td align="right">产品批号</td>
-            <td class="seq" align="left">{{this.seq}}</td>
-        </tr>
-        <tr>
-            <td align="right">装检验号</td>
-            <td class="boxCheck" align="left">{{this.boxCheck}}</td>
-        </tr>
-        <tr>
-            <td align="right">箱号</td>
-            <td class="boxNumber" align="left">{{this.boxNumber}}</td>
-        </tr>
+    <table height="317" style="overflow: hidden;width: 100%">
+        <tr><td valign="middle">
+        <table class="contain">
+            <tr>
+                <td width="20%" align="right" scope="col">客户</td>
+                <td class="customer" width="30%" align="left" scope="col">{{this.customer}}</td>
+                <td width="20%" align="right" scope="col">颜色</td>
+                <td class="color" width="30%" align="left" scope="col">{{this.color}}</td>
+            </tr>
+            <tr>
+                <td align="right">生产日期</td>
+                <td class="createTime" align="left">{{this.createTime$}}</td>
+                <td align="right">数量</td>
+                <td class="amount" align="left">{{this.amount}}</td>
+            </tr>
+            <tr>
+                <td align="right">型号打字</td>
+                <td class="modelType" align="left" colspan="3">{{this.modelType}}</td>
+            </tr>
+            <tr>
+                <td align="right">产品批号</td>
+                <td class="seq" align="left">{{this.seq}}</td>
+                <td colspan="2" rowspan="4" align="right"><img class="qrcode" src="{{this.qrCodeUrl}}" style="width: 80%"></td>
+            </tr>
+            <tr>
+                <td align="right">装检验号</td>
+                <td class="boxCheck" align="left">{{this.boxCheck}}</td>
+            </tr>
+            <tr>
+                <td align="right">箱号</td>
+                <td class="boxNumber" align="left">{{this.boxNumber}}</td>
+            </tr>
+        </table>
+        </td></tr>
     </table>
     {{/each}}
 </script>

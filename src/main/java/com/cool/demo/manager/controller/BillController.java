@@ -171,9 +171,11 @@ public class BillController extends AbstractBaseController {
             item.setId(bill.getId());
             Map<String, Object> map = Cools.conver(item);
             map.put("qrCodeUrl", "/bill/qrcode?id="+j);
-            map.put("createTime$", bill.getCreateTime$());
+            map.put("createTime$", DateUtils.convert(bill.getCreateTime(), DateUtils.yyyyMMdd_F));
             list.add(map);
-
+            if (j == 1) {
+                break;
+            }
         }
         return R.ok(Cools.add("list", list));
     }

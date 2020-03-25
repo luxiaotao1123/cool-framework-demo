@@ -20,7 +20,7 @@ public class QrCode {
     private static final String CHARSET = "utf-8";
     private static final String FORMAT_NAME = "JPG";
     // 二维码尺寸
-    private static final int QRCODE_SIZE = 120;
+    private static final int QRCODE_SIZE = 60;
 
 
     public static BufferedImage createImg(String content) throws WriterException {
