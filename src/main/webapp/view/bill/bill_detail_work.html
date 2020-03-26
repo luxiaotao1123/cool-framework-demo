@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>理想塑胶</title>
+</head>
+<style>
+    #box {
+
+    }
+    .contain {
+        border: 1px solid #000;
+        width: 100%;
+    }
+    .contain td {
+        border: 1px solid #000;
+        line-height: 46px;
+        text-align: center;
+    }
+    .qrcode {
+        margin: 3px;
+    }
+</style>
+<body>
+<div id="box" style="display: block">
+</div>
+</body>
+
+<script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/static/js/common.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/cool.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/handlebars/handlebars-v4.5.3.js"></script>
+<script type="text/template" id="newsListTemplate">
+    {{#each list}}
+    <table height="317" style="overflow: hidden;width: 100%">
+        <tr><td valign="middle">
+            <table class="contain">
+                <tr>
+                    <td width="20%" align="right" scope="col">客户</td>
+                    <td class="customer" width="30%" align="left" scope="col">{{this.customer}}</td>
+                    <td width="20%" align="right" scope="col">颜色</td>
+                    <td class="color" width="30%" align="left" scope="col">{{this.color}}</td>
+                </tr>
+                <tr>
+                    <td align="right">生产日期</td>
+                    <td class="createTime" align="left">{{this.createTime$}}</td>
+                    <td align="right">数量</td>
+                    <td class="amount" align="left">{{this.amount}}</td>
+                </tr>
+                <tr>
+                    <td align="right">型号打字</td>
+                    <td class="modelType" align="left" colspan="3">{{this.modelType}}</td>
+                </tr>
+                <tr>
+                    <td align="right">产品批号</td>
+                    <td class="seq" align="left">{{this.seq}}</td>
+                    <td colspan="2" rowspan="4" align="right"><img class="qrcode" src="{{this.qrCodeUrl}}" style="width: 80%"></td>
+                </tr>
+                <tr>
+                    <td align="right">装检验号</td>
+                    <td class="boxCheck" align="left">{{this.boxCheck}}</td>
+                </tr>
+                <tr>
+                    <td align="right">箱号</td>
+                    <td class="boxNumber" align="left">{{this.boxNumber}}</td>
+                </tr>
+            </table>
+        </td></tr>
+    </table>
+    {{/each}}
+</script>
+<script>
+    $.ajax({
+        url: "/billDetailQuery/qrcode/get",
+        data: {id: 5},
+        method: 'POST',
+        success: function (res) {
+            if (res.code === 200) {
+                var detail = res.data;
+
+                var tpl   =  $("#newsListTemplate").html();
+                var template = Handlebars.compile(tpl);
+                var html = template(detail);
+                $("#box").html(html);
+
+            } else if (res.code === 403) {
+                top.location.href = "/";
+            } else {
+                alert(res.msg);
+            }
+        }
+    });
+</script>
+</html>

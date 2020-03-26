@@ -39,4 +39,9 @@ public class RouterController {
         return "detail";
     }
 
+    @RequestMapping("/bill_detail_work")
+    public String billDetail(){
+        return "bill/bill_detail_work";
+    }
+
 }

@@ -3,11 +3,15 @@ package com.cool.demo.manager.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.core.common.DateUtils;
+import com.cool.demo.common.CodeRes;
+import com.cool.demo.manager.entity.Bill;
 import com.cool.demo.manager.entity.BillDetail;
+import com.cool.demo.manager.entity.BillDto;
 import com.cool.demo.manager.service.BillDetailService;
+import com.cool.demo.manager.service.BillService;
 import com.core.annotations.ManagerAuth;
 import com.core.common.Cools;
+import com.core.common.DateUtils;
 import com.core.common.R;
 import com.core.controller.AbstractBaseController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,8 @@ import java.util.*;
 @Controller
 public class BillDetailController extends AbstractBaseController {
 
+    @Autowired
+    private BillService billService;
     @Autowired
     private BillDetailService billDetailService;
 
@@ -135,6 +141,26 @@ public class BillDetailController extends AbstractBaseController {
             result.add(map);
         }
         return R.ok(result);
+    }
+
+    @RequestMapping(value = "/billDetailQuery/qrcode/get")
+    @ResponseBody
+    public R qrcodeGet(@RequestParam("id")Integer id) {
+        BillDetail detail = billDetailService.selectById(id);
+        if (null == detail) {
+            return R.parse(CodeRes.EMPTY);
+        }
+        Bill bill = billService.selectById(detail.getBillId());
+        if (null == bill) {
+            return R.parse(CodeRes.EMPTY);
+        }
+        if (bill.getUnit() <= 0) {
+            return R.error("当前订单每箱数量错误");
+        }
+        List<Object> list = new ArrayList<>();
+        BillDto dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), null, bill.getBoxCheck(), bill.getBoxPrefix().concat(String.valueOf(detail.getBoxNumber())));
+        list.add(dto);
+        return R.ok(Cools.add("list", list));
     }
 
 }

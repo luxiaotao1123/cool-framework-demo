@@ -117,10 +117,42 @@ public class BillController extends AbstractBaseController {
                 }
                 billDetailService.insert(billDetail);
             }
-
-
         } else {
             billService.updateById(bill);
+            billDetailService.delete(new EntityWrapper<BillDetail>().eq("bill_id", bill.getId()));
+            // 剩余数量
+            int residue = 0;
+            int i = bill.getTotal() / bill.getUnit();
+            if (bill.getTotal() > bill.getUnit() * i) {
+                residue = bill.getTotal() - bill.getUnit() * i;
+                i += 1;
+            }
+            for (int j = 1; j<=i; j++){
+                BillDetail billDetail;
+                // 最后一箱
+                if (residue > 0 && j==i) {
+                    billDetail = new BillDetail(
+                            bill.getId(),    // 所属订单[非空]
+                            residue,    // 数量[非空]
+                            j,    // 箱号[非空]
+                            null,    // 装箱员
+                            new Date(),    // 添加时间[非空]
+                            (short) 1    // 状态[非空]
+                    );
+
+                } else {
+                    billDetail = new BillDetail(
+                            bill.getId(),    // 所属订单[非空]
+                            bill.getUnit(),    // 数量[非空]
+                            j,    // 箱号[非空]
+                            null,    // 装箱员
+                            new Date(),    // 添加时间[非空]
+                            (short) 1    // 状态[非空]
+                    );
+                }
+                billDetailService.insert(billDetail);
+            }
+
         }
         return R.ok();
     }
