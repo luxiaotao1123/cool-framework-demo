@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>理想塑胶</title>
 </head>
+<meta name="viewport" content="viewport-fit=cover,width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
 <style>
     #box {
-
     }
     .contain {
         border: 1px solid #000;
@@ -16,9 +16,6 @@
         border: 1px solid #000;
         line-height: 46px;
         text-align: center;
-    }
-    .qrcode {
-        margin: 3px;
     }
 </style>
 <body>
@@ -38,23 +35,26 @@
                 <tr>
                     <td width="20%" align="right" scope="col">客户</td>
                     <td class="customer" width="30%" align="left" scope="col">{{this.customer}}</td>
+                </tr>
+                <tr>
                     <td width="20%" align="right" scope="col">颜色</td>
                     <td class="color" width="30%" align="left" scope="col">{{this.color}}</td>
                 </tr>
                 <tr>
                     <td align="right">生产日期</td>
                     <td class="createTime" align="left">{{this.createTime$}}</td>
+                </tr>
+                <tr>
                     <td align="right">数量</td>
                     <td class="amount" align="left">{{this.amount}}</td>
                 </tr>
                 <tr>
                     <td align="right">型号打字</td>
-                    <td class="modelType" align="left" colspan="3">{{this.modelType}}</td>
+                    <td class="modelType" align="left">{{this.modelType}}</td>
                 </tr>
                 <tr>
                     <td align="right">产品批号</td>
                     <td class="seq" align="left">{{this.seq}}</td>
-                    <td colspan="2" rowspan="4" align="right"><img class="qrcode" src="{{this.qrCodeUrl}}" style="width: 80%"></td>
                 </tr>
                 <tr>
                     <td align="right">装检验号</td>
