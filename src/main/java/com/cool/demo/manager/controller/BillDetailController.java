@@ -143,9 +143,9 @@ public class BillDetailController extends AbstractBaseController {
         return R.ok(result);
     }
 
-    @RequestMapping(value = "/billDetailQuery/qrcode/get")
+    @RequestMapping(value = "/billDetailQuery/qrcode/get/{id}")
     @ResponseBody
-    public R qrcodeGet(@RequestParam("id")Integer id) {
+    public R qrcodeGet(@PathVariable("id") Integer id) {
         BillDetail detail = billDetailService.selectById(id);
         if (null == detail) {
             return R.parse(CodeRes.EMPTY);

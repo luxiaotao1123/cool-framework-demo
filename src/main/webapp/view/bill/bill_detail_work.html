@@ -70,9 +70,18 @@
     {{/each}}
 </script>
 <script>
+
+    window.getQuerys=function(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    };
+
     $.ajax({
-        url: "/billDetailQuery/qrcode/get",
-        data: {id: 5},
+        url: "/billDetailQuery/qrcode/get/"+window.getQuerys('id'),
         method: 'POST',
         success: function (res) {
             if (res.code === 200) {

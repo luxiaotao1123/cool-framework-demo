@@ -230,7 +230,8 @@ public class BillController extends AbstractBaseController {
         List<BillDetail> details = billDetailService.selectList(new EntityWrapper<BillDetail>().eq("bill_id", bill.getId()));
         String billQrCodeUrl = Parameter.get().getBillQrCodeUrl();
         for (BillDetail detail : details) {
-            BillDto dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), "/bill/qrcode?id=" + billQrCodeUrl, bill.getBoxCheck(), bill.getBoxPrefix().concat(String.valueOf(detail.getBoxNumber())));
+            String url = billQrCodeUrl.concat("?id=").concat(String.valueOf(detail.getId()));
+            BillDto dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), "/bill/qrcode?id=" + url, bill.getBoxCheck(), bill.getBoxPrefix().concat(String.valueOf(detail.getBoxNumber())));
             list.add(dto);
         }
         return R.ok(Cools.add("list", list));
