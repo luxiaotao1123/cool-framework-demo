@@ -22,12 +22,11 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'number', align: 'center',title: '顺序号'}
             ,{field: 'customer', align: 'center',title: '客户'}
             ,{field: 'modelType', align: 'center',title: '型号打字'}
-            ,{field: 'amount', align: 'center',title: '数量'}
+            ,{field: 'total', align: 'center',title: '总数量'}
             ,{field: 'unit', align: 'center',title: '每箱数量'}
             ,{field: 'color', align: 'center',title: '颜色'}
             ,{field: 'boxCheck', align: 'center',title: '装箱检验号'}
-            ,{field: 'boxNumber', align: 'center',title: '箱号'}
-            ,{field: 'boxer', align: 'center',title: '装箱员'}
+            ,{field: 'boxPrefix', align: 'center',title: '箱号前缀'}
             ,{field: 'createTime$', align: 'center',title: '生产日期'}
             ,{field: 'status$', align: 'center',title: '状态'}
 
@@ -220,7 +219,6 @@ layui.use(['table','laydate', 'form'], function(){
 
                 break;
 
-
         }
     });
 
@@ -235,12 +233,11 @@ layui.use(['table','laydate', 'form'], function(){
             number: $('#number').val(),
             customer: $('#customer').val(),
             modelType: $('#modelType').val(),
-            amount: $('#amount').val(),
+            total: $('#total').val(),
             unit: $('#unit').val(),
             color: $('#color').val(),
             boxCheck: $('#boxCheck').val(),
-            boxNumber: $('#boxNumber').val(),
-            boxer: $('#boxer').val(),
+            boxPrefix: $('#boxPrefix').val(),
             createTime: top.strToDate($('#createTime\\$').val()),
             status: $('#status').val(),
 

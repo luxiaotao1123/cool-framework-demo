@@ -42,9 +42,9 @@ public class Bill implements Serializable {
     private String modelType;
 
     /**
-     * 数量
+     * 总数量
      */
-    private Integer amount;
+    private Integer total;
 
     /**
      * 每箱数量
@@ -63,15 +63,10 @@ public class Bill implements Serializable {
     private String boxCheck;
 
     /**
-     * 箱号
+     * 箱号前缀
      */
-    @TableField("box_number")
-    private String boxNumber;
-
-    /**
-     * 装箱员
-     */
-    private String boxer;
+    @TableField("box_prefix")
+    private String boxPrefix;
 
     /**
      * 生产日期
@@ -86,17 +81,16 @@ public class Bill implements Serializable {
 
     public Bill() {}
 
-    public Bill(String seq,String number,String customer,String modelType,Integer amount,Integer unit,String color,String boxCheck,String boxNumber,String boxer,Date createTime,Short status) {
+    public Bill(String seq,String number,String customer,String modelType,Integer total,Integer unit,String color,String boxCheck,String boxPrefix,Date createTime,Short status) {
         this.seq = seq;
         this.number = number;
         this.customer = customer;
         this.modelType = modelType;
-        this.amount = amount;
+        this.total = total;
         this.unit = unit;
         this.color = color;
         this.boxCheck = boxCheck;
-        this.boxNumber = boxNumber;
-        this.boxer = boxer;
+        this.boxPrefix = boxPrefix;
         this.createTime = createTime;
         this.status = status;
     }
@@ -106,12 +100,11 @@ public class Bill implements Serializable {
 //            null,    // 顺序号[非空]
 //            null,    // 客户
 //            null,    // 型号打字
-//            null,    // 数量[非空]
+//            null,    // 总数量[非空]
 //            null,    // 每箱数量[非空]
 //            null,    // 颜色[非空]
 //            null,    // 装箱检验号[非空]
-//            null,    // 箱号
-//            null,    // 装箱员[非空]
+//            null,    // 箱号前缀
 //            null,    // 生产日期
 //            null    // 状态[非空]
 //    );
@@ -156,12 +149,12 @@ public class Bill implements Serializable {
         this.modelType = modelType;
     }
 
-    public Integer getAmount() {
-        return amount;
+    public Integer getTotal() {
+        return total;
     }
 
-    public void setAmount(Integer amount) {
-        this.amount = amount;
+    public void setTotal(Integer total) {
+        this.total = total;
     }
 
     public Integer getUnit() {
@@ -188,20 +181,12 @@ public class Bill implements Serializable {
         this.boxCheck = boxCheck;
     }
 
-    public String getBoxNumber() {
-        return boxNumber;
+    public String getBoxPrefix() {
+        return boxPrefix;
     }
 
-    public void setBoxNumber(String boxNumber) {
-        this.boxNumber = boxNumber;
-    }
-
-    public String getBoxer() {
-        return boxer;
-    }
-
-    public void setBoxer(String boxer) {
-        this.boxer = boxer;
+    public void setBoxPrefix(String boxPrefix) {
+        this.boxPrefix = boxPrefix;
     }
 
     public Date getCreateTime() {

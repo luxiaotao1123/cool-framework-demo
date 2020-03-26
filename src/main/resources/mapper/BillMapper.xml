@@ -9,12 +9,11 @@
         <result column="number" property="number" />
         <result column="customer" property="customer" />
         <result column="model_type" property="modelType" />
-        <result column="amount" property="amount" />
+        <result column="total" property="total" />
         <result column="unit" property="unit" />
         <result column="color" property="color" />
         <result column="box_check" property="boxCheck" />
-        <result column="box_number" property="boxNumber" />
-        <result column="boxer" property="boxer" />
+        <result column="box_prefix" property="boxPrefix" />
         <result column="create_time" property="createTime" />
         <result column="status" property="status" />
 

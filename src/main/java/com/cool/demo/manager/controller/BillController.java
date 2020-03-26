@@ -6,11 +6,14 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.cool.demo.common.CodeRes;
 import com.cool.demo.common.entity.Parameter;
 import com.cool.demo.common.utils.QrCode;
-import com.core.common.DateUtils;
 import com.cool.demo.manager.entity.Bill;
+import com.cool.demo.manager.entity.BillDetail;
+import com.cool.demo.manager.entity.BillDto;
+import com.cool.demo.manager.service.BillDetailService;
 import com.cool.demo.manager.service.BillService;
 import com.core.annotations.ManagerAuth;
 import com.core.common.Cools;
+import com.core.common.DateUtils;
 import com.core.common.R;
 import com.core.controller.AbstractBaseController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,8 @@ public class BillController extends AbstractBaseController {
 
     @Autowired
     private BillService billService;
+    @Autowired
+    private BillDetailService billDetailService;
 
     @RequestMapping("/bill")
     public String index(){
@@ -80,6 +85,40 @@ public class BillController extends AbstractBaseController {
         }
         if (null == bill.getId()){
             billService.insert(bill);
+            // 剩余数量
+            int residue = 0;
+            int i = bill.getTotal() / bill.getUnit();
+            if (bill.getTotal() > bill.getUnit() * i) {
+                residue = bill.getTotal() - bill.getUnit() * i;
+                i += 1;
+            }
+            for (int j = 1; j<=i; j++){
+                BillDetail billDetail;
+                // 最后一箱
+                if (residue > 0 && j==i) {
+                    billDetail = new BillDetail(
+                            bill.getId(),    // 所属订单[非空]
+                            residue,    // 数量[非空]
+                            j,    // 箱号[非空]
+                            null,    // 装箱员
+                            new Date(),    // 添加时间[非空]
+                            (short) 1    // 状态[非空]
+                    );
+
+                } else {
+                    billDetail = new BillDetail(
+                            bill.getId(),    // 所属订单[非空]
+                            bill.getUnit(),    // 数量[非空]
+                            j,    // 箱号[非空]
+                            null,    // 装箱员
+                            new Date(),    // 添加时间[非空]
+                            (short) 1    // 状态[非空]
+                    );
+                }
+                billDetailService.insert(billDetail);
+            }
+
+
         } else {
             billService.updateById(bill);
         }
@@ -155,59 +194,12 @@ public class BillController extends AbstractBaseController {
         if (bill.getUnit() <= 0) {
             return R.error("当前订单每箱数量错误");
         }
-        // 剩余数量
-        int residue = 0;
-        int i = bill.getAmount() / bill.getUnit();
-        if (bill.getAmount() > bill.getUnit() * i) {
-            residue = bill.getAmount() - bill.getUnit() * i;
-            i += 1;
-        }
-
-        // 分配
         List<Object> list = new ArrayList<>();
-        for (int j = 1; j<=i; j++){
-
-            Bill item;
-            // 最后一箱
-            if (residue > 0 && j==i) {
-                item = new Bill(
-                        bill.getSeq(),    // 批次号[非空]
-                        bill.getNumber(),    // 顺序号[非空]
-                        bill.getCustomer(),    // 客户
-                        bill.getModelType(),    // 型号打字
-                        residue,    // 数量[非空]
-                        residue,    // 每箱数量[非空]
-                        bill.getColor(),    // 颜色[非空]
-                        bill.getBoxCheck(),    // 装箱检验号[非空]
-                        String.valueOf(j),    // 箱号
-                        bill.getBoxer(),    // 装箱员[非空]
-                        null,    // 生产日期
-                        (short) 1    // 状态[非空]
-                );
-            } else {
-                item = new Bill(
-                        bill.getSeq(),    // 批次号[非空]
-                        bill.getNumber(),    // 顺序号[非空]
-                        bill.getCustomer(),    // 客户
-                        bill.getModelType(),    // 型号打字
-                        bill.getUnit(),    // 数量[非空]
-                        bill.getUnit(),    // 每箱数量[非空]
-                        bill.getColor(),    // 颜色[非空]
-                        bill.getBoxCheck(),    // 装箱检验号[非空]
-                        String.valueOf(j),    // 箱号
-                        bill.getBoxer(),    // 装箱员[非空]
-                        null,    // 生产日期
-                        (short) 1    // 状态[非空]
-                );
-            }
-            item.setId(bill.getId());
-            Map<String, Object> map = Cools.conver(item);
-
-            String billQrCodeUrl = Parameter.get().getBillQrCodeUrl();
-
-            map.put("qrCodeUrl", "/bill/qrcode?id="+billQrCodeUrl);
-            map.put("createTime$", item.getCreateTime()==null?null:DateUtils.convert(item.getCreateTime(), DateUtils.yyyyMMdd_F));
-            list.add(map);
+        List<BillDetail> details = billDetailService.selectList(new EntityWrapper<BillDetail>().eq("bill_id", bill.getId()));
+        String billQrCodeUrl = Parameter.get().getBillQrCodeUrl();
+        for (BillDetail detail : details) {
+            BillDto dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), "/bill/qrcode?id=" + billQrCodeUrl, bill.getBoxCheck(), bill.getBoxPrefix().concat(String.valueOf(detail.getBoxNumber())));
+            list.add(dto);
         }
         return R.ok(Cools.add("list", list));
     }
