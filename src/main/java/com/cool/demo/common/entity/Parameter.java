@@ -49,4 +49,14 @@ public class Parameter {
         return instance;
     }
 
+
+    private String billQrCodeUrl;
+
+    public String getBillQrCodeUrl() {
+        return billQrCodeUrl;
+    }
+
+    public void setBillQrCodeUrl(String billQrCodeUrl) {
+        this.billQrCodeUrl = billQrCodeUrl;
+    }
 }

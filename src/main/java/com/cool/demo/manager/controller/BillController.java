@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.cool.demo.common.CodeRes;
+import com.cool.demo.common.entity.Parameter;
 import com.cool.demo.common.utils.QrCode;
 import com.core.common.DateUtils;
 import com.cool.demo.manager.entity.Bill;
@@ -201,7 +202,10 @@ public class BillController extends AbstractBaseController {
             }
             item.setId(bill.getId());
             Map<String, Object> map = Cools.conver(item);
-            map.put("qrCodeUrl", "/bill/qrcode?id="+j);
+
+            String billQrCodeUrl = Parameter.get().getBillQrCodeUrl();
+
+            map.put("qrCodeUrl", "/bill/qrcode?id="+billQrCodeUrl);
             map.put("createTime$", item.getCreateTime()==null?null:DateUtils.convert(item.getCreateTime(), DateUtils.yyyyMMdd_F));
             list.add(map);
         }
