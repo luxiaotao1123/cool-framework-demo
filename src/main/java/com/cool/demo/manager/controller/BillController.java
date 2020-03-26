@@ -151,31 +151,59 @@ public class BillController extends AbstractBaseController {
         if (null == bill) {
             return R.parse(CodeRes.EMPTY);
         }
-        List<Object> list = new ArrayList<>();
+        if (bill.getUnit() <= 0) {
+            return R.error("当前订单每箱数量错误");
+        }
+        // 剩余数量
+        int residue = 0;
         int i = bill.getAmount() / bill.getUnit();
-        for (int j = 0; j<i; j++){
-            Bill item = new Bill(
-                    bill.getSeq(),    // 批次号[非空]
-                    bill.getNumber(),    // 顺序号[非空]
-                    bill.getCustomer(),    // 客户
-                    bill.getModelType(),    // 型号打字
-                    bill.getUnit(),    // 数量[非空]
-                    bill.getUnit(),    // 每箱数量[非空]
-                    bill.getColor(),    // 颜色[非空]
-                    bill.getBoxCheck(),    // 装箱检验号[非空]
-                    bill.getBoxNumber(),    // 箱号
-                    bill.getBoxer(),    // 装箱员[非空]
-                    new Date(),    // 生产日期
-                    (short) 1    // 状态[非空]
-            );
+        if (bill.getAmount() > bill.getUnit() * i) {
+            residue = bill.getAmount() - bill.getUnit() * i;
+            i += 1;
+        }
+
+        // 分配
+        List<Object> list = new ArrayList<>();
+        for (int j = 1; j<=i; j++){
+
+            Bill item;
+            // 最后一箱
+            if (residue > 0 && j==i) {
+                item = new Bill(
+                        bill.getSeq(),    // 批次号[非空]
+                        bill.getNumber(),    // 顺序号[非空]
+                        bill.getCustomer(),    // 客户
+                        bill.getModelType(),    // 型号打字
+                        residue,    // 数量[非空]
+                        residue,    // 每箱数量[非空]
+                        bill.getColor(),    // 颜色[非空]
+                        bill.getBoxCheck(),    // 装箱检验号[非空]
+                        String.valueOf(j),    // 箱号
+                        bill.getBoxer(),    // 装箱员[非空]
+                        null,    // 生产日期
+                        (short) 1    // 状态[非空]
+                );
+            } else {
+                item = new Bill(
+                        bill.getSeq(),    // 批次号[非空]
+                        bill.getNumber(),    // 顺序号[非空]
+                        bill.getCustomer(),    // 客户
+                        bill.getModelType(),    // 型号打字
+                        bill.getUnit(),    // 数量[非空]
+                        bill.getUnit(),    // 每箱数量[非空]
+                        bill.getColor(),    // 颜色[非空]
+                        bill.getBoxCheck(),    // 装箱检验号[非空]
+                        String.valueOf(j),    // 箱号
+                        bill.getBoxer(),    // 装箱员[非空]
+                        null,    // 生产日期
+                        (short) 1    // 状态[非空]
+                );
+            }
             item.setId(bill.getId());
             Map<String, Object> map = Cools.conver(item);
             map.put("qrCodeUrl", "/bill/qrcode?id="+j);
-            map.put("createTime$", DateUtils.convert(bill.getCreateTime(), DateUtils.yyyyMMdd_F));
+            map.put("createTime$", item.getCreateTime()==null?null:DateUtils.convert(item.getCreateTime(), DateUtils.yyyyMMdd_F));
             list.add(map);
-            if (j == 1) {
-                break;
-            }
         }
         return R.ok(Cools.add("list", list));
     }
