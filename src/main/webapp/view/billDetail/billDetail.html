@@ -47,6 +47,7 @@
         <button class="layui-btn layui-btn-sm" id="btn-add" lay-event="addData">新增</button>
         <button class="layui-btn layui-btn-sm" id="btn-refresh" lay-event="refreshData">刷新</button>
         <button class="layui-btn layui-btn-sm" id="btn-delete" lay-event="deleteData">删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="repairPrint"  >补印</button>
         <button class="layui-btn layui-btn-primary layui-btn-sm" id="btn-export" lay-event="exportData">导出</button>
     </div>
 </script>
@@ -54,6 +55,8 @@
 <script type="text/html" id="operate">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="repairPrint">补印</a>
+
 </script>
 
 <script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
@@ -61,6 +64,8 @@
 <script type="text/javascript" src="/static/js/billDetail/billDetail.js" charset="utf-8"></script>
 <script type="text/javascript" src="/static/js/common.js" charset="utf-8"></script>
 <script type="text/javascript" src="/static/js/cool.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/jquery/jQuery.print.js"></script>
+<script type="text/javascript" src="/static/js/handlebars/handlebars-v4.5.3.js"></script>
 
 <iframe id="detail-iframe" scrolling="auto" style="display:none;"></iframe>
 

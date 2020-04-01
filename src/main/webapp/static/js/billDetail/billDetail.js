@@ -5,7 +5,8 @@ layui.use(['table','laydate', 'form'], function(){
     var layer = layui.layer;
     var layDate = layui.laydate;
     var form = layui.form;
-
+    var selectIds=[];
+    var selectIds2=[];
     // 数据渲染
     tableIns = table.render({
         elem: '#billDetail',
@@ -25,14 +26,16 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'createTime$', align: 'center',title: '添加时间'}
             ,{field: 'status$', align: 'center',title: '状态'}
 
-            ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
+            ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:200}
         ]],
         request: {
             pageName: 'curr',
             pageSize: 'limit'
         },
         parseData: function (res) {
+
             return {
+
                 'code': res.code,
                 'msg': res.msg,
                 'count': res.data.total,
@@ -49,6 +52,8 @@ layui.use(['table','laydate', 'form'], function(){
             pageCurr=curr;
         }
     });
+
+
 
     // 监听头工具栏事件
     table.on('toolbar(billDetail)', function (obj) {
@@ -106,6 +111,7 @@ layui.use(['table','laydate', 'form'], function(){
                 }
                 break;
             case 'exportData':
+
                 layer.confirm('确定导出Excel吗', function(){
                     var titles=[];
                     var fields=[];
@@ -143,6 +149,61 @@ layui.use(['table','laydate', 'form'], function(){
                     });
                 });
                 break;
+            // 补印编辑
+            case 'repairPrint':
+                selectIds=[];
+                var data = checkStatus.data;
+                data.map(function (track) {
+                    selectIds.push(track.id);
+                });
+                if (selectIds.length === 0){
+                    layer.msg('请选择数据');
+                }
+                else{
+                    layer.open({
+                        type: 2,
+                        title: '补印',
+                        maxmin: false,
+                        area:["400px","500px"],
+                        shadeClose: false,
+                        content: '/repairPrint',
+                        success: function(layero, index){
+                            var div = layero.find('iframe').contents().find("#ids_1");
+                            div.val(selectIds);
+
+                        }
+                    });
+
+                }
+                break;
+            // 打印
+            // case 'print':
+            //     $.ajax({
+            //         url: "/bill/print",
+            //         headers: {'token': localStorage.getItem('token')},
+            //         data: {id: data.id},
+            //         method: 'POST',
+            //         success: function (res) {
+            //             if (res.code === 200) {
+            //                 var bill = res.data;
+            //
+            //                 var tpl   =  $("#newsListTemplate").html();
+            //                 var template = Handlebars.compile(tpl);
+            //                 var html = template(bill);
+            //                 $("#box").html(html);
+            //
+            //                 $('#box').css("display", "block");
+            //                 $('#box').print();
+            //                 $('#box').css("display", "none");
+            //             } else if (res.code === 403) {
+            //                 top.location.href = "/";
+            //             } else {
+            //                 layer.msg(res.msg)
+            //             }
+            //         }
+            //     });
+            //
+            //     break;
         }
     });
 
@@ -220,6 +281,27 @@ layui.use(['table','laydate', 'form'], function(){
                    });
                 }
                 break;
+            // 补印编辑
+            case 'repairPrint':
+                selectIds=[];
+                    layer.open({
+                        type: 2,
+                        title: '补印',
+                        maxmin: false,
+                        area:["400px","500px"],
+                        shadeClose: false,
+                        content: '/repairPrint',
+                        success: function(layero, index){
+                            // setFormVal(layer.getChildFrame('#createTime_detail', index), data, false);
+                            // top.convertDisabled(layer.getChildFrame('#ids_1 :input', index), true);
+                            var div = layero.find('iframe').contents().find("#ids_1");
+                            div.val(data.id);
+                        }
+                    });
+
+
+                break;
+
 
         }
     });
@@ -261,6 +343,63 @@ layui.use(['table','laydate', 'form'], function(){
         })
     });
 
+    form.on('submit(editCreateTime)', function () {
+        var index = layer.load(1, {
+            shade: [0.5,'#000'] //0.1透明度的背景
+        });
+        var data = {
+
+             ids:$("#ids_1").val(),// top.strToDate($('#ids1').text()),
+            createTime: top.strToDate($('#createTime').val()),
+        };
+
+        $.ajax({
+            url: "/billDetail/updateCreate",
+            headers: {'token': localStorage.getItem('token')},
+            data: top.reObject(data),
+            method: 'POST',
+            async:false,//取消异步请求
+            success: function (res) {
+
+                if (res.code === 200){
+                    tableReload(true);
+                    $.ajax({
+                        url: "/billDetail/print",
+                        headers: {'token': localStorage.getItem('token')},
+                        data: {id: $("#ids_1").val()},
+                        method: 'POST',
+                        async:false,//取消异步请求
+                        success: function (res) {
+                            if (res.code === 200) {
+                                 layer.closeAll();
+                                var bill = res.data;
+                                var tpl   =  $("#newsListTemplate2").html();
+                                var template = Handlebars.compile(tpl);
+                                var html = template(bill);
+                                $("#box").html(html);
+
+                                $('#box').css("display", "block");
+                                $('#box').print();
+                                $('#box').css("display", "none");
+                            } else if (res.code === 403) {
+                                top.location.href = "/";
+                            } else {
+
+                                layer.msg(res.msg)
+                            }
+                        }
+                    });
+                } else if (res.code === 403){
+                    top.location.href = "/";
+                }else {
+                    $("#ids_1").val("")
+                    layer.msg(res.msg)
+                }
+                layer.close(index);
+            }
+        })
+    });
+
     // 搜索栏搜索事件
     form.on('submit(search)', function (data) {
         pageCurr = 1;
@@ -279,13 +418,21 @@ layui.use(['table','laydate', 'form'], function(){
         elem: '#createTime\\$',
         type: 'datetime'
     });
+    // 时间选择器
+    layDate.render({
+        elem: '#createTime',
+        type: 'datetime'
+    });
 
 
 });
 
 // 关闭动作
 $(document).on('click','#data-detail-close', function () {
+
     parent.layer.closeAll();
+
+
 });
 
 function tableReload(child) {
@@ -317,6 +464,7 @@ function tableReload(child) {
 }
 
 function setFormVal(el, data, showImg) {
+
     for (var val in data) {
         var find = el.find(":input[id='" + val + "']");
         find.val(data[val]);
@@ -358,3 +506,4 @@ $('body').keydown(function () {
         $("#search").click();
     }
 });
+

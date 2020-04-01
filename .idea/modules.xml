@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/cool-framework-demo.iml" filepath="$PROJECT_DIR$/cool-framework-demo.iml" />
+      <module fileurl="file://$USER_HOME$/Documents/flydragon/flydragon.iml" filepath="$USER_HOME$/Documents/flydragon/flydragon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../cool-framework/framework.iml" filepath="$PROJECT_DIR$/../cool-framework/framework.iml" />
     </modules>
   </component>
 </project>

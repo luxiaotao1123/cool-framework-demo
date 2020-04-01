@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/css/cool.css" media="all">
+    <link rel="stylesheet" href="/static/css/common.css" media="all">
+    <style>
+        #createTime-div {
+            padding: 20px 20px 20px 13px;
+        }
+        .layui-form-item {
+            margin-bottom: 8px;
+        }
+        .layui-form-item .layui-input-inline {
+            margin: 0 0 10px 100px
+        }
+        .layui-form-label {
+            color: #999!important;;
+            padding: 9px 0;
+        }
+        #data-detail-btn {
+            padding-top: 5px;
+            margin-left: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #data-detail-btn.layui-btn-container .layui-btn{
+            margin-right: 30px;
+        }
+
+         table {
+             width: 90%;
+             background: #ccc;
+             margin: 10px auto;
+             border-collapse: collapse;
+         }
+        td {
+            height: 25px;
+            line-height: 25px;
+            text-align: center;
+        }
+        tr {
+            background: #fff;
+        }
+        #box {
+            margin-top: 30px;
+        }
+        .contain {
+            border: 1px solid #000;
+            width: 100%;
+        }
+        .contain td {
+            border: 1px solid #000;
+            line-height: 46px;
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<!-- 详情 -->
+<div id="createTime-div">
+    <form id="createTime_detail" class="layui-form">
+    <div class="layui-form" lay-filter="">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">生产日期</label>
+            <div class="layui-input-inline">
+                <input id="createTime" class="layui-input" type="text" lay-verify="required" autocomplete="off" lay-key="1">
+                <input id="ids_1"   class="layui-input" type="hidden"  lay-verify="required" autocomplete="off" lay-key="1" value="" >
+            </div>
+        </div>
+        <hr class="layui-bg-gray">
+        <div id="data-detail-btn" class="layui-btn-container layui-form-item">
+            <div id="data-detail-submit" type="button" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="editCreateTime">保存</div>
+            <div id="data-detail-close" type="button" class="layui-btn" lay-submit="" lay-filter="close">关闭</div>
+        </div>
+    </div>
+    </form>
+</div>
+<div id="box" style="display: none;"></div>
+</body>
+<script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/static/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/billDetail/billDetail.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/common.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/cool.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/handlebars/handlebars-v4.5.3.js"></script>
+<script type="text/javascript" src="/static/js/jquery/jQuery.print.js"></script>
+<script type="text/javascript" src="/static/js/handlebars/handlebars-v4.5.3.js"></script>
+<script type="text/template" id="newsListTemplate2">
+    {{#each list}}
+    <table height="317" style="overflow: hidden;width: 100%">
+        <tr><td valign="middle">
+            <table class="contain">
+                <tr>
+                    <td width="20%" align="right" scope="col">客户</td>
+                    <td class="customer" width="30%" align="left" scope="col">{{this.customer}}</td>
+                    <td width="20%" align="right" scope="col">颜色</td>
+                    <td class="color" width="30%" align="left" scope="col">{{this.color}}</td>
+                </tr>
+                <tr>
+                    <td align="right">生产日期</td>
+                    <td class="createTime" align="left">{{this.createTime$}}</td>
+                    <td align="right">数量</td>
+                    <td class="amount" align="left">{{this.amount}}</td>
+                </tr>
+                <tr>
+                    <td align="right">型号打字</td>
+                    <td class="modelType" align="left" colspan="3">{{this.modelType}}</td>
+                </tr>
+                <tr>
+                    <td align="right">产品批号</td>
+                    <td class="seq" align="left">{{this.seq}}</td>
+                    <td colspan="2" rowspan="4" align="right"><img class="qrcode" src="{{this.qrCodeUrl}}" style="width: 80%"></td>
+                </tr>
+                <tr>
+                    <td align="right">装检验号</td>
+                    <td class="boxCheck" align="left">{{this.boxCheck}}</td>
+                </tr>
+                <tr>
+                    <td align="right">箱号</td>
+                    <td class="boxNumber" align="left">{{this.boxNumber}}</td>
+                </tr>
+            </table>
+        </td></tr>
+    </table>
+    {{/each}}
+</script>
+<script>
+
+    window.getQuerys=function(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    };
+
+    $.ajax({
+        url: "/billDetailQuery/qrcode/get/"+window.getQuerys('id'),
+        method: 'POST',
+        success: function (res) {
+            if (res.code === 200) {
+                var detail = res.data;
+
+                    var tpl   =  $("#newsListTemplate2").html();
+                var template = Handlebars.compile(tpl);
+                var html = template(detail);
+                $("#box").html(html);
+
+            } else if (res.code === 403) {
+                top.location.href = "/";
+            } else {
+                alert(res.msg);
+            }
+        }
+    });
+</script>
+
+</html>
+

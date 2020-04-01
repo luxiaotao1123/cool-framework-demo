@@ -19,7 +19,7 @@ mybatis-plus:
     field-strategy: 0
 
 logging:
-  path: /stock/out/logs
+  path: stock/out/logs
 
 aliyun:
   oss:
