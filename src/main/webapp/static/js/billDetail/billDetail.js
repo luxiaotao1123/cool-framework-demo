@@ -416,7 +416,7 @@ layui.use(['table','laydate', 'form'], function(){
     // 时间选择器
     layDate.render({
         elem: '#createTime\\$',
-        type: 'datetime'
+        type: 'date'
     });
     // 时间选择器
     layDate.render({
