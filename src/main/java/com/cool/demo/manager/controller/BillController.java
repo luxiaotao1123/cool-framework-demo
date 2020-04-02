@@ -183,6 +183,9 @@ public class BillController extends AbstractBaseController {
             return R.error();
         }
         billService.deleteBatchIds(Arrays.asList(ids));
+        for (Integer id : ids) {
+            billDetailService.delete(new EntityWrapper<BillDetail>().eq("bill_id", id));
+        }
         return R.ok();
     }
 

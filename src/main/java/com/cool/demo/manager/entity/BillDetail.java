@@ -133,7 +133,7 @@ public class BillDetail implements Serializable {
         if (Cools.isEmpty(this.createTime)){
             return "";
         }
-        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.createTime);
+        return new SimpleDateFormat("yyyy-MM-dd").format(this.createTime);
     }
 
     public void setCreateTime(Date createTime) {

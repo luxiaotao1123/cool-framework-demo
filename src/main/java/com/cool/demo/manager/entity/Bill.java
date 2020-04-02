@@ -1,13 +1,14 @@
 package com.cool.demo.manager.entity;
 
-import com.core.common.Cools;import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+import com.core.common.Cools;
+
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import com.baomidou.mybatisplus.annotations.TableName;
-import java.io.Serializable;
 
 @TableName("man_bill")
 public class Bill implements Serializable {
@@ -197,7 +198,7 @@ public class Bill implements Serializable {
         if (Cools.isEmpty(this.createTime)){
             return "";
         }
-        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.createTime);
+        return new SimpleDateFormat("yyyy-MM-dd").format(this.createTime);
     }
 
     public void setCreateTime(Date createTime) {
