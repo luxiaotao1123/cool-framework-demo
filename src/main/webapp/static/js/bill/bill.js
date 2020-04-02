@@ -24,7 +24,7 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'modelType', align: 'center',title: '型号打字'}
             ,{field: 'total', align: 'center',title: '总数量'}
             ,{field: 'unit', align: 'center',title: '每箱数量'}
-            ,{field: 'color', align: 'center',title: '颜色'}
+            ,{field: 'color', align: 'center',title: '胶种颜色'}
             ,{field: 'boxCheck', align: 'center',title: '装箱检验号'}
             ,{field: 'boxPrefix', align: 'center',title: '箱号前缀'}
             ,{field: 'createTime$', align: 'center',title: '生产日期'}
