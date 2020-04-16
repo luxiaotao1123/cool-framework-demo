@@ -27,6 +27,12 @@ public class BillDto {
 
     private String boxNumber;
 
+    private  String boxer;
+
+    private Integer count;
+
+    private String boxingTime;
+
     public BillDto() {
     }
 
@@ -42,6 +48,22 @@ public class BillDto {
         this.qrCodeUrl = qrCodeUrl;
         this.boxCheck = boxCheck;
         this.boxNumber = boxNumber;
+    }
+    public BillDto(Long billId, Long billDetailId, String customer, String color, String createTime$, int amount, String modelType, String seq, String qrCodeUrl, String boxCheck, String boxNumber,String boxer,int count,String boxingTime) {
+        this.billId = billId;
+        this.billDetailId = billDetailId;
+        this.customer = customer;
+        this.color = color;
+        this.createTime$ = createTime$;
+        this.amount = amount;
+        this.modelType = modelType;
+        this.seq = seq;
+        this.qrCodeUrl = qrCodeUrl;
+        this.boxCheck = boxCheck;
+        this.boxNumber = boxNumber;
+        this.boxer=boxer;
+        this.count=count;
+        this.boxingTime=boxingTime;
     }
 
     public Long getBillId() {
@@ -130,5 +152,29 @@ public class BillDto {
 
     public void setBoxNumber(String boxNumber) {
         this.boxNumber = boxNumber;
+    }
+
+    public String getBoxer() {
+        return boxer;
+    }
+
+    public void setBoxer(String boxer) {
+        this.boxer = boxer;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public String getBoxingTime() {
+        return boxingTime;
+    }
+
+    public void setBoxingTime(String boxingTime) {
+        this.boxingTime = boxingTime;
     }
 }

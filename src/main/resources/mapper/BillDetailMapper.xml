@@ -13,5 +13,10 @@
         <result column="status" property="status" />
 
     </resultMap>
-
+ <select id="getBillDetailByOrderIdandBoxNumber" resultMap="BaseResultMap" >
+     select * from man_bill_detail where bill_id= ${billId} and box_number=${boxNumber}
+ </select>
+    <select id="getStatistics" resultType="java.lang.Integer">
+        select count(*) from man_bill_detail where boxer = #{boxer}
+    </select>
 </mapper>

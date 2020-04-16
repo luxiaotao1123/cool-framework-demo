@@ -56,6 +56,12 @@ public class BillDetail implements Serializable {
      */
     private Short status;
 
+    /**
+     * 添加时间
+     */
+    @TableField("boxing_time")
+    private Date boxingTime;
+
     public BillDetail() {}
 
     public BillDetail(Long billId,Integer amount,Integer boxNumber,String boxer,Date createTime,Short status) {
@@ -160,5 +166,11 @@ public class BillDetail implements Serializable {
         this.status = status;
     }
 
+    public Date getBoxingTime() {
+        return boxingTime;
+    }
 
+    public void setBoxingTime(Date boxingTime) {
+        this.boxingTime = boxingTime;
+    }
 }

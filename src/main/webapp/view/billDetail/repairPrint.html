@@ -123,37 +123,36 @@
     </table>
     {{/each}}
 </script>
-<script>
+<!--<script>-->
 
-    window.getQuerys=function(name) {
-        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) {
-            return unescape(r[2]);
-        }
-        return null;
-    };
+<!--    window.getQuerys=function(name) {-->
+<!--        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');-->
+<!--        var r = window.location.search.substr(1).match(reg);-->
+<!--        if (r != null) {-->
+<!--            return unescape(r[2]);-->
+<!--        }-->
+<!--        return null;-->
+<!--    };-->
 
-    $.ajax({
-        url: "/billDetailQuery/qrcode/get/"+window.getQuerys('id'),
-        method: 'POST',
-        success: function (res) {
-            if (res.code === 200) {
-                var detail = res.data;
+<!--    $.ajax({-->
+<!--        url: "/billDetailQuery/qrcode/get/"+window.getQuerys('id'),-->
+<!--        method: 'POST',-->
+<!--        success: function (res) {-->
+<!--            if (res.code === 200) {-->
+<!--                var detail = res.data;-->
+<!--                var tpl   =  $("#newsListTemplate2").html();-->
+<!--                var template = Handlebars.compile(tpl);-->
+<!--                var html = template(detail);-->
+<!--                $("#box").html(html);-->
 
-                    var tpl   =  $("#newsListTemplate2").html();
-                var template = Handlebars.compile(tpl);
-                var html = template(detail);
-                $("#box").html(html);
-
-            } else if (res.code === 403) {
-                top.location.href = "/";
-            } else {
-                alert(res.msg);
-            }
-        }
-    });
-</script>
+<!--            } else if (res.code === 403) {-->
+<!--                top.location.href = "/";-->
+<!--            } else {-->
+<!--                alert(res.msg);-->
+<!--            }-->
+<!--        }-->
+<!--    });-->
+<!--</script>-->
 
 </html>
 

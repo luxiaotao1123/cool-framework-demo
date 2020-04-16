@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -43,6 +44,11 @@ public class BillDetailController extends AbstractBaseController {
     @RequestMapping("/repairPrint")
     public String repairPrint() {
         return "billDetail/repairPrint";
+    }
+
+    @RequestMapping("/boxing")
+    public String boxing() {
+        return "billDetail/boxing";
     }
 
     @RequestMapping(value = "/billDetail/{id}/auth")
@@ -207,20 +213,19 @@ public class BillDetailController extends AbstractBaseController {
         return R.ok();
     }
 
-    @RequestMapping(value = "billDetail/print")
+    @RequestMapping(value = "/billDetail/print")
     @ResponseBody
     @ManagerAuth
     public R print(@RequestParam("id") String ids) {
         List<BillDetail> details = new ArrayList<>();
         ArrayList<Object> list = new ArrayList<>();
-        if(Cools.isEmpty("ids")){
+        if (Cools.isEmpty("ids")) {
             return R.error("传入ID为空");
-        }else{
+        } else {
             String billQrCodeUrl = Parameter.get().getBillQrCodeUrl();
             String[] split = ids.split(",");
             //根据","将字符串分割成数组
-            for (int i=0;i<split.length;i++)
-            {
+            for (int i = 0; i < split.length; i++) {
                 //遍历数组根据ID查询订单详情 返回对象
                 BillDetail billDetail = billDetailService.selectById(split[i]);
                 details.add(billDetail);
@@ -234,6 +239,42 @@ public class BillDetailController extends AbstractBaseController {
             }
         }
         return R.ok(Cools.add("list", list));
+    }
+
+    @ManagerAuth
+    @Transactional
+    @RequestMapping(value = "/billDetail/boxingQuery")
+    @ResponseBody
+    public R boxingQuery( String url ,String boxer) {
+
+        if ("".equals(url)) {
+            return R.error("箱号或者订单编号为空");
+        }
+        String id= null;
+        try {
+            url ="{"+(url.substring(url.indexOf("?")+1,url.length())).replace("=",":")+"}";
+            JSONObject jsonObject=JSONObject.parseObject(url);
+            id = jsonObject.getString("id");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.error("二维码信息错误");
+        }
+        BillDetail detail = billDetailService.selectById(id);
+
+        if (!Cools.isEmpty(detail)) {
+            detail.setBoxer(boxer);
+            detail.setBoxingTime( new Date());
+            boolean b = billDetailService.updateById(detail);
+            if (b) {
+                int count =billDetailService.getStatistics(detail.getBoxer());
+                Bill bill =billService.selectById(detail.getBillId());
+                BillDto dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), "", bill.getBoxCheck(), bill.getBoxPrefix().concat(String.valueOf(detail.getBoxNumber())),detail.getBoxer(),count,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(detail.getBoxingTime()));
+
+                return R.ok(dto);
+            }
+
+        }
+        return R.error("未查询到信息！");
     }
 
 }
