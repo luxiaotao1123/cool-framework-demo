@@ -154,9 +154,11 @@ public class BillDetail implements Serializable {
         if (null == this.status){ return null; }
         switch (this.status){
             case 1:
-                return "正常";
-            case 0:
-                return "禁用";
+                return "已录入";
+            case 2:
+                return "已装箱";
+            case 3:
+                return "已出库";
             default:
                 return String.valueOf(this.status);
         }
