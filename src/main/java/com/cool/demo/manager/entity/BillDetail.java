@@ -46,6 +46,10 @@ public class BillDetail implements Serializable {
     private String boxer;
 
     /**
+     * 出库员
+     */
+    private String outStocker;
+    /**
      * 添加时间
      */
     @TableField("create_time")
@@ -57,10 +61,16 @@ public class BillDetail implements Serializable {
     private Short status;
 
     /**
-     * 添加时间
+     * 装箱时间
      */
     @TableField("boxing_time")
     private Date boxingTime;
+
+    /**
+     * 出库时间
+     */
+    @TableField("out_stock_time")
+    private Date outStockTime;
 
     public BillDetail() {}
 
@@ -174,5 +184,21 @@ public class BillDetail implements Serializable {
 
     public void setBoxingTime(Date boxingTime) {
         this.boxingTime = boxingTime;
+    }
+
+    public String getOutStocker() {
+        return outStocker;
+    }
+
+    public void setOutStocker(String outStocker) {
+        this.outStocker = outStocker;
+    }
+
+    public Date getOutStockTime() {
+        return outStockTime;
+    }
+
+    public void setOutStockTime(Date outStockTime) {
+        this.outStockTime = outStockTime;
     }
 }

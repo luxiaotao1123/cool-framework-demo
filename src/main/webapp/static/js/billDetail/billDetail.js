@@ -23,6 +23,7 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'amount', align: 'center',title: '数量'}
             ,{field: 'boxNumber', align: 'center',title: '箱号'}
             ,{field: 'boxer', align: 'center',title: '装箱员'}
+            ,{field: 'outStocker', align: 'center',title: '出库员'}
             ,{field: 'createTime$', align: 'center',title: '添加时间'}
             ,{field: 'status$', align: 'center',title: '状态'}
 
@@ -371,6 +372,7 @@ layui.use(['table','laydate', 'form'], function(){
                         async:false,//取消异步请求
                         success: function (res) {
                             if (res.code === 200) {
+
                                  layer.closeAll();
                                 var bill = res.data;
                                 var tpl   =  $("#newsListTemplate2").html();
@@ -413,11 +415,11 @@ layui.use(['table','laydate', 'form'], function(){
         tableReload(false);
     });
 
-    // 时间选择器
-    layDate.render({
-        elem: '#createTime\\$',
-        type: 'date'
-    });
+    // // 时间选择器
+    // layDate.render({
+    //     elem: '#createTime\\$',
+    //     type: 'date'
+    // });
     // 时间选择器
     layDate.render({
         elem: '#createTime',

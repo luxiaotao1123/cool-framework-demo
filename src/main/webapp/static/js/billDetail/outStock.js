@@ -32,9 +32,9 @@ function myFunction(url) {
         //请求的媒体类型
         //contentType: "application/json;charset=UTF-8",
         //请求地址
-        url: "/billDetail/boxingQuery",
+        url: "/billDetail/outStock",
         //数据，json字符串
-        data: {"url": url,"boxer":boxer},
+        data: {"url": url,"outStocker":boxer},
         headers: {'token': localStorage.getItem('token')},
         //请求成功
         success: function (result) {
@@ -48,9 +48,9 @@ function myFunction(url) {
                 $("#seq").text(result.data.seq);
                 $("#statistics").text(result.data.count) ;
                 $("#boxNumber").text(result.data.boxNumber) ;
-                $("#boxingTime").text(result.data.boxingTime) ;
+                $("#outStockTime").text(result.data.boxingTime) ;
                 setTimeout(function () {
-                    $("#order_num").attr("placeholder","入库提交成功！");
+                    $("#order_num").attr("placeholder","出库提交成功！");
                 },1000);
             }else
             {

@@ -50,6 +50,10 @@ public class BillDetailController extends AbstractBaseController {
     public String boxing() {
         return "billDetail/boxing";
     }
+    @RequestMapping("/outStock")
+    public String outStock() {
+        return "billDetail/outStock";
+    }
 
     @RequestMapping(value = "/billDetail/{id}/auth")
     @ResponseBody
@@ -264,12 +268,95 @@ public class BillDetailController extends AbstractBaseController {
         if (!Cools.isEmpty(detail)) {
             detail.setBoxer(boxer);
             detail.setBoxingTime( new Date());
+            detail.setStatus((short) 2);
             boolean b = billDetailService.updateById(detail);
             if (b) {
                 int count =billDetailService.getStatistics(detail.getBoxer());
                 Bill bill =billService.selectById(detail.getBillId());
                 BillDto dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), "", bill.getBoxCheck(), bill.getBoxPrefix().concat(String.valueOf(detail.getBoxNumber())),detail.getBoxer(),count,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(detail.getBoxingTime()));
+                //根据订单ID查询装箱明细信息
+                List<BillDetail>  list =billDetailService.selectByBillId(bill.getId());
+                if(list.size()>0){
+                    //计数器
+                    int counts=0;
+                    for (BillDetail billDetail:list ) {
+                        if(billDetail.getStatus()== 2)
+                        {
+                            counts=counts+1;
 
+                        }else
+                        {
+                            break;
+                        }
+                    }
+                    if(counts!=0 &&  counts==list.size())
+                    {
+                        bill.setStatus((short) 2);
+                        billService.updateById(bill);
+                    }
+
+                }
+                return R.ok(dto);
+            }
+
+        }
+        return R.error("未查询到信息！");
+    }
+
+    @ManagerAuth
+    @Transactional
+    @RequestMapping(value = "/billDetail/outStock")
+    @ResponseBody
+    public R outStock( String url ,String outStocker) {
+
+        if ("".equals(url)) {
+            return R.error("箱号或者订单编号为空");
+        }
+        String id= null;
+        try {
+            url ="{"+(url.substring(url.indexOf("?")+1,url.length())).replace("=",":")+"}";
+            JSONObject jsonObject=JSONObject.parseObject(url);
+            id = jsonObject.getString("id");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.error("二维码信息错误");
+        }
+        BillDetail detail = billDetailService.selectById(id);
+
+        if (!Cools.isEmpty(detail)) {
+            detail.setOutStocker(outStocker);
+            detail.setOutStockTime(new Date());
+            detail.setStatus((short)3);
+            boolean b = billDetailService.updateById(detail);
+            if (b) {
+                //根据出入人员名称查询出库数量
+                int count =billDetailService.getOutStockStatistics(detail.getOutStocker());
+                Bill bill =billService.selectById(detail.getBillId());
+                BillDto dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), "", bill.getBoxCheck(), bill.getBoxPrefix().concat(String.valueOf(detail.getBoxNumber())),detail.getBoxer(),count,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(detail.getOutStockTime()));
+
+                //根据订单ID查询装箱明细信息
+               List<BillDetail>  list =billDetailService.selectByBillId(bill.getId());
+
+               if(list.size()>0){
+                   //计数器
+                   int counts=0;
+                   for (BillDetail billDetail:list ) {
+                       if(billDetail.getStatus()== 3)
+                       {
+                         counts=counts+1;
+
+                       }else
+                       {
+                           break;
+                       }
+                   }
+                   if(counts!=0 &&  counts==list.size())
+                   {
+                       bill.setStatus((short) 3);
+                       billService.updateById(bill);
+                   }
+
+               }
                 return R.ok(dto);
             }
 

@@ -17,6 +17,15 @@
      select * from man_bill_detail where bill_id= ${billId} and box_number=${boxNumber}
  </select>
     <select id="getStatistics" resultType="java.lang.Integer">
-        select count(*) from man_bill_detail where boxer = #{boxer}
+        select count(*) from man_bill_detail where boxer = #{boxer} and TO_DAYS(boxing_time) = TO_DAYS(NOW())
     </select>
+
+    <select id="getOutStockStatistics" resultType="java.lang.Integer">
+        select count(*) from man_bill_detail where out_stocker = #{outStocker} and  TO_DAYS(out_stock_time) = TO_DAYS(NOW())
+    </select>
+
+    <select id="selectByBillId" resultType="com.cool.demo.manager.entity.BillDetail">
+        select * from man_bill_detail where bill_id = #{billId}
+    </select>
+
 </mapper>

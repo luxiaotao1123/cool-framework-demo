@@ -33,6 +33,8 @@ public class BillDto {
 
     private String boxingTime;
 
+    private  String  outStockTime;
+
     public BillDto() {
     }
 
@@ -64,7 +66,9 @@ public class BillDto {
         this.boxer=boxer;
         this.count=count;
         this.boxingTime=boxingTime;
+        this.outStockTime=boxingTime;
     }
+
 
     public Long getBillId() {
         return billId;
