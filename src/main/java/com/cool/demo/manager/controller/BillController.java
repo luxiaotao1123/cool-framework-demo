@@ -237,7 +237,7 @@ public class BillController extends AbstractBaseController {
             BillDto dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), "/bill/qrcode?id=" + url, bill.getBoxCheck(), bill.getBoxPrefix().concat(String.valueOf(detail.getBoxNumber())));
             list.add(dto);
         }
-        bill.setStatus((short) 2);
+//        bill.setStatus((short) 2);
         billService.updateById(bill);
         return R.ok(Cools.add("list", list));
     }
