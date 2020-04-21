@@ -26,7 +26,7 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'unit', align: 'center',title: '每箱数量'}
             ,{field: 'color', align: 'center',title: '胶种颜色'}
             ,{field: 'boxCheck', align: 'center',title: '装箱检验号'}
-            ,{field: 'boxPrefix', align: 'center',title: '箱号前缀'}
+            // ,{field: 'boxPrefix', align: 'center',title: '箱号前缀'}
             ,{field: 'createTime$', align: 'center',title: '生产日期'}
             ,{field: 'status$', align: 'center',title: '状态'}
 
@@ -200,7 +200,7 @@ layui.use(['table','laydate', 'form'], function(){
                     success: function (res) {
                         if (res.code === 200) {
                             var bill = res.data;
-
+                            console.info(bill)
                             var tpl   =  $("#newsListTemplate").html();
                             var template = Handlebars.compile(tpl);
                             var html = template(bill);

@@ -66,8 +66,8 @@ public class Bill implements Serializable {
     /**
      * 箱号前缀
      */
-    @TableField("box_prefix")
-    private String boxPrefix;
+//    @TableField("box_prefix")
+//    private String boxPrefix;
 
     /**
      * 生产日期
@@ -80,9 +80,15 @@ public class Bill implements Serializable {
      */
     private Short status;
 
+    /**
+     * 备注
+     */
+    @TableField("remark")
+    private String remark;
+
     public Bill() {}
 
-    public Bill(String seq,String number,String customer,String modelType,Integer total,Integer unit,String color,String boxCheck,String boxPrefix,Date createTime,Short status) {
+    public Bill(String seq,String number,String customer,String modelType,Integer total,Integer unit,String color,String boxCheck,Date createTime,Short status) {
         this.seq = seq;
         this.number = number;
         this.customer = customer;
@@ -91,7 +97,7 @@ public class Bill implements Serializable {
         this.unit = unit;
         this.color = color;
         this.boxCheck = boxCheck;
-        this.boxPrefix = boxPrefix;
+        //this.boxPrefix = boxPrefix;
         this.createTime = createTime;
         this.status = status;
     }
@@ -182,13 +188,13 @@ public class Bill implements Serializable {
         this.boxCheck = boxCheck;
     }
 
-    public String getBoxPrefix() {
-        return boxPrefix;
-    }
-
-    public void setBoxPrefix(String boxPrefix) {
-        this.boxPrefix = boxPrefix;
-    }
+//    public String getBoxPrefix() {
+//        return boxPrefix;
+//    }
+//
+//    public void setBoxPrefix(String boxPrefix) {
+//        this.boxPrefix = boxPrefix;
+//    }
 
     public Date getCreateTime() {
         return createTime;
@@ -227,5 +233,11 @@ public class Bill implements Serializable {
         this.status = status;
     }
 
+    public String getRemark() {
+        return remark;
+    }
 
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 }

@@ -6,7 +6,7 @@ layui.use(['table','laydate', 'form'], function(){
     var layDate = layui.laydate;
     var form = layui.form;
     var selectIds=[];
-    var selectIds2=[];
+    var spell=[];
     // 数据渲染
     tableIns = table.render({
         elem: '#billDetail',
@@ -26,7 +26,7 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'outStocker', align: 'center',title: '出库员'}
             ,{field: 'createTime$', align: 'center',title: '添加时间'}
             ,{field: 'status$', align: 'center',title: '状态'}
-
+            ,{field: 'spellStatus$', align: 'center',title: '拼单状态'}
             ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:200}
         ]],
         request: {
@@ -174,37 +174,94 @@ layui.use(['table','laydate', 'form'], function(){
 
                         }
                     });
-
                 }
                 break;
-            // 打印
-            // case 'print':
-            //     $.ajax({
-            //         url: "/bill/print",
-            //         headers: {'token': localStorage.getItem('token')},
-            //         data: {id: data.id},
-            //         method: 'POST',
-            //         success: function (res) {
-            //             if (res.code === 200) {
-            //                 var bill = res.data;
+
+            // 拼单
+            case 'spellList':
+                spell=[];
+                var data = checkStatus.data;
+                data.map(function (track) {
+                    spell.push(track.id);
+                });
+                if (spell.length === 0){
+                    layer.msg('请选择数据');
+                }
+                else{
+                    // layer.open({
+                    //     type: 2,
+                    //     title: '拼单',
+                    //     maxmin: false,
+                    //     area:["400px","500px"],
+                    //     shadeClose: false,
+                    //     content: '/repairPrint',
+                    //     success: function(layero, index){
+                    //         var div = layero.find('iframe').contents().find("#ids_1");
+                    //         div.val(selectIds);
+                    //
+                    //     }
+                    // });、
+
+                    layer.open({
+                        type: 1
+                        ,title: '拼单' //不显示标题栏
+                        ,closeBtn: false
+                        ,area: '300px;'
+                        ,shade: 0.8
+                        ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                        ,btn: ['确认', '取消']
+                        ,btnAlign: 'c'
+
+                        ,moveType: 1 //拖拽模式，0或者1
+                        ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">确保您选择的箱号为同一个订单,否则拼单无效! <br></div>'
+                        ,success: function(layero){
+                            var btn = layero.find('.layui-layer-btn');
+                            //btn.find()
+                            // btn.find('.layui-layer-btn0').attr({
+                            //     href: 'billDetail/spellList'
+                            //     ,target: '_self'
+                            // });
+                            btn.click(function () {
+                                var datas= spell;
+                                $.ajax({
+                                    url: "/billDetail/spellList",
+                                    headers: {'token': localStorage.getItem('token')},
+                                    data:{"ids":datas.toString()},
+                                    method: 'POST',
+                                    success: function (res) {
+
+                                        if (res.code === 200){
+
+                                            var bill = res.data;
+                                            console.log(res);
+                                            var tpl   =  $("#newsListTemplate2").html();
+                                            var template = Handlebars.compile(tpl);
+                                            var html = template(bill);
+                                            $("#box").html(html);
+
+                                            $('#box').css("display", "block");
+                                            $('#box').print();
+                                            $('#box').css("display", "none");
+                                        } else if (res.code === 403){
+                                            top.location.href = "/";
+                                        }else {
+                                            layer.msg(res.msg)
+                                        }
+                                        layer.close();
+                                    }
+                                })
+                            })
+
+                        }
+                    });
+                }
+            // ,offset: function(othis){
+            //     var type = othis.data('type')
+            //         ,text = othis.text();
             //
-            //                 var tpl   =  $("#newsListTemplate").html();
-            //                 var template = Handlebars.compile(tpl);
-            //                 var html = template(bill);
-            //                 $("#box").html(html);
-            //
-            //                 $('#box').css("display", "block");
-            //                 $('#box').print();
-            //                 $('#box').css("display", "none");
-            //             } else if (res.code === 403) {
-            //                 top.location.href = "/";
-            //             } else {
-            //                 layer.msg(res.msg)
-            //             }
-            //         }
-            //     });
-            //
-            //     break;
+            // }
+                break;
+
         }
     });
 

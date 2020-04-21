@@ -12,8 +12,8 @@ public class CodeBuilder {
         generator.url="47.111.25.152:3306/plastic";
         generator.username="root";
         generator.password="ykBmgA5TPoc";
-        generator.table="man_bill";
-        generator.packagePath="com.cool.demo.manager";
+        generator.table="man_bill_detail";
+        generator.packagePath="com.cool.demo.manager.entity";
         generator.build();
     }
 

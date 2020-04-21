@@ -72,6 +72,35 @@ public class BillDetail implements Serializable {
     @TableField("out_stock_time")
     private Date outStockTime;
 
+    /**
+     * 拼单状态
+     */
+    @TableField("spell_status")
+    private Short spellStatus;
+
+    public Short getSpellStatus() {
+        return spellStatus;
+    }
+
+    public String getSpellStatus$(){
+        if (null == this.spellStatus)
+        {
+            return null;
+        }
+        switch (this.spellStatus){
+            case 1:
+                return "已拼单";
+
+            default:
+                return String.valueOf(this.spellStatus);
+        }
+    }
+
+
+    public void setSpellStatus(Short spellStatus) {
+        this.spellStatus = spellStatus;
+    }
+
     public BillDetail() {}
 
     public BillDetail(Long billId,Integer amount,Integer boxNumber,String boxer,Date createTime,Short status) {
@@ -201,4 +230,6 @@ public class BillDetail implements Serializable {
     public void setOutStockTime(Date outStockTime) {
         this.outStockTime = outStockTime;
     }
+
+
 }

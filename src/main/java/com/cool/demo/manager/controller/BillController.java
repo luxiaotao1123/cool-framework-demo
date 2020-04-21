@@ -234,7 +234,15 @@ public class BillController extends AbstractBaseController {
         String billQrCodeUrl = Parameter.get().getBillQrCodeUrl();
         for (BillDetail detail : details) {
             String url = billQrCodeUrl.concat("?id=").concat(String.valueOf(detail.getId()));
-            BillDto dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), "/bill/qrcode?id=" + url, bill.getBoxCheck(), bill.getBoxPrefix().concat(String.valueOf(detail.getBoxNumber())));
+            BillDto dto = new BillDto(bill.getId(), detail.getId(),
+                    bill.getCustomer(),
+                    bill.getColor(),
+                    detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(),
+                            DateUtils.yyyyMMdd_F),
+                    detail.getAmount(),
+                    bill.getModelType(),
+                    bill.getSeq(),
+                    "/bill/qrcode?id=" + url, bill.getBoxCheck(),bill.getNumber());
             list.add(dto);
         }
 //        bill.setStatus((short) 2);

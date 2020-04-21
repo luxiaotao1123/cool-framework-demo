@@ -18,5 +18,12 @@
         <result column="status" property="status" />
 
     </resultMap>
-
+<select id="selectByDetialId"   resultType="com.cool.demo.manager.entity.Bill">
+    select * from man_bill where id in (SELECT bill_id from man_bill_detail where id in
+    <foreach collection="array" item="ids" index="index"
+             open="(" close=")" separator=",">
+        ${ids}
+    </foreach>
+    )
+</select>
 </mapper>

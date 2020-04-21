@@ -42,7 +42,7 @@
         <div class="layui-inline"  style="width:31%;">
             <label class="layui-form-label">型号打字：</label>
             <div class="layui-input-inline">
-                <input id="modelType" class="layui-input" type="text">
+                <input id="modelType" class="layui-input" type="text" autocapitalize="on" autocomplete="on">
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">
@@ -69,18 +69,24 @@
                 <input id="boxCheck" class="layui-input" type="text" lay-verify="required" >
             </div>
         </div>
-        <div class="layui-inline"  style="width:31%;">
-            <label class="layui-form-label">箱号前缀：</label>
-            <div class="layui-input-inline">
-                <input id="boxPrefix" class="layui-input" type="text">
-            </div>
-        </div>
+<!--        <div class="layui-inline"  style="width:31%;">-->
+<!--            <label class="layui-form-label">箱号前缀：</label>-->
+<!--            <div class="layui-input-inline">-->
+<!--                <input id="boxPrefix" class="layui-input" type="text">-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="layui-inline"  style="width:31%;">
             <label class="layui-form-label">生产日期：</label>
             <div class="layui-input-inline">
                 <input id="createTime$" class="layui-input" type="text" autocomplete="off">
             </div>
         </div>
+        <div class="layui-inline"  style="width:31%;">
+                        <label class="layui-form-label">备注：</label>
+                        <div class="layui-input-inline">
+                            <input id="remark" class="layui-input" type="text">
+                        </div>
+                    </div>
         <div class="layui-inline"  style="width:31%;">
             <label class="layui-form-label"><span class="not-null">*</span>状　　态：</label>
             <div class="layui-input-inline">

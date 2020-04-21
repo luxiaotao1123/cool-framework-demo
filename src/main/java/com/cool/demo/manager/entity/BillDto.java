@@ -38,7 +38,7 @@ public class BillDto {
     public BillDto() {
     }
 
-    public BillDto(Long billId, Long billDetailId, String customer, String color, String createTime$, int amount, String modelType, String seq, String qrCodeUrl, String boxCheck, String boxNumber) {
+    public BillDto(Long billId, Long billDetailId, String customer, String color, String createTime$, int amount, String modelType, String seq, String qrCodeUrl,  String boxCheck,String boxNumber) {
         this.billId = billId;
         this.billDetailId = billDetailId;
         this.customer = customer;
@@ -51,7 +51,7 @@ public class BillDto {
         this.boxCheck = boxCheck;
         this.boxNumber = boxNumber;
     }
-    public BillDto(Long billId, Long billDetailId, String customer, String color, String createTime$, int amount, String modelType, String seq, String qrCodeUrl, String boxCheck, String boxNumber,String boxer,int count,String boxingTime) {
+    public BillDto(Long billId, Long billDetailId, String customer, String color, String createTime$, int amount, String modelType, String seq, String boxCheck,String qrCodeUrl,  String boxNumber,String boxer,int count,String boxingTime) {
         this.billId = billId;
         this.billDetailId = billDetailId;
         this.customer = customer;
