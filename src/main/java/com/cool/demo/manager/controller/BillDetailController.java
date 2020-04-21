@@ -8,17 +8,14 @@ import com.cool.demo.common.entity.Parameter;
 import com.cool.demo.manager.entity.Bill;
 import com.cool.demo.manager.entity.BillDetail;
 import com.cool.demo.manager.entity.BillDto;
-import com.cool.demo.manager.entity.Spell;
 import com.cool.demo.manager.service.BillDetailService;
 import com.cool.demo.manager.service.BillService;
-import com.cool.demo.manager.service.SpellService;
 import com.core.annotations.ManagerAuth;
 import com.core.common.Cools;
 import com.core.common.DateUtils;
 import com.core.common.R;
 import com.core.controller.AbstractBaseController;
 import com.core.exception.CoolException;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,9 +32,6 @@ public class BillDetailController extends AbstractBaseController {
     private BillService billService;
     @Autowired
     private BillDetailService billDetailService;
-
-    @Autowired
-    private SpellService spellService;
 
     @RequestMapping("/billDetail")
     public String index() {
