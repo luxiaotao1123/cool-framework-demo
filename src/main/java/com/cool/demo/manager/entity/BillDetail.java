@@ -56,7 +56,7 @@ public class BillDetail implements Serializable {
     private Date createTime;
 
     /**
-     * 状态 1: 正常  0: 禁用  
+         * 状态 1: 已录入  2: 已装箱 3:已出库
      */
     private Short status;
 
@@ -78,15 +78,42 @@ public class BillDetail implements Serializable {
     @TableField("spell_status")
     private Short spellStatus;
 
+    /**
+     * 状态 1: 正常  0: 禁用
+     */
+    @TableField("use_status")
+    private Short useStatus;
+
+    public Short getUseStatus() {
+        return useStatus;
+    }
+
+    public void setUseStatus(Short useStatus) {
+        this.useStatus = useStatus;
+    }
+
     public Short getSpellStatus() {
         return spellStatus;
     }
 
-    public String getSpellStatus$(){
-        if (null == this.spellStatus)
-        {
-            return null;
+    public void setSpellStatus(Short spellStatus) {
+        this.spellStatus = spellStatus;
+    }
+
+    public String getUseStatus$(){
+        if (null == this.useStatus){ return null; }
+        switch (this.useStatus){
+            case 1:
+                return "正常";
+            case 0:
+                return "禁用";
+
+            default:
+                return String.valueOf(this.useStatus);
         }
+    }
+    public String getSpellStatus$(){
+        if (null == this.spellStatus){ return null; }
         switch (this.spellStatus){
             case 1:
                 return "已拼单";
@@ -96,20 +123,27 @@ public class BillDetail implements Serializable {
         }
     }
 
-
-    public void setSpellStatus(Short spellStatus) {
-        this.spellStatus = spellStatus;
-    }
-
     public BillDetail() {}
 
-    public BillDetail(Long billId,Integer amount,Integer boxNumber,String boxer,Date createTime,Short status) {
+    public BillDetail(Long billId,Integer amount,Integer boxNumber,String boxer,Date createTime,Short status,Short useStatus ) {
         this.billId = billId;
         this.amount = amount;
         this.boxNumber = boxNumber;
         this.boxer = boxer;
         this.createTime = createTime;
         this.status = status;
+        this.useStatus=useStatus;
+
+    }
+    public BillDetail(Long billId,Integer amount,Integer boxNumber,String boxer,Date createTime,Short status, Short spellStatus,Short useStatus) {
+        this.billId = billId;
+        this.amount = amount;
+        this.boxNumber = boxNumber;
+        this.boxer = boxer;
+        this.createTime = createTime;
+        this.status = status;
+        this.spellStatus = spellStatus;
+        this.useStatus=useStatus;
     }
 
 //    BillDetail billDetail = new BillDetail(

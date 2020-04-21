@@ -8,19 +8,23 @@ import com.cool.demo.common.entity.Parameter;
 import com.cool.demo.manager.entity.Bill;
 import com.cool.demo.manager.entity.BillDetail;
 import com.cool.demo.manager.entity.BillDto;
+import com.cool.demo.manager.entity.Spell;
 import com.cool.demo.manager.service.BillDetailService;
 import com.cool.demo.manager.service.BillService;
+import com.cool.demo.manager.service.SpellService;
 import com.core.annotations.ManagerAuth;
 import com.core.common.Cools;
 import com.core.common.DateUtils;
 import com.core.common.R;
 import com.core.controller.AbstractBaseController;
 import com.core.exception.CoolException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -31,6 +35,9 @@ public class BillDetailController extends AbstractBaseController {
     private BillService billService;
     @Autowired
     private BillDetailService billDetailService;
+
+    @Autowired
+    private SpellService spellService;
 
     @RequestMapping("/billDetail")
     public String index() {
@@ -45,6 +52,11 @@ public class BillDetailController extends AbstractBaseController {
     @RequestMapping("/repairPrint")
     public String repairPrint() {
         return "billDetail/repairPrint";
+    }
+
+    @RequestMapping("/spell_list")
+    public String spell() {
+        return "billDetail/spell_list";
     }
 
     @RequestMapping("/boxing")
@@ -74,6 +86,7 @@ public class BillDetailController extends AbstractBaseController {
         EntityWrapper<BillDetail> wrapper = new EntityWrapper<>();
         convert(param, wrapper);
         wrapper.orderBy("id", false);
+        wrapper.eq("use_status", 1);
         return R.ok(billDetailService.selectPage(new Page<>(curr, limit), wrapper));
     }
 
@@ -177,7 +190,7 @@ public class BillDetailController extends AbstractBaseController {
             return R.error("当前订单每箱数量错误");
         }
         List<Object> list = new ArrayList<>();
-        BillDto dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), null, bill.getBoxCheck(),bill.getNumber() );
+        BillDto dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), null, bill.getBoxCheck(), bill.getNumber());
         list.add(dto);
         return R.ok(Cools.add("list", list));
     }
@@ -240,7 +253,7 @@ public class BillDetailController extends AbstractBaseController {
             for (int i = 0; i < details.size(); i++) {
                 Bill bill = billService.selectById(details.get(0).getBillId());
                 String url = billQrCodeUrl.concat("?id=").concat(String.valueOf(details.get(i).getId()));
-                BillDto dto = new BillDto(bill.getId(), details.get(i).getId(), bill.getCustomer(), bill.getColor(), details.get(i).getCreateTime() == null ? null : DateUtils.convert(details.get(i).getCreateTime(), DateUtils.yyyyMMdd_F), details.get(i).getAmount(), bill.getModelType(), bill.getSeq(), "/bill/qrcode?id=" + url, bill.getBoxCheck(),bill.getNumber());
+                BillDto dto = new BillDto(bill.getId(), details.get(i).getId(), bill.getCustomer(), bill.getColor(), details.get(i).getCreateTime() == null ? null : DateUtils.convert(details.get(i).getCreateTime(), DateUtils.yyyyMMdd_F), details.get(i).getAmount(), bill.getModelType(), bill.getSeq(), "/bill/qrcode?id=" + url, bill.getBoxCheck(), bill.getNumber());
                 list.add(dto);
             }
         }
@@ -276,7 +289,7 @@ public class BillDetailController extends AbstractBaseController {
                 //根据出入人员名称查询出库数量
                 int count = billDetailService.getStatistics(detail.getBoxer());
                 Bill bill = billService.selectById(detail.getBillId());
-                BillDto dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), bill.getBoxCheck(),"", bill.getNumber(), detail.getBoxer(), count, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(detail.getBoxingTime()));
+                BillDto dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), bill.getBoxCheck(), "", bill.getNumber(), detail.getBoxer(), count, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(detail.getBoxingTime()));
                 //根据订单ID查询装箱明细信息
                 List<BillDetail> list = billDetailService.selectByBillId(bill.getId());
                 if (list.size() > 0) {
@@ -332,7 +345,7 @@ public class BillDetailController extends AbstractBaseController {
                 //根据出入人员名称查询出库数量
                 int count = billDetailService.getOutStockStatistics(detail.getOutStocker());
                 Bill bill = billService.selectById(detail.getBillId());
-                BillDto dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), bill.getBoxCheck(),"", bill.getNumber(), detail.getBoxer(), count, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(detail.getBoxingTime()));
+                BillDto dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), bill.getBoxCheck(), "", bill.getNumber(), detail.getBoxer(), count, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(detail.getBoxingTime()));
 
                 //根据订单ID查询装箱明细信息
                 List<BillDetail> list = billDetailService.selectByBillId(bill.getId());
@@ -364,7 +377,7 @@ public class BillDetailController extends AbstractBaseController {
     @Transactional
     @ResponseBody
     @RequestMapping(value = "/billDetail/spellList")
-    public R spellList(String ids) {
+    public R spellList(String ids) throws ParseException {
 
         if (Cools.isEmpty(ids)) {
             return R.error("请选择装箱信息!");
@@ -374,8 +387,32 @@ public class BillDetailController extends AbstractBaseController {
 
         List<BillDetail> details = billDetailService.selectList(new EntityWrapper<BillDetail>().in("id", split));
         BillDto merge = merge(details);
-        list.add(merge);
-        return R.ok(Cools.add("list", list));
+        BillDetail detail = billDetailService.selectById(merge.getBillDetailId());
+        detail.setAmount(merge.getAmount());
+        boolean b = billDetailService.updateById(detail);
+//        SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//      //  sdf.parse(merge.getCreateTime$());
+//        Spell spell = new Spell(merge.getBillId(),
+//                merge.getBillDetailId(),
+//                merge.getCustomer(),
+//                merge.getColor(),
+//                merge.getCreateTime$(),
+//                merge.getAmount(),
+//                merge.getModelType(),
+//                merge.getSeq(),
+//                merge.getQrCodeUrl(),
+//                merge.getBoxCheck(),
+//                Integer.parseInt(merge.getBoxNumber()));
+//
+//
+//        boolean b = spellService.insert(spell);
+        if (b) {
+
+            list.add(merge);
+            return R.ok(Cools.add("list", list));
+
+        }
+        return R.error();
 
 //
 //
@@ -440,25 +477,25 @@ public class BillDetailController extends AbstractBaseController {
 //        return R.ok(billDetails);
     }
 
-    public BillDto merge(List<BillDetail> details){
-        if (Cools.isEmpty(details)){
+    public BillDto merge(List<BillDetail> details) {
+        if (Cools.isEmpty(details)) {
             return null;
         }
         String seq = null;
         BillDto dto = null;
         // 初始化数量
-        int initAmount=0;
-        for (BillDetail detail : details){
+        int initAmount = 0;
+        for (BillDetail detail : details) {
             Bill bill = billService.selectById(detail.getBillId());
             boolean isCompareable = true;
-            if (null == seq){
+            if (null == seq) {
                 // 初始化数量
                 initAmount = bill.getUnit();
                 seq = bill.getSeq();
                 isCompareable = false;
             }
             // 批次号不同不能拼单
-            if (!seq.equals(bill.getSeq()) && isCompareable){
+            if (!seq.equals(bill.getSeq()) && isCompareable) {
                 throw new CoolException(CodeRes.BILL_20001);
             }
             // init
@@ -466,28 +503,34 @@ public class BillDetailController extends AbstractBaseController {
                 String billQrCodeUrl = Parameter.get().getBillQrCodeUrl();
                 String url = billQrCodeUrl.concat("?id=").concat(String.valueOf(detail.getId()));
 
-                dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), "/bill/qrcode?id=" + url, bill.getBoxCheck(),bill.getNumber());
+                dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), "/bill/qrcode?id=" + url, bill.getBoxCheck(), bill.getNumber());
                 dto.setAmount(0);
             }
             //当前这一箱子的数量
             int cacheAmount = dto.getAmount() + detail.getAmount();
+
+//            detail.setStatus(isCompareable?(short) 1:(short)0); todo
+            detail.setUseStatus(isCompareable ? (short) 1 : (short) 0);
+            detail.setSpellStatus((short) 1);
             /**
              * detail.set拼单状态(已拼单）
              * detail.update();
              *
              */
-            detail.setSpellStatus((short) 1);
+
             billDetailService.updateById(detail);
 
-            if (cacheAmount > initAmount){
-                // 拼单多余数量重新生成新的一箱
+            if (cacheAmount > initAmount) {
+                // 拼单多余数量重新生成新的一箱（要显示的）
                 BillDetail billDetail = new BillDetail(
                         bill.getId(),    // 所属订单[非空]
                         cacheAmount - initAmount,    // 数量[非空]
                         0,    // 箱号[非空]
                         null,    // 装箱员
                         new Date(),    // 添加时间[非空]
-                        (short) 1    // 状态[非空]
+                        (short) 1,    // 状态[非空]
+                        (short) 1,   //装箱状态
+                        (short) 1   //使用状态
                 );
                 billDetailService.insert(billDetail);
                 dto.setAmount(initAmount);
@@ -497,6 +540,7 @@ public class BillDetailController extends AbstractBaseController {
                 return dto;
             }
             dto.setAmount(cacheAmount);
+
         }
         return dto;
 

@@ -102,7 +102,8 @@ public class BillController extends AbstractBaseController {
                             j,    // 箱号[非空]
                             null,    // 装箱员
                             new Date(),    // 添加时间[非空]
-                            (short) 1    // 状态[非空]
+                            (short) 1  ,  // 状态[非空]
+                            (short) 1    //使用状态
                     );
 
                 } else {
@@ -112,7 +113,8 @@ public class BillController extends AbstractBaseController {
                             j,    // 箱号[非空]
                             null,    // 装箱员
                             new Date(),    // 添加时间[非空]
-                            (short) 1    // 状态[非空]
+                            (short) 1 ,   // 状态[非空]
+                            (short) 1
                     );
                 }
                 billDetailService.insert(billDetail);
@@ -137,7 +139,8 @@ public class BillController extends AbstractBaseController {
                             j,    // 箱号[非空]
                             null,    // 装箱员
                             new Date(),    // 添加时间[非空]
-                            (short) 1    // 状态[非空]
+                            (short) 1  ,  // 状态[非空]
+                              (short) 1
                     );
 
                 } else {
@@ -147,7 +150,8 @@ public class BillController extends AbstractBaseController {
                             j,    // 箱号[非空]
                             null,    // 装箱员
                             new Date(),    // 添加时间[非空]
-                            (short) 1    // 状态[非空]
+                            (short) 1 ,   // 状态[非空]
+                            (short) 1
                     );
                 }
                 billDetailService.insert(billDetail);

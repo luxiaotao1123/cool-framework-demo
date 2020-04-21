@@ -99,6 +99,7 @@
         url: "/billDetailQuery/qrcode/get/"+window.getQuerys('id'),
         method: 'POST',
         success: function (res) {
+
             if (res.code === 200) {
                 var detail = res.data;
 

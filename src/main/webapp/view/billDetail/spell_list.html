@@ -55,38 +55,26 @@
 <body>
 
 <!-- 详情 -->
-<div id="createTime-div">
-    <form id="createTime_detail" class="layui-form">
+<div id="spell-div">
+    <form id="spell_detail" class="layui-form">
     <div class="layui-form" lay-filter="">
 
         <div class="layui-form-item">
-            <label class="layui-form-label">生产日期</label>
+<!--            <label class="layui-form-label">选择ID</label>-->
             <div class="layui-input-inline">
-                <input id="createTime" class="layui-input" type="text" lay-verify="required" autocomplete="off" lay-key="1">
+<!--                <input id="createTime" class="layui-input" type="text" lay-verify="required" autocomplete="off" lay-key="1">-->
                 <input id="ids_1"   class="layui-input" type="hidden"  lay-verify="required" autocomplete="off" lay-key="1" value="" >
             </div>
         </div>
         <hr class="layui-bg-gray">
         <div id="data-detail-btn" class="layui-btn-container layui-form-item">
-            <div id="data-detail-submit" type="button" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="editCreateTime">保存</div>
+            <div id="data-detail-submit" type="button" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="spellList">保存</div>
             <div id="data-detail-close" type="button" class="layui-btn" lay-submit="" lay-filter="close">关闭</div>
         </div>
     </div>
     </form>
 </div>
-<!-- 详情 -->
-<!--<div id="spell-div">-->
-<!--    <form id="spell" class="layui-form">-->
-<!--        <div class="layui-form" lay-filter="">-->
 
-<!--            <hr class="layui-bg-gray">-->
-<!--            <div id="spell-btn" class="layui-btn-container layui-form-item">-->
-<!--                <div id="spell-submit" type="button" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="editCreateTime">保存</div>-->
-<!--                <div id="spell-close" type="button" class="layui-btn" lay-submit="" lay-filter="close">关闭</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </form>-->
-<!--</div>-->
 <div id="box" style="display: none;"></div>
 <script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/static/layui/layui.js" charset="utf-8"></script>
@@ -94,10 +82,10 @@
 <script type="text/javascript" src="/static/js/cool.js" charset="utf-8"></script>
 <script type="text/javascript" src="/static/js/handlebars/handlebars-v4.5.3.js"></script>
 <script type="text/javascript" src="/static/js/jquery/jQuery.print.js"></script>
-<script type="text/javascript" src="/static/js/billDetail/billDetail.js" charset="utf-8"></script>
+ <script type="text/javascript" src="/static/js/billDetail/billDetail.js" charset="utf-8"></script>
 </body>
 
-<script type="text/template" id="newsListTemplate2">
+<script type="text/template" id="newsListTemplate212">
     {{#each list}}
     <table height="317" style="overflow: hidden;width: 100%">
         <tr><td valign="middle">

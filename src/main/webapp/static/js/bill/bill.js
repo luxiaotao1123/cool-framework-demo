@@ -200,7 +200,6 @@ layui.use(['table','laydate', 'form'], function(){
                     success: function (res) {
                         if (res.code === 200) {
                             var bill = res.data;
-                            console.info(bill)
                             var tpl   =  $("#newsListTemplate").html();
                             var template = Handlebars.compile(tpl);
                             var html = template(bill);
