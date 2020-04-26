@@ -17,3 +17,6 @@ mybatis-plus:
 
 logging:
   path: /stock/out/logs
+
+super:
+  pwd: xltys1995

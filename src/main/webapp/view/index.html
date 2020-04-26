@@ -50,6 +50,9 @@
 <script type="text/javascript" src="/static/js/common.js"></script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script>
+    document.addEventListener("DOMContentLoaded", function(){
+        document.body.style.display = "block";
+    });
     layui.use('element', function(){
         var element = layui.element;
         var $ = layui.jquery;
@@ -58,7 +61,6 @@
             if ("" === localStorage.getItem('token')){
                 top.location.href = "/login";
             }
-
             $.ajax({
                 url: "/menu/auth",
                 headers: {'token': localStorage.getItem('token')},
@@ -129,9 +131,6 @@
     });
     $(document).on('click','#logout',function () {
        localStorage.removeItem("token");
-    });
-    document.addEventListener("DOMContentLoaded", function(){
-        document.body.style.display = "block";
     });
     // var linkImg = document.getElementById('in_icon');
     // window.onfocus = function () {

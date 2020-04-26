@@ -92,12 +92,13 @@
         </div>
     </div>
     <div class="layui-form-item login-submit">
-        <button class="layui-btn layui-btn-fluid layui-btn-normal" lay-submit="" lay-filter="login">登 录</button>
+        <button id="login-button" class="layui-btn layui-btn-fluid layui-btn-normal" lay-submit="" lay-filter="login">登 录</button>
     </div>
 </div>
 
 </body>
 <script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/static/js/tools/md5.js"></script>
 <script type="text/javascript">
     layui.use(['form','layer'],function () {
         var form = layui.form,
@@ -118,9 +119,10 @@
         });
 
         form.on('submit(login)', function (data) {
+            var md5 = hex_md5($("#password").val());
             var user = {
                 mobile: $("#mobile").val(),
-                password: $("#password").val()
+                password: md5
             };
             $.ajax({
                 url: "/login.action",
@@ -141,7 +143,7 @@
 
         $('body').keydown(function () {
             if (event.keyCode === 13) {
-                $("#login").click();
+                $("#login-button").click();
             }
         });
 
