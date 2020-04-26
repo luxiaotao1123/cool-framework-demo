@@ -3,49 +3,31 @@ package com.cool.demo.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.core.annotations.ManagerAuth;
-import com.core.common.DateUtils;
 import com.cool.demo.system.entity.Role;
 import com.cool.demo.system.service.RoleService;
+import com.core.annotations.ManagerAuth;
 import com.core.common.Cools;
+import com.core.common.DateUtils;
 import com.core.common.R;
 import com.core.controller.AbstractBaseController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@Controller
+@RestController
 public class RoleController extends AbstractBaseController {
 
     @Autowired
     private RoleService roleService;
 
-    @RequestMapping("/role")
-    public String index(){
-        return "role/role";
-    }
-
-    @RequestMapping("/role_detail")
-    public String detail(){
-        return "role/role_detail";
-    }
-
-    @RequestMapping("/role_power_detail")
-    public String powerDetail(){
-        return "role/role_power_detail";
-    }
-
     @RequestMapping(value = "/role/{id}/auth")
-    @ResponseBody
     @ManagerAuth
     public R get(@PathVariable("id") Long id) {
         return R.ok(roleService.selectById(String.valueOf(id)));
     }
 
     @RequestMapping(value = "/role/list/auth")
-    @ResponseBody
     @ManagerAuth
     public R list(@RequestParam(defaultValue = "1")Integer curr,
                   @RequestParam(defaultValue = "10")Integer limit,
@@ -70,7 +52,6 @@ public class RoleController extends AbstractBaseController {
     }
 
     @RequestMapping(value = "/role/edit/auth")
-    @ResponseBody
     @ManagerAuth
     public R edit(Role role) {
         if (Cools.isEmpty(role)){
@@ -85,7 +66,6 @@ public class RoleController extends AbstractBaseController {
     }
 
     @RequestMapping(value = "/role/add/auth")
-    @ResponseBody
     @ManagerAuth
     public R add(Role role) {
         roleService.insert(role);
@@ -93,7 +73,6 @@ public class RoleController extends AbstractBaseController {
     }
 
 	@RequestMapping(value = "/role/update/auth")
-    @ResponseBody
     @ManagerAuth
     public R update(Role role){
         if (Cools.isEmpty(role) || null==role.getId()){
@@ -104,7 +83,6 @@ public class RoleController extends AbstractBaseController {
     }
 
     @RequestMapping(value = "/role/delete/auth")
-    @ResponseBody
     @ManagerAuth
     public R delete(Integer[] ids){
         if (Cools.isEmpty(ids)){
@@ -115,7 +93,6 @@ public class RoleController extends AbstractBaseController {
     }
 
     @RequestMapping(value = "/role/export/auth")
-    @ResponseBody
     @ManagerAuth
     public R export(@RequestBody JSONObject param){
         List<String> fields = JSONObject.parseArray(param.getJSONArray("fields").toJSONString(), String.class);
@@ -127,7 +104,6 @@ public class RoleController extends AbstractBaseController {
     }
 
     @RequestMapping(value = "/roleQuery/auth")
-    @ResponseBody
     @ManagerAuth
     public R query(String condition) {
         EntityWrapper<Role> wrapper = new EntityWrapper<>();

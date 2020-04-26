@@ -5,44 +5,31 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.cool.demo.common.entity.Parameter;
-import com.core.annotations.ManagerAuth;
-import com.core.common.DateUtils;
 import com.cool.demo.system.entity.Config;
 import com.cool.demo.system.service.ConfigService;
+import com.core.annotations.ManagerAuth;
 import com.core.common.Cools;
+import com.core.common.DateUtils;
 import com.core.common.R;
 import com.core.controller.AbstractBaseController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@Controller
+@RestController
 public class ConfigController extends AbstractBaseController {
 
     @Autowired
     private ConfigService configService;
 
-    @RequestMapping("/config")
-    public String index(){
-        return "config/config";
-    }
-
-    @RequestMapping("/config_detail")
-    public String detail(){
-        return "config/config_detail";
-    }
-
     @RequestMapping(value = "/config/{id}/auth")
-    @ResponseBody
     @ManagerAuth
     public R get(@PathVariable("id") Long id) {
         return R.ok(configService.selectById(String.valueOf(id)));
     }
 
     @RequestMapping(value = "/config/list/auth")
-    @ResponseBody
     @ManagerAuth
     public R list(@RequestParam(defaultValue = "1")Integer curr,
                   @RequestParam(defaultValue = "10")Integer limit,
@@ -67,7 +54,6 @@ public class ConfigController extends AbstractBaseController {
     }
 
     @RequestMapping(value = "/config/edit/auth")
-    @ResponseBody
     @ManagerAuth
     public R edit(Config config) {
         if (Cools.isEmpty(config)){
@@ -87,7 +73,6 @@ public class ConfigController extends AbstractBaseController {
     }
 
     @RequestMapping(value = "/config/add/auth")
-    @ResponseBody
     @ManagerAuth
     public R add(Config config) {
         if (config.getType() == 2){
@@ -100,7 +85,6 @@ public class ConfigController extends AbstractBaseController {
     }
 
 	@RequestMapping(value = "/config/update/auth")
-    @ResponseBody
     @ManagerAuth
     public R update(Config config){
         if (Cools.isEmpty(config) || null==config.getId()){
@@ -116,7 +100,6 @@ public class ConfigController extends AbstractBaseController {
     }
 
     @RequestMapping(value = "/config/delete/auth")
-    @ResponseBody
     @ManagerAuth
     public R delete(Integer[] ids){
         if (Cools.isEmpty(ids)){
@@ -127,7 +110,6 @@ public class ConfigController extends AbstractBaseController {
     }
 
     @RequestMapping(value = "/config/export/auth")
-    @ResponseBody
     @ManagerAuth
     public R export(@RequestBody JSONObject param){
         List<String> fields = JSONObject.parseArray(param.getJSONArray("fields").toJSONString(), String.class);
@@ -139,7 +121,6 @@ public class ConfigController extends AbstractBaseController {
     }
 
     @RequestMapping(value = "/configQuery/auth")
-    @ResponseBody
     @ManagerAuth
     public R query(String condition) {
         EntityWrapper<Config> wrapper = new EntityWrapper<>();
@@ -159,7 +140,6 @@ public class ConfigController extends AbstractBaseController {
      * 刷新配置
      */
     @RequestMapping(value = "/config/refresh/auth")
-    @ResponseBody
     @ManagerAuth
     public R refresh(){
         Parameter parameter;

@@ -3,44 +3,31 @@ package com.cool.demo.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.core.annotations.ManagerAuth;
-import com.core.common.DateUtils;
 import com.cool.demo.system.entity.Permission;
 import com.cool.demo.system.service.PermissionService;
+import com.core.annotations.ManagerAuth;
 import com.core.common.Cools;
+import com.core.common.DateUtils;
 import com.core.common.R;
 import com.core.controller.AbstractBaseController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@Controller
+@RestController
 public class PermissionController extends AbstractBaseController {
 
     @Autowired
     private PermissionService permissionService;
 
-    @RequestMapping("/permission")
-    public String index(){
-        return "permission/permission";
-    }
-
-    @RequestMapping("/permission_detail")
-    public String detail(){
-        return "permission/permission_detail";
-    }
-
     @RequestMapping(value = "/permission/{id}/auth")
-    @ResponseBody
     @ManagerAuth
     public R get(@PathVariable("id") Long id) {
         return R.ok(permissionService.selectById(String.valueOf(id)));
     }
 
     @RequestMapping(value = "/permission/list/auth")
-    @ResponseBody
     @ManagerAuth
     public R list(@RequestParam(defaultValue = "1")Integer curr,
                   @RequestParam(defaultValue = "10")Integer limit,
@@ -65,7 +52,6 @@ public class PermissionController extends AbstractBaseController {
     }
 
     @RequestMapping(value = "/permission/edit/auth")
-    @ResponseBody
     @ManagerAuth
     public R edit(Permission permission) {
         if (Cools.isEmpty(permission)){
@@ -80,7 +66,6 @@ public class PermissionController extends AbstractBaseController {
     }
 
     @RequestMapping(value = "/permission/add/auth")
-    @ResponseBody
     @ManagerAuth
     public R add(Permission permission) {
         permissionService.insert(permission);
@@ -88,7 +73,6 @@ public class PermissionController extends AbstractBaseController {
     }
 
 	@RequestMapping(value = "/permission/update/auth")
-    @ResponseBody
     @ManagerAuth
     public R update(Permission permission){
         if (Cools.isEmpty(permission) || null==permission.getId()){
@@ -99,7 +83,6 @@ public class PermissionController extends AbstractBaseController {
     }
 
     @RequestMapping(value = "/permission/delete/auth")
-    @ResponseBody
     @ManagerAuth
     public R delete(Integer[] ids){
         if (Cools.isEmpty(ids)){
@@ -110,7 +93,6 @@ public class PermissionController extends AbstractBaseController {
     }
 
     @RequestMapping(value = "/permission/export/auth")
-    @ResponseBody
     @ManagerAuth
     public R export(@RequestBody JSONObject param){
         List<String> fields = JSONObject.parseArray(param.getJSONArray("fields").toJSONString(), String.class);
@@ -122,7 +104,6 @@ public class PermissionController extends AbstractBaseController {
     }
 
     @RequestMapping(value = "/permissionQuery/auth")
-    @ResponseBody
     @ManagerAuth
     public R query(String condition) {
         EntityWrapper<Permission> wrapper = new EntityWrapper<>();

@@ -3,44 +3,31 @@ package com.cool.demo.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.core.annotations.ManagerAuth;
-import com.core.common.DateUtils;
 import com.cool.demo.system.entity.OperateLog;
 import com.cool.demo.system.service.OperateLogService;
+import com.core.annotations.ManagerAuth;
 import com.core.common.Cools;
+import com.core.common.DateUtils;
 import com.core.common.R;
 import com.core.controller.AbstractBaseController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@Controller
+@RestController
 public class OperateLogController extends AbstractBaseController {
 
     @Autowired
     private OperateLogService operateLogService;
 
-    @RequestMapping("/operateLog")
-    public String index(){
-        return "operateLog/operateLog";
-    }
-
-    @RequestMapping("/operateLog_detail")
-    public String detail(){
-        return "operateLog/operateLog_detail";
-    }
-
     @RequestMapping(value = "/operateLog/{id}/auth")
-    @ResponseBody
     @ManagerAuth
     public R get(@PathVariable("id") Long id) {
         return R.ok(operateLogService.selectById(String.valueOf(id)));
     }
 
     @RequestMapping(value = "/operateLog/list/auth")
-    @ResponseBody
     @ManagerAuth
     public R list(@RequestParam(defaultValue = "1")Integer curr,
                   @RequestParam(defaultValue = "10")Integer limit,
@@ -65,7 +52,6 @@ public class OperateLogController extends AbstractBaseController {
     }
 
     @RequestMapping(value = "/operateLog/edit/auth")
-    @ResponseBody
     @ManagerAuth
     public R edit(OperateLog operateLog) {
         if (Cools.isEmpty(operateLog)){
@@ -80,7 +66,6 @@ public class OperateLogController extends AbstractBaseController {
     }
 
     @RequestMapping(value = "/operateLog/add/auth")
-    @ResponseBody
     @ManagerAuth
     public R add(OperateLog operateLog) {
         operateLogService.insert(operateLog);
@@ -88,7 +73,6 @@ public class OperateLogController extends AbstractBaseController {
     }
 
 	@RequestMapping(value = "/operateLog/update/auth")
-    @ResponseBody
     @ManagerAuth
     public R update(OperateLog operateLog){
         if (Cools.isEmpty(operateLog) || null==operateLog.getId()){
@@ -99,7 +83,6 @@ public class OperateLogController extends AbstractBaseController {
     }
 
     @RequestMapping(value = "/operateLog/delete/auth")
-    @ResponseBody
     @ManagerAuth
     public R delete(Integer[] ids){
         if (Cools.isEmpty(ids)){
@@ -110,7 +93,6 @@ public class OperateLogController extends AbstractBaseController {
     }
 
     @RequestMapping(value = "/operateLog/export/auth")
-    @ResponseBody
     @ManagerAuth
     public R export(@RequestBody JSONObject param){
         List<String> fields = JSONObject.parseArray(param.getJSONArray("fields").toJSONString(), String.class);
@@ -122,7 +104,6 @@ public class OperateLogController extends AbstractBaseController {
     }
 
     @RequestMapping(value = "/operateLogQuery/auth")
-    @ResponseBody
     @ManagerAuth
     public R query(String condition) {
         EntityWrapper<OperateLog> wrapper = new EntityWrapper<>();
