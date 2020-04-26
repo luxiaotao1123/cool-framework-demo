@@ -11,6 +11,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface BillDetailMapper extends BaseMapper<BillDetail> {
+
     BillDetail getBillDetailByOrderIdandBoxNumber(@Param("billId") Long billId, @Param("boxNumber") Long boxNumber);
 
     int getStatistics(String boxer);

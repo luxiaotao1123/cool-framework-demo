@@ -1,5 +1,7 @@
 package com.cool.demo.manager.entity;
 
+import java.net.Inet4Address;
+
 /**
  * Created by vincent on 2020-03-26
  */
@@ -25,20 +27,32 @@ public class BillDto {
 
     private String boxCheck;
 
-    private String boxNumber;
+    private Integer boxNumber;
 
     private  String boxer;
 
     private Integer count;
 
-    private String boxingTime;
+   // private String boxingTime;
 
     private  String  outStockTime;
+
+
+    private  String remark;
+
+    public String getRemark() {
+
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public BillDto() {
     }
 
-    public BillDto(Long billId, Long billDetailId, String customer, String color, String createTime$, int amount, String modelType, String seq, String qrCodeUrl,  String boxCheck,String boxNumber) {
+    public BillDto(Long billId, Long billDetailId, String customer, String color, String createTime$, int amount, String modelType, String seq, String qrCodeUrl,  String boxCheck,Integer boxNumber,String remark) {
         this.billId = billId;
         this.billDetailId = billDetailId;
         this.customer = customer;
@@ -50,8 +64,10 @@ public class BillDto {
         this.qrCodeUrl = qrCodeUrl;
         this.boxCheck = boxCheck;
         this.boxNumber = boxNumber;
+        this.remark=remark;
     }
-    public BillDto(Long billId, Long billDetailId, String customer, String color, String createTime$, int amount, String modelType, String seq, String boxCheck,String qrCodeUrl,  String boxNumber,String boxer,int count,String boxingTime) {
+    public BillDto(Long billId, Long billDetailId, String customer, String color, String createTime$, int amount, String modelType, String seq,
+                   String boxCheck,String qrCodeUrl,  Integer boxNumber,String boxer,int count, String outStockTime) {
         this.billId = billId;
         this.billDetailId = billDetailId;
         this.customer = customer;
@@ -60,15 +76,23 @@ public class BillDto {
         this.amount = amount;
         this.modelType = modelType;
         this.seq = seq;
-        this.qrCodeUrl = qrCodeUrl;
         this.boxCheck = boxCheck;
+        this.qrCodeUrl = qrCodeUrl;
+
         this.boxNumber = boxNumber;
         this.boxer=boxer;
         this.count=count;
-        this.boxingTime=boxingTime;
-        this.outStockTime=boxingTime;
+         //this.boxingTime=boxingTime;
+        this.outStockTime=outStockTime;
     }
 
+    public String getOutStockTime() {
+        return outStockTime;
+    }
+
+    public void setOutStockTime(String outStockTime) {
+        this.outStockTime = outStockTime;
+    }
 
     public Long getBillId() {
         return billId;
@@ -150,11 +174,11 @@ public class BillDto {
         this.boxCheck = boxCheck;
     }
 
-    public String getBoxNumber() {
+    public Integer getBoxNumber() {
         return boxNumber;
     }
 
-    public void setBoxNumber(String boxNumber) {
+    public void setBoxNumber(Integer boxNumber) {
         this.boxNumber = boxNumber;
     }
 
@@ -174,11 +198,11 @@ public class BillDto {
         this.count = count;
     }
 
-    public String getBoxingTime() {
-        return boxingTime;
-    }
-
-    public void setBoxingTime(String boxingTime) {
-        this.boxingTime = boxingTime;
-    }
+//    public String getBoxingTime() {
+//        return boxingTime;
+//    }
+//
+//    public void setBoxingTime(String boxingTime) {
+//        this.boxingTime = boxingTime;
+//    }
 }

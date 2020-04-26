@@ -239,6 +239,7 @@ layui.use(['table','laydate', 'form'], function(){
             boxPrefix: $('#boxPrefix').val(),
             createTime: top.strToDate($('#createTime\\$').val()),
             status: $('#status').val(),
+            remark: $('#remark').val(),
 
         };
         $.ajax({

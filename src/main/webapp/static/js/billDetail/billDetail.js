@@ -28,13 +28,39 @@ layui.use(['table', 'laydate', 'form'], function () {
             }
             , {field: 'amount', align: 'center', title: '数量'}
             , {field: 'boxNumber', align: 'center', title: '箱号'}
-            , {field: 'boxer', align: 'center', title: '装箱员'}
+            // , {field: 'boxer', align: 'center', title: '装箱员'}
             , {field: 'outStocker', align: 'center', title: '出库员'}
+            , {field: 'unpacking$', align: 'center', title: '拆箱状态'}
             , {field: 'createTime$', align: 'center', title: '添加时间'}
             , {field: 'status$', align: 'center', title: '状态'}
 
             , {field: 'spellStatus$', align: 'center', title: '拼单状态'}
-            , {fixed: 'right', title: '操作', align: 'center', toolbar: '#operate', width: 200}
+            , {
+                fixed: 'right',
+                title: '操作',
+                align: 'center',
+                // toolbar: '#operate',
+                width: 250,
+                templet: function (d) {
+                    var state = "";
+                    if (d.unpacking == "0") {
+                        //state = "<input type='checkbox' value='" + d.id + "' id='unpacking' lay-filter='stat'  name='unpacking'  lay-skin='switch' lay-text='拆箱|还原' lay-event=\"unpacking\" >" +
+                        state = " <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"unpacking\" id=\"unpacking\" value='" + d.unpacking + "'> 还原</a>" +
+                            " <a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看</a>\n" +
+                            " <a class=\"layui-btn layui-btn-xs\" lay-event=\"edit\">编辑</a>\n" +
+                            " <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"repairPrint\">补印</a>";
+                    } else {
+                        // state = "<input type='checkbox' value='" + d.id + "' id='unpacking' lay-filter='stat' checked='checked' name='unpacking'  lay-skin='switch' lay-text='拆箱|还原' >" +
+                        state = " <a class=\"layui-btn layui-btn-warm layui-btn-xs\" lay-event=\"unpacking\" id=\"unpacking\">拆箱</a>" +
+                            " <a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看</a>\n" +
+                            " <a class=\"layui-btn layui-btn-xs\" lay-event=\"edit\">编辑</a>\n" +
+                            " <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"repairPrint\">补印</a>";
+                    }
+                    return state;
+
+                }
+
+            }
         ]],
         request: {
             pageName: 'curr',
@@ -43,12 +69,13 @@ layui.use(['table', 'laydate', 'form'], function () {
         parseData: function (res) {
 
             return {
-
                 'code': res.code,
                 'msg': res.msg,
                 'count': res.data.total,
-                'data': res.data.records
+                'data': res.data.records,
             }
+
+
         },
         response: {
             statusCode: 200
@@ -203,73 +230,57 @@ layui.use(['table', 'laydate', 'form'], function () {
                             // setFormVal(layer.getChildFrame('#createTime_detail', index), data, false);
                             // top.convertDisabled(layer.getChildFrame('#ids_1 :input', index), true);
                             var div = layero.find('iframe').contents().find("#ids_1");
-                            console.info(div)
                             div.val(spell);
                         }
                     });
+
+                }
+
+                break;
+
+            //出库单
+            case 'outStockPrint':
+                selectIds = [];
+                var data = checkStatus.data;
+                data.map(function (track) {
+                    selectIds.push(track.id);
+                });
+                if (selectIds.length === 0) {
+                    layer.msg('请选择数据');
+                } else {
+                    selectIds = selectIds.join(',');
+                  //  window.open("/outStockPrint",parent )
+                    window.open("outStockPrint?selectIds="+selectIds) ;
+
+                    // $.ajax({
+                    //     url: "/billDetail/outStockPrintList",
+                    //     headers: {'token': localStorage.getItem('token')},
+                    //     data: {ids: selectIds},
+                    //     method: 'POST',
+                    //     success: function (res) {
+                    //         if (res.code === 200) {
                     //
-                    // layer.open({
-                    //     type: 1
-                    //     ,title: '拼单' //不显示标题栏
-                    //     ,closeBtn: false
-                    //     ,area: '300px;'
-                    //     ,shade: 0.8
-                    //     ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
-                    //     ,btn: ['确认', '取消']
-                    //     ,btnAlign: 'c'
-                    //     ,content: 'spell'
-                    //     ,moveType: 1 //拖拽模式，0或者1
-                    //     ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">确保您选择的箱号为同一个订单,否则拼单无效! <br></div>'
-                    //     ,success: function(layero){
-                    //         var btn = layero.find('.layui-layer-btn');
-                    //         //btn.find()
-                    //         // btn.find('.layui-layer-btn0').attr({
-                    //         //     href: 'billDetail/spellList'
-                    //         //     ,target: '_self'
-                    //         // });
-                    //         btn.click(function () {
-                    //             var datas= spell;
-                    //             $.ajax({
-                    //                 url: "/billDetail/spellList",
-                    //                 headers: {'token': localStorage.getItem('token')},
-                    //                 data:{"ids":datas.toString()},
-                    //                 method: 'POST',
-                    //                 success: function (res) {
                     //
-                    //                     if (res.code === 200){
-                    //
-                    //                         var bill = res.data;
-                    //
-                    //                        // console.log($("body").html());
-                    //
-                    //                         var tpl   =  $("#newsListTemplate212").html();
-                    //                         console.log(tpl);
-                    //                         var template = Handlebars.compile(tpl);
-                    //
-                    //                         var html = template(bill);
-                    //                         $("#box").html(html);
-                    //
-                    //                         $('#box').css("display", "block");
-                    //                         $('#box').print();
-                    //                         $('#box').css("display", "none");
-                    //                     } else if (res.code === 403){
-                    //                         top.location.href = "/";
-                    //                     }else {
-                    //                         layer.msg(res.msg)
-                    //                     }
-                    //                     layer.close();
-                    //                 }
+                    //             $.each(data.data,function(index,item){
+                    //                 var tr;
+                    //                 tr='<td>'+item.billNumber+'</td>'+'<td>'+item.orderMakinger+'</td>'+'<td>'+item.orderMakinger+'</td>'+'<td>'+item.orderMakinger+'</td>';
+                    //                 $("#tabletest").append('<tr>'+tr+'</tr>')
                     //             })
-                    //         })
+                    //             var table=$("#tabletest").html();
+                    //             console.info(table)
+                    //             table.print();
                     //
+                    //           //window.open("/outStockPrint")
+                    //         } else if (res.code === 403) {
+                    //             top.location.href = "/";
+                    //         } else {
+                    //             layer.msg(res.msg)
+                    //         }
                     //     }
                     // });
+
                 }
-                // ,offset: function(othis){
-                //     var type = othis.data('type')
-                //         ,text = othis.text();
-                //
-                // }
+
                 break;
 
         }
@@ -371,6 +382,33 @@ layui.use(['table', 'laydate', 'form'], function () {
                 break;
 
 
+            // 拆箱
+            case 'unpacking':
+                //if(data.unpacking==)
+                layer.confirm('确认修改状态吗?',
+                    {
+                        btn: ['是', '否'],
+                        btn1: function () {
+                            $.ajax({
+                                url: 'billDetail/unpacking',
+                                type: "POST",
+                                data: {"id": data.id, "unpacking": data.unpacking},
+                                success: function (data) {
+                                    layer.msg(data.msg);
+                                    tableIns.reload({
+                                        page: {
+                                            curr: pageCurr
+                                        }
+                                    });
+
+                                }
+                            })
+                        },
+                        btn2: function () {
+                            layer.close();
+                        }
+                    })
+                break;
         }
     });
 
@@ -440,6 +478,7 @@ layui.use(['table', 'laydate', 'form'], function () {
                         success: function (res) {
                             if (res.code === 200) {
 
+                                tableReload(true);
                                 layer.closeAll();
                                 var bill = res.data;
                                 var tpl = $("#newsListTemplate2").html();
@@ -499,33 +538,7 @@ layui.use(['table', 'laydate', 'form'], function () {
                     $('#box').css("display", "block");
                     $('#box').print();
                     $('#box').css("display", "none");
-                    // $.ajax({
-                    //     url: "/billDetail/print",
-                    //     headers: {'token': localStorage.getItem('token')},
-                    //     data: {id: $("#ids_1").val()},
-                    //     method: 'POST',
-                    //     async:false,//取消异步请求
-                    //     success: function (res) {
-                    //         if (res.code === 200) {
-                    //
-                    //             layer.closeAll();
-                    //             var bill = res.data;
-                    //             var tpl   =  $("#newsListTemplate212").html();
-                    //             var template = Handlebars.compile(tpl);
-                    //             var html = template(bill);
-                    //             $("#box").html(html);
-                    //
-                    //             $('#box').css("display", "block");
-                    //             $('#box').print();
-                    //             $('#box').css("display", "none");
-                    //         } else if (res.code === 403) {
-                    //             top.location.href = "/";
-                    //         } else {
-                    //
-                    //             layer.msg(res.msg)
-                    //         }
-                    //     }
-                    // });
+
                 } else if (res.code === 403) {
                     top.location.href = "/";
                 } else {

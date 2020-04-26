@@ -105,7 +105,7 @@ public class BillController extends AbstractBaseController {
                             (short) 1  ,  // 状态[非空]
                             (short) 1    //使用状态
                     );
-
+                    billDetail.setUnpacking((short) 2);
                 } else {
                     billDetail = new BillDetail(
                             bill.getId(),    // 所属订单[非空]
@@ -116,6 +116,7 @@ public class BillController extends AbstractBaseController {
                             (short) 1 ,   // 状态[非空]
                             (short) 1
                     );
+                    billDetail.setUnpacking((short) 2);
                 }
                 billDetailService.insert(billDetail);
             }
@@ -142,7 +143,7 @@ public class BillController extends AbstractBaseController {
                             (short) 1  ,  // 状态[非空]
                               (short) 1
                     );
-
+                    billDetail.setUnpacking((short) 2);
                 } else {
                     billDetail = new BillDetail(
                             bill.getId(),    // 所属订单[非空]
@@ -153,6 +154,7 @@ public class BillController extends AbstractBaseController {
                             (short) 1 ,   // 状态[非空]
                             (short) 1
                     );
+                    billDetail.setUnpacking((short) 2);
                 }
                 billDetailService.insert(billDetail);
             }
@@ -246,7 +248,8 @@ public class BillController extends AbstractBaseController {
                     detail.getAmount(),
                     bill.getModelType(),
                     bill.getSeq(),
-                    "/bill/qrcode?id=" + url, bill.getBoxCheck(),bill.getNumber());
+                    "/bill/qrcode?id=" + url, bill.getBoxCheck(),detail.getBoxNumber(),
+                    bill.getRemark());
             list.add(dto);
         }
 //        bill.setStatus((short) 2);

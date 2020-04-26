@@ -84,6 +84,35 @@ public class BillDetail implements Serializable {
     @TableField("use_status")
     private Short useStatus;
 
+    @TableField("unpacking")
+    private Short unpacking;
+
+    public String getUnpacking$(){
+        if (null == this.unpacking)
+        { return null;
+        }
+        switch (this.unpacking){
+            case 0:
+                return "可拆箱";
+            case 1:
+                return "已拆箱";
+            case 2:  //未拆箱
+                return "";
+
+            default:
+                return String.valueOf(this.unpacking);
+        }
+    }
+
+
+    public Short getUnpacking() {
+        return unpacking;
+    }
+
+    public void setUnpacking(Short unpacking) {
+        this.unpacking = unpacking;
+    }
+
     public Short getUseStatus() {
         return useStatus;
     }
