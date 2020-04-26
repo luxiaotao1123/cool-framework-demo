@@ -18,15 +18,17 @@
     .contain {
         border: 1px solid #000;
         width: 100%;
-        display: table;
-        table-layout:fixed;
     }
     .contain td {
+        height: 30px;
         border: 1px solid #000;
-        line-height: 30px;
+        line-height: 15px;
         text-align: center;
+        vertical-align: middle;
         word-break: break-all;
         word-wrap:break-word;
+        padding:0px;
+        overflow:hidden;
     }
     .qrcode {
         margin: 3px;
@@ -97,50 +99,48 @@
 
 <iframe id="detail-iframe" scrolling="auto" style="display:none;"></iframe>
 
-<div id="box" style="display: block;height: 300px;width: 300px;">
+<div id="box" style="display: block;width: 300px;">
 </div>
 
 
 </body>
 <script type="text/template" id="newsListTemplate">
     {{#each list}}
-    <table  style="overflow: hidden;width: 100%;height:300px;margin-bottom: 10%;margin-top: 10%;table-layout:fixed;word-break:break-all;">
-        <tr><td valign="middle">
-        <table class="contain" style="width: 100%;height:300px;margin-bottom: 10%;margin-top: 10%;table-layout:fixed;word-break:break-all;">
-            <tr style="height: 40px;">
-                <td width="20%" align="right" scope="col" style="height: 40px;line-height:15px;">客户</td>
-                <td class="customer" width="30%" align="left" scope="col"  style="height: 40px;font-size: 11px;line-height:15px;"><div class="duohangclass" style="height: 40px;line-height:20px ;">{{this.customer}}
-                </div></td>
-                <td width="20%" align="right" scope="col"  style="height: 40px;line-height:15px;">颜色</td>
-                <td class="color " width="30%" align="left" scope="col" style="height: 40px;line-height:15px;"><div class="duohangclass" style="height: 40px;line-height: 20px;">{{this.color}}
-                    </div></td>
+    <table cellpadding="0" cellspacing="0" border="0" style="border-color: #fff;">
+        <tr><td height="317" valign="middle" style="background: red;">
+        <table class="contain" cellpadding="0" style="width: 100%;table-layout:fixed;word-break:break-all;">
+            <tr>
+                <td width="20%" align="right" scope="col">客户</td>
+                <td class="customer" width="30%" align="left" scope="col">{{this.customer}}</td>
+                <td width="20%" align="right" scope="col">颜色</td>
+                <td class="color " width="30%" align="left" valign="middle" scope="col">{{this.color}}</td>
             </tr>
             <tr >
-                <td align="right" style="height: 30px;line-height:30px;">生产日期</td>
-                <td class="createTime" align="left" style="height: 30px;line-height:30px;">{{this.createTime$}}</td>
-                <td align="right" style="height: 30px;line-height:30px;">数量</td>
-                <td class="amount" align="left" style="height: 30px;line-height:30px;">{{this.amount}}</td>
+                <td align="right">生产日期</td>
+                <td class="createTime" align="left">{{this.createTime$}}</td>
+                <td align="right">数量</td>
+                <td class="amount" align="left">{{this.amount}}</td>
             </tr>
             <tr >
-                <td align="right" style="height: 30px;line-height:30px;">型号打字</td>
-                <td class="modelType" align="left" colspan="3" style="height: 30px;line-height:30px;"><div class="duohangclass" style="height: 30px;line-height: 30px;">{{this.modelType}}</div></td>
+                <td align="right">型号打字</td>
+                <td class="modelType" align="left" colspan="3">{{this.modelType}}</td>
             </tr>
             <tr>
-                <td align="right" style="height: 30px;line-height:15px;">产品批号</td>
-                <td class="seq" align="left" style="height: 30px;line-height:15px;"><div class="duohangclass" style="height: 30px;">{{this.seq}}</div></td>
-                <td colspan="2" rowspan="4" align="right" style="height: 30px;width: 30px;"><img class="qrcode" src="{{this.qrCodeUrl}}" style="width: 80%;"></td>
+                <td align="right">产品批号</td>
+                <td class="seq" align="left">{{this.seq}}</td>
+                <td colspan="2" rowspan="4" align="right"><img class="qrcode" src="{{this.qrCodeUrl}}" style="width: 80%;"></td>
             </tr>
             <tr >
-                <td align="right" style="height: 30px;line-height:30px;">装检验号</td>
-                <td class="boxCheck" align="left" style="height: 30px;line-height:30px;"><div class="duohangclass" style="height: 30px;">{{this.boxCheck}}</div></td>
+                <td align="right">装检验号</td>
+                <td class="boxCheck" align="left">{{this.boxCheck}}</td>
             </tr>
             <tr >
-                <td align="right" style="height: 30px;line-height:30px;">箱号</td>
-                <td class="boxNumber" align="left" style="height: 30px;line-height:30px;">{{this.boxNumber}}</td>
+                <td align="right">箱号</td>
+                <td class="boxNumber" align="left">{{this.boxNumber}}</td>
             </tr>
             <tr >
-                <td align="right" style="height:30px;;line-height:30px;" >备注</td>
-                <td class="remark" align="left" style="height:30px;;line-height:30px;" ><div class="duohangclass" style="height: 30px;">{{this.remark}}</div></td>
+                <td align="right">备注</td>
+                <td class="remark" align="left">{{this.remark}}</td>
             </tr>
         </table>
         </td></tr>
