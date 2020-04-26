@@ -95,8 +95,15 @@ public class UserController extends AbstractBaseController {
             return R.error();
         }
         User entity = userService.selectById(user.getId());
-        entity.setUsername(user.getUsername());
-        entity.setMobile(user.getMobile());
+        if (user.getPassword()!=null) {
+            entity.setPassword(user.getPassword());
+        }
+        if (user.getUsername()!=null) {
+            entity.setUsername(user.getUsername());
+        }
+        if (user.getMobile()!=null) {
+            entity.setMobile(user.getMobile());
+        }
         userService.updateById(entity);
         return R.ok();
     }

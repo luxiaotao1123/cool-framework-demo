@@ -39,7 +39,7 @@
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
-                        <iframe data-frameid="home" scrolling="auto" frameborder="0" src="home" style="width:100%;height: 100%"></iframe>
+                        <iframe data-frameid="home" scrolling="auto" frameborder="0" src="home.html" style="width:100%;height: 100%"></iframe>
                     </div>
                 </div>
             </div>
@@ -72,7 +72,7 @@
                                 menuHtml += '<a>' + res.data[i].menu + '</a>\n';
                                 menuHtml += '<dl class="layui-nav-child">\n';
                                 for (var j = 0; j < res.data[i].subMenu.length; j++) {
-                                    menuHtml += '<dd><a class="site-active" data-title="' + res.data[i].subMenu[j].name + '" data-url="/' + res.data[i].subMenu[j].code + '" data-id="' + res.data[i].subMenu[j].code + '" target="main">' + res.data[i].subMenu[j].name + '</a></dd>\n'
+                                    menuHtml += '<dd><a class="site-active" data-title="' + res.data[i].subMenu[j].name + '" data-url="' + res.data[i].subMenu[j].code + '" data-id="' + res.data[i].subMenu[j].code + '" target="main">' + res.data[i].subMenu[j].name + '</a></dd>\n'
                                 }
                                 menuHtml += '</dl>\n</li>\n';
                             }

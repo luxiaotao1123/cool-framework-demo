@@ -9,9 +9,9 @@ spring:
     password: xltys1995
   mvc:
     static-path-pattern: /**
-    view:
-      prefix: view/
-      suffix: .html
+#    view:
+#      prefix: view/
+#      suffix: .html
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml

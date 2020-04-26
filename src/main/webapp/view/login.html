@@ -130,7 +130,7 @@
                     if (res.code === 200){
                         localStorage.setItem("token", res.data.token);
                         localStorage.setItem("username", res.data.username);
-                        window.location.href = "/index";
+                        window.location.href = "index.html";
                     } else {
                         layer.msg(res.msg, {offset: '200px'});
                     }
