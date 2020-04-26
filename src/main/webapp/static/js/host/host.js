@@ -60,7 +60,7 @@ layui.use(['table','laydate', 'form'], function(){
                     maxmin: true,
                     area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
-                    content: '/host_detail',
+                    content: 'host_detail.html',
                     success: function(layero, index){
                     	clearFormVal(layer.getChildFrame('#detail', index));
                         detailScreen(index);
@@ -157,7 +157,7 @@ layui.use(['table','laydate', 'form'], function(){
                     maxmin: true,
                     area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
-                    content: '/host_detail',
+                    content: 'host_detail.html',
                     success: function(layero, index){
                         setFormVal(layer.getChildFrame('#detail', index), data, true);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
@@ -175,7 +175,7 @@ layui.use(['table','laydate', 'form'], function(){
                     maxmin: true,
                     area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
-                    content: '/host_detail',
+                    content: 'host_detail.html',
                     success: function(layero, index){
                         setFormVal(layer.getChildFrame('#detail', index), data, false);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
