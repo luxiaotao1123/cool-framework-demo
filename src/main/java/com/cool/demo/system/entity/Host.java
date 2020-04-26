@@ -1,17 +1,14 @@
 package com.cool.demo.system.entity;
 
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.enums.IdType;
-import java.text.SimpleDateFormat;
-import com.core.common.Cools;
-import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableField;
-import java.text.SimpleDateFormat;
-import com.core.common.Cools;
-import java.util.Date;
-
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+import com.core.common.Cools;
+
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @TableName("sys_host")
 public class Host implements Serializable {
@@ -50,6 +47,24 @@ public class Host implements Serializable {
      * 状态 1: 正常  0: 禁用  
      */
     private Integer status;
+
+    public Host() {}
+
+    public Host(String name,String flag,Date createTime,Date updateTime,Integer status) {
+        this.name = name;
+        this.flag = flag;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+        this.status = status;
+    }
+
+//    Host host = new Host(
+//            null,    // 商户名称[非空]
+//            null,    // 标识[非空]
+//            null,    // 添加时间[非空]
+//            null,    // 修改时间
+//            null    // 状态[非空]
+//    );
 
     public Long getId() {
         return id;

@@ -3,11 +3,11 @@ package com.cool.demo.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.core.common.DateUtils;
 import com.cool.demo.system.entity.Host;
 import com.cool.demo.system.service.HostService;
 import com.core.annotations.ManagerAuth;
 import com.core.common.Cools;
-import com.core.common.DateUtils;
 import com.core.common.R;
 import com.core.controller.AbstractBaseController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +73,6 @@ public class HostController extends AbstractBaseController {
     }
 
 	@RequestMapping(value = "/host/update/auth")
-    @ManagerAuth
     public R update(Host host){
         if (Cools.isEmpty(host) || null==host.getId()){
             return R.error();
