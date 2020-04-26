@@ -18,17 +18,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(adminInterceptor)
                 .addPathPatterns("/**")
-                // 首页，登陆页，登录action
-//                .excludePathPatterns("/index","/","/login.action")
                 ;
     }
-
-//    @Bean
-//    public WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer() {
-//        return (factory -> {
-//            ErrorPage errorPage404 = new ErrorPage(HttpStatus.NOT_FOUND, "/404");
-//            factory.addErrorPages(errorPage404);
-//        });
-//    }
 
 }
