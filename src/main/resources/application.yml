@@ -20,3 +20,6 @@ logging:
 
 super:
   pwd: xltys1995
+
+swagger:
+  enable: true
