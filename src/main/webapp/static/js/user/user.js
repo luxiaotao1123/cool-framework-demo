@@ -232,7 +232,7 @@ layui.use(['table','laydate', 'form'], function(){
                         maxmin: true,
                         area: [top.detailHeight, top.detailWidth],
                         shadeClose: false,
-                        content: 'host_detail',
+                        content: '../host/host_detail.html',
                         success: function(layero, index){
                             $.ajax({
                                 url: "/host/"+ param +"/auth",

@@ -196,7 +196,7 @@ layui.use(['table','laydate', 'form'], function(){
                        maxmin: true,
                        area: [top.detailHeight, top.detailWidth],
                        shadeClose: false,
-                       content: 'resource_detail',
+                       content: '../resource/resource_detail.html',
                        success: function(layero, index){
                            $.ajax({
                                url: "/resource/"+ param +"/auth",

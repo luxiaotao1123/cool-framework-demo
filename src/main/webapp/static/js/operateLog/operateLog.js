@@ -19,7 +19,7 @@ layui.use(['table','laydate', 'form'], function(){
             {type: 'checkbox', fixed: 'left'}
             ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
             ,{field: 'action', align: 'center',title: '访问地址'}
-            ,{field: 'userUsername', align: 'center',title: '用户',event: 'User', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'userId$', align: 'center',title: '用户',event: 'userId', style: 'text-decoration: underline;cursor:pointer'}
             ,{field: 'ip', align: 'center',title: '客户端IP'}
             ,{field: 'request', align: 'center',title: '请求数据'}
             ,{field: 'response', align: 'center',title: '响应数据'}
@@ -185,39 +185,39 @@ layui.use(['table','laydate', 'form'], function(){
                     }
                 });
                 break;
-            case 'User':
+            case 'userId':
                 var param = top.reObject(data).userId;
                 if (param === undefined) {
                     layer.msg("无数据");
                 } else {
-                    layer.open({
-                        type: 2,
-                        title: '详情',
-                        maxmin: true,
-                        area: [top.detailHeight, top.detailWidth],
-                        shadeClose: false,
-                        content: 'user_detail',
-                        success: function(layero, index){
-                            $.ajax({
-                                url: "/user/"+ param +"/auth",
-                                headers: {'token': localStorage.getItem('token')},
-                                method: 'GET',
-                                success: function (res) {
-                                    if (res.code === 200){
-                                        setFormVal(layer.getChildFrame('#detail', index), res.data, true);
-                                        top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
-                                        layer.getChildFrame('#data-detail-submit', index).hide();
-                                        detailScreen(index);
-                                        layero.find('iframe')[0].contentWindow.layui.form.render('select');
-                                    } else if (res.code === 403){
-                                        parent.location.href = "/";
-                                    }else {
-                                        layer.msg(res.msg)
-                                    }
-                                }
-                            })
-                        }
-                    });
+                   layer.open({
+                       type: 2,
+                       title: '详情',
+                       maxmin: true,
+                       area: [top.detailHeight, top.detailWidth],
+                       shadeClose: false,
+                       content: '../user/user_detail.html',
+                       success: function(layero, index){
+                           $.ajax({
+                               url: "/user/"+ param +"/auth",
+                               headers: {'token': localStorage.getItem('token')},
+                               method: 'GET',
+                               success: function (res) {
+                                   if (res.code === 200){
+                                       setFormVal(layer.getChildFrame('#detail', index), res.data, true);
+                                       top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
+                                       layer.getChildFrame('#data-detail-submit', index).hide();
+                                       detailScreen(index);
+                                       layero.find('iframe')[0].contentWindow.layui.form.render('select');
+                                   } else if (res.code === 403){
+                                       parent.location.href = "/";
+                                   }else {
+                                       layer.msg(res.msg)
+                                   }
+                               }
+                           })
+                       }
+                   });
                 }
                 break;
 

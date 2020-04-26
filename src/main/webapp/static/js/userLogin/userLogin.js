@@ -193,7 +193,7 @@ layui.use(['table','laydate', 'form'], function(){
                         maxmin: true,
                         area: [top.detailHeight, top.detailWidth],
                         shadeClose: false,
-                        content: 'user_detail',
+                        content: '../user/user_detail.html',
                         success: function(layero, index){
                             $.ajax({
                                 url: "/user/"+ param +"/auth",
