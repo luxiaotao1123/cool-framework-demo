@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.cool.demo.common.CodeRes;
 import com.cool.demo.common.entity.Parameter;
+import com.cool.demo.common.model.OutStockDto;
+import com.cool.demo.common.model.OutStockResult;
 import com.cool.demo.manager.entity.Bill;
 import com.cool.demo.manager.entity.BillDetail;
 import com.cool.demo.manager.entity.BillDto;
@@ -27,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -204,7 +207,7 @@ public class BillDetailController extends AbstractBaseController {
             return R.error("当前订单每箱数量错误");
         }
         List<Object> list = new ArrayList<>();
-        BillDto dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), null, bill.getBoxCheck(), detail.getBoxNumber(),  bill.getRemark());
+        BillDto dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), null, bill.getBoxCheck(), detail.getBoxNumber(), bill.getRemark());
         list.add(dto);
         return R.ok(Cools.add("list", list));
     }
@@ -267,7 +270,7 @@ public class BillDetailController extends AbstractBaseController {
             for (int i = 0; i < details.size(); i++) {
                 Bill bill = billService.selectById(details.get(0).getBillId());
                 String url = billQrCodeUrl.concat("?id=").concat(String.valueOf(details.get(i).getId()));
-                BillDto dto = new BillDto(bill.getId(), details.get(i).getId(), bill.getCustomer(), bill.getColor(), details.get(i).getCreateTime() == null ? null : DateUtils.convert(details.get(i).getCreateTime(), DateUtils.yyyyMMdd_F), details.get(i).getAmount(), bill.getModelType(), bill.getSeq(), "/bill/qrcode?id=" + url, bill.getBoxCheck(), details.get(i).getBoxNumber(),  bill.getRemark());
+                BillDto dto = new BillDto(bill.getId(), details.get(i).getId(), bill.getCustomer(), bill.getColor(), details.get(i).getCreateTime() == null ? null : DateUtils.convert(details.get(i).getCreateTime(), DateUtils.yyyyMMdd_F), details.get(i).getAmount(), bill.getModelType(), bill.getSeq(), "/bill/qrcode?id=" + url, bill.getBoxCheck(), details.get(i).getBoxNumber(), bill.getRemark());
                 list.add(dto);
             }
         }
@@ -523,7 +526,7 @@ public class BillDetailController extends AbstractBaseController {
                 String billQrCodeUrl = Parameter.get().getBillQrCodeUrl();
                 String url = billQrCodeUrl.concat("?id=").concat(String.valueOf(detail.getId()));
 
-                dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), "/bill/qrcode?id=" + url, bill.getBoxCheck(), detail.getBoxNumber(),  bill.getRemark());
+                dto = new BillDto(bill.getId(), detail.getId(), bill.getCustomer(), bill.getColor(), detail.getCreateTime() == null ? null : DateUtils.convert(detail.getCreateTime(), DateUtils.yyyyMMdd_F), detail.getAmount(), bill.getModelType(), bill.getSeq(), "/bill/qrcode?id=" + url, bill.getBoxCheck(), detail.getBoxNumber(), bill.getRemark());
                 dto.setAmount(0);
             }
             //当前这一箱子的数量
@@ -625,10 +628,10 @@ public class BillDetailController extends AbstractBaseController {
     }
 
 
-    @RequestMapping(value = "billDetail/outStockPrintList")
+    @RequestMapping(value = "/billDetail/outStockPrintList")
     @ResponseBody
     public R outStockPrint(String ids, HttpServletRequest request) {
-
+///
         if (Cools.isEmpty(ids)) {
             return R.error("传入ID为空");
         }
@@ -643,7 +646,7 @@ public class BillDetailController extends AbstractBaseController {
         ArrayList<outStockDto> outStockDtos = new ArrayList<>();
         //单据号码  当前日期
         String format = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        format= format.replace("-","");
+        format = format.replace("-", "");
         for (BillDetail detail : details) {
             if (detail.getStatus() == (short) 3) {
                 Bill bill = billService.selectById(detail.getBillId());
@@ -660,15 +663,57 @@ public class BillDetailController extends AbstractBaseController {
                         0.0,
                         bill.getSeq(),
                         detail.getBoxNumber(),
-                        user.getUsername(),
+                         user.getUsername(),
                         new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(detail.getOutStockTime()),
                         bill.getRemark());
                 outStockDtos.add(outStockDto);
             }
         }
-        if(outStockDtos.size()==0){
+        if (outStockDtos.size() == 0) {
             return R.error("尚未出库!");
         }
-        return  R.ok(outStockDtos);
+
+        int singleSize = 10;
+        int pageCount = outStockDtos.size() / singleSize;
+
+        OutStockResult result = new OutStockResult();
+
+        if (outStockDtos.size() <=singleSize) {
+            OutStockDto dto0 = new OutStockDto();
+            dto0.setIndex(1);
+            dto0.setSize(1);
+            dto0.setStockDtos(outStockDtos);
+            result.getOutStockDtos().add(dto0);
+        } else {
+            int size=outStockDtos.size();
+            int s=0;
+            for (int i = 0; i < size; i++) {
+                if ((i+1) % singleSize == 0 && i != 0) {
+
+                    OutStockDto dto = new OutStockDto();
+                    dto.setIndex((i + 1) / singleSize);
+                    dto.setSize((size/ singleSize)+1);
+                    dto.setStockDtos(outStockDtos.subList(s, i+1));
+                    s+=singleSize;
+                    result.getOutStockDtos().add(dto);
+
+                } else if(i==size-1){
+                    OutStockDto dto1 = new OutStockDto();
+                    dto1.setIndex((i + 1) / singleSize +1);
+                    dto1.setSize((size/ singleSize)+1);
+                    dto1.setStockDtos(outStockDtos.subList(i, outStockDtos.size() ));
+                   // result.getOutStockDtos().clear();
+                    result.getOutStockDtos().add(dto1);
+                }
+                if (i % singleSize != 0 || i == 0) {
+
+                   continue;
+                }
+            }
+        }
+        return R.ok(result);
     }
+
+
+
 }

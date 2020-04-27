@@ -60,32 +60,40 @@
             success: function (res) {
                 if(res.code==200)
                 {
-                    //将数据显示在页面上
-                    var str = "<br><br><br><br><div align='center'><font size='5'>杭州理想塑胶有限公司销售出库单</font></div>" +
-                        "<div>" +
-                        "<div>打印日期:  "+res.data[0].printTime +"</div>" +
-                        "<div>单据号码:  "+res.data[0].billNumber +"</div>" +
-                        "<div>客户全称:  "+res.data[0].customer +"</div>" +
-                        "<div>制单人员:  "+res.data[0].orderMakinger +"</div>" +
+                    for(var i =0;i<res.data.outStockDtos.length;i++){
+                        //将数据显示在页面上
+                        var str = "<div style='height: 1030px;width: 100%;'> <br><div align='center' style='font-size: 28px;font-weight: 600px;margin-bottom: 10px'>杭州理想塑胶有限公司销售出库单</div>" +
+                            "<div style='width: 100%;'>" +
+                            "<div style='margin-bottom: 5px;width: 70%;float: left;'>打印日期:  "+res.data.outStockDtos[i].stockDtos[0].printTime +"</div>" +
+                            "<div style='margin-bottom: 5px;width: 30%;float: left;text-align: right;'>页面:  "+ res.data.outStockDtos[i].index+"/"+ res.data.outStockDtos[i].size+"</div>" +
+                            "<div style='margin-bottom: 5px;width: 50%;float: left;'>单据号码:  "+res.data.outStockDtos[i].stockDtos[0].billNumber +"</div>" +
+                            "<div style='margin-bottom: 5px;width: 50%;float: left;'>单据日期:  "+res.data.outStockDtos[i].stockDtos[0].billCreateTime +"</div>" +
+                            "<div style='margin-bottom: 5px;width: 50%;float: right;'>业务人员:  "  +"</div>" +
+                            "<div style='margin-bottom: 5px;'>客户全称:  "+res.data.outStockDtos[i].stockDtos[0].customer +"</div>" +
+                            "<div style='margin-bottom: 15px;'>制单人员:  "+res.data.outStockDtos[i].stockDtos[0].orderMakinger +"</div>" +
 
-                        "</div>" +
-                        "<div    align='center'>" +
-                        "<div>单据日期:  "+res.data[0].billCreateTime +"</div>" +
-                        // "<div>业务人员名称:  "+res.data[0].customer +"</div>" +
-                        "</div>";
-                    str += "<table style='margin: 0px;width: 100%;height: 100%;'>" +
-                        "<thead><tr style='height: 60px;'>" +
-                        "<th>栏号</th><th>产品名称</th><th>批次号</th><th>规格型号</th><th>数量</th><th>单价</th><th>备注</th></tr>" +
-                        "</thead>" +
-                        "<tbody>";
-                    //遍历数据
-                    for (var i = 0; i < res.data.length; i++) {
-                        str += "<tr><td>" + i + "</td><td>" + res.data[i].billName + "</td><td>" + res.data[i].seq + "</td><td>" + res.data[i].specifications + "</td><td>" + res.data[i].amount + "</td><td>" + res.data[i].price + "</td><td>" + res.data[i].remark + "</td></tr>";
+                            "</div>" +
+                            "<div    align='center'>" +
+                            // "<div style='margin-bottom: 5px'>单据日期:  "+res.data[0].billCreateTime +"</div>" +
+                            // "<div>业务人员名称:  "+res.data[0].customer +"</div>" +
+                            "</div>";
+                        str += "<table  cellpadding='0'  style='margin: 0px;width: 100%;height: 100%;table-layout:fixed;word-break:break-all;'>" +
+                            "<thead><tr style='height: 60px;'>" +
+                            "<th style='width: 6%;'>栏号</th><th style='width: 10%;'>产品名称</th><th style='width: 18%;'>批次号</th><th style='width: 30%;'>规格型号</th><th style='width: 6%;'>数量</th><th style='width: 8%;'>单价</th><th style='width: 10%;'>备注</th></tr>" +
+                            "</thead>" +
+                            "<tbody>";
+                        //遍历数据
+                        for (var j = 0; j < res.data.outStockDtos[i].stockDtos.length; j++) {
+                            str += "<tr><td>" + j + "</td><td>" + res.data.outStockDtos[i].stockDtos[j].billName + "</td><td>" + res.data.outStockDtos[i].stockDtos[j].seq + "</td><td>" + res.data.outStockDtos[i].stockDtos[j].specifications + "</td><td>" + res.data.outStockDtos[i].stockDtos[j].amount + "</td><td>" + res.data.outStockDtos[i].stockDtos[j].price + "</td><td>" + res.data.outStockDtos[i].stockDtos[j].remark + "</td></tr>";
+                        }
+                        //遍历完成之后
+                        str += "</tbody></table>";
+                        str+="<br/></div>"
+                        //将表格添加到body中
+
+                        $('body').append(str);
                     }
-                    //遍历完成之后
-                    str += "</tbody></table>";
-                    //将表格添加到body中
-                    $('body').append(str);
+
 
                     $('body').print();
 
