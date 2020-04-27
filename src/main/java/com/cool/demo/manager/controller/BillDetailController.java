@@ -672,12 +672,12 @@ public class BillDetailController extends AbstractBaseController {
         if (outStockDtos.size() == 0) {
             return R.error("尚未出库!");
         }
-
+        //  构造分页模版
         int singleSize = 10;
-        int pageCount = outStockDtos.size() / singleSize;
-
+      //  int pageCount = outStockDtos.size() / singleSize;
+        //返回类型
         OutStockResult result = new OutStockResult();
-
+        //若数据不足十个，则返回给集合所有数据
         if (outStockDtos.size() <=singleSize) {
             OutStockDto dto0 = new OutStockDto();
             dto0.setIndex(1);
@@ -685,11 +685,12 @@ public class BillDetailController extends AbstractBaseController {
             dto0.setStockDtos(outStockDtos);
             result.getOutStockDtos().add(dto0);
         } else {
+            //集合大小
             int size=outStockDtos.size();
             int s=0;
             for (int i = 0; i < size; i++) {
                 if ((i+1) % singleSize == 0 && i != 0) {
-
+                    //若循环到前十个数据，则分页
                     OutStockDto dto = new OutStockDto();
                     dto.setIndex((i + 1) / singleSize);
                     dto.setSize((size/ singleSize)+1);
@@ -698,6 +699,7 @@ public class BillDetailController extends AbstractBaseController {
                     result.getOutStockDtos().add(dto);
 
                 } else if(i==size-1){
+                    //若循环到最后一条数据，则把剩下的数据组成一页
                     OutStockDto dto1 = new OutStockDto();
                     dto1.setIndex((i + 1) / singleSize +1);
                     dto1.setSize((size/ singleSize)+1);
@@ -705,6 +707,7 @@ public class BillDetailController extends AbstractBaseController {
                    // result.getOutStockDtos().clear();
                     result.getOutStockDtos().add(dto1);
                 }
+                //循环下表不等于10的时候，则跳过
                 if (i % singleSize != 0 || i == 0) {
 
                    continue;
