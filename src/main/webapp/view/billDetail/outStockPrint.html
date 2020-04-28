@@ -6,29 +6,44 @@
         * {
             padding: 0;
             margin: 0;
+            height: 100%;
+            width: 95%;
+
         }
 
         table {
-            margin: 30px auto;
-            border: 1px solid #000;
+
+            /*border: 1px solid #000;*/
             border-collapse: collapse; /*设置表格的边框是否被合并为一个单一的边框*/
             border-spacing: 0; /*设置相邻单元格的边框间的距离*/
+            table-layout: fixed;
+            display:inline-block;
         }
 
         tr {
             /*width: 300px;*/
-            height: 25px;
-            line-height: 25px;
-            border-bottom: 1px solid #000;
-            /*background-color: pink;*/
+            height: 20px;
+            line-height: 20px;
+            border: 1px solid #000;
+            white-space:nowrap;
+            overflow:hidden;
+            margin: 0px;
+            padding:0px ;
+
+        /*background-color: pink;*/
         }
 
         td, th {
             width: 99px;
-            height: 25px;
-            line-height: 25px;
+            height: 20px;
+            line-height: 20px;
             text-align: center;
             border-right: 1px solid #000;
+            white-space:nowrap;
+            overflow:hidden;
+            margin: 0px;
+            padding:0px ;
+            font-size: 9px;
         }
     </style>
     <script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
@@ -62,24 +77,24 @@
                 {
                     for(var i =0;i<res.data.outStockDtos.length;i++){
                         //将数据显示在页面上
-                        var str = "<div style='width: 95%;height:100%; '> <br><div align='center' style='font-size: 28px;font-weight: 600px;margin-bottom: 10px'>杭州理想塑胶有限公司销售出库单</div>" +
-                            "<div style='width: 100%;height: 120px;'>" +
-                            "<div style='margin-bottom: 5px;width: 70%;float: left;height: 20px;'>打印日期:  "+res.data.outStockDtos[i].stockDtos[0].printTime +"</div>" +
-                            "<div style='margin-bottom: 5px;width: 30%;float: left;text-align: right;height: 20px;'>页面:  "+ res.data.outStockDtos[i].index+"/"+ res.data.outStockDtos[i].size+"</div>" +
-                            "<div style='margin-bottom: 5px;width: 50%;float: left;height: 20px;'>单据号码:  "+res.data.outStockDtos[i].stockDtos[0].billNumber +"</div>" +
-                            "<div style='margin-bottom: 5px;width: 50%;float: left;height: 20px;'>单据日期:  "+res.data.outStockDtos[i].stockDtos[0].billCreateTime +"</div>" +
-                            "<div style='margin-bottom: 5px;width: 50%;float: left;height: 20px;'>业务人员:  "  +"</div>" +
-                            "<div style='margin-bottom: 5px;height: 20px;width: 50%;float: left;'>客户全称:  "+res.data.outStockDtos[i].stockDtos[0].customer +"</div>" +
-                            "<div style='margin-bottom: 15px;height: 20px;width: 100%;float: left;'>制单人员:  "+res.data.outStockDtos[i].stockDtos[0].orderMakinger +"</div>" +
+                        var str = "<div style='width: 100%;height: 100%;'> <br><div align='center' style='font-size: 28px;font-weight: 600px;margin-bottom: 10px;height: 20px;'>杭州理想塑胶有限公司销售出库单</div>" +
+                            "<div style='width: 100%;height: 70px;margin: 3px;'>" +
+                            "<div style='margin-bottom: 5px;width: 70%;float: left;height: 15px;'>打印日期:  "+res.data.outStockDtos[i].stockDtos[0].printTime +"</div>" +
+                            "<div style='margin-bottom: 5px;width: 30%;float: left;text-align: right;height: 15px;'>页面:  "+ res.data.outStockDtos[i].index+"/"+ res.data.outStockDtos[i].size+"</div>" +
+                            "<div style='margin-bottom: 5px;width: 50%;float: left;height: 15px;'>单据号码:  "+res.data.outStockDtos[i].stockDtos[0].billNumber +"</div>" +
+                            "<div style='margin-bottom: 5px;width: 50%;float: left;height:15px;'>单据日期:  "+res.data.outStockDtos[i].stockDtos[0].billCreateTime +"</div>" +
+                            "<div style='margin-bottom: 5px;width: 50%;float: left;height: 15px;'>业务人员:  "  +"</div>" +
+                            "<div style='margin-bottom: 5px;height: 15px;width: 50%;float: left;'>客户全称:  "+res.data.outStockDtos[i].stockDtos[0].customer +"</div>" +
+                            "<div style='margin-bottom: 15px;height: 15px;width: 100%;float: left;'>制单人员:  "+res.data.outStockDtos[i].stockDtos[0].orderMakinger +"</div>" +
                             "</div>";
-                        str += "<table  cellpadding='0'  style='margin: 0px;width: 100%;table-layout:fixed;word-break:break-all;'>" +
+                        str += "<table  cellpadding='0'  style='margin: 0px;height:200px ;width: 100%;table-layout:fixed;word-break:break-all;'>" +
                             "<thead><tr style='height: 25px;'>" +
-                            "<th style='width: 6%;'>栏号</th><th style='width: 10%;'>产品名称</th><th style='width: 14%;'>批次号</th><th style='width: 22%;'>规格型号</th><th style='width: 6%;'>数量</th><th style='width: 8%;'>单价</th><th style='width: 10%;'>备注</th></tr>" +
+                            "<th style='width: 6%;'>栏号</th><th style='width: 12%;'>产品名称</th><th style='width: 16%;'>批次号</th><th style='width: 27%;'>规格型号</th><th style='width: 6%;'>数量</th><th style='width: 8%;'>单价</th><th style='width: 10%;'>备注</th></tr>" +
                             "</thead>" +
                             "<tbody>";
                         //遍历数据
                         for (var j = 0; j < res.data.outStockDtos[i].stockDtos.length; j++) {
-                            str += "<tr style='height: 30px;'><td>" + j + "</td><td>" + res.data.outStockDtos[i].stockDtos[j].billName + "</td><td>" + res.data.outStockDtos[i].stockDtos[j].seq + "</td><td>" + res.data.outStockDtos[i].stockDtos[j].specifications + "</td><td>" + res.data.outStockDtos[i].stockDtos[j].amount + "</td><td>" + res.data.outStockDtos[i].stockDtos[j].price + "</td><td>" + res.data.outStockDtos[i].stockDtos[j].remark + "</td></tr>";
+                            str += "<tr style='height: 15px;'><td>" + j + "</td><td>" + res.data.outStockDtos[i].stockDtos[j].billName + "</td><td>" + res.data.outStockDtos[i].stockDtos[j].seq + "</td><td >" + res.data.outStockDtos[i].stockDtos[j].specifications + "</td><td>" + res.data.outStockDtos[i].stockDtos[j].amount + "</td><td>" + res.data.outStockDtos[i].stockDtos[j].price + "</td><td>" + res.data.outStockDtos[i].stockDtos[j].remark + "</td></tr>";
                         }
                         //遍历完成之后
                         str += "</tbody></table>";
