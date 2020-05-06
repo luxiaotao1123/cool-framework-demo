@@ -9,6 +9,11 @@ spring:
     password: xltys1995
   mvc:
     static-path-pattern: /**
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+#    password: xltys1995
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
