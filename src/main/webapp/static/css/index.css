@@ -57,6 +57,7 @@ body {
     background:#222;
     box-shadow: 0 0 5px rgba(200,200,200,0.03);
     border-radius: 5px;
+    letter-spacing: 2px;
 }
 .dropdown-item ul li a {
     color:#555;
