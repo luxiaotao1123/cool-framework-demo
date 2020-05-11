@@ -72,6 +72,19 @@
 
           <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
 
+            <!--模版引擎-->
+            <li data-name="{{}}" class="layui-nav-item layui-nav-itemed">
+              <a href="javascript:;" lay-tips="主页" lay-direction="2">
+                <i class="layui-icon layui-icon-home"></i>
+                <cite>主页</cite>
+              </a>
+              <dl class="layui-nav-child">
+                <dd data-name="console" class="layui-this">
+                  <a lay-href="home.html">控制台</a>
+                </dd>
+              </dl>
+            </li>
+
             <li data-name="home" class="layui-nav-item layui-nav-itemed">
               <a href="javascript:;" lay-tips="主页" lay-direction="2">
                 <i class="layui-icon layui-icon-home"></i>
@@ -152,13 +165,58 @@
 
   <script type="text/javascript" src="../static/js/jquery/jquery-3.3.1.min.js"></script>
   <script type="text/javascript" src="../static/js/common.js"></script>
+  <script type="text/javascript" src="../static/js/handlebars/handlebars-v4.5.3.js"></script>
   <script src="../static/layuiadmin/layui/layui.js"></script>
   <script>
   layui.config({
     base: '../static/layuiadmin/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
-  }).use('index');
+  }).use(['index','element'], function () {
+      var element = layui.element;
+      var $ = layui.jquery;
+
+
+      $(function () {
+          if ("" === localStorage.getItem('token')){
+              top.location.href = "/login";
+          }
+          $.ajax({
+              url: "/menu/auth",
+              headers: {'token': localStorage.getItem('token')},
+              method: 'POST',
+              success: function (res) {
+                  console.log(res);
+
+
+
+
+                  if (res.code === 200){
+                      var menuHtml = "";
+                      if (res.data != null){
+                          for (var i = 0; i < res.data.length; i++) {
+                              menuHtml += '<li class="layui-nav-item">\n';
+                              menuHtml += '<a>' + res.data[i].menu + '</a>\n';
+                              menuHtml += '<dl class="layui-nav-child">\n';
+                              for (var j = 0; j < res.data[i].subMenu.length; j++) {
+                                  menuHtml += '<dd><a class="site-active" data-title="' + res.data[i].subMenu[j].name + '" data-url="' + res.data[i].subMenu[j].code + '" data-id="' + res.data[i].subMenu[j].code + '" target="main">' + res.data[i].subMenu[j].name + '</a></dd>\n'
+                              }
+                              menuHtml += '</dl>\n</li>\n';
+                          }
+                      }
+                      $('#cool-menu-tree').append(menuHtml);
+                      element.init();
+                  } else if (res.code === 403){
+                      top.location.href = "/login";
+                  }else {
+                      layer.alert(res.msg)
+                  }
+              }
+          })
+
+
+      });
+  });
   </script>
 </body>
 </html>
