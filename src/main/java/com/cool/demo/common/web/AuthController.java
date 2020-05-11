@@ -2,6 +2,7 @@ package com.cool.demo.common.web;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.cool.demo.common.CodeRes;
+import com.cool.demo.common.utils.RandomValidateCodeUtil;
 import com.cool.demo.system.entity.*;
 import com.cool.demo.system.service.*;
 import com.core.annotations.ManagerAuth;
@@ -11,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -66,6 +69,19 @@ public class AuthController extends BaseController {
         res.put("username", user.getUsername());
         res.put("token", token);
         return R.ok(res);
+    }
+
+    @RequestMapping("/code.action")
+    public void code(@RequestParam String sd, HttpServletResponse response) {
+        System.out.println(sd);
+        RandomValidateCodeUtil.getRandcode(sd, response);
+    }
+
+    @RequestMapping("/code.do")
+    public String codeDo(@RequestParam String sd) {
+        String code = RandomValidateCodeUtil.code.get(sd);
+        RandomValidateCodeUtil.code.remove(sd);
+        return code;
     }
 
     @RequestMapping("/user/detail/auth")

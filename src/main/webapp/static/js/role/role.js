@@ -320,7 +320,7 @@ function detailScreen(index) {
         height = ($(window).height()*0.9);
     }
     layer.style(index, {
-        top: (($(window).height()-height)/3)+"px",
+        // top: (($(window).height()-height)/3)+"px",
         height: height+'px'
     });
     $(".layui-layer-shade").remove();

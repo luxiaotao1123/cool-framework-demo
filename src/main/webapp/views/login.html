@@ -90,6 +90,11 @@
             <label class="layui-icon layui-icon-password layadmin-user-login-icon"></label>
             <input id="password" class="layui-input" type="password" name="password" lay-verify="password" placeholder="密码">
         </div>
+        <div class="layui-form-item">
+            <label class="layui-icon layui-icon-password layadmin-user-login-icon"></label>
+            <input id="code" class="layui-input" type="text" name="password" lay-verify="code" placeholder="验证码">
+            <img id="codeImg" title="看不清？点击换一张。" >
+        </div>
     </div>
     <div class="layui-form-item login-submit">
         <button id="login-button" class="layui-btn layui-btn-fluid layui-btn-normal" lay-submit="" lay-filter="login">登 录</button>
@@ -100,6 +105,28 @@
 <script type="text/javascript" src="../static/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../static/js/tools/md5.js"></script>
 <script type="text/javascript">
+
+    // 初始化验证码
+    function initCode() {
+        var random = Math.random();
+        $('#codeImg').attr("src", "/code.action?sd="+random);
+        setTimeout(function () {
+            $.ajax({
+                url: "/code.do",
+                data: {sd: random},
+                method: 'POST',
+                async: false,
+                success: function (code) {
+                    sessionStorage.setItem("code", code);
+                }
+            });
+        }, 100);
+    }
+    initCode();
+    $('#codeImg').click(function () {
+        initCode();
+    });
+
     layui.use(['form','layer'],function () {
         var form = layui.form,
             layer = layui.layer,
