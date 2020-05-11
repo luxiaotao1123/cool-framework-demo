@@ -108,6 +108,7 @@ public class AuthController extends BaseController {
             if (subMenu.isEmpty()) {
                 continue;
             }
+            map.put("menuCode", menu.getCode());
             map.put("menu", menu.getName());
             map.put("subMenu", subMenu);
             result.add(map);

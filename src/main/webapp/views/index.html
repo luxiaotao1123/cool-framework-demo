@@ -67,53 +67,13 @@
       <div class="layui-side layui-side-menu">
         <div class="layui-side-scroll">
           <div class="layui-logo" lay-href="home.html">
-            <span>中杨物流</span>
+            <span>中扬物流</span>
           </div>
 
           <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
-
-            <li data-name="home" class="layui-nav-item layui-nav-itemed">
-              <a href="javascript:;" lay-tips="主页" lay-direction="2">
-                <i class="layui-icon layui-icon-home"></i>
-                <cite>主页</cite>
-              </a>
-              <dl class="layui-nav-child">
-                <dd data-name="console" class="layui-this">
-                  <a lay-href="home.html">控制台</a>
-                </dd>
-              </dl>
-            </li>
-
-            <li data-name="system" class="layui-nav-item">
-              <a href="javascript:;" lay-tips="组件" lay-direction="2">
-                <i class="layui-icon layui-icon-component"></i>
-                <cite>系统</cite>
-              </a>
-              <dl class="layui-nav-child">
-                <dd data-name="user">
-                  <a lay-href="user/user.html">系统用户</a>
-                </dd>
-                <dd data-name="resource">
-                  <a lay-href="resource/resource.html">菜单列表</a>
-                </dd>
-              </dl>
-            </li>
-
-
-            <li data-name="develop" class="layui-nav-item">
-              <a href="javascript:;" lay-tips="页面" lay-direction="2">
-                <i class="layui-icon layui-icon-template"></i>
-                <cite>开发</cite>
-              </a>
-              <dl class="layui-nav-child">
-                <dd><a lay-href="permission/permission.html">权限控制</a></dd>
-                <dd><a lay-href="api/api.html">接口文档</a></dd>
-              </dl>
-            </li>
           </ul>
         </div>
       </div>
-
       <!-- 页面标签 -->
       <div class="layadmin-pagetabs" id="LAY_app_tabs">
         <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
@@ -152,24 +112,7 @@
 
   <script type="text/javascript" src="../static/js/jquery/jquery-3.3.1.min.js"></script>
   <script type="text/javascript" src="../static/js/common.js"></script>
-  <script type="text/javascript" src="../static/js/handlebars/handlebars-v4.5.3.js"></script>
   <script src="../static/layuiadmin/layui/layui.js"></script>
-
-  <script type="text/template" id="navListTemplate">
-    {{#each list}}
-    <li data-name="{{}}" class="layui-nav-item layui-nav-itemed">
-      <a href="javascript:;" lay-tips="{{this.menu}}" lay-direction="2">
-      <i class="layui-icon layui-icon-home"></i>
-      <cite>主页</cite>
-      </a>
-      <dl class="layui-nav-child">
-        <dd data-name="console" class="layui-this">
-          <a lay-href="home.html">控制台</a>
-        </dd>
-      </dl>
-    </li>
-    {{/each}}
-  </script>
   <script>
   layui.config({
     base: '../static/layuiadmin/' //静态资源所在路径
@@ -189,31 +132,25 @@
               headers: {'token': localStorage.getItem('token')},
               method: 'POST',
               success: function (res) {
-                  console.log(res);
-
-                  var navData = res.data;
-
-                  var tpl   =  $("#navListTemplate").html();
-                  var template = Handlebars.compile(tpl);
-                  var html = template(navData);
-                  $("#box").html(html);
-
-
-
                   if (res.code === 200){
                       var menuHtml = "";
                       if (res.data != null){
                           for (var i = 0; i < res.data.length; i++) {
-                              menuHtml += '<li class="layui-nav-item">\n';
-                              menuHtml += '<a>' + res.data[i].menu + '</a>\n';
+                              menuHtml += '<li data-name="' + res.data[i].menuCode +'" class="layui-nav-item">\n';
+                              menuHtml += '<a href="javascript:;" lay-tips=' +res.data[i].menu+ ' lay-direction="2">\n';
+                              menuHtml += '<i class="layui-icon layui-icon-template"></i>\n';
+                              menuHtml += ' <cite>' +res.data[i].menu+ '</cite>\n';
+                              menuHtml += '</a>\n';
                               menuHtml += '<dl class="layui-nav-child">\n';
                               for (var j = 0; j < res.data[i].subMenu.length; j++) {
-                                  menuHtml += '<dd><a class="site-active" data-title="' + res.data[i].subMenu[j].name + '" data-url="' + res.data[i].subMenu[j].code + '" data-id="' + res.data[i].subMenu[j].code + '" target="main">' + res.data[i].subMenu[j].name + '</a></dd>\n'
+                                  menuHtml += '<dd><a lay-href="' +res.data[i].subMenu[j].code+ '">' + res.data[i].subMenu[j].name + '</a></dd>\n';
+                                  // menuHtml += '<dd><a class="site-active" data-title="' + res.data[i].subMenu[j].name + '" data-url="' + res.data[i].subMenu[j].code + '" data-id="' + res.data[i].subMenu[j].code + '" target="main">' + res.data[i].subMenu[j].name + '</a></dd>\n'
                               }
-                              menuHtml += '</dl>\n</li>\n';
+                              menuHtml += '</dl>\n';
+                              menuHtml += '</li>\n';
                           }
                       }
-                      $('#cool-menu-tree').append(menuHtml);
+                      $('#LAY-system-side-menu').append(menuHtml);
                       element.init();
                   } else if (res.code === 403){
                       top.location.href = "/login";
