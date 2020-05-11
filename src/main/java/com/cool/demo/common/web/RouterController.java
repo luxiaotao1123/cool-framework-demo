@@ -14,7 +14,7 @@ public class RouterController {
     @RequestMapping("/")
     public void index(HttpServletResponse response) {
         try{
-            String redirect = "/view/index.html";
+            String redirect = "/views/index.html";
             response.sendRedirect(redirect);
         } catch (Exception ex){
             ex.printStackTrace();
@@ -24,7 +24,7 @@ public class RouterController {
     @RequestMapping("/login")
     public void login(HttpServletResponse response) {
         try{
-            String redirect = "/view/login.html";
+            String redirect = "/views/login.html";
             response.sendRedirect(redirect);
         } catch (Exception ex){
             ex.printStackTrace();
