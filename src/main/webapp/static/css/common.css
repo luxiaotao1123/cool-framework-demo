@@ -1,3 +1,6 @@
+body {
+    background-color: #fff;
+}
 /*搜索栏*/
 .layui-form.layui-card-header {
     padding: 20px 0 5px 0;
