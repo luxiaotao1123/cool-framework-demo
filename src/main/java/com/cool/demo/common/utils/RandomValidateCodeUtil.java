@@ -12,15 +12,11 @@ public class RandomValidateCodeUtil {
 
     public static final Map<String, String> code = new ConcurrentHashMap<>();
 	
-	public static final String RANDOMCODEKEY= "syscode";//放到session中的key
-	//private String randString = "0123456789";//随机产生只有数字的字符串 private String
-    //private String randString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";//随机产生只有字母的字符串
     private static String randString = "0123456789ABCDEFGHJKLMNPRSTUVWXYZ";//随机产生数字与字母组合的字符串
     private static int width = 60;// 图片宽
     private static int height = 27;// 图片高
     private static int lineSize = 40;// 干扰线数量
     private static int stringNum = 4;// 随机产生字符数量
-
 
     private static Random random = new Random();
 
@@ -49,11 +45,10 @@ public class RandomValidateCodeUtil {
      * 生成随机图片
      */
     public static void getRandcode(String sd, HttpServletResponse response) {
-        // BufferedImage类是具有缓冲区的Image类,Image类是用于描述图像信息的类
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
         Graphics g = image.getGraphics();// 产生Image对象的Graphics对象,改对象可以在图像上进行各种绘制操作
         g.fillRect(0, 0, width, height);//图片大小
-        g.setFont(new Font("Times New Roman", Font.ROMAN_BASELINE, 18));//字体大小
+        g.setFont(new Font("Times New Roman", Font.PLAIN, 18));//字体大小
         g.setColor(getRandColor(110, 133));//字体颜色
         // 绘制干扰线
         for (int i = 0; i <= lineSize; i++) {
@@ -67,7 +62,7 @@ public class RandomValidateCodeUtil {
         System.out.println(randomString);
         code.put(sd, randomString);
         g.dispose();
-        try {// 将内存中的图片通过流动形式输出到客户端
+        try {
             ImageIO.write(image, "JPEG", response.getOutputStream());
         } catch (Exception e) {
             e.printStackTrace();
