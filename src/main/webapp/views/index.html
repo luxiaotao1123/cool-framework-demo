@@ -72,19 +72,6 @@
 
           <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
 
-            <!--模版引擎-->
-            <li data-name="{{}}" class="layui-nav-item layui-nav-itemed">
-              <a href="javascript:;" lay-tips="主页" lay-direction="2">
-                <i class="layui-icon layui-icon-home"></i>
-                <cite>主页</cite>
-              </a>
-              <dl class="layui-nav-child">
-                <dd data-name="console" class="layui-this">
-                  <a lay-href="home.html">控制台</a>
-                </dd>
-              </dl>
-            </li>
-
             <li data-name="home" class="layui-nav-item layui-nav-itemed">
               <a href="javascript:;" lay-tips="主页" lay-direction="2">
                 <i class="layui-icon layui-icon-home"></i>
@@ -167,6 +154,22 @@
   <script type="text/javascript" src="../static/js/common.js"></script>
   <script type="text/javascript" src="../static/js/handlebars/handlebars-v4.5.3.js"></script>
   <script src="../static/layuiadmin/layui/layui.js"></script>
+
+  <script type="text/template" id="navListTemplate">
+    {{#each list}}
+    <li data-name="{{}}" class="layui-nav-item layui-nav-itemed">
+      <a href="javascript:;" lay-tips="{{this.menu}}" lay-direction="2">
+      <i class="layui-icon layui-icon-home"></i>
+      <cite>主页</cite>
+      </a>
+      <dl class="layui-nav-child">
+        <dd data-name="console" class="layui-this">
+          <a lay-href="home.html">控制台</a>
+        </dd>
+      </dl>
+    </li>
+    {{/each}}
+  </script>
   <script>
   layui.config({
     base: '../static/layuiadmin/' //静态资源所在路径
@@ -188,6 +191,12 @@
               success: function (res) {
                   console.log(res);
 
+                  var navData = res.data;
+
+                  var tpl   =  $("#navListTemplate").html();
+                  var template = Handlebars.compile(tpl);
+                  var html = template(navData);
+                  $("#box").html(html);
 
 
 
