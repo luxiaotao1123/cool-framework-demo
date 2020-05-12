@@ -189,3 +189,70 @@ CREATE TABLE `sys_user_login` (
 
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'home#view', '查看', '2', '3', '0', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'detail#view', '查看', '8', '3', '0', '1');
+
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'user#view', '查看', '4', '3', '0', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'user#btn-add', '新增', '4', '3', '1', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'user#btn-edit', '编辑', '4', '3', '2', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'user#btn-delete', '删除', '4', '3', '3', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'user#btn-export', '导出', '4', '3', '4', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'user#btn-into', '导入', '4', '3', '5', '1');
+
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'role#view', '查看', '5', '3', '0', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'role#btn-add', '新增', '5', '3', '1', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'role#btn-edit', '编辑', '5', '3', '2', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'role#btn-delete', '删除', '5', '3', '3', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'role#btn-export', '导出', '5', '3', '4', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'role#btn-into', '导入', '5', '3', '5', '1');
+
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'resource#view', '查看', '6', '3', '0', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'resource#btn-add', '新增', '6', '3', '1', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'resource#btn-edit', '编辑', '6', '3', '2', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'resource#btn-delete', '删除', '6', '3', '3', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'resource#btn-export', '导出', '6', '3', '4', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'resource#btn-into', '导入', '6', '3', '5', '1');
+
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'userLogin#view', '查看', '10', '3', '0', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'userLogin#btn-add', '新增', '10', '3', '1', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'userLogin#btn-edit', '编辑', '10', '3', '2', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'userLogin#btn-delete', '删除', '10', '3', '3', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'userLogin#btn-export', '导出', '10', '3', '4', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'userLogin#btn-into', '导入', '10', '3', '5', '1');
+
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'operateLog#view', '查看', '11', '3', '0', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'operateLog#btn-add', '新增', '11', '3', '1', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'operateLog#btn-edit', '编辑', '11', '3', '2', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'operateLog#btn-delete', '删除', '11', '3', '3', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'operateLog#btn-export', '导出', '11', '3', '4', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'operateLog#btn-into', '导入', '11', '3', '5', '1');
+
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'host#view', '查看', '13', '3', '0', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'host#btn-add', '新增', '13', '3', '1', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'host#btn-edit', '编辑', '13', '3', '2', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'host#btn-delete', '删除', '13', '3', '3', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'host#btn-export', '导出', '13', '3', '4', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'host#btn-into', '导入', '13', '3', '5', '1');
+
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'permission#view', '查看', '15', '3', '0', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'permission#btn-add', '新增', '15', '3', '1', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'permission#btn-edit', '编辑', '15', '3', '2', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'permission#btn-delete', '删除', '15', '3', '3', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'permission#btn-export', '导出', '15', '3', '4', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'permission#btn-into', '导入', '15', '3', '5', '1');
+
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'api#view', '查看', '16', '3', '0', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'api#btn-add', '新增', '16', '3', '1', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'api#btn-edit', '编辑', '16', '3', '2', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'api#btn-delete', '删除', '16', '3', '3', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'api#btn-export', '导出', '16', '3', '4', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'api#btn-into', '导入', '16', '3', '5', '1');
+
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'config#view', '查看', '17', '3', '0', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'config#btn-add', '新增', '17', '3', '1', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'config#btn-edit', '编辑', '17', '3', '2', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'config#btn-delete', '删除', '17', '3', '3', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'config#btn-export', '导出', '17', '3', '4', '1');
+insert into `sys_resource` ( `code`, `name`, `resource_id`, `level`, `sort`, `status`) values ( 'config#btn-into', '导入', '17', '3', '5', '1');
+

@@ -2,6 +2,7 @@ package com.cool.demo.common.web;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.cool.demo.common.CodeRes;
 import com.cool.demo.common.model.PowerDto;
 import com.cool.demo.common.utils.RandomValidateCodeUtil;
@@ -96,20 +97,22 @@ public class AuthController extends BaseController {
     public R menu(){
         // 获取所有一级菜单
         List<Resource> oneLevel = resourceService.selectList(new EntityWrapper<Resource>().eq("level", 1).eq("status", 1).orderBy("sort"));
-        // 获取当前用户的所有二级菜单
-        List<RoleResource> roleResources;
+        User user = null;
+        Wrapper<Resource> resourceWrapper;
         if (getUserId() == 9527) {
-            roleResources = roleResourceService.selectList(new EntityWrapper<>());
+            resourceWrapper = new EntityWrapper<Resource>().eq("level", 2).eq("status", 1).orderBy("sort");
         } else {
-            User user = userService.selectById(getUserId());
-            roleResources = roleResourceService.selectList(new EntityWrapper<RoleResource>().eq("role_id", user.getRoleId()));
+            // 获取当前用户的所有二级菜单
+            user = userService.selectById(getUserId());
+            List<RoleResource> roleResources = roleResourceService.selectList(new EntityWrapper<RoleResource>().eq("role_id", user.getRoleId()));
+            List<Long> resourceIds = new ArrayList<>();
+            roleResources.forEach(roleResource -> resourceIds.add(roleResource.getResourceId()));
+            if (resourceIds.isEmpty()){
+                return R.ok();
+            }
+            resourceWrapper = new EntityWrapper<Resource>().in("id", resourceIds).eq("level", 2).eq("status", 1).orderBy("sort");
         }
-        List<Long> resourceIds = new ArrayList<>();
-        roleResources.forEach(roleResource -> resourceIds.add(roleResource.getResourceId()));
-        if (resourceIds.isEmpty()){
-            return R.ok();
-        }
-        List<Resource> twoLevel = resourceService.selectList(new EntityWrapper<Resource>().in("id", resourceIds).eq("level", 2).eq("status", 1).orderBy("sort"));
+        List<Resource> twoLevel = resourceService.selectList(resourceWrapper);
         List<Map<String, Object>> result = new ArrayList<>();
         for (Resource menu : oneLevel) {
             Map<String, Object> map = new HashMap<>();
@@ -118,6 +121,20 @@ public class AuthController extends BaseController {
             while (iterator.hasNext()) {
                 Resource resource = iterator.next();
                 if (resource.getResourceId().equals(menu.getId())) {
+
+                    // 是否拥有查看权限
+                    if (getUserId() != 9527) {
+                        Resource view = resourceService.selectOne(new EntityWrapper<Resource>().eq("resource_id", resource.getId()).like("code", "view"));
+                        if (!Cools.isEmpty(view)){
+                            RoleResource param = new RoleResource();
+                            param.setResourceId(view.getId());
+                            param.setRoleId(user.getId());
+                            if (null == roleResourceService.selectOne(new EntityWrapper<>(param))){
+                                continue;
+                            }
+                        }
+                    }
+
                     subMenu.add(resource);
                     iterator.remove();
                 }
@@ -148,7 +165,6 @@ public class AuthController extends BaseController {
             oneLevelMap.put("spread", true);
             oneLevelMap.put("children", twoLevelsList);
             List<Resource> twoLevels = resourceService.selectList(new EntityWrapper<Resource>().eq("resource_id", oneLevel.getId()).eq("level", 2).eq("status", 1).orderBy("sort"));
-
             // 二级
             for (Resource twoLevel : twoLevels){
                 Map<String, Object> twoLevelMap = new HashMap<>();
@@ -164,6 +180,7 @@ public class AuthController extends BaseController {
                     Map<String, Object> threeLevelMap = new HashMap<>();
                     threeLevelMap.put("title", threeLevel.getName());
                     threeLevelMap.put("id", threeLevel.getCode());
+                    threeLevelMap.put("checked", false);
                     threeLevelsList.add(threeLevelMap);
                 }
 
@@ -201,7 +218,7 @@ public class AuthController extends BaseController {
         for (RoleResource roleResource : roleResources){
             Resource resource = resourceService.selectById(roleResource.getResourceId());
             if (!Cools.isEmpty(resource)){
-                if (resource.getLevel() == 2){
+                if (resource.getLevel() == 3){
                     result.add(resource.getCode());
                 }
             }
@@ -231,6 +248,14 @@ public class AuthController extends BaseController {
                     roleResource.setRoleId(roleId);
                     roleResource.setResourceId(resource.getId());
                     roleResourceService.insert(roleResource);
+                } else {
+                    Permission permission = permissionService.selectOne(new EntityWrapper<Permission>().eq("action", dto.getTwo()));
+                    if (!Cools.isEmpty(permission)){
+                        RolePermission rolePermission = new RolePermission();
+                        rolePermission.setRoleId(roleId);
+                        rolePermission.setPermissionId(permission.getId());
+                        rolePermissionService.insert(rolePermission);
+                    }
                 }
                 for (String three : dto.getThree()){
                     Resource resource1 = resourceService.selectOne(new EntityWrapper<Resource>().eq("code", three).eq("level", 3));
@@ -242,24 +267,6 @@ public class AuthController extends BaseController {
                     }
                 }
             }
-//            for (String power : powers) {
-//                Resource resource = resourceService.selectOne(new EntityWrapper<Resource>().eq("code", power).eq("level", 2));
-//                if (!Cools.isEmpty(resource)) {
-//                    RoleResource roleResource = new RoleResource();
-//                    roleResource.setRoleId(roleId);
-//                    roleResource.setResourceId(resource.getId());
-//                    roleResourceService.insert(roleResource);
-//                } else {
-//                    Permission permission = permissionService.selectOne(new EntityWrapper<Permission>().eq("action", power));
-//                    if (!Cools.isEmpty(permission)){
-//                        RolePermission rolePermission = new RolePermission();
-//                        rolePermission.setRoleId(roleId);
-//                        rolePermission.setPermissionId(permission.getId());
-//                        rolePermissionService.insert(rolePermission);
-//                    }
-//                }
-//
-//            }
         }
         return R.ok();
     }
@@ -267,11 +274,14 @@ public class AuthController extends BaseController {
     @RequestMapping(value = "/power/menu/{resourceId}/auth")
     @ManagerAuth
     public R buttonResource(@PathVariable("resourceId") Long resourceId) {
-        List<Resource> resources = null;
+        List<Resource> resources;
         if (getUserId() == 9527) {
-//            roleResources = roleResourceService.selectList(new EntityWrapper<>());
+            resources = resourceService.selectList(new EntityWrapper<Resource>().eq("level", 3).eq("resource_id", resourceId));
         } else {
             resources = roleResourceService.getMenuButtomResource(resourceId, getUserId());
+        }
+        for (Resource resource : resources) {
+            resource.setCode(resource.getCode().split("#")[1]);
         }
         return R.ok(resources);
     }
