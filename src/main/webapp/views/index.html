@@ -134,7 +134,7 @@
                           for (var i = 0; i < res.data.length; i++) {
                               menuHtml += '<li data-name="' + res.data[i].menuCode +'" class="layui-nav-item">\n';
                               menuHtml += '<a href="javascript:;" lay-tips=' +res.data[i].menu+ ' lay-direction="2">\n';
-                              menuHtml += '<i class="layui-icon layui-icon-template"></i>\n';
+                              menuHtml += '<i class="layui-icon '+ res.data[i].menuIcon +'"></i>\n';
                               menuHtml += ' <cite>' +res.data[i].menu+ '</cite>\n';
                               menuHtml += '</a>\n';
                               menuHtml += '<dl class="layui-nav-child">\n';

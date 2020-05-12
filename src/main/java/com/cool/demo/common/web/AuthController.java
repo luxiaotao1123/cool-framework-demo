@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.cool.demo.common.CodeRes;
 import com.cool.demo.common.model.PowerDto;
+import com.cool.demo.common.model.enums.HtmlNavIconType;
 import com.cool.demo.common.utils.RandomValidateCodeUtil;
 import com.cool.demo.system.entity.*;
 import com.cool.demo.system.service.*;
@@ -144,6 +145,7 @@ public class AuthController extends BaseController {
             }
             map.put("menuId", menu.getId());
             map.put("menuCode", menu.getCode());
+            map.put("menuIcon", HtmlNavIconType.get(menu.getCode()));
             map.put("menu", menu.getName());
             map.put("subMenu", subMenu);
             result.add(map);
