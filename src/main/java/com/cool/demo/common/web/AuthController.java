@@ -136,6 +136,7 @@ public class AuthController extends BaseController {
     public R powerList(){
         List<Resource> oneLevels = resourceService.selectList(new EntityWrapper<Resource>().eq("level", 1).eq("status", 1).orderBy("sort"));
         List<Map> result = new ArrayList<>();
+        // 一级
         for (Resource oneLevel : oneLevels){
             List<Map> twoLevelsList = new ArrayList<>();
             Map<String, Object> oneLevelMap = new HashMap<>();
@@ -145,11 +146,24 @@ public class AuthController extends BaseController {
             oneLevelMap.put("children", twoLevelsList);
             List<Resource> twoLevels = resourceService.selectList(new EntityWrapper<Resource>().eq("resource_id", oneLevel.getId()).eq("level", 2).eq("status", 1).orderBy("sort"));
 
+            // 二级
             for (Resource twoLevel : twoLevels){
                 Map<String, Object> twoLevelMap = new HashMap<>();
                 twoLevelMap.put("title", twoLevel.getName());
                 twoLevelMap.put("id", twoLevel.getCode());
-                twoLevelMap.put("spread", true);
+                twoLevelMap.put("spread", false);
+
+                List<Map> threeLevelsList = new ArrayList<>();
+                twoLevelMap.put("children", threeLevelsList);
+                // 三级
+                List<Resource> threeLevels = resourceService.selectList(new EntityWrapper<Resource>().eq("resource_id", twoLevel.getId()).eq("level", 3).eq("status", 1).orderBy("sort"));
+                for (Resource threeLevel : threeLevels){
+                    Map<String, Object> threeLevelMap = new HashMap<>();
+                    threeLevelMap.put("title", threeLevel.getName());
+                    threeLevelMap.put("id", threeLevel.getCode());
+                    threeLevelsList.add(threeLevelMap);
+                }
+
                 twoLevelsList.add(twoLevelMap);
             }
             result.add(oneLevelMap);
