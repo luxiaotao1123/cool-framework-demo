@@ -44,7 +44,7 @@
           </li>
           <li class="layui-nav-item" lay-unselect>
             <a href="javascript:;">
-              <cite>陆晓涛</cite>
+              <cite id="person-username">管理员</cite>
             </a>
             <dl class="layui-nav-child">
               <dd><a lay-href="detail.html">基本资料</a></dd>
@@ -66,7 +66,7 @@
       <!-- 侧边菜单 -->
       <div class="layui-side layui-side-menu">
         <div class="layui-side-scroll">
-          <div class="layui-logo" lay-href="home.html">
+          <div class="layui-logo" lay-href="home/console.html">
             <span>中扬物流</span>
           </div>
 
@@ -122,6 +122,7 @@
       var element = layui.element;
       var $ = layui.jquery;
 
+      $('#person-username').text(localStorage.getItem('username'));
 
       $(function () {
           if ("" === localStorage.getItem('token')){
@@ -144,7 +145,6 @@
                               menuHtml += '<dl class="layui-nav-child">\n';
                               for (var j = 0; j < res.data[i].subMenu.length; j++) {
                                   menuHtml += '<dd><a lay-href="' +res.data[i].subMenu[j].code+ '">' + res.data[i].subMenu[j].name + '</a></dd>\n';
-                                  // menuHtml += '<dd><a class="site-active" data-title="' + res.data[i].subMenu[j].name + '" data-url="' + res.data[i].subMenu[j].code + '" data-id="' + res.data[i].subMenu[j].code + '" target="main">' + res.data[i].subMenu[j].name + '</a></dd>\n'
                               }
                               menuHtml += '</dl>\n';
                               menuHtml += '</li>\n';
