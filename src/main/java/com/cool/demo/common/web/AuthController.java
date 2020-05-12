@@ -129,7 +129,7 @@ public class AuthController extends BaseController {
                         if (!Cools.isEmpty(view)){
                             RoleResource param = new RoleResource();
                             param.setResourceId(view.getId());
-                            param.setRoleId(user.getId());
+                            param.setRoleId(user.getRoleId());
                             if (null == roleResourceService.selectOne(new EntityWrapper<>(param))){
                                 continue;
                             }
