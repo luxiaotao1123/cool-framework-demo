@@ -123,6 +123,8 @@ public class Resource implements Serializable {
                 return "一级菜单";
             case 2:
                 return "二级菜单";
+            case 3:
+                return "三级菜单";
             default:
                 return String.valueOf(this.level);
         }
