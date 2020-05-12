@@ -3,12 +3,13 @@ server:
 
 spring:
   datasource:
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     # mysql
+    driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/cool?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password: xltys1995
     # sql-server
+#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 #    url: jdbc:sqlserver://127.0.0.1:1433;databasename=cool
 #    username: sa
 #    password: Qwe!@#123
