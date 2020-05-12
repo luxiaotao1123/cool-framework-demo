@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" href="../static/layuiadmin/layui/css/layui.css" media="all">
   <link rel="stylesheet" href="../static/layuiadmin/style/admin.css" media="all">
+
 </head>
 <body class="layui-layout-body">
   
@@ -15,7 +16,7 @@
     <div class="layui-layout layui-layout-admin">
       <div class="layui-header">
         <!-- 头部区域 -->
-        <ul class="layui-nav layui-layout-left">
+        <ul id="cool-header-left" class="layui-nav layui-layout-left">
           <li class="layui-nav-item layadmin-flexible" lay-unselect>
             <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
               <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
@@ -30,7 +31,7 @@
             <!--<input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search" layadmin-event="serach" lay-action="template/search.html?keywords="> -->
           <!--</li>-->
         </ul>
-        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+        <ul id="cool-header-right" class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
           
           <li class="layui-nav-item layui-hide-xs" lay-unselect>
             <a href="javascript:;" layadmin-event="theme">
@@ -52,13 +53,6 @@
               <hr>
               <dd style="text-align: center;"><a id="logout" href="/">退出</a></dd>
             </dl>
-          </li>
-          
-          <li class="layui-nav-item layui-hide-xs" lay-unselect>
-            <a href="javascript:;" layadmin-event="about"><i class="layui-icon layui-icon-more-vertical"></i></a>
-          </li>
-          <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
-            <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
           </li>
         </ul>
       </div>
