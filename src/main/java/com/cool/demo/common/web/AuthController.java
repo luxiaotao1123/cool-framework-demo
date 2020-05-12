@@ -73,7 +73,6 @@ public class AuthController extends BaseController {
 
     @RequestMapping("/code.action")
     public void code(@RequestParam String sd, HttpServletResponse response) {
-        System.out.println(sd);
         RandomValidateCodeUtil.getRandcode(sd, response);
     }
 

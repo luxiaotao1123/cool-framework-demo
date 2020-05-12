@@ -59,7 +59,6 @@ public class RandomValidateCodeUtil {
         for (int i = 1; i <= stringNum; i++) {
             randomString = drowString(g, randomString, i);
         }
-        System.out.println(randomString);
         code.put(sd, randomString);
         g.dispose();
         try {

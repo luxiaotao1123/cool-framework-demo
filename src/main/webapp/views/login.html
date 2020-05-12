@@ -73,6 +73,28 @@
             border-radius: 4px;
             height: 52px;
         }
+        #code-box {
+            position: relative;
+            height: 42px;
+        }
+        #code-label {
+            z-index: 999;
+        }
+        #code {
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: inline-block;
+            width: 60%;
+        }
+        #codeImg {
+            border: 1px solid rgba(0,0,0,0.1);
+            position: absolute;
+            right: 5%;
+            top: 0;
+            width: 30%;
+            height: 90%;
+        }
     </style>
 </head>
 <body class="login-bg">
@@ -90,10 +112,10 @@
             <label class="layui-icon layui-icon-password layadmin-user-login-icon"></label>
             <input id="password" class="layui-input" type="password" name="password" lay-verify="password" placeholder="密码">
         </div>
-        <div class="layui-form-item">
-            <label class="layui-icon layui-icon-password layadmin-user-login-icon"></label>
+        <div id="code-box" class="layui-form-item">
+            <label id="code-label" class="layui-icon layui-icon-vercode layadmin-user-login-icon"></label>
             <input id="code" class="layui-input" type="text" name="password" lay-verify="code" placeholder="验证码">
-            <img id="codeImg" title="看不清？点击换一张。" >
+            <img id="codeImg" title="看不清？点击换一张。">
         </div>
     </div>
     <div class="layui-form-item login-submit">
@@ -142,14 +164,19 @@
                 if (val === "") {
                     return "请输入密码";
                 }
+            },
+            code: function (val) {
+                if (val === ""){
+                    return "请输入验证码";
+                }
+
             }
         });
 
         form.on('submit(login)', function (data) {
-            var md5 = hex_md5($("#password").val());
             var user = {
                 mobile: $("#mobile").val(),
-                password: md5
+                password: hex_md5($("#password").val())
             };
             $.ajax({
                 url: "/login.action",

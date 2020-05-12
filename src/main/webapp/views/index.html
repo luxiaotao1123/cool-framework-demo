@@ -47,10 +47,10 @@
               <cite>陆晓涛</cite>
             </a>
             <dl class="layui-nav-child">
-              <dd><a lay-href="set/user/info.html">基本资料</a></dd>
-              <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+              <dd><a lay-href="detail.html">基本资料</a></dd>
+              <!--<dd><a lay-href="set/user/password.html">修改密码</a></dd>-->
               <hr>
-              <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
+              <dd style="text-align: center;"><a id="logout" href="/">退出</a></dd>
             </dl>
           </li>
           
@@ -160,6 +160,10 @@
               }
           })
 
+          // 注销
+          $(document).on('click','#logout',function () {
+              localStorage.removeItem("token");
+          });
 
       });
   });
