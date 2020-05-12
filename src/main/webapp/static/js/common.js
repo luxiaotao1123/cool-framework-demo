@@ -56,22 +56,26 @@ function convertDisabled(el, param) {
 
 // 权限
 function limit(){
-    var resourceId = window.location.href.split("?")[1].split("=")[1];
-    $.ajax({
-        url: "/power/menu/"+resourceId+"/auth",
-        headers: {'token': localStorage.getItem('token')},
-        method: 'GET',
-        success: function (res) {
-            if (res.code === 200){
-                for(var i = 0, len = res.data.length; i < len; i++) {
-                    $('#'+res.data[i].code).css("display", "inline-block");
-                    $('.'+res.data[i].code).css("display", "inline-block");
+    var param = window.location.href.split("?")[1];
+    if (null != param) {
+        var resourceId = param.split("=")[1];
+        $.ajax({
+            url: "/power/menu/"+resourceId+"/auth",
+            headers: {'token': localStorage.getItem('token')},
+            method: 'GET',
+            success: function (res) {
+                if (res.code === 200){
+                    for(var i = 0, len = res.data.length; i < len; i++) {
+                        $('#'+res.data[i].code).css("display", "inline-block");
+                        $('.'+res.data[i].code).css("display", "inline-block");
+                    }
+                } else if (res.code === 403){
+                    top.location.href = "/";
+                } else {
+                    layer.msg(res.msg)
                 }
-            } else if (res.code === 403){
-                top.location.href = "/";
-            } else {
-                layer.msg(res.msg)
             }
-        }
-    });
+        });
+    }
+
 }

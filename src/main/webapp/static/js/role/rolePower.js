@@ -19,7 +19,6 @@ layui.use(['form', 'tree'], function() {
         method: 'GET',
         success: function (res) {
             if (res.code === 200){
-                console.log(res.data);
                 tree.setChecked('powerTree', res.data);
             } else if (res.code === 403){
                 top.location.href = "/";
