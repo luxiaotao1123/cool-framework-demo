@@ -137,3 +137,19 @@ div .layui-table-tool .layui-table-tool-self .layui-inline[title='导出']{
 }
 
 
+/*权限*/
+#btn-add {
+    display: none;
+}
+#btn-edit {
+    display: none;
+}
+#btn-delete {
+    display: none;
+}
+#btn-export {
+    display: none;
+}
+#btn-into {
+    display: none;
+}

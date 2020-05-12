@@ -1,7 +1,9 @@
 package com.cool.demo.common.web;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.cool.demo.common.CodeRes;
+import com.cool.demo.common.model.PowerDto;
 import com.cool.demo.common.utils.RandomValidateCodeUtil;
 import com.cool.demo.system.entity.*;
 import com.cool.demo.system.service.*;
@@ -123,6 +125,7 @@ public class AuthController extends BaseController {
             if (subMenu.isEmpty()) {
                 continue;
             }
+            map.put("menuId", menu.getId());
             map.put("menuCode", menu.getCode());
             map.put("menu", menu.getName());
             map.put("subMenu", subMenu);
@@ -216,35 +219,62 @@ public class AuthController extends BaseController {
 
     @RequestMapping("/power/auth")
     @ManagerAuth
-    public R power(Long roleId, String[] powers){
+    public R power(Long roleId, String powers){
         roleResourceService.delete(new EntityWrapper<RoleResource>().eq("role_id", roleId));
         rolePermissionService.delete(new EntityWrapper<RolePermission>().eq("role_id", roleId));
         if (!Cools.isEmpty(powers)){
-            for (String power : powers) {
-                Resource resource = resourceService.selectOne(new EntityWrapper<Resource>().eq("code", power).eq("level", 2));
+            List<PowerDto> dtos = JSON.parseArray(powers, PowerDto.class);
+            for (PowerDto dto : dtos) {
+                Resource resource = resourceService.selectOne(new EntityWrapper<Resource>().eq("code", dto.getTwo()).eq("level", 2));
                 if (!Cools.isEmpty(resource)) {
                     RoleResource roleResource = new RoleResource();
                     roleResource.setRoleId(roleId);
                     roleResource.setResourceId(resource.getId());
                     roleResourceService.insert(roleResource);
-                } else {
-                    Permission permission = permissionService.selectOne(new EntityWrapper<Permission>().eq("action", power));
-                    if (!Cools.isEmpty(permission)){
-                        RolePermission rolePermission = new RolePermission();
-                        rolePermission.setRoleId(roleId);
-                        rolePermission.setPermissionId(permission.getId());
-                        rolePermissionService.insert(rolePermission);
+                }
+                for (String three : dto.getThree()){
+                    Resource resource1 = resourceService.selectOne(new EntityWrapper<Resource>().eq("code", three).eq("level", 3));
+                    if (!Cools.isEmpty(three)) {
+                        RoleResource roleResource = new RoleResource();
+                        roleResource.setRoleId(roleId);
+                        roleResource.setResourceId(resource1.getId());
+                        roleResourceService.insert(roleResource);
                     }
                 }
-
             }
+//            for (String power : powers) {
+//                Resource resource = resourceService.selectOne(new EntityWrapper<Resource>().eq("code", power).eq("level", 2));
+//                if (!Cools.isEmpty(resource)) {
+//                    RoleResource roleResource = new RoleResource();
+//                    roleResource.setRoleId(roleId);
+//                    roleResource.setResourceId(resource.getId());
+//                    roleResourceService.insert(roleResource);
+//                } else {
+//                    Permission permission = permissionService.selectOne(new EntityWrapper<Permission>().eq("action", power));
+//                    if (!Cools.isEmpty(permission)){
+//                        RolePermission rolePermission = new RolePermission();
+//                        rolePermission.setRoleId(roleId);
+//                        rolePermission.setPermissionId(permission.getId());
+//                        rolePermissionService.insert(rolePermission);
+//                    }
+//                }
+//
+//            }
         }
         return R.ok();
     }
 
-    public static void main(String[] args) {
-        String root = Cools.md5("root");
-        System.out.println(root);
+    @RequestMapping(value = "/power/menu/{resourceId}/auth")
+    @ManagerAuth
+    public R buttonResource(@PathVariable("resourceId") Long resourceId) {
+        List<Resource> resources = null;
+        if (getUserId() == 9527) {
+//            roleResources = roleResourceService.selectList(new EntityWrapper<>());
+        } else {
+            resources = roleResourceService.getMenuButtomResource(resourceId, getUserId());
+        }
+        return R.ok(resources);
     }
+
 
 }

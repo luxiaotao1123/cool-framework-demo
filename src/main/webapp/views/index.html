@@ -139,7 +139,7 @@
                               menuHtml += '</a>\n';
                               menuHtml += '<dl class="layui-nav-child">\n';
                               for (var j = 0; j < res.data[i].subMenu.length; j++) {
-                                  menuHtml += '<dd><a lay-href="' +res.data[i].subMenu[j].code+ '">' + res.data[i].subMenu[j].name + '</a></dd>\n';
+                                  menuHtml += '<dd><a lay-href="' +res.data[i].subMenu[j].code+ '?resourceId='+ res.data[i].subMenu[j].id + '">' + res.data[i].subMenu[j].name + '</a></dd>\n';
                               }
                               menuHtml += '</dl>\n';
                               menuHtml += '</li>\n';

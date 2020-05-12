@@ -19,6 +19,7 @@ layui.use(['form', 'tree'], function() {
         method: 'GET',
         success: function (res) {
             if (res.code === 200){
+                console.log(res.data);
                 tree.setChecked('powerTree', res.data);
             } else if (res.code === 403){
                 top.location.href = "/";
@@ -34,16 +35,26 @@ layui.use(['form', 'tree'], function() {
         var checkData = tree.getChecked('powerTree');
         checkData.map(function (obj) {
             obj.children.map(function (resource) {
-                param.push(resource.id);
+
+                var childrens = [];
+                resource.children.map(function (resource) {
+                    childrens.push(resource.id);
+                });
+                var one = {
+                    'two': resource.id,
+                    'three': childrens
+                };
+                param.push(one);
             })
         });
+        // console.log(JSON.stringify(param));
         $.ajax({
             url: "/power/auth",
             traditional: true,
             headers: {'token': localStorage.getItem('token')},
             data: {
                 'roleId': parent.roleId,
-                'powers': param
+                'powers': JSON.stringify(param)
             },
             method: 'POST',
             success: function (res) {
