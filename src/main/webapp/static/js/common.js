@@ -65,6 +65,7 @@ function limit(){
             if (res.code === 200){
                 for(var i = 0, len = res.data.length; i < len; i++) {
                     $('#'+res.data[i].code).css("display", "inline-block");
+                    $('.'+res.data[i].code).css("display", "inline-block");
                 }
             } else if (res.code === 403){
                 top.location.href = "/";
