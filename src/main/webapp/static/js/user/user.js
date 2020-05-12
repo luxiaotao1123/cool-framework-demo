@@ -197,7 +197,7 @@ layui.use(['table','laydate', 'form'], function(){
                         maxmin: true,
                         area: [top.detailHeight, top.detailWidth],
                         shadeClose: false,
-                        content: 'role_detail',
+                        content: '../role/role_detail.html',
                         success: function(layero, index){
                             $.ajax({
                                 url: "/role/"+ param +"/auth",
