@@ -66,6 +66,7 @@ layui.use(['table','laydate', 'form'], function(){
                 });
                 break;
             case 'refreshData':
+                limit();
                 tableIns.reload({
                     page: {
                         curr: pageCurr
@@ -274,6 +275,7 @@ layui.use(['table','laydate', 'form'], function(){
         type: 'datetime'
     });
 
+    limit();
 
 });
 
