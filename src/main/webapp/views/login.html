@@ -154,29 +154,49 @@
             layer = layui.layer,
             $ = layui.jquery;
 
-        form.verify({
-            mobile: function (val) {
-                if (val === "") {
-                    return "请输入手机号";
-                }
-            },
-            password: function (val) {
-                if (val === "") {
-                    return "请输入密码";
-                }
-            },
-            code: function (val) {
-                if (val === ""){
-                    return "请输入验证码";
-                }
-
-            }
-        });
+        // form.verify({
+        //     mobile: function (val) {
+        //         if (val === "") {
+        //             return "请输入手机号";
+        //         }
+        //     },
+        //     password: function (val) {
+        //         if (val === "") {
+        //             return "请输入密码";
+        //         }
+        //     },
+        //     code: function (val) {
+        //         if (val === ""){
+        //             return "请输入验证码";
+        //         }
+        //
+        //     }
+        // });
 
         form.on('submit(login)', function (data) {
+            var mobile = $("#mobile").val();
+            if (mobile === "") {
+                layer.msg("请输入手机号", {offset: '200px'});
+                return;
+            }
+            var password = $("#password").val();
+            if (password === "") {
+                layer.msg("请输入密码", {offset: '200px'});
+                return;
+            }
+            var code = $("#code").val();
+            if (code === "") {
+                layer.msg("请输入验证码", {offset: '200px'});
+                return;
+            }
+            if (sessionStorage.getItem("code").toUpperCase() !== code.toUpperCase()){
+                layer.msg("验证码错误", {offset: '200px'});
+                return;
+            }
+
             var user = {
-                mobile: $("#mobile").val(),
-                password: hex_md5($("#password").val())
+                mobile: mobile,
+                password: hex_md5(password)
             };
             $.ajax({
                 url: "/login.action",
