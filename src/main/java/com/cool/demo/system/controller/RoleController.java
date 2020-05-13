@@ -45,7 +45,7 @@ public class RoleController extends BaseController {
         Long leaderId = role.getLeader();
         if (null != leaderId) {
             List<Long> leaderIds = new ArrayList<>();
-            leaderIds.add(leaderId);
+            leaderIds.add(roleId);
             while (leaderId != null) {
                 Role leader = roleService.selectById(leaderId);
                 leaderIds.add(leader.getId());
@@ -53,9 +53,9 @@ public class RoleController extends BaseController {
             }
             wrapper.notIn("id", leaderIds);
         }
-        if (null != role.getLevel()) {
-            wrapper.gt("level", role.getLevel());
-        }
+//        if (null != role.getLevel()) {
+//            wrapper.gt("level", role.getLevel());
+//        }
         return R.ok(roleService.selectPage(new Page<>(curr, limit), wrapper));
     }
 
@@ -141,9 +141,9 @@ public class RoleController extends BaseController {
                 }
                 wrapper.notIn("id", leaderIds);
             }
-            if (null != role.getLevel()) {
-                wrapper.ge("level", role.getLevel());
-            }
+//            if (null != role.getLevel()) {
+//                wrapper.ge("level", role.getLevel());
+//            }
         }
 
         Page<Role> page = roleService.selectPage(new Page<>(0, 10), wrapper);

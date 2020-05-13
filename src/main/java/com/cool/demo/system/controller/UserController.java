@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.cool.demo.common.web.BaseController;
+import com.cool.demo.system.entity.Role;
 import com.cool.demo.system.entity.User;
 import com.cool.demo.system.service.RoleService;
 import com.cool.demo.system.service.UserService;
@@ -42,24 +43,20 @@ public class UserController extends BaseController {
         if (9527 == getUserId()) {
             return R.ok(userService.selectPage(new Page<>(curr, limit), wrapper));
         }
-//
-//        Long roleId = getUser().getRoleId();
-//        Role role = roleService.selectById(roleId);
-//        Long leaderId = role.getLeader();
-//        if (null != leaderId) {
-//            List<Long> leaderIds = new ArrayList<>();
-//            leaderIds.add(leaderId);
-//            while (leaderId != null) {
-//                Role leader = roleService.selectById(leaderId);
-//                leaderIds.add(leader.getId());
-//                leaderId = leader.getLeader();
-//            }
-//            wrapper.notIn("id", leaderIds);
-//        }
-//        if (null != role.getLevel()) {
-//            wrapper.gt("level", role.getLevel());
-//        }
 
+        Long roleId = getUser().getRoleId();
+        Role role = roleService.selectById(roleId);
+        Long leaderId = role.getLeader();
+        if (null != leaderId) {
+            List<Long> leaderIds = new ArrayList<>();
+            leaderIds.add(role.getId());
+            while (leaderId != null) {
+                Role leader = roleService.selectById(leaderId);
+                leaderIds.add(leader.getId());
+                leaderId = leader.getLeader();
+            }
+            wrapper.notIn("role_id", leaderIds);
+        }
 
         return R.ok(userService.selectPage(new Page<>(curr, limit), wrapper));
     }

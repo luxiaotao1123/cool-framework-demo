@@ -40,7 +40,7 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'code', align: 'center',title: '编码'}
             ,{field: 'name', align: 'center',title: '名称'}
             ,{field: 'leader$', align: 'center',title: '上级',event: 'leader', style: 'text-decoration: underline;cursor:pointer'}
-            ,{field: 'level$', align: 'center',title: '角色等级'}
+            // ,{field: 'level$', align: 'center',title: '角色等级'}
 
             ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
         ]],
