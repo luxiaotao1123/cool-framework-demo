@@ -55,8 +55,11 @@ function convertDisabled(el, param) {
 }
 
 // 权限
-function limit(){
-    var param = window.location.href.split("?")[1];
+function limit(child){
+    if (child == null){
+        child = false;
+    }
+    var param = (child?parent.window:window).location.href.split("?")[1];
     if (null != param) {
         var resourceId = param.split("=")[1];
         $.ajax({
@@ -66,8 +69,8 @@ function limit(){
             success: function (res) {
                 if (res.code === 200){
                     for(var i = 0, len = res.data.length; i < len; i++) {
-                        $('#'+res.data[i].code).css("display", "inline-block");
-                        $('.'+res.data[i].code).css("display", "inline-block");
+                        (child?parent:window).$('#'+res.data[i].code).css("display", "inline-block");
+                        (child?parent:window).$('.'+res.data[i].code).css("display", "inline-block");
                     }
                 } else if (res.code === 403){
                     top.location.href = "/";

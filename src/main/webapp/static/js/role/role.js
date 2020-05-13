@@ -297,6 +297,7 @@ function tableReload(child) {
                 });
                 pageCurr -= 1;
             }
+            limit(child);
         }
     });
 }
