@@ -10,7 +10,7 @@ public class CodeBuilder {
     public static void main(String[] args) throws Exception {
         CoolGenerator generator = new CoolGenerator();
         // mysql
-        generator.url="localhost/cool";
+        generator.url="localhost:3306/cool";
         generator.username="root";
         generator.password="xltys1995";
         generator.table="sys_role";

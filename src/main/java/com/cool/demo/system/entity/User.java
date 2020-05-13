@@ -13,6 +13,8 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+//import com.cool.demo.system.service.RoleService;
+
 @TableName("sys_user")
 public class User implements Serializable {
 

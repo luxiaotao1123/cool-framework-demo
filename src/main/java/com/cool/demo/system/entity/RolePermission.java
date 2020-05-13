@@ -1,15 +1,17 @@
 package com.cool.demo.system.entity;
 
-import com.core.common.Cools;import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.enums.IdType;
-import com.core.common.SpringUtils;
-import com.cool.demo.system.service.RoleService;
 import com.baomidou.mybatisplus.annotations.TableField;
-import com.core.common.SpringUtils;
-import com.cool.demo.system.service.PermissionService;
-
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+import com.cool.demo.system.service.PermissionService;
+import com.cool.demo.system.service.RoleService;
+import com.core.common.Cools;
+import com.core.common.SpringUtils;
+
 import java.io.Serializable;
+
+//import com.cool.demo.system.service.RoleService;
 
 @TableName("sys_role_permission")
 public class RolePermission implements Serializable {
