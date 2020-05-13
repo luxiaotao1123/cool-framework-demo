@@ -117,9 +117,10 @@
             <input id="code" class="layui-input" type="text" name="password" lay-verify="code" placeholder="验证码">
             <img id="codeImg" title="看不清？点击换一张。">
         </div>
-        <div class="layui-unselect layui-form-checkbox" lay-skin="primary">
-            <span>记住密码</span><i class="layui-icon layui-icon-ok"></i>
-        </div>
+        <!--<div class="layui-form-item">-->
+            <!--<input id="rememberPwd" style="vertical-align: middle" type="checkbox" lay-filter="remPwd" lay-skin="switch" lay-text="开启|关闭" title="记住密码" checked="checked">-->
+            <!--<span style="vertical-align: middle;font-size: 15px">记住密码</span>-->
+        <!--</div>-->
     </div>
     <div class="layui-form-item login-submit">
         <button id="login-button" class="layui-btn layui-btn-fluid layui-btn-normal" lay-submit="" lay-filter="login">登 录</button>
@@ -169,14 +170,14 @@
                 return;
             }
             var code = $("#code").val();
-            if (code === "") {
-                layer.msg("请输入验证码", {offset: '200px'});
-                return;
-            }
-            if (sessionStorage.getItem("code").toUpperCase() !== code.toUpperCase()){
-                layer.msg("验证码错误", {offset: '200px'});
-                return;
-            }
+            // if (code === "") {
+            //     layer.msg("请输入验证码", {offset: '200px'});
+            //     return;
+            // }
+            // if (sessionStorage.getItem("code").toUpperCase() !== code.toUpperCase()){
+            //     layer.msg("验证码错误", {offset: '200px'});
+            //     return;
+            // }
 
             var user = {
                 mobile: mobile,
