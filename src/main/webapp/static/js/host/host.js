@@ -46,6 +46,7 @@ layui.use(['table','laydate', 'form'], function(){
                 top.location.href = "/";
             }
             pageCurr=curr;
+            limit();
         }
     });
 
@@ -68,12 +69,12 @@ layui.use(['table','laydate', 'form'], function(){
                 });
                 break;
             case 'refreshData':
-                limit();
                 tableIns.reload({
                     page: {
                         curr: pageCurr
                     }
                 });
+                limit();
                 break;
             case 'deleteData':
                 var data = checkStatus.data;
@@ -247,8 +248,6 @@ layui.use(['table','laydate', 'form'], function(){
         elem: '#updateTime\\$',
         type: 'datetime'
     });
-
-    limit();
 
 });
 
