@@ -141,7 +141,7 @@ div .layui-table-tool .layui-table-tool-self .layui-inline[title='导出']{
 #btn-add {
     display: none;
 }
-#btn-edit {
+.btn-edit {
     display: none;
 }
 #btn-delete {
