@@ -12,8 +12,10 @@ import com.cool.demo.system.service.*;
 import com.core.annotations.ManagerAuth;
 import com.core.common.Cools;
 import com.core.common.R;
+import com.core.exception.CoolException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +34,8 @@ public class AuthController extends BaseController {
     private String superPwd;
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleService roleService;
     @Autowired
     private UserLoginService userLoginService;
     @Autowired
@@ -238,7 +242,10 @@ public class AuthController extends BaseController {
 
     @RequestMapping("/power/auth")
     @ManagerAuth
+    @Transactional
     public R power(Long roleId, String powers){
+        Role role = roleService.selectById(roleId);
+        Long leaderId = role.getLeader();
         roleResourceService.delete(new EntityWrapper<RoleResource>().eq("role_id", roleId));
         rolePermissionService.delete(new EntityWrapper<RolePermission>().eq("role_id", roleId));
         if (!Cools.isEmpty(powers)){
@@ -246,6 +253,13 @@ public class AuthController extends BaseController {
             for (PowerDto dto : dtos) {
                 Resource resource = resourceService.selectOne(new EntityWrapper<Resource>().eq("code", dto.getTwo()).eq("level", 2));
                 if (!Cools.isEmpty(resource)) {
+                    // 校验上级权限
+                    if (leaderId != null) {
+                        RoleResource roleResource = roleResourceService.selectOne(new EntityWrapper<RoleResource>().eq("role_id", leaderId).eq("resource_id", resource.getId()));
+                        if (null == roleResource) {
+                            throw new CoolException(resource.getName().concat("无法授权给").concat(role.getName()));
+                        }
+                    }
                     RoleResource roleResource = new RoleResource();
                     roleResource.setRoleId(roleId);
                     roleResource.setResourceId(resource.getId());
@@ -261,7 +275,14 @@ public class AuthController extends BaseController {
                 }
                 for (String three : dto.getThree()){
                     Resource resource1 = resourceService.selectOne(new EntityWrapper<Resource>().eq("code", three).eq("level", 3));
-                    if (!Cools.isEmpty(three)) {
+                    if (!Cools.isEmpty(resource1)) {
+                        // 校验上级权限
+                        if (leaderId != null) {
+                            RoleResource roleResource = roleResourceService.selectOne(new EntityWrapper<RoleResource>().eq("role_id", leaderId).eq("resource_id", resource1.getId()));
+                            if (null == roleResource) {
+                                throw new CoolException(resource.getName().concat("的").concat(resource1.getName().concat("无法授权给").concat(role.getName())));
+                            }
+                        }
                         RoleResource roleResource = new RoleResource();
                         roleResource.setRoleId(roleId);
                         roleResource.setResourceId(resource1.getId());

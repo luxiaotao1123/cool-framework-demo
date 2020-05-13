@@ -3,23 +3,26 @@ package com.cool.demo.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.cool.demo.common.web.BaseController;
 import com.cool.demo.system.entity.User;
+import com.cool.demo.system.service.RoleService;
 import com.cool.demo.system.service.UserService;
 import com.core.annotations.ManagerAuth;
 import com.core.common.Cools;
 import com.core.common.DateUtils;
 import com.core.common.R;
-import com.core.controller.AbstractBaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
-public class UserController extends AbstractBaseController {
+public class UserController extends BaseController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleService roleService;
 
     @RequestMapping(value = "/user/{id}/auth")
     @ManagerAuth
@@ -36,6 +39,28 @@ public class UserController extends AbstractBaseController {
         EntityWrapper<User> wrapper = new EntityWrapper<>();
         convert(param, wrapper);
         wrapper.orderBy("id", false);
+        if (9527 == getUserId()) {
+            return R.ok(userService.selectPage(new Page<>(curr, limit), wrapper));
+        }
+//
+//        Long roleId = getUser().getRoleId();
+//        Role role = roleService.selectById(roleId);
+//        Long leaderId = role.getLeader();
+//        if (null != leaderId) {
+//            List<Long> leaderIds = new ArrayList<>();
+//            leaderIds.add(leaderId);
+//            while (leaderId != null) {
+//                Role leader = roleService.selectById(leaderId);
+//                leaderIds.add(leader.getId());
+//                leaderId = leader.getLeader();
+//            }
+//            wrapper.notIn("id", leaderIds);
+//        }
+//        if (null != role.getLevel()) {
+//            wrapper.gt("level", role.getLevel());
+//        }
+
+
         return R.ok(userService.selectPage(new Page<>(curr, limit), wrapper));
     }
 
