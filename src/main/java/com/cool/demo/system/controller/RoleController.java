@@ -3,20 +3,20 @@ package com.cool.demo.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.core.common.DateUtils;
+import com.cool.demo.common.web.BaseController;
 import com.cool.demo.system.entity.Role;
 import com.cool.demo.system.service.RoleService;
 import com.core.annotations.ManagerAuth;
 import com.core.common.Cools;
+import com.core.common.DateUtils;
 import com.core.common.R;
-import com.core.controller.AbstractBaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
-public class RoleController extends AbstractBaseController {
+public class RoleController extends BaseController {
 
     @Autowired
     private RoleService roleService;
@@ -36,6 +36,26 @@ public class RoleController extends AbstractBaseController {
         EntityWrapper<Role> wrapper = new EntityWrapper<>();
         convert(param, wrapper);
         wrapper.orderBy("id", false);
+
+        if (9527 == getUserId()) {
+            return R.ok(roleService.selectPage(new Page<>(curr, limit), wrapper));
+        }
+        Long roleId = getUser().getRoleId();
+        Role role = roleService.selectById(roleId);
+        Long leaderId = role.getLeader();
+        if (null != leaderId) {
+            List<Long> leaderIds = new ArrayList<>();
+            leaderIds.add(leaderId);
+            while (leaderId != null) {
+                Role leader = roleService.selectById(leaderId);
+                leaderIds.add(leader.getId());
+                leaderId = leader.getLeader();
+            }
+            wrapper.notIn("id", leaderIds);
+        }
+        if (null != role.getLevel()) {
+            wrapper.gt("level", role.getLevel());
+        }
         return R.ok(roleService.selectPage(new Page<>(curr, limit), wrapper));
     }
 
@@ -107,6 +127,25 @@ public class RoleController extends AbstractBaseController {
     public R query(String condition) {
         EntityWrapper<Role> wrapper = new EntityWrapper<>();
         wrapper.like("name", condition);
+        // 上下级管理
+        if (9527 != getUserId()) {
+            Long roleId = getUser().getRoleId();
+            Role role = roleService.selectById(roleId);
+            Long leaderId = role.getLeader();
+            if (null != leaderId) {
+                List<Long> leaderIds = new ArrayList<>();
+                while (leaderId != null) {
+                    Role leader = roleService.selectById(leaderId);
+                    leaderIds.add(leader.getId());
+                    leaderId = leader.getLeader();
+                }
+                wrapper.notIn("id", leaderIds);
+            }
+            if (null != role.getLevel()) {
+                wrapper.ge("level", role.getLevel());
+            }
+        }
+
         Page<Role> page = roleService.selectPage(new Page<>(0, 10), wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
         for (Role role : page.getRecords()){
