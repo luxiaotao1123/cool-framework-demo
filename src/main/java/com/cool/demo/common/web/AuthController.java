@@ -121,7 +121,7 @@ public class AuthController extends BaseController {
             Iterator<Resource> iterator = twoLevel.iterator();
             while (iterator.hasNext()) {
                 Resource resource = iterator.next();
-                if (resource.getResourceId().equals(menu.getId())) {
+                if (resource.getResourceId() != null && resource.getResourceId().equals(menu.getId())) {
 
                     // 是否拥有查看权限
                     if (getUserId() != 9527) {
