@@ -105,3 +105,37 @@ function getForeignKeyQuery(str) {
     }
     return str;
 }
+
+// 主键校验
+function check(id) {
+    var param = {
+        key: id,
+        val: $('#'+id).val()
+    };
+    $.ajax({
+        url: "/basWrkStatus/check/column/auth",
+        headers: {'token': localStorage.getItem('token')},
+        data: JSON.stringify(param),
+        dataType:'json',
+        contentType:'application/json;charset=UTF-8',
+        method: 'POST',
+        success: function (res) {
+            if (res.code === 200) {
+                layer.close(tips);
+            } else if (res.code === 403) {
+                top.location.href = "/";
+            } else {
+                tips = layer.tips(
+                    "<span style='color:red;'>已存在</span>",
+                    '#'+id,
+                    {
+                        tipsMore: true,
+                        tips: [2,'#fff'],
+                        time:0
+                        ,area: 'auto'
+                        ,maxWidth:500}
+                    );
+            }
+        }
+    });
+}

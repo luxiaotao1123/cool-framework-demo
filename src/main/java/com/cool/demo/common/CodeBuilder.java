@@ -19,7 +19,7 @@ public class CodeBuilder {
         generator.username="sa";
         generator.password="sa@123";
         generator.table="asr_bas_wrk_status";
-        generator.packagePath="com.cool.demo.manager";
+        generator.packagePath="com.cool.demo.asrs";
         generator.build();
     }
 
