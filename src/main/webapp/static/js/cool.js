@@ -124,7 +124,7 @@ function check(id) {
                 layer.close(tips);
             } else if (res.code === 403) {
                 top.location.href = "/";
-            } else {
+            } else if (res.code === 407) {
                 tips = layer.tips(
                     "<span style='color:red;'>已存在</span>",
                     '#'+id,
