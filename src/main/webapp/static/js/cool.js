@@ -122,19 +122,22 @@ function check(id) {
         success: function (res) {
             if (res.code === 200) {
                 layer.close(tips);
+                banMsg = null;
             } else if (res.code === 403) {
                 top.location.href = "/";
             } else if (res.code === 407) {
+                banMsg = res.data + "不可用";
+                console.log(banMsg);
                 tips = layer.tips(
                     "<span style='color:red;'>已存在</span>",
                     '#'+id,
                     {
-                        tipsMore: true,
+                        // tipsMore: true,
                         tips: [2,'#fff'],
                         time:0
                         ,area: 'auto'
-                        ,maxWidth:500}
-                    );
+                        ,maxWidth:500
+                    });
             }
         }
     });
