@@ -127,7 +127,6 @@ function check(id) {
                 top.location.href = "/";
             } else if (res.code === 407) {
                 banMsg = res.data + "不可用";
-                console.log(banMsg);
                 tips = layer.tips(
                     "<span style='color:red;'>已存在</span>",
                     '#'+id,
