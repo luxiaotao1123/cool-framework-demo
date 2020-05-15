@@ -106,6 +106,8 @@ function getForeignKeyQuery(str) {
     return str;
 }
 
+var banMsg;
+var tips;
 // 主键校验
 function check(id) {
     var param = {
