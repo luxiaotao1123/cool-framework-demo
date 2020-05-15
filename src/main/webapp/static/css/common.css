@@ -157,6 +157,17 @@ div .layui-table-tool .layui-table-tool-self .layui-inline[title='导出']{
     display: none;
 }
 
+/*修改复选框颜色*/
+/*.layui-form-checked[lay-skin=primary] i {*/
+    /*border-color: #4c95b8!important;*/
+    /*background-color: #4c95b8;*/
+    /*color: #fff;*/
+/*}*/
+/*.layui-form-checkbox[lay-skin=primary]:hover i {*/
+    /*border-color: #4c95b8;*/
+    /*color: #fff;*/
+/*}*/
+
 /* 媒体查询 —— 响应布局 */
 /* 做响应式布局时，不建议用固定尺寸，尽量用% */
 @media only screen and (max-width: 800px) {
