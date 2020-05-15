@@ -28,9 +28,9 @@ public class BasWrkStatus implements Serializable {
     private Long wrkSts;
 
     /**
-     * 工作状态描述
+     * 状态描述
      */
-    @ApiModelProperty(value= "工作状态描述")
+    @ApiModelProperty(value= "状态描述")
     @TableField("wrk_desc")
     private String wrkDesc;
 
@@ -73,7 +73,7 @@ public class BasWrkStatus implements Serializable {
     }
 
 //    BasWrkStatus basWrkStatus = new BasWrkStatus(
-//            null,    // 工作状态描述
+//            null,    // 状态描述
 //            null,    // 修改人员
 //            null,    // 修改时间
 //            null,    // 创建者

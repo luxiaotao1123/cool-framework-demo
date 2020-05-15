@@ -5,19 +5,21 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.core.common.DateUtils;
 import com.cool.demo.asrs.entity.BasWrkStatus;
 import com.cool.demo.asrs.service.BasWrkStatusService;
 import com.cool.demo.common.web.BaseController;
 import com.core.annotations.ManagerAuth;
 import com.core.common.BaseRes;
 import com.core.common.Cools;
+import com.core.common.DateUtils;
 import com.core.common.R;
-import com.core.controller.AbstractBaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class BasWrkStatusController extends BaseController {
@@ -113,13 +115,13 @@ public class BasWrkStatusController extends BaseController {
     @ManagerAuth
     public R query(String condition) {
         EntityWrapper<BasWrkStatus> wrapper = new EntityWrapper<>();
-        wrapper.like("wrkSts", condition);
+        wrapper.like("wrkDesc", condition);
         Page<BasWrkStatus> page = basWrkStatusService.selectPage(new Page<>(0, 10), wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
         for (BasWrkStatus basWrkStatus : page.getRecords()){
             Map<String, Object> map = new HashMap<>();
             map.put("id", basWrkStatus.getWrkSts());
-            map.put("value", basWrkStatus.getWrkSts());
+            map.put("value", basWrkStatus.getWrkDesc());
             result.add(map);
         }
         return R.ok(result);
