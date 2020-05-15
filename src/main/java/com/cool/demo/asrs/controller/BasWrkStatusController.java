@@ -16,10 +16,7 @@ import com.core.common.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class BasWrkStatusController extends BaseController {
@@ -74,6 +71,8 @@ public class BasWrkStatusController extends BaseController {
     @RequestMapping(value = "/basWrkStatus/add/auth")
     @ManagerAuth
     public R add(BasWrkStatus basWrkStatus) {
+        basWrkStatus.setModiUser(getUserId());
+        basWrkStatus.setModiTime(new Date());
         basWrkStatusService.insert(basWrkStatus);
         return R.ok();
     }
@@ -83,6 +82,8 @@ public class BasWrkStatusController extends BaseController {
         if (Cools.isEmpty(basWrkStatus) || null==basWrkStatus.getWrkSts()){
             return R.error();
         }
+        basWrkStatus.setModiUser(getUserId());
+        basWrkStatus.setModiTime(new Date());
         basWrkStatusService.updateById(basWrkStatus);
         return R.ok();
     }

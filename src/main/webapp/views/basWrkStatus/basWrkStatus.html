@@ -32,18 +32,6 @@
             </div>
         </div>
     </div>
-    <div class="layui-inline">
-        <label class="layui-form-label">创 建 者：</label>
-        <div class="layui-input-inline cool-auto-complete">
-            <input id="appeUser" class="layui-input" name="appe_user" type="text" placeholder="请输入" autocomplete="off" style="display: none">
-            <input id="appeUser$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入" onfocus=this.blur()>
-            <div class="cool-auto-complete-window">
-                <input class="cool-auto-complete-window-input" data-key="userQueryByappeUser" onkeyup="autoLoad(this.getAttribute('data-key'))">
-                <select class="cool-auto-complete-window-select" data-key="userQueryByappeUserSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
-                </select>
-            </div>
-        </div>
-    </div>
 
     <!-- 待添加 -->
     <div id="data-search-btn" class="layui-btn-container layui-form-item">

@@ -22,8 +22,8 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'wrkDesc', align: 'center',title: '状态描述'}
             ,{field: 'modiUser$', align: 'center',title: '修改人员',event: 'modiUser', style: 'text-decoration: underline;cursor:pointer'}
             ,{field: 'modiTime$', align: 'center',title: '修改时间'}
-            ,{field: 'appeUser$', align: 'center',title: '创建者',event: 'appeUser', style: 'text-decoration: underline;cursor:pointer'}
-            ,{field: 'appeTime$', align: 'center',title: '添加时间'}
+            // ,{field: 'appeUser$', align: 'center',title: '创建者',event: 'appeUser', style: 'text-decoration: underline;cursor:pointer'}
+            // ,{field: 'appeTime$', align: 'center',title: '添加时间'}
 
             ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
         ]],
@@ -196,7 +196,7 @@ layui.use(['table','laydate', 'form'], function(){
                        type: 2,
                        title: '修改详情',
                        maxmin: true,
-                       area: [top.detailHeight, top.detailWidth],
+                       area: [top.detailWidth, top.detailHeight],
                        shadeClose: false,
                        content: '../user/user_detail.html',
                        success: function(layero, index){
@@ -209,6 +209,7 @@ layui.use(['table','laydate', 'form'], function(){
                                        setFormVal(layer.getChildFrame('#detail', index), res.data, true);
                                        top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
                                        layer.getChildFrame('#data-detail-submit', index).hide();
+                                       layer.getChildFrame('#password,#createTime\\$,#status', index).parent().parent().hide();
                                        detailScreen(index);
                                        layero.find('iframe')[0].contentWindow.layui.form.render('select');
                                    } else if (res.code === 403){
@@ -231,7 +232,7 @@ layui.use(['table','laydate', 'form'], function(){
                        type: 2,
                        title: '创详情',
                        maxmin: true,
-                       area: [top.detailHeight, top.detailWidth],
+                       area: [top.detailWidth, top.detailHeight],
                        shadeClose: false,
                        content: '../user/user_detail.html',
                        success: function(layero, index){
