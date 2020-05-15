@@ -66,6 +66,7 @@ function limit(child){
             url: "/power/menu/"+resourceId+"/auth",
             headers: {'token': localStorage.getItem('token')},
             method: 'GET',
+            async: false,
             success: function (res) {
                 if (res.code === 200){
                     for(var i = 0, len = res.data.length; i < len; i++) {
