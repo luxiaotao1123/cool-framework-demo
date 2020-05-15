@@ -14,6 +14,7 @@ layui.use(['table','laydate', 'form'], function(){
         page: true,
         limit: 16,
         skin: 'line',
+        even: true,
         toolbar: '#toolbar',
         cellMinWidth: 50,
         cols: [[

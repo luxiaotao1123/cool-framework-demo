@@ -152,6 +152,11 @@ div .layui-table-tool .layui-table-tool-self .layui-inline[title='导出']{
     display: none;
 }
 
+/*layui table 详情按钮*/
+.layui-table-grid-down {
+    display: none;
+}
+
 /* 媒体查询 —— 响应布局 */
 /* 做响应式布局时，不建议用固定尺寸，尽量用% */
 @media only screen and (max-width: 800px) {
