@@ -16,10 +16,7 @@ import com.core.common.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class BasLocTypeController extends BaseController {
@@ -74,6 +71,10 @@ public class BasLocTypeController extends BaseController {
     @RequestMapping(value = "/basLocType/add/auth")
     @ManagerAuth
     public R add(BasLocType basLocType) {
+        basLocType.setModiUser(getUserId());
+        basLocType.setModiTime(new Date());
+        basLocType.setAppeUser(getUserId());
+        basLocType.setAppeTime(new Date());
         basLocTypeService.insert(basLocType);
         return R.ok();
     }
@@ -83,6 +84,8 @@ public class BasLocTypeController extends BaseController {
         if (Cools.isEmpty(basLocType) || null==basLocType.getLocSts()){
             return R.error();
         }
+        basLocType.setModiUser(getUserId());
+        basLocType.setModiTime(new Date());
         basLocTypeService.updateById(basLocType);
         return R.ok();
     }

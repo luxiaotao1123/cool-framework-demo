@@ -73,6 +73,8 @@ public class BasWrkStatusController extends BaseController {
     public R add(BasWrkStatus basWrkStatus) {
         basWrkStatus.setModiUser(getUserId());
         basWrkStatus.setModiTime(new Date());
+        basWrkStatus.setAppeUser(getUserId());
+        basWrkStatus.setAppeTime(new Date());
         basWrkStatusService.insert(basWrkStatus);
         return R.ok();
     }
