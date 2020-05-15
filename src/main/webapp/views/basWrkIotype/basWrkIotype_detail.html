@@ -24,15 +24,15 @@
         </div>
     -->
         <div class="layui-inline"  style="width:31%;">
-            <label class="layui-form-label" style="font-size: x-small">入出类型代号：</label>
+            <label class="layui-form-label" style="font-size: x-small"><span class="not-null">*</span>入出类型代号：</label>
             <div class="layui-input-inline">
-                <input id="ioType" class="layui-input" type="text" onkeyup="check(this.id, 'basWrkIotype')">
+                <input id="ioType" class="layui-input" type="text" onkeyup="check(this.id, 'basWrkIotype')"  lay-verify="required">
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;display: none">
-            <label class="layui-form-label">主　　要：</label>
+            <label class="layui-form-label"><span class="not-null">*</span>主　　要：</label>
             <div class="layui-input-inline">
-                <input id="ioPri" class="layui-input" type="text">
+                <input id="ioPri" class="layui-input" type="text" >
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">

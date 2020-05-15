@@ -24,15 +24,15 @@
         </div>
     -->
         <div class="layui-inline"  style="width:31%;">
-            <label class="layui-form-label">代　　号：</label>
+            <label class="layui-form-label"><span class="not-null">*</span>代　　号：</label>
             <div class="layui-input-inline">
-                <input id="wrkSts" class="layui-input" type="text" onkeyup="check(this.id, 'basWrkStatus')">
+                <input id="wrkSts" class="layui-input" type="text" onkeyup="check(this.id, 'basWrkStatus')"  lay-verify="required">
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">
-            <label class="layui-form-label">状态描述：</label>
+            <label class="layui-form-label"><span class="not-null">*</span>状态描述：</label>
             <div class="layui-input-inline">
-                <input id="wrkDesc" class="layui-input" type="text">
+                <input id="wrkDesc" class="layui-input" type="text"  lay-verify="required">
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;display: none">
