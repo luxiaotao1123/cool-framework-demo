@@ -13,13 +13,14 @@ layui.use(['table','laydate', 'form'], function(){
         url: '/basWrkIotype/list/auth',
         page: true,
         limit: 16,
+        skin: 'line',
         toolbar: '#toolbar',
         cellMinWidth: 50,
         cols: [[
             {type: 'checkbox', fixed: 'left'}
 //            ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
             ,{field: 'ioType', align: 'center',title: '入出类型代号'}
-            ,{field: 'ioPri', align: 'center',title: '主要'}
+            // ,{field: 'ioPri', align: 'center',title: '主要'}
             ,{field: 'ioDesc', align: 'center',title: '入出类型描述'}
             ,{field: 'modiUser$', align: 'center',title: '修改人员',event: 'modiUser', style: 'text-decoration: underline;cursor:pointer'}
             ,{field: 'modiTime$', align: 'center',title: '修改时间'}
