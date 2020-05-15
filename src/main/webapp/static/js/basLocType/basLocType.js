@@ -13,6 +13,7 @@ layui.use(['table','laydate', 'form'], function(){
         url: '/basLocType/list/auth',
         page: true,
         limit: 16,
+        skin: 'row',
         toolbar: '#toolbar',
         cellMinWidth: 50,
         cols: [[
