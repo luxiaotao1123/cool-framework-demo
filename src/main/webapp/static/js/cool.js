@@ -109,13 +109,13 @@ function getForeignKeyQuery(str) {
 var banMsg;
 var tips;
 // 主键校验
-function check(id) {
+function check(id, domain) {
     var param = {
         key: id,
         val: $('#'+id).val()
     };
     $.ajax({
-        url: "/basWrkStatus/check/column/auth",
+        url: "/"+domain+"/check/column/auth",
         headers: {'token': localStorage.getItem('token')},
         data: JSON.stringify(param),
         dataType:'json',

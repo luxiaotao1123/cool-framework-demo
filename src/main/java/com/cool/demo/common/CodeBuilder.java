@@ -18,7 +18,7 @@ public class CodeBuilder {
         generator.url="192.168.3.215:1433;databasename=cool";
         generator.username="sa";
         generator.password="sa@123";
-        generator.table="asr_bas_wrk_status";
+        generator.table="asr_bas_loc_type";
         generator.packagePath="com.cool.demo.asrs";
         generator.build();
     }
