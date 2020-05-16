@@ -111,6 +111,10 @@ div .layui-table-tool .layui-table-tool-self .layui-inline[title='导出']{
     color:red;
 }
 
+#detail .layui-form-checkbox {
+    top: 10px;
+}
+
 /*图片*/
 .cool-img {
     cursor:pointer;
