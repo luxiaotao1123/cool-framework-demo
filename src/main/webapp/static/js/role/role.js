@@ -82,7 +82,7 @@ layui.use(['table','laydate', 'form'], function(){
                     content: 'role_detail.html',
                     success: function(layero, index){
                     	clearFormVal(layer.getChildFrame('#detail', index));
-                        detailScreen(index);
+                        layer.iframeAuto(index);
                     }
                 });
                 break;
@@ -182,7 +182,7 @@ layui.use(['table','laydate', 'form'], function(){
                         setFormVal(layer.getChildFrame('#detail', index), data, true);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
                         layer.getChildFrame('#data-detail-submit', index).hide();
-                        detailScreen(index);
+                        layer.iframeAuto(index);
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                     }
                 });
@@ -199,7 +199,7 @@ layui.use(['table','laydate', 'form'], function(){
                     success: function(layero, index){
                         setFormVal(layer.getChildFrame('#detail', index), data, false);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
-                        detailScreen(index);
+                        layer.iframeAuto(index);
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                     }
                 });
@@ -226,7 +226,7 @@ layui.use(['table','laydate', 'form'], function(){
                                        setFormVal(layer.getChildFrame('#detail', index), res.data, true);
                                        top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
                                        layer.getChildFrame('#data-detail-submit', index).hide();
-                                       detailScreen(index);
+                                       layer.iframeAuto(index);
                                        layero.find('iframe')[0].contentWindow.layui.form.render('select');
                                    } else if (res.code === 403){
                                        parent.location.href = "/";

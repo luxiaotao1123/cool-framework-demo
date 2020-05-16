@@ -66,7 +66,7 @@ layui.use(['table','laydate', 'form'], function(){
                     content: 'user_detail.html',
                     success: function(layero, index){
                     	clearFormVal(layer.getChildFrame('#detail', index));
-                        detailScreen(index);
+                        layer.iframeAuto(index);
                     }
                 });
                 break;
@@ -166,7 +166,7 @@ layui.use(['table','laydate', 'form'], function(){
                         setFormVal(layer.getChildFrame('#detail', index), data);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
                         layer.getChildFrame('#data-detail-submit', index).hide();
-                        detailScreen(index);
+                        layer.iframeAuto(index);
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                     }
                 });
@@ -183,7 +183,7 @@ layui.use(['table','laydate', 'form'], function(){
                     success: function(layero, index){
                         setFormVal(layer.getChildFrame('#detail', index), data);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
-                        detailScreen(index);
+                        layer.iframeAuto(index);
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                     }
                 });
@@ -210,7 +210,7 @@ layui.use(['table','laydate', 'form'], function(){
                                         setFormVal(layer.getChildFrame('#detail', index), res.data);
                                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
                                         layer.getChildFrame('#data-detail-submit', index).hide();
-                                        detailScreen(index);
+                                        layer.iframeAuto(index);
                                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                                     } else if (res.code === 403){
                                         parent.location.href = "/";
@@ -245,7 +245,7 @@ layui.use(['table','laydate', 'form'], function(){
                                         setFormVal(layer.getChildFrame('#detail', index), res.data);
                                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
                                         layer.getChildFrame('#data-detail-submit', index).hide();
-                                        detailScreen(index);
+                                        layer.iframeAuto(index);
                                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                                     } else if (res.code === 403){
                                         parent.location.href = "/";
