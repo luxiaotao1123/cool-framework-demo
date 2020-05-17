@@ -65,7 +65,7 @@ layui.use(['table','laydate', 'form'], function(){
                     content: 'resource_detail.html',
                     success: function(layero, index){
                     	clearFormVal(layer.getChildFrame('#detail', index));
-                        layer.iframeAuto(index);
+                        layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                     }
                 });
                 break;
@@ -165,7 +165,7 @@ layui.use(['table','laydate', 'form'], function(){
                         setFormVal(layer.getChildFrame('#detail', index), data, true);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
                         layer.getChildFrame('#data-detail-submit', index).hide();
-                        layer.iframeAuto(index);
+                        layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                     }
                 });
@@ -182,7 +182,7 @@ layui.use(['table','laydate', 'form'], function(){
                     success: function(layero, index){
                         setFormVal(layer.getChildFrame('#detail', index), data, false);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
-                        layer.iframeAuto(index);
+                        layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                     }
                 });
@@ -209,7 +209,7 @@ layui.use(['table','laydate', 'form'], function(){
                                        setFormVal(layer.getChildFrame('#detail', index), res.data, true);
                                        top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
                                        layer.getChildFrame('#data-detail-submit', index).hide();
-                                       layer.iframeAuto(index);
+                                       layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                                        layero.find('iframe')[0].contentWindow.layui.form.render('select');
                                    } else if (res.code === 403){
                                        parent.location.href = "/";
