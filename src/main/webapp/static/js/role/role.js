@@ -245,7 +245,7 @@ layui.use(['table','laydate', 'form'], function(){
                     type: 2,
                     title: data.name + ' 权限分配',
                     maxmin: true,
-                    area: [top.detailWidth/2, top.detailHeight],
+                    area: [top.detailWidth/2, '85%'],
                     shadeClose: false,
                     content: 'role_power_detail.html',
                     success: function(layero, index){

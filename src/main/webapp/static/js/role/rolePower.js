@@ -17,6 +17,9 @@ layui.use(['form', 'tree'], function() {
         url: "/power/"+parent.roleId+"/auth",
         headers: {'token': localStorage.getItem('token')},
         method: 'GET',
+        async: false,
+        beforeSend: function () {
+        },
         success: function (res) {
             if (res.code === 200){
                 tree.setChecked('powerTree', res.data);

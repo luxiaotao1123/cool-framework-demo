@@ -167,7 +167,7 @@ public class AuthController extends BaseController {
             List<Map> twoLevelsList = new ArrayList<>();
             Map<String, Object> oneLevelMap = new HashMap<>();
             oneLevelMap.put("title", oneLevel.getName());
-            oneLevelMap.put("id", oneLevel.getCode());
+            oneLevelMap.put("id", oneLevel.getId());
             oneLevelMap.put("spread", true);
             oneLevelMap.put("children", twoLevelsList);
             List<Resource> twoLevels = resourceService.selectList(new EntityWrapper<Resource>().eq("resource_id", oneLevel.getId()).eq("level", 2).eq("status", 1).orderBy("sort"));
@@ -175,7 +175,7 @@ public class AuthController extends BaseController {
             for (Resource twoLevel : twoLevels){
                 Map<String, Object> twoLevelMap = new HashMap<>();
                 twoLevelMap.put("title", twoLevel.getName());
-                twoLevelMap.put("id", twoLevel.getCode());
+                twoLevelMap.put("id", twoLevel.getId());
                 twoLevelMap.put("spread", false);
 
                 List<Map> threeLevelsList = new ArrayList<>();
@@ -185,7 +185,7 @@ public class AuthController extends BaseController {
                 for (Resource threeLevel : threeLevels){
                     Map<String, Object> threeLevelMap = new HashMap<>();
                     threeLevelMap.put("title", threeLevel.getName());
-                    threeLevelMap.put("id", threeLevel.getCode());
+                    threeLevelMap.put("id", threeLevel.getId());
                     threeLevelMap.put("checked", false);
                     threeLevelsList.add(threeLevelMap);
                 }
@@ -218,14 +218,14 @@ public class AuthController extends BaseController {
     @RequestMapping(value = "/power/{roleId}/auth")
     @ManagerAuth
     public R get(@PathVariable("roleId") Long roleId) {
-        List<String> result = new ArrayList<>();
+        List<Object> result = new ArrayList<>();
         // 菜单
         List<RoleResource> roleResources = roleResourceService.selectList(new EntityWrapper<RoleResource>().eq("role_id", roleId));
         for (RoleResource roleResource : roleResources){
             Resource resource = resourceService.selectById(roleResource.getResourceId());
             if (!Cools.isEmpty(resource)){
                 if (resource.getLevel() == 3){
-                    result.add(resource.getCode());
+                    result.add(resource.getId());
                 }
             }
         }
@@ -251,7 +251,7 @@ public class AuthController extends BaseController {
         if (!Cools.isEmpty(powers)){
             List<PowerDto> dtos = JSON.parseArray(powers, PowerDto.class);
             for (PowerDto dto : dtos) {
-                Resource resource = resourceService.selectOne(new EntityWrapper<Resource>().eq("code", dto.getTwo()).eq("level", 2));
+                Resource resource = resourceService.selectOne(new EntityWrapper<Resource>().eq("id", dto.getTwo()).eq("level", 2));
                 if (!Cools.isEmpty(resource)) {
                     // 校验上级权限
                     if (leaderId != null) {
@@ -274,7 +274,7 @@ public class AuthController extends BaseController {
                     }
                 }
                 for (String three : dto.getThree()){
-                    Resource resource1 = resourceService.selectOne(new EntityWrapper<Resource>().eq("code", three).eq("level", 3));
+                    Resource resource1 = resourceService.selectOne(new EntityWrapper<Resource>().eq("id", three).eq("level", 3));
                     if (!Cools.isEmpty(resource1)) {
                         // 校验上级权限
                         if (leaderId != null) {
