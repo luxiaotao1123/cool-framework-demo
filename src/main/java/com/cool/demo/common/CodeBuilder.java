@@ -15,7 +15,7 @@ public class CodeBuilder {
 //        generator.password="xltys1995";
 //        generator.table="sys_host";
         // sqlserver
-        generator.url="192.168.3.238:1433;databasename=cool";
+        generator.url="192.168.1.100:1433;databasename=cool";
         generator.username="sa";
         generator.password="sa@123";
         generator.table="asr_bas_devp";
