@@ -5,8 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.cool.demo.asrs.entity.LocMast;
-import com.cool.demo.asrs.service.LocMastService;
+import com.cool.demo.asrs.entity.BasCrnp;
+import com.cool.demo.asrs.service.BasCrnpService;
 import com.cool.demo.common.web.BaseController;
 import com.core.annotations.ManagerAuth;
 import com.core.common.BaseRes;
@@ -19,27 +19,27 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-public class LocMastController extends BaseController {
+public class BasCrnpController extends BaseController {
 
     @Autowired
-    private LocMastService locMastService;
+    private BasCrnpService basCrnpService;
 
-    @RequestMapping(value = "/locMast/{id}/auth")
+    @RequestMapping(value = "/basCrnp/{id}/auth")
     @ManagerAuth
     public R get(@PathVariable("id") String id) {
-        return R.ok(locMastService.selectById(String.valueOf(id)));
+        return R.ok(basCrnpService.selectById(String.valueOf(id)));
     }
 
-    @RequestMapping(value = "/locMast/list/auth")
+    @RequestMapping(value = "/basCrnp/list/auth")
     @ManagerAuth
     public R list(@RequestParam(defaultValue = "1")Integer curr,
                   @RequestParam(defaultValue = "10")Integer limit,
                   @RequestParam Map<String, Object> param){
         excludeTrash(param);
-        EntityWrapper<LocMast> wrapper = new EntityWrapper<>();
+        EntityWrapper<BasCrnp> wrapper = new EntityWrapper<>();
         convert(param, wrapper);
 //        wrapper.orderBy("id", false);
-        return R.ok(locMastService.selectPage(new Page<>(curr, limit), wrapper));
+        return R.ok(basCrnpService.selectPage(new Page<>(curr, limit), wrapper));
     }
 
     private void convert(Map<String, Object> map, EntityWrapper wrapper){
@@ -54,75 +54,75 @@ public class LocMastController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "/locMast/add/auth")
+    @RequestMapping(value = "/basCrnp/add/auth")
     @ManagerAuth
-    public R add(LocMast locMast) {
-        locMast.setModiUser(getUserId());
-        locMast.setModiTime(new Date());
-        locMast.setAppeUser(getUserId());
-        locMast.setAppeTime(new Date());
-        locMastService.insert(locMast);
+    public R add(BasCrnp basCrnp) {
+        basCrnp.setModiUser(getUserId());
+        basCrnp.setModiTime(new Date());
+        basCrnp.setAppeUser(getUserId());
+        basCrnp.setAppeTime(new Date());
+        basCrnpService.insert(basCrnp);
         return R.ok();
     }
 
-	@RequestMapping(value = "/locMast/update/auth")
+	@RequestMapping(value = "/basCrnp/update/auth")
 	@ManagerAuth
-    public R update(LocMast locMast){
-        if (Cools.isEmpty(locMast) || null==locMast.getLocNo()){
+    public R update(BasCrnp basCrnp){
+        if (Cools.isEmpty(basCrnp) || null==basCrnp.getCrnNo()){
             return R.error();
         }
-        locMast.setModiUser(getUserId());
-        locMast.setModiTime(new Date());
-        locMastService.updateById(locMast);
+        basCrnp.setModiUser(getUserId());
+        basCrnp.setModiTime(new Date());
+        basCrnpService.updateById(basCrnp);
         return R.ok();
     }
 
-    @RequestMapping(value = "/locMast/delete/auth")
+    @RequestMapping(value = "/basCrnp/delete/auth")
     @ManagerAuth
     public R delete(@RequestParam String param){
-        List<LocMast> list = JSONArray.parseArray(param, LocMast.class);
+        List<BasCrnp> list = JSONArray.parseArray(param, BasCrnp.class);
         if (Cools.isEmpty(list)){
             return R.error();
         }
-        for (LocMast entity : list){
-            locMastService.delete(new EntityWrapper<>(entity));
+        for (BasCrnp entity : list){
+            basCrnpService.delete(new EntityWrapper<>(entity));
         }
         return R.ok();
     }
 
-    @RequestMapping(value = "/locMast/export/auth")
+    @RequestMapping(value = "/basCrnp/export/auth")
     @ManagerAuth
     public R export(@RequestBody JSONObject param){
         List<String> fields = JSONObject.parseArray(param.getJSONArray("fields").toJSONString(), String.class);
-        EntityWrapper<LocMast> wrapper = new EntityWrapper<>();
-        Map<String, Object> map = excludeTrash(param.getJSONObject("locMast"));
+        EntityWrapper<BasCrnp> wrapper = new EntityWrapper<>();
+        Map<String, Object> map = excludeTrash(param.getJSONObject("basCrnp"));
         convert(map, wrapper);
-        List<LocMast> list = locMastService.selectList(wrapper);
+        List<BasCrnp> list = basCrnpService.selectList(wrapper);
         return R.ok(exportSupport(list, fields));
     }
 
-    @RequestMapping(value = "/locMastQuery/auth")
+    @RequestMapping(value = "/basCrnpQuery/auth")
     @ManagerAuth
     public R query(String condition) {
-        EntityWrapper<LocMast> wrapper = new EntityWrapper<>();
-        wrapper.like("locNo", condition);
-        Page<LocMast> page = locMastService.selectPage(new Page<>(0, 10), wrapper);
+        EntityWrapper<BasCrnp> wrapper = new EntityWrapper<>();
+        wrapper.like("crnNo", condition);
+        Page<BasCrnp> page = basCrnpService.selectPage(new Page<>(0, 10), wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
-        for (LocMast locMast : page.getRecords()){
+        for (BasCrnp basCrnp : page.getRecords()){
             Map<String, Object> map = new HashMap<>();
-            map.put("id", locMast.getLocNo());
-            map.put("value", locMast.getLocNo());
+            map.put("id", basCrnp.getCrnNo());
+            map.put("value", basCrnp.getCrnNo());
             result.add(map);
         }
         return R.ok(result);
     }
 
-    @RequestMapping(value = "/locMast/check/column/auth")
+    @RequestMapping(value = "/basCrnp/check/column/auth")
     @ManagerAuth
     public R query(@RequestBody JSONObject param) {
-        Wrapper<LocMast> wrapper = new EntityWrapper<LocMast>().eq(humpToLine(String.valueOf(param.get("key"))), param.get("val"));
-        if (null != locMastService.selectOne(wrapper)){
-            return R.parse(BaseRes.REPEAT).add(getComment(LocMast.class, String.valueOf(param.get("key"))));
+        Wrapper<BasCrnp> wrapper = new EntityWrapper<BasCrnp>().eq(humpToLine(String.valueOf(param.get("key"))), param.get("val"));
+        if (null != basCrnpService.selectOne(wrapper)){
+            return R.parse(BaseRes.REPEAT).add(getComment(BasCrnp.class, String.valueOf(param.get("key"))));
         }
         return R.ok();
     }

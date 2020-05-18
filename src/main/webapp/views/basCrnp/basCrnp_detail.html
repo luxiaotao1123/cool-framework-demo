@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/css/cool.css" media="all">
+    <link rel="stylesheet" href="/static/css/common.css" media="all">
+</head>
+<body>
+
+<!-- 详情 -->
+<div id="data-detail" class="layer_self_wrap">
+    <form id="detail" class="layui-form">
+    <!--
+        <div class="layui-inline"  style="display: none">
+            <label class="layui-form-label"><span class="not-null">*</span>编　　号：</label>
+            <div class="layui-input-inline">
+                <input id="id" class="layui-input" type="text" placeholder="编号">
+            </div>
+        </div>
+    -->
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label"><span class="not-null">*</span>编　　号：</label>
+            <div class="layui-input-inline">
+                <input id="crnNo" class="layui-input" type="text" onkeyup="check(this.id, 'basCrnp')">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">可　　入：</label>
+            <div class="layui-input-inline">
+                <input id="inEnable" class="layui-input" type="checkBox" lay-skin="primary" lay-filter='detailCheckbox'>
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">可　　出：</label>
+            <div class="layui-input-inline">
+                <input id="outEnable" class="layui-input" type="checkBox" lay-skin="primary" lay-filter='detailCheckbox'>
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">状　　态：</label>
+            <div class="layui-input-inline cool-auto-complete">
+                <input id="crnSts" class="layui-input" type="text" style="display: none">
+                <input id="crnSts$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入..." onfocus=this.blur()>
+                <div class="cool-auto-complete-window">
+                    <input class="cool-auto-complete-window-input" data-key="basCrnStatusQueryBycrnSts" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                    <select class="cool-auto-complete-window-select" data-key="basCrnStatusQueryBycrnStsSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">工 作 号：</label>
+            <div class="layui-input-inline">
+                <input id="wrkNo" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">异 常 码：</label>
+            <div class="layui-input-inline cool-auto-complete">
+                <input id="crnErr" class="layui-input" type="text" style="display: none">
+                <input id="crnErr$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入..." onfocus=this.blur()>
+                <div class="cool-auto-complete-window">
+                    <input class="cool-auto-complete-window-input" data-key="basCrnErrorQueryBycrnErr" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                    <select class="cool-auto-complete-window-select" data-key="basCrnErrorQueryBycrnErrSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">源 库 位：</label>
+            <div class="layui-input-inline cool-auto-complete">
+                <input id="frmLocno" class="layui-input" type="text" style="display: none">
+                <input id="frmLocno$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入..." onfocus=this.blur()>
+                <div class="cool-auto-complete-window">
+                    <input class="cool-auto-complete-window-input" data-key="locMastQueryByfrmLocno" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                    <select class="cool-auto-complete-window-select" data-key="locMastQueryByfrmLocnoSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">源　　站：</label>
+            <div class="layui-input-inline cool-auto-complete">
+                <input id="frmSta" class="layui-input" type="text" style="display: none">
+                <input id="frmSta$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入..." onfocus=this.blur()>
+                <div class="cool-auto-complete-window">
+                    <input class="cool-auto-complete-window-input" data-key="basDevpQueryByfrmSta" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                    <select class="cool-auto-complete-window-select" data-key="basDevpQueryByfrmStaSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">目 标 站：</label>
+            <div class="layui-input-inline cool-auto-complete">
+                <input id="toSta" class="layui-input" type="text" style="display: none">
+                <input id="toSta$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入..." onfocus=this.blur()>
+                <div class="cool-auto-complete-window">
+                    <input class="cool-auto-complete-window-input" data-key="basDevpQueryBytoSta" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                    <select class="cool-auto-complete-window-select" data-key="basDevpQueryBytoStaSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">目标库位：</label>
+            <div class="layui-input-inline cool-auto-complete">
+                <input id="toLocno" class="layui-input" type="text" style="display: none">
+                <input id="toLocno$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入..." onfocus=this.blur()>
+                <div class="cool-auto-complete-window">
+                    <input class="cool-auto-complete-window-input" data-key="locMastQueryBytoLocno" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                    <select class="cool-auto-complete-window-select" data-key="locMastQueryBytoLocnoSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">创 建 者：</label>
+            <div class="layui-input-inline cool-auto-complete">
+                <input id="appeUser" class="layui-input" type="text" style="display: none">
+                <input id="appeUser$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入..." onfocus=this.blur()>
+                <div class="cool-auto-complete-window">
+                    <input class="cool-auto-complete-window-input" data-key="userQueryByappeUser" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                    <select class="cool-auto-complete-window-select" data-key="userQueryByappeUserSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">创建时间：</label>
+            <div class="layui-input-inline">
+                <input id="appeTime$" class="layui-input" type="text" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">修改人员：</label>
+            <div class="layui-input-inline cool-auto-complete">
+                <input id="modiUser" class="layui-input" type="text" style="display: none">
+                <input id="modiUser$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入..." onfocus=this.blur()>
+                <div class="cool-auto-complete-window">
+                    <input class="cool-auto-complete-window-input" data-key="userQueryBymodiUser" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                    <select class="cool-auto-complete-window-select" data-key="userQueryBymodiUserSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">修改时间：</label>
+            <div class="layui-input-inline">
+                <input id="modiTime$" class="layui-input" type="text" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="hpMk" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="retrieveMk" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="ctlHp" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="ctlRest" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="empIn" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="tankQty" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="tankQty1" class="layui-input" type="text">
+            </div>
+        </div>
+
+
+        <hr class="layui-bg-gray">
+
+        <div id="data-detail-btn" class="layui-btn-container layui-form-item">
+            <div id="data-detail-submit-save" type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="save">保存</div>
+            <div id="data-detail-submit-edit" type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="edit">修改</div>
+            <div id="data-detail-close" type="button" class="layui-btn" lay-submit lay-filter="close">关闭</div>
+        </div>
+
+        <div id="prompt">
+            温馨提示：请仔细填写相关信息，<span class="extrude"><span class="not-null">*</span> 为必填选项。</span>
+        </div>
+    </form>
+</div>
+</body>
+<script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/static/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/basCrnp/basCrnp.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/common.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/cool.js" charset="utf-8"></script>
+</html>
+
