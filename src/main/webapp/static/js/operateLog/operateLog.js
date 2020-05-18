@@ -13,6 +13,7 @@ layui.use(['table','laydate', 'form'], function(){
         url: '/operateLog/list/auth',
         page: true,
         limit: 16,
+        // even: true,
         toolbar: '#toolbar',
         cellMinWidth: 50,
         cols: [[
@@ -52,10 +53,13 @@ layui.use(['table','laydate', 'form'], function(){
     });
 
     table.on('edit(operateLog)', function (obj) {
-        layer.confirm('保存修改?', function(){
+        $('body').keydown(function () {
+            if (event.keyCode === 13) {
+                layer.confirm('保存修改?', function(){
 
+                });
+            }
         });
-
     });
 
     // 监听头工具栏事件
@@ -362,8 +366,3 @@ function detailScreen(index) {
     $(".layui-layer-shade").remove();
 }
 
-$('body').keydown(function () {
-    if (event.keyCode === 13) {
-        $("#search").click();
-    }
-});
