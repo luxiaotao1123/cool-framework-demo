@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/css/cool.css" media="all">
+    <link rel="stylesheet" href="/static/css/common.css" media="all">
+</head>
+<body>
+
+<!-- 详情 -->
+<div id="data-detail" class="layer_self_wrap">
+    <form id="detail" class="layui-form">
+    <!--
+        <div class="layui-inline"  style="display: none">
+            <label class="layui-form-label"><span class="not-null">*</span>编　　号：</label>
+            <div class="layui-input-inline">
+                <input id="id" class="layui-input" type="text" placeholder="编号">
+            </div>
+        </div>
+    -->
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label"><span class="not-null">*</span>库 位 号：</label>
+            <div class="layui-input-inline">
+                <input id="locNo" class="layui-input" type="text" onkeyup="check(this.id, 'locMast')">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">库位类型：</label>
+            <div class="layui-input-inline cool-auto-complete">
+                <input id="whsType" class="layui-input" type="text" style="display: none">
+                <input id="whsType$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入..." onfocus=this.blur()>
+                <div class="cool-auto-complete-window">
+                    <input class="cool-auto-complete-window-input" data-key="basWhsQueryBywhsType" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                    <select class="cool-auto-complete-window-select" data-key="basWhsQueryBywhsTypeSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="pltType" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="ctnType" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label"><span class="not-null">*</span>：</label>
+            <div class="layui-input-inline">
+                <input id="locSts" class="layui-input" type="text" >
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="sheetNo" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label" style="font-size: x-small">堆垛机号(asr_bas_crnp)：</label>
+            <div class="layui-input-inline">
+                <input id="crnNo" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">排：</label>
+            <div class="layui-input-inline">
+                <input id="row1" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">列：</label>
+            <div class="layui-input-inline">
+                <input id="bay1" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">层：</label>
+            <div class="layui-input-inline">
+                <input id="lev1" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">满　　板：</label>
+            <div class="layui-input-inline">
+                <input id="fullPlt" class="layui-input" type="checkBox" lay-skin="primary" lay-filter='detailCheckbox'>
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label"><span class="not-null">*</span>库位状态：</label>
+            <div class="layui-input-inline cool-auto-complete">
+                <input id="locType" class="layui-input" type="text" style="display: none" lay-verify="required" >
+                <input id="locType$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入..." onfocus=this.blur()>
+                <div class="cool-auto-complete-window">
+                    <input class="cool-auto-complete-window-input" data-key="basLocTypeQueryBylocType" onkeyup="autoLoad(this.getAttribute('data-key'))" >
+                    <select class="cool-auto-complete-window-select" data-key="basLocTypeQueryBylocTypeSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="outEnable" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="ioTime$" class="layui-input" type="text" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="firstTime$" class="layui-input" type="text" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">修改人员：</label>
+            <div class="layui-input-inline cool-auto-complete">
+                <input id="modiUser" class="layui-input" type="text" style="display: none">
+                <input id="modiUser$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入..." onfocus=this.blur()>
+                <div class="cool-auto-complete-window">
+                    <input class="cool-auto-complete-window-input" data-key="userQueryBymodiUser" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                    <select class="cool-auto-complete-window-select" data-key="userQueryBymodiUserSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">修改时间：</label>
+            <div class="layui-input-inline">
+                <input id="modiTime$" class="layui-input" type="text" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">创 建 者：</label>
+            <div class="layui-input-inline cool-auto-complete">
+                <input id="appeUser" class="layui-input" type="text" style="display: none">
+                <input id="appeUser$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入..." onfocus=this.blur()>
+                <div class="cool-auto-complete-window">
+                    <input class="cool-auto-complete-window-input" data-key="userQueryByappeUser" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                    <select class="cool-auto-complete-window-select" data-key="userQueryByappeUserSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">添加时间：</label>
+            <div class="layui-input-inline">
+                <input id="appeTime$" class="layui-input" type="text" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="errorTime$" class="layui-input" type="text" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="errorMemo" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="ctnKind" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="scWeight" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="invWh" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="mk" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="barcode" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="PdcType" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;display: none">
+            <label class="layui-form-label">：</label>
+            <div class="layui-input-inline">
+                <input id="ctnNo" class="layui-input" type="text">
+            </div>
+        </div>
+
+
+        <hr class="layui-bg-gray">
+
+        <div id="data-detail-btn" class="layui-btn-container layui-form-item">
+            <div id="data-detail-submit-save" type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="save">保存</div>
+            <div id="data-detail-submit-edit" type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="edit">修改</div>
+            <div id="data-detail-close" type="button" class="layui-btn" lay-submit lay-filter="close">关闭</div>
+        </div>
+
+        <div id="prompt">
+            温馨提示：请仔细填写相关信息，<span class="extrude"><span class="not-null">*</span> 为必填选项。</span>
+        </div>
+    </form>
+</div>
+</body>
+<script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/static/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/locMast/locMast.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/common.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/cool.js" charset="utf-8"></script>
+</html>
+

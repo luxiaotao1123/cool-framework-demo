@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cool.demo.asrs.mapper.LocMastMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cool.demo.asrs.entity.LocMast">
+        <id column="loc_no" property="locNo" />
+        <result column="whs_type" property="whsType" />
+        <result column="plt_type" property="pltType" />
+        <result column="ctn_type" property="ctnType" />
+        <result column="loc_sts" property="locSts" />
+        <result column="sheet_no" property="sheetNo" />
+        <result column="crn_no" property="crnNo" />
+        <result column="row1" property="row1" />
+        <result column="bay1" property="bay1" />
+        <result column="lev1" property="lev1" />
+        <result column="full_plt" property="fullPlt" />
+        <result column="loc_type" property="locType" />
+        <result column="out_enable" property="outEnable" />
+        <result column="io_time" property="ioTime" />
+        <result column="first_time" property="firstTime" />
+        <result column="modi_user" property="modiUser" />
+        <result column="modi_time" property="modiTime" />
+        <result column="appe_user" property="appeUser" />
+        <result column="appe_time" property="appeTime" />
+        <result column="error_time" property="errorTime" />
+        <result column="error_memo" property="errorMemo" />
+        <result column="ctn_kind" property="ctnKind" />
+        <result column="sc_weight" property="scWeight" />
+        <result column="inv_wh" property="invWh" />
+        <result column="mk" property="mk" />
+        <result column="barcode" property="barcode" />
+        <result column="Pdc_type" property="PdcType" />
+        <result column="ctn_no" property="ctnNo" />
+
+    </resultMap>
+
+</mapper>

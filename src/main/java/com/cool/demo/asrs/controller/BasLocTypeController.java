@@ -26,8 +26,8 @@ public class BasLocTypeController extends BaseController {
 
     @RequestMapping(value = "/basLocType/{id}/auth")
     @ManagerAuth
-    public R get(@PathVariable("id") Long id) {
-        return R.ok(basLocTypeService.selectById(String.valueOf(id)));
+    public R get(@PathVariable("id") String id) {
+        return R.ok(basLocTypeService.selectById(id));
     }
 
     @RequestMapping(value = "/basLocType/list/auth")
