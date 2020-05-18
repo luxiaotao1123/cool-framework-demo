@@ -19,19 +19,19 @@ layui.use(['table','laydate', 'form'], function(){
         cols: [[
             {type: 'checkbox', fixed: 'left'}
 //            ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
-            ,{field: 'crnNo', align: 'center',title: '编号'}
+            ,{field: 'crnNo', align: 'center',title: '编号',width:80}
             ,{field: 'inEnable', align: 'center',title: '可入', templet:function(row){
                     var html = "<input value='inEnable' type='checkbox' lay-skin='primary' lay-filter='tableCheckbox' table-index='"+row.LAY_TABLE_INDEX+"'";
                     if(row.inEnable === 'Y'){html += " checked ";}
                     html += ">";
                     return html;
-                }}
+                },width:80}
             ,{field: 'outEnable', align: 'center',title: '可出', templet:function(row){
                     var html = "<input value='outEnable' type='checkbox' lay-skin='primary' lay-filter='tableCheckbox' table-index='"+row.LAY_TABLE_INDEX+"'";
                     if(row.outEnable === 'Y'){html += " checked ";}
                     html += ">";
                     return html;
-                }}
+                },width:80}
             ,{field: 'crnSts$', align: 'center',title: '状态',event: 'crnSts', style: 'text-decoration: underline;cursor:pointer'}
             ,{field: 'wrkNo', align: 'center',title: '工作号'}
             ,{field: 'crnErr$', align: 'center',title: '异常码',event: 'crnErr', style: 'text-decoration: underline;cursor:pointer'}
