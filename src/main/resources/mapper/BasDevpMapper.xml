@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cool.demo.asrs.mapper.BasDevpMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cool.demo.asrs.entity.BasDevp">
+        <id column="dev_no" property="devNo" />
+        <result column="dec_desc" property="decDesc" />
+        <result column="dev_mk" property="devMk" />
+        <result column="in_enable" property="inEnable" />
+        <result column="out_enable" property="outEnable" />
+        <result column="autoing" property="autoing" />
+        <result column="loading" property="loading" />
+        <result column="canining" property="canining" />
+        <result column="canouting" property="canouting" />
+        <result column="fronting" property="fronting" />
+        <result column="rearing" property="rearing" />
+        <result column="uping" property="uping" />
+        <result column="downing" property="downing" />
+        <result column="inreq1" property="inreq1" />
+        <result column="inreq2" property="inreq2" />
+        <result column="wrk_no" property="wrkNo" />
+        <result column="wrk_no1" property="wrkNo1" />
+        <result column="ctn_type" property="ctnType" />
+        <result column="barcode" property="barcode" />
+        <result column="in_qty" property="inQty" />
+        <result column="row1" property="row1" />
+        <result column="io_time" property="ioTime" />
+        <result column="area" property="area" />
+        <result column="in_ok" property="inOk" />
+        <result column="out_ok" property="outOk" />
+        <result column="modi_user" property="modiUser" />
+        <result column="modi_time" property="modiTime" />
+        <result column="appe_user" property="appeUser" />
+        <result column="appe_time" property="appeTime" />
+        <result column="std_qty" property="stdQty" />
+        <result column="min_wt" property="minWt" />
+        <result column="max_wt" property="maxWt" />
+        <result column="gross_wt" property="grossWt" />
+        <result column="cart_pos" property="cartPos" />
+
+    </resultMap>
+
+</mapper>
