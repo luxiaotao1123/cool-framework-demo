@@ -226,11 +226,11 @@ layui.use(['table','laydate', 'form'], function(){
     table.on('tool(basDevp)', function(obj){
         var data = obj.data;
         switch (obj.event) {
-            // 查看
+            // 详情
             case 'detail':
                 layer.open({
                     type: 2,
-                    title: '查看',
+                    title: '详情',
                     maxmin: true,
                     area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
