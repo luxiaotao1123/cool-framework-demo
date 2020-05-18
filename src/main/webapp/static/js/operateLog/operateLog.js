@@ -20,7 +20,7 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
             ,{field: 'action', align: 'center',title: '访问地址'}
             ,{field: 'userId$', align: 'center',title: '用户',event: 'userId', style: 'text-decoration: underline;cursor:pointer'}
-            ,{field: 'ip', align: 'center',title: '客户端IP'}
+            ,{field: 'ip',  edit:'text', align: 'center',title: '客户端IP'}
             ,{field: 'request', align: 'center',title: '请求数据'}
             ,{field: 'response', align: 'center',title: '响应数据'}
             ,{field: 'createTime$', align: 'center',title: '添加时间'}
@@ -49,6 +49,13 @@ layui.use(['table','laydate', 'form'], function(){
             pageCurr=curr;
             limit();
         }
+    });
+
+    table.on('edit(operateLog)', function (obj) {
+        layer.confirm('保存修改?', function(){
+
+        });
+
     });
 
     // 监听头工具栏事件
