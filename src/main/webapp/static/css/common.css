@@ -70,7 +70,7 @@ div .layui-table-tool .layui-table-tool-self .layui-inline[title='导出']{
     border-width: 0;
 }
 .layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {
-    background-color: #f8f8f8;
+    background-color: #f9f9f9;
 }
 .layui-table-tool {
     /*background-color: #fff;*/
@@ -84,7 +84,7 @@ div .layui-table-tool .layui-table-tool-self .layui-inline[title='导出']{
     text-align: right;
 }
 #detail {
-    padding: 25px 0 15px 0;
+    padding: 25px 0;
     margin: 0 20px 0 30px;
 }
 #detail .layui-inline {
