@@ -14,6 +14,7 @@ layui.use(['table','laydate', 'form'], function(){
         page: true,
         limit: 16,
         toolbar: '#toolbar',
+        even: true,
         cellMinWidth: 50,
         cols: [[
             {type: 'checkbox', fixed: 'left'}
