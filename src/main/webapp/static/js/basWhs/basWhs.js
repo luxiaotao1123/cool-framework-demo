@@ -13,7 +13,6 @@ layui.use(['table','laydate', 'form'], function(){
         url: '/basWhs/list/auth',
         page: true,
         limit: 16,
-        even: true,
         toolbar: '#toolbar',
         cellMinWidth: 50,
         cols: [[

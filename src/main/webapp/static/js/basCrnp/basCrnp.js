@@ -13,7 +13,7 @@ layui.use(['table','laydate', 'form'], function(){
         url: '/basCrnp/list/auth',
         page: true,
         limit: 16,
-        even: true,
+        skin: 'line',
         toolbar: '#toolbar',
         cellMinWidth: 50,
         cols: [[
