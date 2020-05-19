@@ -105,7 +105,7 @@ public class WrkLastnoController extends BaseController {
     @ManagerAuth
     public R query(String condition) {
         EntityWrapper<WrkLastno> wrapper = new EntityWrapper<>();
-        wrapper.like("wrkMk", condition);
+        wrapper.like("wrk_mk", condition);
         Page<WrkLastno> page = wrkLastnoService.selectPage(new Page<>(0, 10), wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
         for (WrkLastno wrkLastno : page.getRecords()){

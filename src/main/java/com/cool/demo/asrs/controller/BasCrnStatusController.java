@@ -105,7 +105,7 @@ public class BasCrnStatusController extends BaseController {
     @ManagerAuth
     public R query(String condition) {
         EntityWrapper<BasCrnStatus> wrapper = new EntityWrapper<>();
-        wrapper.like("stsDesc", condition);
+        wrapper.like("sts_desc", condition);
         Page<BasCrnStatus> page = basCrnStatusService.selectPage(new Page<>(0, 10), wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
         for (BasCrnStatus basCrnStatus : page.getRecords()){

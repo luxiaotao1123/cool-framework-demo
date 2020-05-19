@@ -118,7 +118,7 @@ public class BasLocTypeController extends BaseController {
     @ManagerAuth
     public R query(String condition) {
         EntityWrapper<BasLocType> wrapper = new EntityWrapper<>();
-        wrapper.like("locDesc", condition);
+        wrapper.like("loc_desc", condition);
         Page<BasLocType> page = basLocTypeService.selectPage(new Page<>(0, 10), wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
         for (BasLocType basLocType : page.getRecords()){

@@ -105,7 +105,7 @@ public class BasCrnpController extends BaseController {
     @ManagerAuth
     public R query(String condition) {
         EntityWrapper<BasCrnp> wrapper = new EntityWrapper<>();
-        wrapper.like("crnNo", condition);
+        wrapper.like("crn_no", condition);
         Page<BasCrnp> page = basCrnpService.selectPage(new Page<>(0, 10), wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
         for (BasCrnp basCrnp : page.getRecords()){

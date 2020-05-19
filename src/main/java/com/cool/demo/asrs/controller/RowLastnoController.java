@@ -105,7 +105,7 @@ public class RowLastnoController extends BaseController {
     @ManagerAuth
     public R query(String condition) {
         EntityWrapper<RowLastno> wrapper = new EntityWrapper<>();
-        wrapper.like("whsType", condition);
+        wrapper.like("whs_type", condition);
         Page<RowLastno> page = rowLastnoService.selectPage(new Page<>(0, 10), wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
         for (RowLastno rowLastno : page.getRecords()){

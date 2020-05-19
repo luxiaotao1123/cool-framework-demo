@@ -105,7 +105,7 @@ public class WrkMastController extends BaseController {
     @ManagerAuth
     public R query(String condition) {
         EntityWrapper<WrkMast> wrapper = new EntityWrapper<>();
-        wrapper.like("wrkNo", condition);
+        wrapper.like("wrk_no", condition);
         Page<WrkMast> page = wrkMastService.selectPage(new Page<>(0, 10), wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
         for (WrkMast wrkMast : page.getRecords()){

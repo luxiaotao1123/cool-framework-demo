@@ -118,7 +118,7 @@ public class BasWrkIotypeController extends BaseController {
     @ManagerAuth
     public R query(String condition) {
         EntityWrapper<BasWrkIotype> wrapper = new EntityWrapper<>();
-        wrapper.like("ioDesc", condition);
+        wrapper.like("io_desc", condition);
         Page<BasWrkIotype> page = basWrkIotypeService.selectPage(new Page<>(0, 10), wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
         for (BasWrkIotype basWrkIotype : page.getRecords()){

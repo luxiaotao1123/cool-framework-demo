@@ -105,7 +105,7 @@ public class BasDevpController extends BaseController {
     @ManagerAuth
     public R query(String condition) {
         EntityWrapper<BasDevp> wrapper = new EntityWrapper<>();
-        wrapper.like("devNo", condition);
+        wrapper.like("dev_no", condition);
         Page<BasDevp> page = basDevpService.selectPage(new Page<>(0, 10), wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
         for (BasDevp basDevp : page.getRecords()){

@@ -105,7 +105,7 @@ public class StaDescController extends BaseController {
     @ManagerAuth
     public R query(String condition) {
         EntityWrapper<StaDesc> wrapper = new EntityWrapper<>();
-        wrapper.like("crnNo", condition);
+        wrapper.like("crn_no", condition);
         Page<StaDesc> page = staDescService.selectPage(new Page<>(0, 10), wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
         for (StaDesc staDesc : page.getRecords()){

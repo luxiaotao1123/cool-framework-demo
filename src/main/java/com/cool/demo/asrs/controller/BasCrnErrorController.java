@@ -105,7 +105,7 @@ public class BasCrnErrorController extends BaseController {
     @ManagerAuth
     public R query(String condition) {
         EntityWrapper<BasCrnError> wrapper = new EntityWrapper<>();
-        wrapper.like("errName", condition);
+        wrapper.like("err_name", condition);
         Page<BasCrnError> page = basCrnErrorService.selectPage(new Page<>(0, 10), wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
         for (BasCrnError basCrnError : page.getRecords()){

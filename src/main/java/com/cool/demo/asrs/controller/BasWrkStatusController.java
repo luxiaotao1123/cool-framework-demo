@@ -118,7 +118,7 @@ public class BasWrkStatusController extends BaseController {
     @ManagerAuth
     public R query(String condition) {
         EntityWrapper<BasWrkStatus> wrapper = new EntityWrapper<>();
-        wrapper.like("wrkDesc", condition);
+        wrapper.like("wrk_desc", condition);
         Page<BasWrkStatus> page = basWrkStatusService.selectPage(new Page<>(0, 10), wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
         for (BasWrkStatus basWrkStatus : page.getRecords()){

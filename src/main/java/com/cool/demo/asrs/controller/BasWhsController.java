@@ -105,7 +105,7 @@ public class BasWhsController extends BaseController {
     @ManagerAuth
     public R query(String condition) {
         EntityWrapper<BasWhs> wrapper = new EntityWrapper<>();
-        wrapper.like("whsDesc", condition);
+        wrapper.like("whs_desc", condition);
         Page<BasWhs> page = basWhsService.selectPage(new Page<>(0, 10), wrapper);
         List<Map<String, Object>> result = new ArrayList<>();
         for (BasWhs basWhs : page.getRecords()){
