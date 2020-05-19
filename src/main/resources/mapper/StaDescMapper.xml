@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cool.demo.asrs.mapper.StaDescMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cool.demo.asrs.entity.StaDesc">
+        <result column="type_id" property="typeId" />
+        <result column="type_no" property="typeNo" />
+        <result column="type_desc" property="typeDesc" />
+        <result column="stn_no" property="stnNo" />
+        <result column="stn_desc" property="stnDesc" />
+        <result column="crn_no" property="crnNo" />
+        <result column="crn_stn" property="crnStn" />
+        <result column="memo" property="memo" />
+        <result column="modi_user" property="modiUser" />
+        <result column="modi_time" property="modiTime" />
+        <result column="appe_user" property="appeUser" />
+        <result column="appe_time" property="appeTime" />
+
+    </resultMap>
+
+</mapper>
