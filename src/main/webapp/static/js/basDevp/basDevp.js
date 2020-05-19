@@ -20,7 +20,7 @@ layui.use(['table','laydate', 'form'], function(){
             {type: 'checkbox', fixed: 'left'}
 //            ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
             ,{field: 'devNo', align: 'center',title: '编号'}
-            ,{field: 'decDesc', align: 'center',title: '设备描述'}
+            // ,{field: 'decDesc', align: 'center',title: '设备描述'}
             // ,{field: 'devMk', align: 'center',title: '备注'}
             ,{field: 'inEnable', align: 'center',title: '可入', templet:function(row){
                     var html = "<input value='inEnable' type='checkbox' lay-skin='primary' lay-filter='tableCheckbox' table-index='"+row.LAY_TABLE_INDEX+"'";
@@ -84,8 +84,8 @@ layui.use(['table','laydate', 'form'], function(){
             // ,{field: 'area', align: 'center',title: ''}
             // ,{field: 'inOk', align: 'center',title: ''}
             // ,{field: 'outOk', align: 'center',title: ''}
-            ,{field: 'modiUser$', align: 'center',title: '修改人员',event: 'modiUser', style: 'text-decoration: underline;cursor:pointer'}
-            ,{field: 'modiTime$', align: 'center',title: '修改时间'}
+            // ,{field: 'modiUser$', align: 'center',title: '修改人员',event: 'modiUser', style: 'text-decoration: underline;cursor:pointer'}
+            // ,{field: 'modiTime$', align: 'center',title: '修改时间'}
             // ,{field: 'appeUser$', align: 'center',title: '创建者',event: 'appeUser', style: 'text-decoration: underline;cursor:pointer'}
             // ,{field: 'appeTime$', align: 'center',title: '添加时间'}
             // ,{field: 'stdQty', align: 'center',title: ''}
