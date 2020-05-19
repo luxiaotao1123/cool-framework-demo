@@ -20,7 +20,7 @@ layui.use(['table','laydate', 'form'], function(){
             {type: 'checkbox'}
 //            ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
 //             ,{field: 'id', align: 'center',title: '编号'}
-            ,{field: 'wrkNo$', align: 'center',title: '工作号',event: 'wrkNo', style: 'cursor:pointer'}
+            ,{field: 'wrkNo', align: 'center',title: '工作号',event: 'wrkNo'}
             ,{field: 'ioTime$', align: 'center',title: '工作时间', width:160}
             ,{field: 'wrkSts$', align: 'center',title: '工作状态',event: 'wrkSts', style: 'cursor:pointer', width:160}
             ,{field: 'ioType$', align: 'center',title: '入出库类型',event: 'ioType', style: 'cursor:pointer', width:160}
@@ -64,7 +64,7 @@ layui.use(['table','laydate', 'form'], function(){
             //         return html;
             //     }}
 
-            ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:100}
+            ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:130}
         ]],
         request: {
             pageName: 'curr',
@@ -238,42 +238,6 @@ layui.use(['table','laydate', 'form'], function(){
 
                     }
                 });
-                break;
-            case 'wrkNo':
-                var param = top.reObject(data).wrkNo;
-                if (param === undefined) {
-                    layer.msg("无数据");
-                } else {
-                   layer.open({
-                       type: 2,
-                       title: '工作号详情',
-                       maxmin: true,
-                       area: [top.detailWidth, top.detailHeight],
-                       shadeClose: false,
-                       content: '../wrkMast/wrkMast_detail.html',
-                       success: function(layero, index){
-                           $.ajax({
-                               url: "/wrkMast/"+ param +"/auth",
-                               headers: {'token': localStorage.getItem('token')},
-                               method: 'GET',
-                               success: function (res) {
-                                   if (res.code === 200){
-                                       setFormVal(layer.getChildFrame('#detail', index), res.data, true);
-                                       top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
-                                       layer.getChildFrame('#data-detail-submit-save,#data-detail-submit-edit,#prompt', index).hide();
-                                       layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
-                                       layero.find('iframe')[0].contentWindow.layui.form.render('select');
-                                       layero.find('iframe')[0].contentWindow.layui.form.render('checkbox');
-                                   } else if (res.code === 403){
-                                       parent.location.href = "/";
-                                   }else {
-                                       layer.msg(res.msg)
-                                   }
-                               }
-                           })
-                       }
-                   });
-                }
                 break;
             case 'wrkSts':
                 var param = top.reObject(data).wrkSts;

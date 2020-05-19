@@ -15,14 +15,6 @@
 <!-- 详情 -->
 <div id="data-detail" class="layer_self_wrap">
     <form id="detail" class="layui-form">
-    <!--
-        <div class="layui-inline"  style="display: none">
-            <label class="layui-form-label"><span class="not-null">*</span>编　　号：</label>
-            <div class="layui-input-inline">
-                <input id="id" class="layui-input" type="text" placeholder="编号">
-            </div>
-        </div>
-    -->
         <div class="layui-inline"  style="width:31%;display: none">
             <label class="layui-form-label"><span class="not-null">*</span>编　　号：</label>
             <div class="layui-input-inline">
@@ -31,14 +23,8 @@
         </div>
         <div class="layui-inline"  style="width:31%;">
             <label class="layui-form-label"><span class="not-null">*</span>工 作 号：</label>
-            <div class="layui-input-inline cool-auto-complete">
-                <input id="wrkNo" class="layui-input" type="text" lay-verify="required|number"  style="display: none">
-                <input id="wrkNo$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入..." onfocus=this.blur()>
-                <div class="cool-auto-complete-window">
-                    <input class="cool-auto-complete-window-input" data-key="wrkMastQueryBywrkNo" onkeyup="autoLoad(this.getAttribute('data-key'))">
-                    <select class="cool-auto-complete-window-select" data-key="wrkMastQueryBywrkNoSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
-                    </select>
-                </div>
+            <div class="layui-input-inline">
+                <input id="wrkNo" class="layui-input" type="text" onkeyup="check(this.id, 'wrkMastLog')" lay-verify="required|number" >
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">
