@@ -25,7 +25,7 @@ layui.use(['table','laydate', 'form'], function(){
             // ,{field: 'ctnType', align: 'center',title: ''}
             // ,{field: 'locSts', align: 'center',title: ''}
             // ,{field: 'sheetNo', align: 'center',title: ''}
-            ,{field: 'crnNo', align: 'center',title: '堆垛机号(asr_bas_crnp)'}
+            ,{field: 'crnNo', align: 'center',title: '堆垛机号'}
             ,{field: 'row1', align: 'center',title: '排'}
             ,{field: 'bay1', align: 'center',title: '列'}
             ,{field: 'lev1', align: 'center',title: '层'}

@@ -55,7 +55,7 @@ public class LocMast implements Serializable {
     /**
      * 堆垛机号(asr_bas_crnp)
      */
-    @ApiModelProperty(value= "堆垛机号(asr_bas_crnp)")
+    @ApiModelProperty(value= "堆垛机号")
     @TableField("crn_no")
     private Integer crnNo;
 
