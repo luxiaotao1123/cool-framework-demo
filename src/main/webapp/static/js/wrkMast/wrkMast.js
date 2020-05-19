@@ -207,10 +207,10 @@ layui.use(['table','laydate', 'form'], function(){
                         setFormVal(layer.getChildFrame('#detail', index), data, true);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
                         layer.getChildFrame('#data-detail-submit-save,#data-detail-submit-edit,#prompt', index).hide();
-                        layer.getChildFrame('##dealDownLine', index).hide();
-                        layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                         layero.find('iframe')[0].contentWindow.layui.form.render('checkbox');
+                        layer.getChildFrame('##dealDownLine', index).hide();
+                        layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                     }
                 });
                 break;
@@ -228,10 +228,10 @@ layui.use(['table','laydate', 'form'], function(){
                         setFormVal(layer.getChildFrame('#detail', index), data, false);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
                         top.convertDisabled(layer.getChildFrame('#wrkNo', index), true);
-                        layer.getChildFrame('##dealDownLine', index).hide();
-                        layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                         layero.find('iframe')[0].contentWindow.layui.form.render('checkbox');
+                        layer.getChildFrame('##dealDownLine', index).hide();
+                        layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                     }
                 });
                 break;
