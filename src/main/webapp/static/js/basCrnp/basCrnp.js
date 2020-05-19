@@ -35,10 +35,10 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'crnSts$', align: 'center',title: '状态',event: 'crnSts', style: 'text-decoration: underline;cursor:pointer'}
             ,{field: 'wrkNo', align: 'center',title: '工作号'}
             ,{field: 'crnErr$', align: 'center',title: '异常码',event: 'crnErr', style: 'text-decoration: underline;cursor:pointer'}
-            ,{field: 'frmLocno$', align: 'center',title: '源库位',event: 'frmLocno', style: 'text-decoration: underline;cursor:pointer'}
-            ,{field: 'toLocno$', align: 'center',title: '目标库位',event: 'toLocno', style: 'text-decoration: underline;cursor:pointer'}
-            ,{field: 'frmSta$', align: 'center',title: '源站',event: 'frmSta', style: 'text-decoration: underline;cursor:pointer'}
-            ,{field: 'toSta$', align: 'center',title: '目标站',event: 'toSta', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'frmLocno$', align: 'center',title: '源库位',sort: true, event: 'frmLocno', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'toLocno$', align: 'center',title: '目标库位', sort: true, event: 'toLocno', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'frmSta$', align: 'center',title: '源站', sort: true, event: 'frmSta', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'toSta$', align: 'center',title: '目标站', sort: true, event: 'toSta', style: 'text-decoration: underline;cursor:pointer'}
             // ,{field: 'appeUser$', align: 'center',title: '创建者',event: 'appeUser', style: 'text-decoration: underline;cursor:pointer'}
             // ,{field: 'appeTime$', align: 'center',title: '创建时间'}
             // ,{field: 'modiUser$', align: 'center',title: '修改人员',event: 'modiUser', style: 'text-decoration: underline;cursor:pointer'}

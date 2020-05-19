@@ -20,7 +20,7 @@ layui.use(['table','laydate', 'form'], function(){
             {type: 'checkbox', fixed: 'left'}
 //            ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
             ,{field: 'locSts', align: 'center',title: '库位状态代号'}
-            ,{field: 'locDesc', align: 'center',title: '库位状态描述'}
+            ,{field: 'locDesc', align: 'center',sort: true,title: '库位状态描述'}
             ,{field: 'modiUser$', align: 'center',title: '修改人员',event: 'modiUser', style: 'text-decoration: underline;cursor:pointer'}
             ,{field: 'modiTime$', align: 'center',title: '修改时间'}
             // ,{field: 'appeUser$', align: 'center',title: '创建者',event: 'appeUser', style: 'text-decoration: underline;cursor:pointer'}
