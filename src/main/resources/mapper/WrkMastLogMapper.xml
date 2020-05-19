@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cool.demo.asrs.mapper.WrkMastLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cool.demo.asrs.entity.WrkMastLog">
+        <id column="id" property="id" />
+        <result column="wrk_no" property="wrkNo" />
+        <result column="inv_wh" property="invWh" />
+        <result column="ymd" property="ymd" />
+        <result column="mk" property="mk" />
+        <result column="whs_type" property="whsType" />
+        <result column="wrk_sts" property="wrkSts" />
+        <result column="io_type" property="ioType" />
+        <result column="crn_no" property="crnNo" />
+        <result column="sheet_no" property="sheetNo" />
+        <result column="io_pri" property="ioPri" />
+        <result column="wrk_date" property="wrkDate" />
+        <result column="loc_no" property="locNo" />
+        <result column="sta_no" property="staNo" />
+        <result column="source_sta_no" property="sourceStaNo" />
+        <result column="source_loc_no" property="sourceLocNo" />
+        <result column="loc_sts" property="locSts" />
+        <result column="picking" property="picking" />
+        <result column="link_mis" property="linkMis" />
+        <result column="online_yn" property="onlineYn" />
+        <result column="upd_mk" property="updMk" />
+        <result column="exit_mk" property="exitMk" />
+        <result column="plt_type" property="pltType" />
+        <result column="empty_mk" property="emptyMk" />
+        <result column="io_time" property="ioTime" />
+        <result column="ctn_type" property="ctnType" />
+        <result column="packed" property="packed" />
+        <result column="ove_mk" property="oveMk" />
+        <result column="mtn_type" property="mtnType" />
+        <result column="user_no" property="userNo" />
+        <result column="crn_str_time" property="crnStrTime" />
+        <result column="crn_end_time" property="crnEndTime" />
+        <result column="plc_str_time" property="plcStrTime" />
+        <result column="crn_pos_time" property="crnPosTime" />
+        <result column="load_time" property="loadTime" />
+        <result column="exp_time" property="expTime" />
+        <result column="ref_wrkno" property="refWrkno" />
+        <result column="ref_iotime" property="refIotime" />
+        <result column="modi_user" property="modiUser" />
+        <result column="modi_time" property="modiTime" />
+        <result column="appe_user" property="appeUser" />
+        <result column="appe_time" property="appeTime" />
+        <result column="pause_mk" property="pauseMk" />
+        <result column="error_time" property="errorTime" />
+        <result column="error_memo" property="errorMemo" />
+        <result column="ctn_kind" property="ctnKind" />
+        <result column="manu_type" property="manuType" />
+        <result column="memo_m" property="memoM" />
+        <result column="sc_weight" property="scWeight" />
+        <result column="log_mk" property="logMk" />
+        <result column="log_err_time" property="logErrTime" />
+        <result column="log_err_memo" property="logErrMemo" />
+        <result column="barcode" property="barcode" />
+        <result column="Pdc_type" property="PdcType" />
+        <result column="ctn_no" property="ctnNo" />
+        <result column="full_plt" property="fullPlt" />
+
+    </resultMap>
+
+</mapper>
