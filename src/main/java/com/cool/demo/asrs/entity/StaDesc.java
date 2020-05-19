@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
+import com.cool.demo.asrs.service.BasCrnpService;
+import com.cool.demo.asrs.service.BasDevpService;
+import com.cool.demo.asrs.service.BasWrkIotypeService;
 import com.cool.demo.system.entity.User;
 import com.cool.demo.system.service.UserService;
 import com.core.common.Cools;
@@ -23,13 +26,14 @@ public class StaDesc implements Serializable {
      * 路径ID
      */
     @ApiModelProperty(value= "路径ID")
+    @TableId(value = "type_id", type = IdType.AUTO)
     @TableField("type_id")
     private Long typeId;
 
     /**
-     * 入出代号
+     * 入出库类型
      */
-    @ApiModelProperty(value= "入出代号")
+    @ApiModelProperty(value= "入出库类型")
     @TableId(value = "type_no", type = IdType.INPUT)
     @TableField("type_no")
     private Integer typeNo;
@@ -107,8 +111,7 @@ public class StaDesc implements Serializable {
 
     public StaDesc() {}
 
-    public StaDesc(Long typeId,String typeDesc,String stnDesc,Integer crnStn,String memo,Long modiUser,Date modiTime,Long appeUser,Date appeTime) {
-        this.typeId = typeId;
+    public StaDesc(String typeDesc,String stnDesc,Integer crnStn,String memo,Long modiUser,Date modiTime,Long appeUser,Date appeTime) {
         this.typeDesc = typeDesc;
         this.stnDesc = stnDesc;
         this.crnStn = crnStn;
@@ -120,7 +123,6 @@ public class StaDesc implements Serializable {
     }
 
 //    StaDesc staDesc = new StaDesc(
-//            null,    // 路径ID[非空]
 //            null,    // 作业类型
 //            null,    // 站点名称
 //            null,    // 堆垛机站点
@@ -143,6 +145,15 @@ public class StaDesc implements Serializable {
         return typeNo;
     }
 
+    public String getTypeNo$(){
+        BasWrkIotypeService service = SpringUtils.getBean(BasWrkIotypeService.class);
+        BasWrkIotype basWrkIotype = service.selectById(this.typeNo);
+        if (!Cools.isEmpty(basWrkIotype)){
+            return String.valueOf(basWrkIotype.getIoDesc());
+        }
+        return null;
+    }
+
     public void setTypeNo(Integer typeNo) {
         this.typeNo = typeNo;
     }
@@ -157,6 +168,15 @@ public class StaDesc implements Serializable {
 
     public Integer getStnNo() {
         return stnNo;
+    }
+
+    public String getStnNo$(){
+        BasDevpService service = SpringUtils.getBean(BasDevpService.class);
+        BasDevp basDevp = service.selectById(this.stnNo);
+        if (!Cools.isEmpty(basDevp)){
+            return String.valueOf(basDevp.getDevNo());
+        }
+        return null;
     }
 
     public void setStnNo(Integer stnNo) {
@@ -175,12 +195,30 @@ public class StaDesc implements Serializable {
         return crnNo;
     }
 
+    public String getCrnNo$(){
+        BasCrnpService service = SpringUtils.getBean(BasCrnpService.class);
+        BasCrnp basCrnp = service.selectById(this.crnNo);
+        if (!Cools.isEmpty(basCrnp)){
+            return String.valueOf(basCrnp.getCrnNo());
+        }
+        return null;
+    }
+
     public void setCrnNo(Integer crnNo) {
         this.crnNo = crnNo;
     }
 
     public Integer getCrnStn() {
         return crnStn;
+    }
+
+    public String getCrnStn$(){
+        BasDevpService service = SpringUtils.getBean(BasDevpService.class);
+        BasDevp basDevp = service.selectById(this.crnStn);
+        if (!Cools.isEmpty(basDevp)){
+            return String.valueOf(basDevp.getDevNo());
+        }
+        return null;
     }
 
     public void setCrnStn(Integer crnStn) {

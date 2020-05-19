@@ -17,18 +17,20 @@ layui.use(['table','laydate', 'form'], function(){
         toolbar: '#toolbar',
         cellMinWidth: 50,
         cols: [[
-            {type: 'checkbox', fixed: 'left'}
+            {type: 'checkbox'}
 //            ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
-            ,{field: 'typeId', align: 'center',title: '路径ID'}
-            ,{field: 'typeNo', align: 'center',title: '入出代号'}
+//             ,{field: 'typeId', align: 'center',title: '路径ID'}
+            ,{field: 'typeNo$', align: 'center',title: '入出库类型',event: 'typeNo', style: 'cursor:pointer'}
             ,{field: 'typeDesc', align: 'center',title: '作业类型'}
-            ,{field: 'stnNo', align: 'center',title: '作业站点'}
+            ,{field: 'stnNo$', align: 'center',title: '作业站点',event: 'stnNo', style: 'cursor:pointer'}
             ,{field: 'stnDesc', align: 'center',title: '站点名称'}
-            ,{field: 'crnNo', align: 'center',title: '堆垛机号'}
-            ,{field: 'crnStn', align: 'center',title: '堆垛机站点'}
+            ,{field: 'crnNo$', align: 'center',title: '堆垛机号',event: 'crnNo', style: 'cursor:pointer'}
+            ,{field: 'crnStn$', align: 'center',title: '堆垛机站点',event: 'crnStn', style: 'cursor:pointer'}
             ,{field: 'memo', align: 'center',title: '备注'}
-            ,{field: 'modiUser$', align: 'center',title: '修改人员',event: 'modiUser', style: 'cursor:pointer'}
-            ,{field: 'modiTime$', align: 'center',title: '修改时间', width:200}
+            // ,{field: 'modiUser$', align: 'center',title: '修改人员',event: 'modiUser', style: 'cursor:pointer'}
+            // ,{field: 'modiTime$', align: 'center',title: '修改时间'}
+            // ,{field: 'appeUser$', align: 'center',title: '创建者',event: 'appeUser', style: 'cursor:pointer'}
+            // ,{field: 'appeTime$', align: 'center',title: '添加时间'}
 
             ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
         ]],
@@ -194,12 +196,156 @@ layui.use(['table','laydate', 'form'], function(){
                         layer.getChildFrame('#data-detail-submit-save', index).hide();
                         setFormVal(layer.getChildFrame('#detail', index), data, false);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
-                        top.convertDisabled(layer.getChildFrame('#typeNo,#stnNo,#crnNo', index), true);
+                        top.convertDisabled(layer.getChildFrame('#typeId,#typeNo,#stnNo,#crnNo', index), true);
                         layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                         layero.find('iframe')[0].contentWindow.layui.form.render('checkbox');
                     }
                 });
+                break;
+            case 'typeNo':
+                var param = top.reObject(data).typeNo;
+                if (param === undefined) {
+                    layer.msg("无数据");
+                } else {
+                   layer.open({
+                       type: 2,
+                       title: '入出库详情',
+                       maxmin: true,
+                       area: [top.detailWidth, top.detailHeight],
+                       shadeClose: false,
+                       content: '../basWrkIotype/basWrkIotype_detail.html',
+                       success: function(layero, index){
+                           $.ajax({
+                               url: "/basWrkIotype/"+ param +"/auth",
+                               headers: {'token': localStorage.getItem('token')},
+                               method: 'GET',
+                               success: function (res) {
+                                   if (res.code === 200){
+                                       setFormVal(layer.getChildFrame('#detail', index), res.data, true);
+                                       top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
+                                       layer.getChildFrame('#data-detail-submit-save,#data-detail-submit-edit,#prompt', index).hide();
+                                       layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
+                                       layero.find('iframe')[0].contentWindow.layui.form.render('select');
+                                       layero.find('iframe')[0].contentWindow.layui.form.render('checkbox');
+                                   } else if (res.code === 403){
+                                       parent.location.href = "/";
+                                   }else {
+                                       layer.msg(res.msg)
+                                   }
+                               }
+                           })
+                       }
+                   });
+                }
+                break;
+            case 'stnNo':
+                var param = top.reObject(data).stnNo;
+                if (param === undefined) {
+                    layer.msg("无数据");
+                } else {
+                   layer.open({
+                       type: 2,
+                       title: '作业详情',
+                       maxmin: true,
+                       area: [top.detailWidth, top.detailHeight],
+                       shadeClose: false,
+                       content: '../basDevp/basDevp_detail.html',
+                       success: function(layero, index){
+                           $.ajax({
+                               url: "/basDevp/"+ param +"/auth",
+                               headers: {'token': localStorage.getItem('token')},
+                               method: 'GET',
+                               success: function (res) {
+                                   if (res.code === 200){
+                                       setFormVal(layer.getChildFrame('#detail', index), res.data, true);
+                                       top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
+                                       layer.getChildFrame('#data-detail-submit-save,#data-detail-submit-edit,#prompt', index).hide();
+                                       layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
+                                       layero.find('iframe')[0].contentWindow.layui.form.render('select');
+                                       layero.find('iframe')[0].contentWindow.layui.form.render('checkbox');
+                                   } else if (res.code === 403){
+                                       parent.location.href = "/";
+                                   }else {
+                                       layer.msg(res.msg)
+                                   }
+                               }
+                           })
+                       }
+                   });
+                }
+                break;
+            case 'crnNo':
+                var param = top.reObject(data).crnNo;
+                if (param === undefined) {
+                    layer.msg("无数据");
+                } else {
+                   layer.open({
+                       type: 2,
+                       title: '堆垛机详情',
+                       maxmin: true,
+                       area: [top.detailWidth, top.detailHeight],
+                       shadeClose: false,
+                       content: '../basCrnp/basCrnp_detail.html',
+                       success: function(layero, index){
+                           $.ajax({
+                               url: "/basCrnp/"+ param +"/auth",
+                               headers: {'token': localStorage.getItem('token')},
+                               method: 'GET',
+                               success: function (res) {
+                                   if (res.code === 200){
+                                       setFormVal(layer.getChildFrame('#detail', index), res.data, true);
+                                       top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
+                                       layer.getChildFrame('#data-detail-submit-save,#data-detail-submit-edit,#prompt', index).hide();
+                                       layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
+                                       layero.find('iframe')[0].contentWindow.layui.form.render('select');
+                                       layero.find('iframe')[0].contentWindow.layui.form.render('checkbox');
+                                   } else if (res.code === 403){
+                                       parent.location.href = "/";
+                                   }else {
+                                       layer.msg(res.msg)
+                                   }
+                               }
+                           })
+                       }
+                   });
+                }
+                break;
+            case 'crnStn':
+                var param = top.reObject(data).crnStn;
+                if (param === undefined) {
+                    layer.msg("无数据");
+                } else {
+                   layer.open({
+                       type: 2,
+                       title: '堆垛机站点详情',
+                       maxmin: true,
+                       area: [top.detailWidth, top.detailHeight],
+                       shadeClose: false,
+                       content: '../basDevp/basDevp_detail.html',
+                       success: function(layero, index){
+                           $.ajax({
+                               url: "/basDevp/"+ param +"/auth",
+                               headers: {'token': localStorage.getItem('token')},
+                               method: 'GET',
+                               success: function (res) {
+                                   if (res.code === 200){
+                                       setFormVal(layer.getChildFrame('#detail', index), res.data, true);
+                                       top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
+                                       layer.getChildFrame('#data-detail-submit-save,#data-detail-submit-edit,#prompt', index).hide();
+                                       layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
+                                       layero.find('iframe')[0].contentWindow.layui.form.render('select');
+                                       layero.find('iframe')[0].contentWindow.layui.form.render('checkbox');
+                                   } else if (res.code === 403){
+                                       parent.location.href = "/";
+                                   }else {
+                                       layer.msg(res.msg)
+                                   }
+                               }
+                           })
+                       }
+                   });
+                }
                 break;
             case 'modiUser':
                 var param = top.reObject(data).modiUser;
@@ -222,7 +368,6 @@ layui.use(['table','laydate', 'form'], function(){
                                    if (res.code === 200){
                                        setFormVal(layer.getChildFrame('#detail', index), res.data, true);
                                        top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
-                                       layer.getChildFrame('#password,#createTime\\$,#status', index).parent().parent().hide();
                                        layer.getChildFrame('#data-detail-submit-save,#data-detail-submit-edit,#prompt', index).hide();
                                        layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                                        layero.find('iframe')[0].contentWindow.layui.form.render('select');
