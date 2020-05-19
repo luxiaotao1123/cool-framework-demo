@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/css/cool.css" media="all">
+    <link rel="stylesheet" href="/static/css/common.css" media="all">
+</head>
+<body>
+
+<!-- 搜索栏 -->
+<div id="search-box" class="layui-form layui-card-header">
+    <div class="layui-inline">
+        <label class="layui-form-label">工 作 号：</label>
+        <div class="layui-input-inline">
+            <input class="layui-input" type="text" name="wrk_no" placeholder="请输入" autocomplete="off">
+        </div>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label">工作状态：</label>
+        <div class="layui-input-inline cool-auto-complete">
+            <input id="wrkSts" class="layui-input" name="wrk_sts" type="text" placeholder="请输入" autocomplete="off" style="display: none">
+            <input id="wrkSts$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入" onfocus=this.blur()>
+            <div class="cool-auto-complete-window">
+                <input class="cool-auto-complete-window-input" data-key="basWrkStatusQueryBywrkSts" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                <select class="cool-auto-complete-window-select" data-key="basWrkStatusQueryBywrkStsSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label">堆 垛 机：</label>
+        <div class="layui-input-inline cool-auto-complete">
+            <input id="crnNo" class="layui-input" name="crn_no" type="text" placeholder="请输入" autocomplete="off" style="display: none">
+            <input id="crnNo$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入" onfocus=this.blur()>
+            <div class="cool-auto-complete-window">
+                <input class="cool-auto-complete-window-input" data-key="basCrnpQueryBycrnNo" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                <select class="cool-auto-complete-window-select" data-key="basCrnpQueryBycrnNoSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                </select>
+            </div>
+        </div>
+    </div>
+    <!--<div class="layui-inline">-->
+        <!--<label class="layui-form-label">目标库位：</label>-->
+        <!--<div class="layui-input-inline cool-auto-complete">-->
+            <!--<input id="locNo" class="layui-input" name="loc_no" type="text" placeholder="请输入" autocomplete="off" style="display: none">-->
+            <!--<input id="locNo$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入" onfocus=this.blur()>-->
+            <!--<div class="cool-auto-complete-window">-->
+                <!--<input class="cool-auto-complete-window-input" data-key="locMastQueryBylocNo" onkeyup="autoLoad(this.getAttribute('data-key'))">-->
+                <!--<select class="cool-auto-complete-window-select" data-key="locMastQueryBylocNoSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-inline">-->
+        <!--<label class="layui-form-label">目 标 站：</label>-->
+        <!--<div class="layui-input-inline cool-auto-complete">-->
+            <!--<input id="staNo" class="layui-input" name="sta_no" type="text" placeholder="请输入" autocomplete="off" style="display: none">-->
+            <!--<input id="staNo$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入" onfocus=this.blur()>-->
+            <!--<div class="cool-auto-complete-window">-->
+                <!--<input class="cool-auto-complete-window-input" data-key="basDevpQueryBystaNo" onkeyup="autoLoad(this.getAttribute('data-key'))">-->
+                <!--<select class="cool-auto-complete-window-select" data-key="basDevpQueryBystaNoSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-inline">-->
+        <!--<label class="layui-form-label">源　　站：</label>-->
+        <!--<div class="layui-input-inline cool-auto-complete">-->
+            <!--<input id="sourceStaNo" class="layui-input" name="source_sta_no" type="text" placeholder="请输入" autocomplete="off" style="display: none">-->
+            <!--<input id="sourceStaNo$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入" onfocus=this.blur()>-->
+            <!--<div class="cool-auto-complete-window">-->
+                <!--<input class="cool-auto-complete-window-input" data-key="basDevpQueryBysourceStaNo" onkeyup="autoLoad(this.getAttribute('data-key'))">-->
+                <!--<select class="cool-auto-complete-window-select" data-key="basDevpQueryBysourceStaNoSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-inline">-->
+        <!--<label class="layui-form-label">源 库 位：</label>-->
+        <!--<div class="layui-input-inline cool-auto-complete">-->
+            <!--<input id="sourceLocNo" class="layui-input" name="source_loc_no" type="text" placeholder="请输入" autocomplete="off" style="display: none">-->
+            <!--<input id="sourceLocNo$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入" onfocus=this.blur()>-->
+            <!--<div class="cool-auto-complete-window">-->
+                <!--<input class="cool-auto-complete-window-input" data-key="locMastQueryBysourceLocNo" onkeyup="autoLoad(this.getAttribute('data-key'))">-->
+                <!--<select class="cool-auto-complete-window-select" data-key="locMastQueryBysourceLocNoSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!-- 待添加 -->
+    <div id="data-search-btn" class="layui-btn-container layui-form-item">
+        <button id="search" class="layui-btn layui-btn-primary layui-btn-radius" lay-submit lay-filter="search">搜索</button>
+        <button id="reset" class="layui-btn layui-btn-primary layui-btn-radius" lay-submit lay-filter="reset">重置</button>
+    </div>
+</div>
+
+<!-- 表格 -->
+<div class="layui-form">
+    <table class="layui-hide" id="wrkMast" lay-filter="wrkMast"></table>
+</div>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" id="btn-add" lay-event="addData">新增</button>
+        <!--<button class="layui-btn layui-btn-sm" id="btn-refresh" lay-event="refreshData">刷新</button>-->
+        <button class="layui-btn layui-btn-sm" id="btn-delete" lay-event="deleteData">删除</button>
+        <button class="layui-btn layui-btn-primary layui-btn-sm" id="btn-export" lay-event="exportData">导出</button>
+    </div>
+</script>
+
+<script type="text/html" id="operate">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">详情</a>
+    <a class="layui-btn layui-btn-xs btn-edit" lay-event="edit">编辑</a>
+</script>
+
+<script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/static/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/wrkMast/wrkMast.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/common.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/cool.js" charset="utf-8"></script>
+
+<iframe id="detail-iframe" scrolling="auto" style="display:none;"></iframe>
+
+</body>
+</html>
+
