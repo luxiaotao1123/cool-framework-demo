@@ -12,7 +12,7 @@ layui.use(['table','laydate', 'form'], function(){
         headers: {token: localStorage.getItem('token')},
         url: '/wrkMast/list/auth',
         page: true,
-        limit: 16,
+        limit: 5,
         even: true,
         toolbar: '#toolbar',
         cellMinWidth: 50,
