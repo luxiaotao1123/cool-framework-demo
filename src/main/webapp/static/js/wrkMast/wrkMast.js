@@ -17,7 +17,7 @@ layui.use(['table','laydate', 'form'], function(){
         toolbar: '#toolbar',
         cellMinWidth: 50,
         cols: [[
-            {type: 'checkbox', fixed: 'left'}
+            {type: 'checkbox'}
             ,{field: 'wrkNo', align: 'center',title: '工作号',width:80}
             ,{field: 'ioTime$', align: 'center',title: '工作时间',width:90}
             ,{field: 'wrkSts$', align: 'center',title: '工作状态',event: 'wrkSts', style: 'cursor:pointer',width:120}
