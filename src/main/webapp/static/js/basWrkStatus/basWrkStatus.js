@@ -162,7 +162,7 @@ layui.use(['table','laydate', 'form'], function(){
                     success: function(layero, index){
                         setFormVal(layer.getChildFrame('#detail', index), data, true);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
-                        layer.getChildFrame('#data-detail-submit-save', index).hide();
+                        layer.getChildFrame('#data-detail-submit-save,#prompt', index).hide();
                         layer.getChildFrame('#data-detail-submit-edit', index).hide();
                         layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
@@ -209,7 +209,7 @@ layui.use(['table','laydate', 'form'], function(){
                                    if (res.code === 200){
                                        setFormVal(layer.getChildFrame('#detail', index), res.data, true);
                                        top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
-                                       layer.getChildFrame('#data-detail-submit', index).hide();
+                                       layer.getChildFrame('#data-detail-submit,#prompt', index).hide();
                                        layer.getChildFrame('#password,#createTime\\$,#status', index).parent().parent().hide();
                                        layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                                        layero.find('iframe')[0].contentWindow.layui.form.render('select');

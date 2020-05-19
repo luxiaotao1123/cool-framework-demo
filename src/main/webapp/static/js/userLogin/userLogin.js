@@ -161,7 +161,7 @@ layui.use(['table','laydate', 'form'], function(){
                     success: function(layero, index){
                         setFormVal(layer.getChildFrame('#detail', index), data);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
-                        layer.getChildFrame('#data-detail-submit', index).hide();
+                        layer.getChildFrame('#data-detail-submit,#prompt', index).hide();
                         layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                     }
@@ -205,7 +205,7 @@ layui.use(['table','laydate', 'form'], function(){
                                     if (res.code === 200){
                                         setFormVal(layer.getChildFrame('#detail', index), res.data);
                                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
-                                        layer.getChildFrame('#data-detail-submit', index).hide();
+                                        layer.getChildFrame('#data-detail-submit,#prompt', index).hide();
                                         layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                                     } else if (res.code === 403){
