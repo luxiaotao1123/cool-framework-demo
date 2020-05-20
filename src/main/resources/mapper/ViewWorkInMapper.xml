@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cool.demo.asrs.mapper.ReportQueryMapper">
+
+<!-- mapper不支持sql语句嵌套时，采用sql片段包含方式，解决xml标签问题 -->
+<sql id="viewWorkInConditionSql">	
+		<if test="loc_no!=null and loc_no!='' ">
+			and loc_no like '%' + #{loc_no} + '%'
+		</if>
+		<if test="matnr!=null and matnr!='' ">
+			and matnr like '%' + #{matnr} + '%'
+		</if>
+		<if test="maktx!=null and maktx!='' ">
+			and (maktx like '%' + #{maktx} + '%'
+			or matnr like '%' + #{maktx} + '%'
+			or lgnum like '%' + #{maktx} + '%'
+			or tbnum like '%' + #{maktx} + '%'
+			or tbpos like '%' + #{maktx} + '%'
+			or zmatid like '%' + #{maktx} + '%'
+			or maktx like '%' + #{maktx} + '%'
+			or werks like '%' + #{maktx} + '%'
+			or anfme like '%' + #{maktx} + '%'
+			or altme like '%' + #{maktx} + '%'
+			or zpallet like '%' + #{maktx} + '%'
+			or bname like '%' + #{maktx} + '%'
+			)
+		</if>
+		<if test="begin_date!=null and begin_date!='' ">
+			<![CDATA[
+			and io_time >= #{begin_date} 			
+			]]>			
+		</if>	
+		<if test="end_date!=null and end_date!='' ">
+			<![CDATA[
+			and io_time <= #{end_date} 			
+			]]>			
+		</if>
+</sql>
+
+<sql id="viewWorkOutConditionSql">	
+		<if test="loc_no!=null and loc_no!='' ">
+			and loc_no like '%' + #{loc_no} + '%'
+		</if>
+		<if test="matnr!=null and matnr!='' ">
+			and matnr like '%' + #{matnr} + '%'
+		</if>
+		<if test="maktx!=null and maktx!='' ">
+			and (maktx like '%' + #{maktx} + '%'
+			or matnr like '%' + #{maktx} + '%'
+			or lgnum like '%' + #{maktx} + '%'
+			or tbnum like '%' + #{maktx} + '%'
+			or tbpos like '%' + #{maktx} + '%'
+			or zmatid like '%' + #{maktx} + '%'
+			or maktx like '%' + #{maktx} + '%'
+			or werks like '%' + #{maktx} + '%'
+			or anfme like '%' + #{maktx} + '%'
+			or altme like '%' + #{maktx} + '%'
+			or zpallet like '%' + #{maktx} + '%'
+			or bname like '%' + #{maktx} + '%'
+			)
+		</if>
+		<if test="begin_date!=null and begin_date!='' ">
+			<![CDATA[
+			and crn_str_time >= #{begin_date} 			
+			]]>			
+		</if>	
+		<if test="end_date!=null and end_date!='' ">
+			<![CDATA[
+			and crn_str_time <= #{end_date} 			
+			]]>			
+		</if>
+</sql>
+
+<!-- 入库统计 -->
+<!-- 分页查询所有信息 -->
+<select id="queryViewWorkInList" parameterType="com.cool.demo.asrs.entity.ViewWorkInBean" resultType="com.cool.demo.asrs.entity.ViewWorkInBean">
+select * from ( 
+select *,ROW_NUMBER() OVER(Order by io_time desc) as rowid
+ from asr_wrkin_view
+<where>
+	1=1
+ 	<include refid="viewWorkInConditionSql"></include>
+</where>
+ ) as a
+<where>
+	rowid between ((#{pageNumber}-1)*#{pageSize}+1) and (#{pageNumber}*#{pageSize})
+	<![CDATA[
+		order by io_time desc
+	]]>
+</where>
+</select>
+
+<select id="getViewWorkInCount" parameterType="com.cool.demo.asrs.entity.ViewWorkInBean"	resultType="Integer">
+select count(1) from asr_wrkin_view a
+<where>
+<![CDATA[
+	1=1
+]]>
+<include refid="viewWorkInConditionSql"></include>
+</where>
+</select>
+
+<!-- 不分页查询所有信息，用于excel导出 -->
+<select id="getViewWorkInAll" parameterType="com.cool.demo.asrs.entity.ViewWorkInBean" resultType="com.cool.demo.asrs.entity.ViewWorkInBean">
+select * from asr_wrkin_view a
+<where>
+	<![CDATA[
+ 		1=1
+ 	]]>
+	<include refid="viewWorkInConditionSql"></include>
+	<![CDATA[
+		order by io_time desc
+	]]>
+</where>
+</select>
+
+<!-- 出库统计 -->
+<!-- 分页查询所有信息 -->
+<select id="queryViewWorkOutList" parameterType="com.cool.demo.asrs.entity.ViewWorkInBean" resultType="com.cool.demo.asrs.entity.ViewWorkInBean">
+select * from ( 
+select *,ROW_NUMBER() OVER(Order by io_time desc) as rowid
+ from asr_wrkout_view
+<where>
+	1=1
+ 	<include refid="viewWorkOutConditionSql"></include>
+</where>
+ ) as a
+<where>
+	rowid between ((#{pageNumber}-1)*#{pageSize}) and (#{pageNumber}*#{pageSize})
+	<![CDATA[
+		order by io_time desc
+	]]>
+</where>
+</select>
+
+<select id="getViewWorkOutCount" parameterType="com.cool.demo.asrs.entity.ViewWorkInBean"	resultType="Integer">
+select count(1) from asr_wrkout_view a
+<where>
+<![CDATA[
+	1=1
+]]>
+<include refid="viewWorkOutConditionSql"></include>
+</where>
+</select>
+
+<!-- 不分页查询所有信息，用于excel导出 -->
+<select id="getViewWorkOutAll" parameterType="com.cool.demo.asrs.entity.ViewWorkInBean" resultType="com.cool.demo.asrs.entity.ViewWorkInBean">
+select * from asr_wrkout_view a
+<where>
+	<![CDATA[
+ 		1=1
+ 	]]>
+	<include refid="viewWorkOutConditionSql"></include>
+	<![CDATA[
+		order by io_time desc
+	]]>
+</where>
+</select>
+
+</mapper>
