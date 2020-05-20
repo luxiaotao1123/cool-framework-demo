@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cool.demo.asrs.mapper.StkPlcmMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cool.demo.asrs.entity.StkPlcm">
+        <result column="io_time" property="ioTime" />
+        <result column="wrk_no" property="wrkNo" />
+        <result column="wrk_type" property="wrkType" />
+        <result column="s_station" property="sStation" />
+        <result column="loc_no" property="locNo" />
+        <result column="crn_error" property="crnError" />
+        <result column="o_station" property="oStation" />
+        <result column="modi_user" property="modiUser" />
+        <result column="modi_time" property="modiTime" />
+        <result column="appe_user" property="appeUser" />
+        <result column="appe_time" property="appeTime" />
+        <result column="dev_no" property="devNo" />
+        <result column="input_type" property="inputType" />
+        <result column="wrk_time" property="wrkTime" />
+        <result column="tag" property="tag" />
+
+    </resultMap>
+
+</mapper>
