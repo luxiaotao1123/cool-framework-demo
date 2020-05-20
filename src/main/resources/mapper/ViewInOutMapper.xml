@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cool.demo.asrs.mapper.ReportQueryMapper">
+
+<!-- mapper不支持sql语句嵌套时，采用sql片段包含方式，解决xml标签问题 -->
+<sql id="viewInOutConditionSql">	
+		<if test="source_sta_no!=null and source_sta_no!='' ">
+			and source_sta_no like '%' + #{source_sta_no} + '%'
+		</if>
+		<if test="begin_date!=null and begin_date!='' ">
+			<![CDATA[
+			and ymd >= #{begin_date} 			
+			]]>			
+		</if>	
+		<if test="end_date!=null and end_date!='' ">
+			<![CDATA[
+			and ymd <= #{end_date} 			
+			]]>			
+		</if>
+</sql>
+
+<!-- 分页查询所有信息 -->
+<select id="queryViewInOutList" parameterType="com.cool.demo.asrs.entity.ViewInOutBean" resultType="com.cool.demo.asrs.entity.ViewInOutBean">
+select * from ( 
+select *,ROW_NUMBER() OVER(Order by ymd desc) as rowid
+ from asr_sta_inout_view
+<where>
+	1=1
+ 	<include refid="viewInOutConditionSql"></include>
+</where>
+ ) as a
+<where>
+	rowid between ((#{pageNumber}-1)*#{pageSize}+1) and (#{pageNumber}*#{pageSize})
+	<![CDATA[
+		order by ymd desc
+	]]>
+</where>
+</select>
+
+<select id="getViewInOutCount" parameterType="com.cool.demo.asrs.entity.ViewInOutBean"	resultType="Integer">
+select count(1) from asr_sta_inout_view a
+<where>
+<![CDATA[
+	1=1
+]]>
+<include refid="viewInOutConditionSql"></include>
+</where>
+</select>
+
+<!-- 不分页查询所有信息，用于excel导出 -->
+<select id="getViewInOutAll" parameterType="com.cool.demo.asrs.entity.ViewInOutBean" resultType="com.cool.demo.asrs.entity.ViewInOutBean">
+select * from asr_sta_inout_view a
+<where>
+	<![CDATA[
+ 		1=1
+ 	]]>
+	<include refid="viewInOutConditionSql"></include>
+	<![CDATA[
+		order by ymd desc
+	]]>
+</where>
+</select>
+
+</mapper>

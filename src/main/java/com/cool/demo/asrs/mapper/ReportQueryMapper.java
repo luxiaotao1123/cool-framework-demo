@@ -1,5 +1,6 @@
 package com.cool.demo.asrs.mapper;
 
+import com.cool.demo.asrs.entity.ViewInOutBean;
 import com.cool.demo.asrs.entity.ViewStayTimeBean;
 import com.cool.demo.asrs.entity.ViewStockUseBean;
 import com.cool.demo.asrs.entity.ViewWorkInBean;
@@ -23,6 +24,12 @@ public interface ReportQueryMapper {
 	public int getViewStayTimeCount(ViewStayTimeBean viewStayTime);
 	//不分页查询所有信息，用于excel导出
 	public List<ViewStayTimeBean> getViewStayTimeAll(ViewStayTimeBean viewStayTime);
+
+	//分页查询站点入出库次数统计
+	public List<ViewInOutBean> queryViewInOutList(ViewInOutBean viewInOut);
+	public int getViewInOutCount(ViewInOutBean viewInOut);
+	//不分页查询所有信息，用于excel导出
+	public List<ViewInOutBean> getViewInOutAll(ViewInOutBean viewInOut);
 
 	//分页查询日入库记录
 	public List<ViewWorkInBean> queryViewWorkInList(ViewWorkInBean viewWorkIn);

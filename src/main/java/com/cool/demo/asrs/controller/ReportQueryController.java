@@ -2,6 +2,7 @@ package com.cool.demo.asrs.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.cool.demo.asrs.entity.ViewInOutBean;
 import com.cool.demo.asrs.entity.ViewStayTimeBean;
 import com.cool.demo.asrs.entity.ViewStockUseBean;
 import com.cool.demo.asrs.entity.ViewWorkInBean;
@@ -78,8 +79,32 @@ public class ReportQueryController extends BaseController {
 		return R.ok(exportSupport(list, fields));
 	}
 
+	//------------------站点日入出库次数统计--------------------------------------
+	@RequestMapping("/viewInOutList.action")
+	public Map<String,Object> viewInOutList(@RequestParam(defaultValue = "1")Integer curr,
+											 @RequestParam(defaultValue = "10")Integer limit,
+											 @RequestParam Map<String, Object> param){
+		ViewInOutBean bean = new ViewInOutBean();
+		bean.setPageSize(limit);
+		bean.setPageNumber(curr);
+		List<ViewInOutBean> list = reportQueryMapper.queryViewInOutList(bean);
+		int count = reportQueryMapper.getViewInOutCount(bean);
+		Page<ViewInOutBean> page = new Page<>();
+		page.setRecords(list);
+		page.setTotal(count);
+		return R.ok(page);
+	}
+
+	//excel导出
+	@RequestMapping("/viewInOutExport.action")
+	@ManagerAuth
+	public R viewInOutExport(@RequestBody JSONObject param){
+		List<String> fields = JSONObject.parseArray(param.getJSONArray("fields").toJSONString(), String.class);
+		List<ViewInOutBean> list = reportQueryMapper.getViewInOutAll(new ViewInOutBean());
+		return R.ok(exportSupport(list, fields));
+	}
+
 	//------------------日入库明细统计--------------------------------------
-	@ResponseBody
 	@RequestMapping("/viewWorkInList.action")
 	public Map<String,Object> viewWorkInList(@RequestParam(defaultValue = "1")Integer curr,
 											 @RequestParam(defaultValue = "10")Integer limit,
