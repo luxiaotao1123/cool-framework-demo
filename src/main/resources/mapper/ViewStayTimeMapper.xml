@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cool.demo.asrs.mapper.ReportQueryMapper">
+
+<!-- mapper不支持sql语句嵌套时，采用sql片段包含方式，解决xml标签问题 -->
+<sql id="viewStayTimeConditionSql">	
+		<if test="loc_no!=null and loc_no!='' ">
+			and loc_no like '%' + #{loc_no} + '%'
+		</if>
+		<if test="matnr!=null and matnr!='' ">
+			and matnr like '%' + #{matnr} + '%'
+		</if>
+		<if test="stay_time!=null and stay_time!='' ">
+			and stay_time > #{stay_time}
+		</if>
+<!-- 		<if test="appe_time!=null and appe_time!='' "> -->
+<!-- 			and appe_time > #{appe_time} -->
+<!-- 		</if> -->
+		<if test="maktx!=null and maktx!='' ">
+			and (maktx like '%' + #{maktx} + '%'
+			or lgnum like '%' + #{maktx} + '%'
+			or tbnum like '%' + #{maktx} + '%'
+			or tbpos like '%' + #{maktx} + '%'
+			or zmatid like '%' + #{maktx} + '%'
+			or werks like '%' + #{maktx} + '%'
+			or anfme like '%' + #{maktx} + '%'
+			or altme like '%' + #{maktx} + '%'
+			or zpallet like '%' + #{maktx} + '%'
+			or bname like '%' + #{maktx} + '%'
+			)
+		</if>
+		<if test="begin_date!=null and begin_date!='' ">
+			<![CDATA[
+			and appe_time >= #{begin_date} 			
+			]]>			
+		</if>	
+		<if test="end_date!=null and end_date!='' ">
+			<![CDATA[
+			and appe_time <= #{end_date} 			
+			]]>			
+		</if>
+</sql>
+
+<!-- 分页查询所有信息 -->
+<select id="queryViewStayTimeList" parameterType="com.cool.demo.asrs.entity.ViewStayTimeBean" resultType="com.cool.demo.asrs.entity.ViewStayTimeBean">
+select * from ( 
+select *,ROW_NUMBER() OVER(Order by appe_time,loc_no,matnr) as rowid
+ from asr_stk_staytime_view
+<where>
+	1=1
+ 	<include refid="viewStayTimeConditionSql"></include>
+</where>
+ ) as a
+<where>
+	rowid between ((#{pageNumber}-1)*#{pageSize}+1) and (#{pageNumber}*#{pageSize})
+	<![CDATA[
+		order by a.appe_time asc
+	]]>
+</where>
+</select>
+
+<select id="getViewStayTimeCount" parameterType="com.cool.demo.asrs.entity.ViewStayTimeBean"	resultType="Integer">
+select count(1) from asr_stk_staytime_view a
+<where>
+<![CDATA[
+	1=1
+]]>
+<include refid="viewStayTimeConditionSql"></include>
+</where>
+</select>
+
+<!-- 不分页查询所有信息，用于excel导出 -->
+<select id="getViewStayTimeAll" parameterType="com.cool.demo.asrs.entity.ViewStayTimeBean" resultType="com.cool.demo.asrs.entity.ViewStayTimeBean">
+select * from asr_stk_staytime_view a
+<where>
+	<![CDATA[
+ 		1=1
+ 	]]>
+	<include refid="viewStayTimeConditionSql"></include>
+	<![CDATA[
+		order by appe_time asc
+	]]>
+</where>
+</select>
+
+</mapper>

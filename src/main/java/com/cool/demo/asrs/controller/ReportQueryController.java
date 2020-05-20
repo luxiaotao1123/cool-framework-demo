@@ -2,6 +2,7 @@ package com.cool.demo.asrs.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.cool.demo.asrs.entity.ViewStayTimeBean;
 import com.cool.demo.asrs.entity.ViewStockUseBean;
 import com.cool.demo.asrs.mapper.ReportQueryMapper;
 import com.cool.demo.common.web.BaseController;
@@ -30,11 +31,11 @@ public class ReportQueryController extends BaseController {
 	public R queryViewStockUseListByPages(@RequestParam(defaultValue = "1")Integer curr,
 										  @RequestParam(defaultValue = "10")Integer limit,
 										  @RequestParam Map<String, Object> param){
-		ViewStockUseBean viewStockUse = new ViewStockUseBean();
-		viewStockUse.setPageSize(limit);
-		viewStockUse.setPageNumber(curr);
-		List<ViewStockUseBean> list= reportQueryMapper.queryViewStockUseList(viewStockUse);
-		int count = reportQueryMapper.getViewStockUseCount(viewStockUse);
+		ViewStockUseBean bean = new ViewStockUseBean();
+		bean.setPageSize(limit);
+		bean.setPageNumber(curr);
+		List<ViewStockUseBean> list= reportQueryMapper.queryViewStockUseList(bean);
+		int count = reportQueryMapper.getViewStockUseCount(bean);
 		Page<ViewStockUseBean> page = new Page<>();
 		page.setRecords(list);
 		page.setTotal(count);
@@ -44,9 +45,36 @@ public class ReportQueryController extends BaseController {
 	// 导出
 	@RequestMapping(value = "/viewStockUseExport.action")
 	@ManagerAuth
-	public R export(@RequestBody JSONObject param){
+	public R viewStockUseExport(@RequestBody JSONObject param){
 		List<String> fields = JSONObject.parseArray(param.getJSONArray("fields").toJSONString(), String.class);
 		List<ViewStockUseBean> list = reportQueryMapper.getViewStockUseAll(new ViewStockUseBean());
 		return R.ok(exportSupport(list, fields));
 	}
+
+	//------------------库存滞留统计--------------------------------------
+	@ResponseBody
+	@RequestMapping("/viewStayTimeList.action")
+	public Map<String,Object> queryViewStayTimeListByPages(@RequestParam(defaultValue = "1")Integer curr,
+														   @RequestParam(defaultValue = "10")Integer limit,
+														   @RequestParam Map<String, Object> param){
+		ViewStayTimeBean bean = new ViewStayTimeBean();
+		bean.setPageSize(limit);
+		bean.setPageNumber(curr);
+		List<ViewStayTimeBean> list = reportQueryMapper.queryViewStayTimeList(bean);
+		int count = reportQueryMapper.getViewStayTimeCount(bean);
+		Page<ViewStayTimeBean> page = new Page<>();
+		page.setRecords(list);
+		page.setTotal(count);
+		return R.ok(page);
+	}
+
+	// 导出
+	@RequestMapping(value = "/viewStayTimeExport.action")
+	@ManagerAuth
+	public R viewStayTimeExport(@RequestBody JSONObject param){
+		List<String> fields = JSONObject.parseArray(param.getJSONArray("fields").toJSONString(), String.class);
+		List<ViewStayTimeBean> list = reportQueryMapper.getViewStayTimeAll(new ViewStayTimeBean());
+		return R.ok(exportSupport(list, fields));
+	}
+
 }
