@@ -78,11 +78,37 @@ public class ReportQueryController extends BaseController {
 		return R.ok(exportSupport(list, fields));
 	}
 
+	//------------------日入库明细统计--------------------------------------
+	@ResponseBody
+	@RequestMapping("/viewWorkInList.action")
+	public Map<String,Object> viewWorkInList(@RequestParam(defaultValue = "1")Integer curr,
+											 @RequestParam(defaultValue = "10")Integer limit,
+											 @RequestParam Map<String, Object> param){
+		ViewWorkInBean bean = new ViewWorkInBean();
+		bean.setPageSize(limit);
+		bean.setPageNumber(curr);
+		List<ViewWorkInBean> list = reportQueryMapper.queryViewWorkInList(bean);
+		int count = reportQueryMapper.getViewWorkInCount(bean);
+		Page<ViewWorkInBean> page = new Page<>();
+		page.setRecords(list);
+		page.setTotal(count);
+		return R.ok(page);
+	}
+
+	//excel导出
+	@RequestMapping("/viewWorkInExport.action")
+	@ManagerAuth
+	public R viewWorkInExport(@RequestBody JSONObject param){
+		List<String> fields = JSONObject.parseArray(param.getJSONArray("fields").toJSONString(), String.class);
+		List<ViewWorkInBean> list = reportQueryMapper.getViewWorkInAll(new ViewWorkInBean());
+		return R.ok(exportSupport(list, fields));
+	}
+
 	//------------------日出库明细统计--------------------------------------
 	@RequestMapping("/viewWorkOutList.action")
 	public R viewWorkOutList(@RequestParam(defaultValue = "1")Integer curr,
-										  @RequestParam(defaultValue = "10")Integer limit,
-										  @RequestParam Map<String, Object> param){
+						  @RequestParam(defaultValue = "10")Integer limit,
+						  @RequestParam Map<String, Object> param){
 		ViewWorkInBean bean = new ViewWorkInBean();
 		bean.setPageSize(limit);
 		bean.setPageNumber(curr);

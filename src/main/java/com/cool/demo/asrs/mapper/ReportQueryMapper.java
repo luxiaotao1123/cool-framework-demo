@@ -24,6 +24,12 @@ public interface ReportQueryMapper {
 	//不分页查询所有信息，用于excel导出
 	public List<ViewStayTimeBean> getViewStayTimeAll(ViewStayTimeBean viewStayTime);
 
+	//分页查询日入库记录
+	public List<ViewWorkInBean> queryViewWorkInList(ViewWorkInBean viewWorkIn);
+	public int getViewWorkInCount(ViewWorkInBean viewWorkIn);
+	//不分页查询所有信息，用于excel导出
+	public List<ViewWorkInBean> getViewWorkInAll(ViewWorkInBean viewWorkIn);
+
 	//分页查询日出库记录
 	public List<ViewWorkInBean> queryViewWorkOutList(ViewWorkInBean viewWorkOut);
 	public int getViewWorkOutCount(ViewWorkInBean viewWorkOut);
