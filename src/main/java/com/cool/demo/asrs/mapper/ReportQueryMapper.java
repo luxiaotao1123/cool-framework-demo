@@ -1,10 +1,9 @@
 package com.cool.demo.asrs.mapper;
 
-import com.cool.demo.asrs.entity.ViewInOutBean;
-import com.cool.demo.asrs.entity.ViewStayTimeBean;
-import com.cool.demo.asrs.entity.ViewStockUseBean;
-import com.cool.demo.asrs.entity.ViewWorkInBean;
+import com.cool.demo.asrs.entity.*;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,12 +17,18 @@ public interface ReportQueryMapper {
 	int getViewStockUseCount(ViewStockUseBean viewStockUse);
 	List<ViewStockUseBean> getViewStockUseAll(ViewStockUseBean viewStockUse);
 
-
 	//分页查询库存滞留时间
 	public List<ViewStayTimeBean> queryViewStayTimeList(ViewStayTimeBean viewStayTime);
 	public int getViewStayTimeCount(ViewStayTimeBean viewStayTime);
 	//不分页查询所有信息，用于excel导出
 	public List<ViewStayTimeBean> getViewStayTimeAll(ViewStayTimeBean viewStayTime);
+
+	// 库位Map
+	@Select("select distinct lev1 from asr_loc_mast where row1=#{row1} order by lev1 desc")
+	public List<String> getViewLocLevCount(@Param("row1")int row1);
+
+	@Select("select bay1,loc_type as locType from asr_loc_mast where row1=#{row1} and lev1=#{lev1} order by bay1")
+	public List<ViewLocMapDto> getViewLocBays(@Param("row1")int row1, @Param("lev1")int lev1);
 
 	//分页查询站点入出库次数统计
 	public List<ViewInOutBean> queryViewInOutList(ViewInOutBean viewInOut);
