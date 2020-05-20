@@ -13,7 +13,7 @@ layui.use(['table','laydate', 'form'], function(){
         url: '/locDetl/list/auth',
         page: true,
         limit: 10,
-        // skin: 'line',
+        skin: 'line',
         even: true,
         toolbar: '#toolbar',
         cellMinWidth: 50,
