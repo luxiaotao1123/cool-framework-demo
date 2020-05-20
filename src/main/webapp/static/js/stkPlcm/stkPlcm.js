@@ -199,7 +199,7 @@ layui.use(['table','laydate', 'form'], function(){
                 break;
             case 'locNo':
                 var param = top.reObject(data).locNo;
-                if (param === undefined) {
+                if (param === undefined || param.trim() === '') {
                     layer.msg("无数据");
                 } else {
                    layer.open({
