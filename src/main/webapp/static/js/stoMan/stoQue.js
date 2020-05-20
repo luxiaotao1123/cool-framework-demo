@@ -20,12 +20,12 @@ layui.use(['table','laydate', 'form'], function(){
         cols: [[
             {type: 'checkbox', fixed: 'left'}
             ,{field: 'locNo', align: 'center',title: '库位号'}
-            ,{field: 'locType$', align: 'center',title: '库位状态',width:200}
+            ,{field: 'locType$', align: 'center',title: '库位状态'}
             ,{field: 'whsType$', align: 'center',title: '库位类型'}
             ,{field: 'crnNo', align: 'center',title: '堆垛机号'}
-            ,{field: 'row1', align: 'center',title: '排', width:80}
-            ,{field: 'bay1', align: 'center',title: '列', width:80}
-            ,{field: 'lev1', align: 'center',title: '层', width:80}
+            ,{field: 'row1', align: 'center',title: '排'}
+            ,{field: 'bay1', align: 'center',title: '列'}
+            ,{field: 'lev1', align: 'center',title: '层'}
             ,{field: 'fullPlt', align: 'center',title: '满板', templet:function(row){
                     var html = "<input value='fullPlt' type='checkbox' lay-skin='primary' lay-filter='tableCheckbox' table-index='"+row.LAY_TABLE_INDEX+"'";
                     if(row.fullPlt === 'Y'){html += " checked ";}
@@ -33,8 +33,8 @@ layui.use(['table','laydate', 'form'], function(){
                     return html;
                 },width:80}
             ,{field: 'modiUser$', align: 'center',title: '修改人员'}
-            ,{field: 'modiTime$', align: 'center',title: '修改时间', width:200}
-            ,{ fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
+            ,{field: 'modiTime$', align: 'center',title: '修改时间'}
+            ,{ fixed: 'right', title:'操作', align: 'center', toolbar: '#operate'}
         ]],
         request: {
             pageName: 'curr',
