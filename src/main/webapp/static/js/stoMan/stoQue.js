@@ -20,8 +20,8 @@ layui.use(['table','laydate', 'form'], function(){
         cols: [[
             {type: 'checkbox', fixed: 'left'}
             ,{field: 'locNo', align: 'center',title: '库位号'}
-            ,{field: 'locType$', align: 'center',title: '库位状态',event: 'locType', style: 'text-decoration: underline;cursor:pointer',width:200}
-            ,{field: 'whsType$', align: 'center',title: '库位类型',event: 'whsType', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'locType$', align: 'center',title: '库位状态',width:200}
+            ,{field: 'whsType$', align: 'center',title: '库位类型'}
             ,{field: 'crnNo', align: 'center',title: '堆垛机号'}
             ,{field: 'row1', align: 'center',title: '排', width:80}
             ,{field: 'bay1', align: 'center',title: '列', width:80}
@@ -32,7 +32,7 @@ layui.use(['table','laydate', 'form'], function(){
                     html += ">";
                     return html;
                 },width:80}
-            ,{field: 'modiUser$', align: 'center',title: '修改人员',event: 'modiUser', style: 'cursor:pointer'}
+            ,{field: 'modiUser$', align: 'center',title: '修改人员'}
             ,{field: 'modiTime$', align: 'center',title: '修改时间', width:200}
             ,{ fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
         ]],
