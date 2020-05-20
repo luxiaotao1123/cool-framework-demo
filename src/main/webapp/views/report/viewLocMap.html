@@ -17,6 +17,10 @@
 </head>
 <body>
 
+<div id="test" style="height: 500px">
+
+</div>
+
 <!-- 搜索栏 -->
 <div id="search-box" class="layui-form layui-card-header">
     <!--<div class="layui-inline">-->
@@ -35,12 +39,20 @@
 
 <!-- 表格 -->
 <table class="layui-hide" id="locMap" lay-filter="locMap"></table>
+<script type="text/template" id="locMapTemplate">
+    {{#each title}}
+    <div class="demo">
+        <h1>{{lev}}</h1>
+    </div>
+    {{/each}}
+</script>
 
 <script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/static/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript" src="/static/js/report/locMap.js" charset="utf-8"></script>
 <script type="text/javascript" src="/static/js/common.js" charset="utf-8"></script>
 <script type="text/javascript" src="/static/js/cool.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/handlebars/handlebars-v4.5.3.js"></script>
 </body>
 </html>
 
