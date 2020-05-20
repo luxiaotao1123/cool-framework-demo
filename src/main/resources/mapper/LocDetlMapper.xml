@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cool.demo.asrs.mapper.LocDetlMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cool.demo.asrs.entity.LocDetl">
+        <result column="loc_no" property="locNo" />
+        <result column="matnr" property="matnr" />
+        <result column="lgnum" property="lgnum" />
+        <result column="tbnum" property="tbnum" />
+        <result column="tbpos" property="tbpos" />
+        <result column="zmatid" property="zmatid" />
+        <result column="maktx" property="maktx" />
+        <result column="werks" property="werks" />
+        <result column="anfme" property="anfme" />
+        <result column="altme" property="altme" />
+        <result column="zpallet" property="zpallet" />
+        <result column="bname" property="bname" />
+        <result column="memo" property="memo" />
+        <result column="modi_user" property="modiUser" />
+        <result column="modi_time" property="modiTime" />
+        <result column="appe_user" property="appeUser" />
+        <result column="appe_time" property="appeTime" />
+
+    </resultMap>
+
+</mapper>

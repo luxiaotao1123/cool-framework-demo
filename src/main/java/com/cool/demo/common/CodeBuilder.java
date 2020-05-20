@@ -15,10 +15,10 @@ public class CodeBuilder {
 //        generator.password="xltys1995";
 //        generator.table="sys_host";
         // sqlserver
-        generator.url="192.168.1.102:1433;databasename=cool";
+        generator.url="192.168.3.222:1433;databasename=cool";
         generator.username="sa";
         generator.password="sa@123";
-        generator.table="asr_stk_plcm";
+        generator.table="asr_loc_detl";
         generator.packagePath="com.cool.demo.asrs";
         generator.build();
     }
