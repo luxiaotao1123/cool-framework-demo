@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cool.demo.asrs.mapper.ReportQueryMapper">
+
+<!-- mapper不支持sql语句嵌套时，采用sql片段包含方式，解决xml标签问题 -->
+<sql id="viewStockUseConditionSql">	
+		<if test="row1!=null and row1!='' ">
+			and row1 like '%' + #{row1} + '%'
+		</if>
+</sql>
+
+<!-- 分页查询所有信息 -->
+<select id="queryViewStockUseList" parameterType="com.cool.demo.asrs.entity.ViewStockUseBean" resultType="com.cool.demo.asrs.entity.ViewStockUseBean">
+select top (#{pageSize}) * from asr_stk_use_view 
+<where>
+	row1 not in (select top ((#{pageNumber}-1)*#{pageSize}) row1 from asr_stk_use_view 
+	<where>
+		1=1
+		<include refid="viewStockUseConditionSql"></include>		
+	</where>
+	order by row1 asc)
+	<include refid="viewStockUseConditionSql"></include>
+	<![CDATA[
+		order by row1 asc
+	]]>
+</where>
+</select>
+
+<select id="getViewStockUseCount" parameterType="com.cool.demo.asrs.entity.ViewStockUseBean"	resultType="Integer">
+select count(1) from asr_stk_use_view
+<where>
+<![CDATA[
+	1=1
+]]>
+<include refid="viewStockUseConditionSql"></include>
+</where>
+</select>
+
+<!-- 不分页查询所有信息，用于excel导出 -->
+<select id="getViewStockUseAll" parameterType="com.cool.demo.asrs.entity.ViewStockUseBean" resultType="com.cool.demo.asrs.entity.ViewStockUseBean">
+select * from asr_stk_use_view 
+<where>
+	<![CDATA[
+ 		1=1
+ 	]]>
+	<include refid="viewStockUseConditionSql"></include>
+	<![CDATA[
+		order by row1 asc
+	]]>
+</where>
+</select>
+
+</mapper>
