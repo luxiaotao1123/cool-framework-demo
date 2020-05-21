@@ -32,8 +32,16 @@ layui.use(['table','laydate', 'form'], function(){
 });
 
 var locNo = '';
-function locDetl(val) {
-    if (val===null ||val === undefined|| val.trim()===''){
+function locDetl(el) {
+    var value = $(el).attr('title');
+    var html = $(el).html();
+    if (value===null
+        ||value === undefined
+        || value.trim()===''
+        || html.trim()==='S'
+        || html.trim()==='D'
+        || html.trim()==='O'
+    ){
 
     } else {
         layer.open({
@@ -44,7 +52,7 @@ function locDetl(val) {
             shadeClose: false,
             content: 'locDetl.html',
             success: function(layero, index){
-                locNo = val;
+                locNo = value;
             }
         });
     }
