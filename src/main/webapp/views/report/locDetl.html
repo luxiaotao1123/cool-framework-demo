@@ -23,9 +23,6 @@
     </div>
 </div>
 <table class="layui-hide" id="locDetlByMap" lay-filter="locDetlByMap"></table>
-<!--<div id="data-detail-btn" class="layui-btn-container layui-form-item">-->
-    <!--<div id="data-detail-close" type="button" class="layui-btn" lay-submit lay-filter="close">关闭</div>-->
-<!--</div>-->
 </body>
 <script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/static/layui/layui.js" charset="utf-8"></script>
@@ -37,7 +34,6 @@
     layui.use(['table','laydate', 'form'], function() {
         table = layui.table;
         var $ = layui.jquery;
-        var layer = layui.layer;
         var form = layui.form;
 
         $('#locNo').val(parent.locNo);
@@ -57,14 +53,14 @@
                 // {type: 'checkbox'}
                 {field: 'locNo$', align: 'center',title: '库位号'}
                 ,{field: 'matnr', align: 'center',title: '物料'}
-                ,{field: 'lgnum', align: 'center',title: '仓库号', width:80}
+                ,{field: 'lgnum', align: 'center',title: '仓库号'}
                 ,{field: 'tbnum', align: 'center',title: '转储请求编号'}
                 // ,{field: 'tbpos', align: 'center',title: '行项目'}
-                ,{field: 'zmatid', align: 'center',title: '物料标签ID', width:200}
-                ,{field: 'maktx', align: 'center',title: '物料描述', width:150}
+                ,{field: 'zmatid', align: 'center',title: '物料标签ID'}
+                ,{field: 'maktx', align: 'center',title: '物料描述'}
                 ,{field: 'werks', align: 'center',title: '工厂'}
-                ,{field: 'anfme', align: 'center',title: '数量', width:80}
-                ,{field: 'altme', align: 'center',title: '单位', width:80}
+                ,{field: 'anfme', align: 'center',title: '数量'}
+                ,{field: 'altme', align: 'center',title: '单位'}
                 ,{field: 'zpallet', align: 'center',title: '托盘条码'}
                 ,{field: 'bname', align: 'center',title: '用户ID'}
             ]],
@@ -88,7 +84,6 @@
                     top.location.href = "/";
                 }
                 pageCur=curr;
-                limit();
                 form.on('checkbox(tableCheckbox)', function (data) {
                     var _index = $(data.elem).attr('table-index')||0;
                     if(data.elem.checked){
