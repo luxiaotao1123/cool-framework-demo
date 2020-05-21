@@ -93,7 +93,7 @@ public class ReportQueryController extends BaseController {
 			// 获取层级数据
 			List<ViewLocMapDto> dtos = reportQueryMapper.getViewLocBays(row, Integer.parseInt(lev));
 			// ！表格第一列放层级数
-			dtos.add(0, new ViewLocMapDto(null, lev));
+			dtos.add(0, new ViewLocMapDto(null ,null, lev));
 			Map<String, Object> map = new HashMap<>();
 			map.put("loc", dtos);
 			body.add(map);

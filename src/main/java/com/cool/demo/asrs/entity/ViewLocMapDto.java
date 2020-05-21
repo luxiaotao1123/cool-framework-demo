@@ -5,17 +5,33 @@ package com.cool.demo.asrs.entity;
  */
 public class ViewLocMapDto {
 
+    // 库位号
+    private String locNo;
     // 列
     private Integer bay1;
     // 库位状态
     private String locType;
+    // 背景色
+    private String bgc = "#fff";
+    // 字体颜色
+    private String color = "#666";
 
     public ViewLocMapDto() {
     }
 
-    public ViewLocMapDto(Integer bay1, String locType) {
+    public ViewLocMapDto(String locNo, Integer bay1, String locType) {
+        this.locNo = locNo;
         this.bay1 = bay1;
         this.locType = locType;
+        this.bgc = getBgc();
+    }
+
+    public String getLocNo() {
+        return locNo;
+    }
+
+    public void setLocNo(String locNo) {
+        this.locNo = locNo;
     }
 
     public Integer getBay1() {
@@ -32,5 +48,24 @@ public class ViewLocMapDto {
 
     public void setLocType(String locType) {
         this.locType = locType;
+    }
+
+    public String getBgc() {
+        if (locType.equals("F")){
+            return "#000";
+        }
+        return bgc;
+    }
+
+    public void setBgc(String bgc) {
+        this.bgc = bgc;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

@@ -27,7 +27,7 @@ public interface ReportQueryMapper {
 	@Select("select distinct lev1 from asr_loc_mast where row1=#{row1} order by lev1 desc")
 	public List<String> getViewLocLevCount(@Param("row1")int row1);
 //
-	@Select("select bay1,loc_type as locType from asr_loc_mast where row1=#{row1} and lev1=#{lev1} order by bay1")
+	@Select("select loc_no as locNo, bay1,loc_type as locType from asr_loc_mast where row1=#{row1} and lev1=#{lev1} order by bay1")
 	public List<ViewLocMapDto> getViewLocBays(@Param("row1")int row1, @Param("lev1")int lev1);
 
 	// 库位Map

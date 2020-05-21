@@ -13,16 +13,20 @@
         #btn-export {
             float:initial !important;
         }
+        .layui-table-body.layui-table-main{
+            overflow: auto; !important;
+        }
+        .a-loc {
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-
 <!-- 搜索栏 -->
 <div id="search-box" class="layui-form layui-card-header">
-    <div class="layui-inline">
-        <label class="layui-form-label">第 几 排：</label>
+    <div class="layui-inline" style="margin-left: 20px">
         <div class="layui-input-inline">
-            <select name="row">
+            <select name="row" lay-filter="row">
                 <option value="1">第1排</option>
                 <option value="2">第2排</option>
                 <option value="3">第3排</option>
@@ -30,19 +34,12 @@
             </select>
         </div>
     </div>
-
-    <!-- 待添加 -->
-    <div id="data-search-btn" class="layui-btn-container layui-form-item">
-        <button id="search" class="layui-btn layui-btn-primary layui-btn-radius" lay-submit lay-filter="search">搜索</button>
-        <button id="reset" class="layui-btn layui-btn-primary layui-btn-radius" lay-submit lay-filter="reset">重置</button>
-    </div>
 </div>
-
 <!-- 表格 -->
-<table class="layui-table" id="locMap" lay-filter="locMap">
-</table>
-<script type="text/template" id="locMapTemplate">
+<table class="layui-table" id="locMap" lay-filter="locMap"></table>
+<iframe id="detail-iframe" scrolling="auto" style="display:none;"></iframe>
 
+<script type="text/template" id="locMapTemplate">
     <thead>
         <tr>
         {{#each title}}
@@ -54,13 +51,12 @@
         {{#each body}}
         <tr>
             {{#each loc}}
-                <td>{{locType}}</td>
+                <td class="a-loc" title="{{locNo}}" onclick="locDetl(this.title)" style="background-color:{{bgc}};color:{{color}}">{{locType}}</td>
             {{/each}}
         </tr>
         {{/each}}
     </tbody>
 </script>
-
 <script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/static/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript" src="/static/js/report/locMap.js" charset="utf-8"></script>
