@@ -58,8 +58,3 @@ function locDetl(el) {
     }
 }
 
-// 关闭动作
-$(document).on('click','#data-detail-close', function () {
-    parent.layer.closeAll();
-});
-

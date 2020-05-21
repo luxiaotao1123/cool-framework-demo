@@ -10,11 +10,12 @@
     <link rel="stylesheet" href="/static/css/cool.css" media="all">
     <link rel="stylesheet" href="/static/css/common.css" media="all">
     <style>
-        #btn-export {
-            float:initial !important;
+        #locMapContain {
+            overflow-x: auto;
+            width:100%;
+            height:700px
         }
-        .layui-table-body.layui-table-main{
-            overflow: auto; !important;
+        #locMap {
         }
         .a-loc {
             cursor: pointer;
@@ -25,12 +26,15 @@
         .layui-table td, .layui-table th {
             font-weight: bold;
         }
-    </style>
+        .layui-table, .layui-table-view {
+            margin: 0;
+        }
+</style>
 </head>
 <body>
 <!-- 搜索栏 -->
 <div id="search-box" class="layui-form layui-card-header">
-    <div class="layui-inline" style="margin-left: 20px">
+    <div class="layui-inline" style="margin-left: 10px">
         <div class="layui-input-inline">
             <select name="row" lay-filter="row">
                 <option value="1">第1排</option>
@@ -41,8 +45,11 @@
         </div>
     </div>
 </div>
+<div id="locMapContain">
+    <table class="layui-table" id="locMap" lay-filter="locMap"></table>
+</div>
 <!-- 表格 -->
-<table class="layui-table" id="locMap" lay-filter="locMap"></table>
+
 <iframe id="detail-iframe" scrolling="auto" style="display:none;"></iframe>
 
 <script type="text/template" id="locMapTemplate">
