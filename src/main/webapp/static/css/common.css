@@ -52,6 +52,10 @@ body {
 }
 
 /*表格*/
+.layui-table thead th {
+    font-weight: bold;
+    text-align: center;
+}
 div .layui-table-tool .layui-table-tool-self .layui-inline[title='导出']{
     display: none;
 }
