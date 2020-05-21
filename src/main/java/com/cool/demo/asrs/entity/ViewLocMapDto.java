@@ -10,6 +10,14 @@ public class ViewLocMapDto {
     // 库位状态
     private String locType;
 
+    public ViewLocMapDto() {
+    }
+
+    public ViewLocMapDto(Integer bay1, String locType) {
+        this.bay1 = bay1;
+        this.locType = locType;
+    }
+
     public Integer getBay1() {
         return bay1;
     }

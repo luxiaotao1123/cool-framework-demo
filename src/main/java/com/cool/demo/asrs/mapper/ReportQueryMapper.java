@@ -23,12 +23,20 @@ public interface ReportQueryMapper {
 	//不分页查询所有信息，用于excel导出
 	public List<ViewStayTimeBean> getViewStayTimeAll(ViewStayTimeBean viewStayTime);
 
-	// 库位Map
+//	// 库位Map
 	@Select("select distinct lev1 from asr_loc_mast where row1=#{row1} order by lev1 desc")
 	public List<String> getViewLocLevCount(@Param("row1")int row1);
-
+//
 	@Select("select bay1,loc_type as locType from asr_loc_mast where row1=#{row1} and lev1=#{lev1} order by bay1")
 	public List<ViewLocMapDto> getViewLocBays(@Param("row1")int row1, @Param("lev1")int lev1);
+
+	// 库位Map
+	@Select("select distinct bay1 from asr_loc_mast where row1=#{row1} order by bay1")
+	public List<String> getViewLocBayCount(@Param("row1")int row1);
+
+	@Select("select lev1,loc_type as locType from asr_loc_mast where row1=#{row1} and bay1=#{bay1} order by bay1")
+	public List<ViewLocMapDto> getViewLocLevs(@Param("row1")int row1, @Param("bay1")int bay1);
+
 
 	//分页查询站点入出库次数统计
 	public List<ViewInOutBean> queryViewInOutList(ViewInOutBean viewInOut);

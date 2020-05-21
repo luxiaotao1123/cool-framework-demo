@@ -17,18 +17,19 @@
 </head>
 <body>
 
-<div id="test" style="height: 500px">
-
-</div>
-
 <!-- 搜索栏 -->
 <div id="search-box" class="layui-form layui-card-header">
-    <!--<div class="layui-inline">-->
-        <!--<label class="layui-form-label">库 位 号：</label>-->
-        <!--<div class="layui-input-inline">-->
-            <!--<input class="layui-input" type="text" name="id" placeholder="请输入" autocomplete="off">-->
-        <!--</div>-->
-    <!--</div>-->
+    <div class="layui-inline">
+        <label class="layui-form-label">第 几 排：</label>
+        <div class="layui-input-inline">
+            <select name="row">
+                <option value="1">第1排</option>
+                <option value="2">第2排</option>
+                <option value="3">第3排</option>
+                <option value="4">第4排</option>
+            </select>
+        </div>
+    </div>
 
     <!-- 待添加 -->
     <div id="data-search-btn" class="layui-btn-container layui-form-item">
@@ -38,13 +39,26 @@
 </div>
 
 <!-- 表格 -->
-<table class="layui-hide" id="locMap" lay-filter="locMap"></table>
+<table class="layui-table" id="locMap" lay-filter="locMap">
+</table>
 <script type="text/template" id="locMapTemplate">
-    {{#each title}}
-    <div class="demo">
-        <h1>{{lev}}</h1>
-    </div>
-    {{/each}}
+
+    <thead>
+        <tr>
+        {{#each title}}
+            <th lay-data="{field:'{{this}}', width:100}">{{this}}</th>
+        {{/each}}
+        </tr>
+    </thead>
+    <tbody>
+        {{#each body}}
+        <tr>
+            {{#each loc}}
+                <td>{{locType}}</td>
+            {{/each}}
+        </tr>
+        {{/each}}
+    </tbody>
 </script>
 
 <script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
