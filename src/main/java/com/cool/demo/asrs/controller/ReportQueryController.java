@@ -84,6 +84,7 @@ public class ReportQueryController extends BaseController {
 		// 获取排级数据
 		// 表格标题：列 ===>> 升序
 		List<String> bays = reportQueryMapper.getViewLocBayCount(row);
+		// ！表格第一列放层级数
 		bays.add(0, "");
 		// 表格行：层 ====>> 倒序
 		List<String> levs = reportQueryMapper.getViewLocLevCount(row);
@@ -91,9 +92,9 @@ public class ReportQueryController extends BaseController {
 		for (String lev : levs){
 			// 获取层级数据
 			List<ViewLocMapDto> dtos = reportQueryMapper.getViewLocBays(row, Integer.parseInt(lev));
+			// ！表格第一列放层级数
 			dtos.add(0, new ViewLocMapDto(null, lev));
 			Map<String, Object> map = new HashMap<>();
-//			map.put("lev", Integer.parseInt(lev));
 			map.put("loc", dtos);
 			body.add(map);
 		}
