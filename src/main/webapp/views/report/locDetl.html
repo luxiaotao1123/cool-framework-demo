@@ -23,6 +23,9 @@
     </div>
 </div>
 <table class="layui-hide" id="locDetlByMap" lay-filter="locDetlByMap"></table>
+<!--<div id="data-detail-btn" class="layui-btn-container layui-form-item">-->
+    <!--<div id="data-detail-close" type="button" class="layui-btn" lay-submit lay-filter="close">关闭</div>-->
+<!--</div>-->
 </body>
 <script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/static/layui/layui.js" charset="utf-8"></script>
@@ -51,8 +54,8 @@
             even: true,
             cellMinWidth: 50,
             cols: [[
-                {type: 'checkbox'}
-                ,{field: 'locNo$', align: 'center',title: '库位号',event: 'locNo', style: 'cursor:pointer'}
+                // {type: 'checkbox'}
+                {field: 'locNo$', align: 'center',title: '库位号'}
                 ,{field: 'matnr', align: 'center',title: '物料'}
                 ,{field: 'lgnum', align: 'center',title: '仓库号', width:80}
                 ,{field: 'tbnum', align: 'center',title: '转储请求编号'}

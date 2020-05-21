@@ -23,42 +23,6 @@ public class ViewLocMapDto {
         this.locNo = locNo;
         this.bay1 = bay1;
         this.locType = locType;
-        switch (locType){
-            case "D":
-                this.bgc = "#00B271";
-                this.color = "#fff";
-                break;
-            case "F":
-                this.bgc = "#479AC7";
-                this.color = "#fff";
-                break;
-            case "O":
-                this.bgc = "#B45B3E";
-                this.color = "#fff";
-                break;
-            case "P":
-                this.bgc = "#336699";
-                this.color = "#fff";
-                break;
-            case "Q":
-                this.bgc = "#EFEFDA";
-                this.color = "#000";
-                break;
-            case "R":
-                this.bgc = "#D7FFF0";
-                this.color = "#000";
-                break;
-            case "S":
-                this.bgc = "#F0DAD2";
-                this.color = "#000";
-                break;
-            case "X":
-                this.bgc = "#D5F3F4";
-                this.color = "#000";
-                break;
-            default:
-                break;
-        }
     }
 
     public String getLocNo() {
@@ -98,23 +62,23 @@ public class ViewLocMapDto {
                 break;
             case "P":
                 this.bgc = "#66CCCC";
-                this.color = "#000";
+                this.color = "#fff";
                 break;
             case "Q":
-                this.bgc = "#EFEFDA";
-                this.color = "#000";
+                this.bgc = "#5172ef";
+                this.color = "#fff";
                 break;
             case "R":
                 this.bgc = "#D7FFF0";
-                this.color = "#000";
+                this.color = "#fff";
                 break;
             case "S":
                 this.bgc = "#F0DAD2";
-                this.color = "#000";
+                this.color = "#fff";
                 break;
             case "X":
-                this.bgc = "#D5F3F4";
-                this.color = "#000";
+                this.bgc = "#bac296";
+                this.color = "#fff";
                 break;
             default:
                 break;
