@@ -23,7 +23,42 @@ public class ViewLocMapDto {
         this.locNo = locNo;
         this.bay1 = bay1;
         this.locType = locType;
-        this.bgc = getBgc();
+        switch (locType){
+            case "D":
+                this.bgc = "#00B271";
+                this.color = "#fff";
+                break;
+            case "F":
+                this.bgc = "#479AC7";
+                this.color = "#fff";
+                break;
+            case "O":
+                this.bgc = "#B45B3E";
+                this.color = "#fff";
+                break;
+            case "P":
+                this.bgc = "#336699";
+                this.color = "#fff";
+                break;
+            case "Q":
+                this.bgc = "#EFEFDA";
+                this.color = "#000";
+                break;
+            case "R":
+                this.bgc = "#D7FFF0";
+                this.color = "#000";
+                break;
+            case "S":
+                this.bgc = "#F0DAD2";
+                this.color = "#000";
+                break;
+            case "X":
+                this.bgc = "#D5F3F4";
+                this.color = "#000";
+                break;
+            default:
+                break;
+        }
     }
 
     public String getLocNo() {
@@ -48,12 +83,45 @@ public class ViewLocMapDto {
 
     public void setLocType(String locType) {
         this.locType = locType;
+        switch (locType){
+            case "D":
+                this.bgc = "#00B271";
+                this.color = "#fff";
+                break;
+            case "F":
+                this.bgc = "#479AC7";
+                this.color = "#fff";
+                break;
+            case "O":
+                this.bgc = "#B45B3E";
+                this.color = "#fff";
+                break;
+            case "P":
+                this.bgc = "#66CCCC";
+                this.color = "#000";
+                break;
+            case "Q":
+                this.bgc = "#EFEFDA";
+                this.color = "#000";
+                break;
+            case "R":
+                this.bgc = "#D7FFF0";
+                this.color = "#000";
+                break;
+            case "S":
+                this.bgc = "#F0DAD2";
+                this.color = "#000";
+                break;
+            case "X":
+                this.bgc = "#D5F3F4";
+                this.color = "#000";
+                break;
+            default:
+                break;
+        }
     }
 
     public String getBgc() {
-        if (locType.equals("F")){
-            return "#000";
-        }
         return bgc;
     }
 
