@@ -32,13 +32,13 @@ layui.use(['table','laydate', 'form'], function(){
                     html += ">";
                     return html;
                 },width:80}
-            ,{field: 'crnSts$', align: 'center',title: '状态',event: 'crnSts', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'crnSts$', align: 'center',title: '状态'}
             ,{field: 'wrkNo', align: 'center',title: '工作号'}
-            ,{field: 'crnErr$', align: 'center',title: '异常码',event: 'crnErr', style: 'text-decoration: underline;cursor:pointer'}
-            ,{field: 'frmLocno$', align: 'center',title: '源库位',sort: true, event: 'frmLocno', style: 'text-decoration: underline;cursor:pointer'}
-            ,{field: 'toLocno$', align: 'center',title: '目标库位', sort: true, event: 'toLocno', style: 'text-decoration: underline;cursor:pointer'}
-            ,{field: 'frmSta$', align: 'center',title: '源站', sort: true, event: 'frmSta', style: 'text-decoration: underline;cursor:pointer'}
-            ,{field: 'toSta$', align: 'center',title: '目标站', sort: true, event: 'toSta', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'crnErr$', align: 'center',title: '异常码'}
+            ,{field: 'frmLocno$', align: 'center',title: '源库位',sort: true, event: 'frmLocno', style: 'cursor:pointer'}
+            ,{field: 'toLocno$', align: 'center',title: '目标库位', sort: true, event: 'toLocno', style: 'cursor:pointer'}
+            ,{field: 'frmSta$', align: 'center',title: '源站', sort: true, event: 'frmSta', style: 'cursor:pointer'}
+            ,{field: 'toSta$', align: 'center',title: '目标站', sort: true, event: 'toSta', style: 'cursor:pointer'}
             // ,{field: 'appeUser$', align: 'center',title: '创建者',event: 'appeUser', style: 'text-decoration: underline;cursor:pointer'}
             // ,{field: 'appeTime$', align: 'center',title: '创建时间'}
             // ,{field: 'modiUser$', align: 'center',title: '修改人员',event: 'modiUser', style: 'text-decoration: underline;cursor:pointer'}
@@ -98,6 +98,7 @@ layui.use(['table','laydate', 'form'], function(){
                     shadeClose: false,
                     content: 'basCrnp_detail.html',
                     success: function(layero, index){
+                        layer.getChildFrame('#crnSts,#wrkNo,#crnErr,#frmLocno,#frmSta,#toSta,#toLocno', index).parent().parent().hide();
                         layer.getChildFrame('#data-detail-submit-edit', index).hide();
                     	clearFormVal(layer.getChildFrame('#detail', index));
                         layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
@@ -212,6 +213,7 @@ layui.use(['table','laydate', 'form'], function(){
                     shadeClose: false,
                     content: 'basCrnp_detail.html',
                     success: function(layero, index){
+                        layer.getChildFrame('#crnSts,#wrkNo,#crnErr,#frmLocno,#frmSta,#toSta,#toLocno', index).parent().parent().hide();
                         layer.getChildFrame('#data-detail-submit-save', index).hide();
                         setFormVal(layer.getChildFrame('#detail', index), data, false);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
@@ -406,7 +408,7 @@ layui.use(['table','laydate', 'form'], function(){
                 break;
             case 'toSta':
                 var param = top.reObject(data).toSta;
-                if (param === undefined || param === 0 || param.trim() === '') {
+                if (param === undefined || param === 0) {
                     layer.msg("无数据");
                 } else {
                    layer.open({
