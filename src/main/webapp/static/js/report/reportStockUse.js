@@ -99,7 +99,6 @@ layui.use(['table','laydate', 'form'], function(){
                         contentType:'application/json;charset=UTF-8',
                         method: 'POST',
                         success: function (res) {
-                            console.log(res);
                             layer.closeAll();
                             if (res.code === 200) {
                                 table.exportFile(titles,res.data,'xls');

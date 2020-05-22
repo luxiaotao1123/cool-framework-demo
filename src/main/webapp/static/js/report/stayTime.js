@@ -17,7 +17,7 @@ layui.use(['table','laydate', 'form'], function(){
         toolbar: '#toolbar',
         cellMinWidth: 50,
         cols: [[
-            {type: 'checkbox', fixed: 'left'}
+            {type: 'checkbox'}
             ,{field: 'appe_time', title: '入库时间', sort: true, align: 'center'}
             ,{field: 'stay_time', align: 'center',title: '滞留天数'}
             ,{field: 'loc_no', align: 'center',title: '库位号'}
@@ -104,7 +104,6 @@ layui.use(['table','laydate', 'form'], function(){
                         contentType:'application/json;charset=UTF-8',
                         method: 'POST',
                         success: function (res) {
-                            console.log(res);
                             layer.closeAll();
                             if (res.code === 200) {
                                 table.exportFile(titles,res.data,'xls');

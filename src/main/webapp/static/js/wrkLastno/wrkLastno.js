@@ -43,7 +43,6 @@ layui.use(['table','laydate', 'form'], function(){
             statusCode: 200
         },
         done: function(res, curr, count) {
-            console.log(res);
             if (res.code === 403) {
                 top.location.href = "/";
             }

@@ -64,6 +64,9 @@ layui.use(['table','laydate', 'form'], function(){
                     res.data[_index][data.value] = 'N';
                 }
             });
+            if (count === 1){
+                locDetl(res.data[0][locNo]);
+            }
         }
     });
 
@@ -146,12 +149,12 @@ layui.use(['table','laydate', 'form'], function(){
             // 查看明细
             case 'locDetl':
                 locDetl(data.locNo);
-                $('#detlTable').css("display", 'block');
         }
     });
 
     var pageCur;
     function locDetl(locNo){
+        $('#detlTable').css("display", 'block');
         // 数据渲染
         tableIns1 = table.render({
             elem: '#locDetlByMap',
@@ -223,41 +226,44 @@ layui.use(['table','laydate', 'form'], function(){
         tableReload(false);
         $('#detlTable').css("display", 'none');
     });
+
+    function tableReload(child) {
+        var searchData = {};
+        $.each($('#search-box [name]').serializeArray(), function() {
+            searchData[this.name] = this.value;
+        });
+        (child ? parent.tableIns : tableIns).reload({
+            where: searchData,
+            page: {
+                curr: pageCurr
+            },
+            done: function (res, curr, count) {
+                if (res.code === 403) {
+                    top.location.href = "/";
+                }
+                pageCurr=curr;
+                if (count === 1){
+                    locDetl(res.data[0][locNo]);
+                }
+                if (res.data.length === 0 && count !== 0) {
+                    tableIns.reload({
+                        where: searchData,
+                        page: {
+                            curr: pageCurr-1
+                        }
+                    });
+                    pageCurr -= 1;
+                }
+                limit(child);
+            }
+        });
+    }
 });
 
 // 关闭动作
 $(document).on('click','#data-detail-close', function () {
     parent.layer.closeAll();
 });
-
-function tableReload(child) {
-    var searchData = {};
-    $.each($('#search-box [name]').serializeArray(), function() {
-        searchData[this.name] = this.value;
-    });
-    (child ? parent.tableIns : tableIns).reload({
-        where: searchData,
-        page: {
-            curr: pageCurr
-        },
-        done: function (res, curr, count) {
-            if (res.code === 403) {
-                top.location.href = "/";
-            }
-            pageCurr=curr;
-            if (res.data.length === 0 && count !== 0) {
-                tableIns.reload({
-                    where: searchData,
-                    page: {
-                        curr: pageCurr-1
-                    }
-                });
-                pageCurr -= 1;
-            }
-            limit(child);
-        }
-    });
-}
 
 function setFormVal(el, data, showImg) {
     for (var val in data) {

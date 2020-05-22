@@ -357,7 +357,6 @@ layui.use(['table','laydate', 'form'], function(){
                 break;
             case 'toLocno':
                 var param = top.reObject(data).toLocno;
-                console.log(param);
                 if (param === undefined || param === 0 || param.trim() === '') {
                     layer.msg("无数据");
                 } else {
