@@ -12,7 +12,7 @@ layui.use(['table','laydate', 'form'], function(){
         headers: {token: localStorage.getItem('token')},
         url: '/wrkMastLog/list/auth',
         page: true,
-        limit: 10,
+        limit: 20,
         even: true,
         toolbar: '#toolbar',
         cellMinWidth: 50,
@@ -20,12 +20,12 @@ layui.use(['table','laydate', 'form'], function(){
             {type: 'checkbox'}
 //            ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
 //             ,{field: 'id', align: 'center',title: '编号'}
-            ,{field: 'wrkNo', align: 'center',title: '工作号',event: 'wrkNo'}
-            ,{field: 'ioTime$', align: 'center',title: '工作时间', width:160}
-            ,{field: 'wrkSts$', align: 'center',title: '工作状态',event: 'wrkSts', style: 'cursor:pointer', width:160}
-            ,{field: 'ioType$', align: 'center',title: '入出库类型',event: 'ioType', style: 'cursor:pointer', width:160}
+            ,{field: 'wrkNo', align: 'center',title: '工作号',event: 'wrkNo', sort: true}
+            ,{field: 'ioTime$', align: 'center',title: '工作时间', width:160, sort: true}
+            ,{field: 'wrkSts$', align: 'center',title: '工作状态', width:160}
+            ,{field: 'ioType$', align: 'center',title: '入出库类型', width:160}
             ,{field: 'ioPri', align: 'center',title: '优先级'}
-            ,{field: 'crnNo$', align: 'center',title: '堆垛机号',event: 'crnNo', style: 'cursor:pointer'}
+            ,{field: 'crnNo$', align: 'center',title: '堆垛机号'}
             ,{field: 'sourceStaNo$', align: 'center',title: '源站',event: 'sourceStaNo', style: 'cursor:pointer'}
             ,{field: 'staNo$', align: 'center',title: '目标站',event: 'staNo', style: 'cursor:pointer'}
             ,{field: 'sourceLocNo$', align: 'center',title: '源库位',event: 'sourceLocNo', style: 'cursor:pointer'}
@@ -64,7 +64,7 @@ layui.use(['table','laydate', 'form'], function(){
             //         return html;
             //     }}
 
-            ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:130}
+            // ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:130}
         ]],
         request: {
             pageName: 'curr',
