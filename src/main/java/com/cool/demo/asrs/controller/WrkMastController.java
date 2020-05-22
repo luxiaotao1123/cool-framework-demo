@@ -136,4 +136,25 @@ public class WrkMastController extends BaseController {
         return R.ok();
     }
 
+    @RequestMapping(value = "/wrkMast/add/pri/auth")
+    @ManagerAuth
+    public R addPri(@RequestBody List<WrkMast> list) {
+        for (WrkMast entity : list){
+           entity.setIoPri(entity.getIoPri() + 1);
+        }
+        wrkMastService.updateBatchById(list);
+        return R.ok();
+    }
+
+    @RequestMapping(value = "/wrkMast/red/pri/auth")
+    @ManagerAuth
+    public R redPri(@RequestBody List<WrkMast> list) {
+        for (WrkMast entity : list){
+            entity.setIoPri(entity.getIoPri() - 1);
+        }
+        wrkMastService.updateBatchById(list);
+        return R.ok();
+    }
+
+
 }

@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="/static/css/cool.css" media="all">
     <link rel="stylesheet" href="/static/css/common.css" media="all">
+    <style>
+        .layui-btn .layui-icon {
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
 
@@ -44,54 +49,6 @@
             </div>
         </div>
     </div>
-    <!--<div class="layui-inline">-->
-        <!--<label class="layui-form-label">目标库位：</label>-->
-        <!--<div class="layui-input-inline cool-auto-complete">-->
-            <!--<input id="locNo" class="layui-input" name="loc_no" type="text" placeholder="请输入" autocomplete="off" style="display: none">-->
-            <!--<input id="locNo$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入" onfocus=this.blur()>-->
-            <!--<div class="cool-auto-complete-window">-->
-                <!--<input class="cool-auto-complete-window-input" data-key="locMastQueryBylocNo" onkeyup="autoLoad(this.getAttribute('data-key'))">-->
-                <!--<select class="cool-auto-complete-window-select" data-key="locMastQueryBylocNoSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">-->
-                <!--</select>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="layui-inline">-->
-        <!--<label class="layui-form-label">目 标 站：</label>-->
-        <!--<div class="layui-input-inline cool-auto-complete">-->
-            <!--<input id="staNo" class="layui-input" name="sta_no" type="text" placeholder="请输入" autocomplete="off" style="display: none">-->
-            <!--<input id="staNo$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入" onfocus=this.blur()>-->
-            <!--<div class="cool-auto-complete-window">-->
-                <!--<input class="cool-auto-complete-window-input" data-key="basDevpQueryBystaNo" onkeyup="autoLoad(this.getAttribute('data-key'))">-->
-                <!--<select class="cool-auto-complete-window-select" data-key="basDevpQueryBystaNoSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">-->
-                <!--</select>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="layui-inline">-->
-        <!--<label class="layui-form-label">源　　站：</label>-->
-        <!--<div class="layui-input-inline cool-auto-complete">-->
-            <!--<input id="sourceStaNo" class="layui-input" name="source_sta_no" type="text" placeholder="请输入" autocomplete="off" style="display: none">-->
-            <!--<input id="sourceStaNo$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入" onfocus=this.blur()>-->
-            <!--<div class="cool-auto-complete-window">-->
-                <!--<input class="cool-auto-complete-window-input" data-key="basDevpQueryBysourceStaNo" onkeyup="autoLoad(this.getAttribute('data-key'))">-->
-                <!--<select class="cool-auto-complete-window-select" data-key="basDevpQueryBysourceStaNoSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">-->
-                <!--</select>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="layui-inline">-->
-        <!--<label class="layui-form-label">源 库 位：</label>-->
-        <!--<div class="layui-input-inline cool-auto-complete">-->
-            <!--<input id="sourceLocNo" class="layui-input" name="source_loc_no" type="text" placeholder="请输入" autocomplete="off" style="display: none">-->
-            <!--<input id="sourceLocNo$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入" onfocus=this.blur()>-->
-            <!--<div class="cool-auto-complete-window">-->
-                <!--<input class="cool-auto-complete-window-input" data-key="locMastQueryBysourceLocNo" onkeyup="autoLoad(this.getAttribute('data-key'))">-->
-                <!--<select class="cool-auto-complete-window-select" data-key="locMastQueryBysourceLocNoSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">-->
-                <!--</select>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
 
     <!-- 待添加 -->
     <div id="data-search-btn" class="layui-btn-container layui-form-item">
@@ -106,16 +63,15 @@
 </div>
 <script type="text/html" id="toolbar">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" id="btn-add" lay-event="addData">新增</button>
-        <!--<button class="layui-btn layui-btn-sm" id="btn-refresh" lay-event="refreshData">刷新</button>-->
-        <button class="layui-btn layui-btn-sm" id="btn-delete" lay-event="deleteData">删除</button>
+        <button class="layui-btn " id="btn-pri-add" lay-event="priAdd"><i class="layui-icon">&#xe624;</i>增加优先级</button>
+        <button class="layui-btn " id="btn-pri-red" lay-event="priRed"><i class="layui-icon">&#xe67e;</i>降低优先级</button>
         <button class="layui-btn layui-btn-primary layui-btn-sm" id="btn-export" lay-event="exportData">导出</button>
     </div>
 </script>
 
 <script type="text/html" id="operate">
-    <a class="layui-btn layui-btn-primary layui-btn-xs btn-complete" lay-event="complete">完成</a>
-    <a class="layui-btn layui-btn-xs btn-cancel" lay-event="cancel">取消</a>
+    <a class="layui-btn layui-btn-danger layui-btn-sm btn-complete" lay-event="complete">完成</a>
+    <a class="layui-btn layui-btn-primary layui-btn-sm btn-cancel" lay-event="cancel">取消</a>
 </script>
 
 <script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>

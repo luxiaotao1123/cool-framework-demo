@@ -18,14 +18,14 @@ layui.use(['table','laydate', 'form'], function(){
         cellMinWidth: 50,
         cols: [[
             {type: 'checkbox'}
-            ,{field: 'wrkNo', align: 'center',title: '工作号',sort: true, width:80}
-            ,{field: 'ioTime$', align: 'center',title: '工作时间',sort: true, width:90}
+            ,{field: 'wrkNo', align: 'center',title: '工作号',sort: true}
+            ,{field: 'ioTime$', align: 'center',title: '工作时间',sort: true}
             ,{field: 'wrkSts$', align: 'center',title: '工作状态'}
             ,{field: 'ioType$', align: 'center',title: '入出库类型'}
-            ,{field: 'ioPri', align: 'center',title: '优先级',width:80}
+            ,{field: 'ioPri', align: 'center',title: '优先级'}
             ,{field: 'crnNo$', align: 'center',title: '堆垛机'}
-            ,{field: 'sourceStaNo$', align: 'center',title: '源站',event: 'sourceStaNo', style: 'cursor:pointer',width:60}
-            ,{field: 'staNo$', align: 'center',title: '目标站',event: 'staNo', style: 'cursor:pointer',width:80}
+            ,{field: 'sourceStaNo$', align: 'center',title: '源站',event: 'sourceStaNo', style: 'cursor:pointer'}
+            ,{field: 'staNo$', align: 'center',title: '目标站',event: 'staNo', style: 'cursor:pointer'}
             ,{field: 'sourceLocNo$', align: 'center',title: '源库位',event: 'sourceLocNo', style: 'cursor:pointer'}
             ,{field: 'locNo$', align: 'center',title: '目标库位',event: 'locNo', style: 'cursor:pointer'}
             ,{field: 'barcode', align: 'center',title: '条码'}
@@ -62,7 +62,7 @@ layui.use(['table','laydate', 'form'], function(){
             //         return html;
             //     }}
 
-            ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:120}
+            ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:130}
         ]],
         request: {
             pageName: 'curr',
@@ -123,6 +123,78 @@ layui.use(['table','laydate', 'form'], function(){
     table.on('toolbar(wrkMast)', function (obj) {
         var checkStatus = table.checkStatus(obj.config.id);
         switch(obj.event) {
+            // 增加优先级
+            case 'priAdd':
+                var list=[];
+                checkStatus.data.map(function (track) {
+                    list.push({
+                        wrkNo: track.wrkNo,
+                        ioTime: track.ioTime,
+                        ioPri: track.ioPri
+                    });
+                });
+                if (list.length === 0){
+                    layer.msg('请选择数据');
+                } else {
+                    layer.confirm('确定增加'+(list.length===1?'此':list.length)+'条数据的优先级吗', function(){
+                        $.ajax({
+                            url: "/wrkMast/add/pri/auth",
+                            headers: {'token': localStorage.getItem('token')},
+                            contentType:'application/json;charset=UTF-8',
+                            data: JSON.stringify(list),
+                            method: 'POST',
+                            traditional:true,
+                            success: function (res) {
+                                layer.closeAll();
+                                if (res.code === 200){
+                                    $(".layui-laypage-btn")[0].click();
+                                    tableReload(false);
+                                } else if (res.code === 403){
+                                    top.location.href = "/";
+                                } else {
+                                    layer.msg(res.msg)
+                                }
+                            }
+                        })
+                    });
+                }
+                break;
+            // 降低优先级
+            case 'priRed':
+                var list=[];
+                checkStatus.data.map(function (track) {
+                    list.push({
+                        wrkNo: track.wrkNo,
+                        ioTime: track.ioTime,
+                        ioPri: track.ioPri
+                    });
+                });
+                if (list.length === 0){
+                    layer.msg('请选择数据');
+                } else {
+                    layer.confirm('确定降低'+(list.length===1?'此':list.length)+'条数据的优先级吗', function(){
+                        $.ajax({
+                            url: "/wrkMast/red/pri/auth",
+                            headers: {'token': localStorage.getItem('token')},
+                            contentType:'application/json;charset=UTF-8',
+                            data: JSON.stringify(list),
+                            method: 'POST',
+                            traditional:true,
+                            success: function (res) {
+                                layer.closeAll();
+                                if (res.code === 200){
+                                    $(".layui-laypage-btn")[0].click();
+                                    tableReload(false);
+                                } else if (res.code === 403){
+                                    top.location.href = "/";
+                                } else {
+                                    layer.msg(res.msg)
+                                }
+                            }
+                        })
+                    });
+                }
+                break;
             case 'addData':
                 layer.open({
                     type: 2,
