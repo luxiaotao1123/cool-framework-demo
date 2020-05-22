@@ -20,7 +20,8 @@ layui.use(['table','laydate', 'form'], function(){
             {type: 'checkbox', fixed: 'left'}
 //            ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
             ,{field: 'locNo', align: 'center',title: '库位号',sort:true}
-            ,{field: 'whsType$', align: 'center',title: '库位类型',event: 'whsType', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'locType$', align: 'center',title: '库位状态',width:200}
+            ,{field: 'whsType$', align: 'center',title: '库位类型'}
             // ,{field: 'pltType', align: 'center',title: ''}
             // ,{field: 'ctnType', align: 'center',title: ''}
             // ,{field: 'locSts', align: 'center',title: ''}
@@ -35,7 +36,6 @@ layui.use(['table','laydate', 'form'], function(){
                     html += ">";
                     return html;
                 },width:80}
-            ,{field: 'locType$', align: 'center',title: '库位状态',event: 'locType', style: 'text-decoration: underline;cursor:pointer',width:200}
             // ,{field: 'outEnable', align: 'center',title: ''}
             // ,{field: 'ioTime$', align: 'center',title: ''}
             // ,{field: 'firstTime$', align: 'center',title: ''}
