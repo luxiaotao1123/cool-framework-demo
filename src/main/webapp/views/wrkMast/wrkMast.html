@@ -25,6 +25,11 @@
         .btn-cancel {
             display: none;
         }
+
+        /*明细表*/
+        #detlTable {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -63,7 +68,7 @@
     </div>
 
     <!-- 待添加 -->
-    <div id="data-search-btn" class="layui-btn-container layui-form-item">
+    <div id="data-search-btn" class="layui-btn-container layui-form-item" style="display: inline-block; margin-left: 20px">
         <button id="search" class="layui-btn layui-btn-primary layui-btn-radius" lay-submit lay-filter="search">搜索</button>
         <button id="reset" class="layui-btn layui-btn-primary layui-btn-radius" lay-submit lay-filter="reset">重置</button>
     </div>
@@ -80,6 +85,15 @@
         <button class="layui-btn layui-btn-primary layui-btn-sm" id="btn-export" lay-event="exportData">导出</button>
     </div>
 </script>
+
+<!--明细表-->
+<div id="detlTable" style="display: none">
+    <div class="layui-inline"  style="width:90%;margin-top: 10px;margin-left: 20px">
+        <span style=" color: indianred">以下为当前工作流的物料明细</span>
+    </div>
+
+    <table class="layui-hide" id="locDetlByMap" lay-filter="locDetlByMap"></table>
+</div>
 
 <script type="text/html" id="operate">
     <a class="layui-btn layui-btn-danger layui-btn-sm btn-complete" lay-event="complete">完成</a>

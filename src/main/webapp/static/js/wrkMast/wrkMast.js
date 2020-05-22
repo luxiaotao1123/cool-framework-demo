@@ -18,17 +18,17 @@ layui.use(['table','laydate', 'form'], function(){
         cellMinWidth: 50,
         cols: [[
             {type: 'checkbox'}
-            ,{field: 'wrkNo', align: 'center',title: '工作号',sort: true}
-            ,{field: 'ioTime$', align: 'center',title: '工作时间',sort: true}
-            ,{field: 'wrkSts$', align: 'center',title: '工作状态'}
-            ,{field: 'ioType$', align: 'center',title: '入出库类型'}
-            ,{field: 'ioPri', align: 'center',title: '优先级'}
-            ,{field: 'crnNo$', align: 'center',title: '堆垛机'}
+            ,{field: 'wrkNo', align: 'center',title: '工作号',sort: true,event: 'detlShow'}
+            ,{field: 'ioTime$', align: 'center',title: '工作时间',sort: true,event: 'detlShow'}
+            ,{field: 'wrkSts$', align: 'center',title: '工作状态',event: 'detlShow'}
+            ,{field: 'ioType$', align: 'center',title: '入出库类型',event: 'detlShow'}
+            ,{field: 'ioPri', align: 'center',title: '优先级',event: 'detlShow'}
+            ,{field: 'crnNo$', align: 'center',title: '堆垛机',event: 'detlShow'}
             ,{field: 'sourceStaNo$', align: 'center',title: '源站',event: 'sourceStaNo', style: 'cursor:pointer'}
             ,{field: 'staNo$', align: 'center',title: '目标站',event: 'staNo', style: 'cursor:pointer'}
             ,{field: 'sourceLocNo$', align: 'center',title: '源库位',event: 'sourceLocNo', style: 'cursor:pointer'}
             ,{field: 'locNo$', align: 'center',title: '目标库位',event: 'locNo', style: 'cursor:pointer'}
-            ,{field: 'barcode', align: 'center',title: '条码'}
+            ,{field: 'barcode', align: 'center',title: '条码',event: 'detlShow'}
             // ,{field: 'picking', align: 'center',title: '拣料', templet:function(row){
             //         var html = "<input value='picking' type='checkbox' lay-skin='primary' lay-filter='tableCheckbox' table-index='"+row.LAY_TABLE_INDEX+"'";
             //         if(row.picking === 'Y'){html += " checked ";}
@@ -289,6 +289,10 @@ layui.use(['table','laydate', 'form'], function(){
     table.on('tool(wrkMast)', function(obj){
         var data = obj.data;
         switch (obj.event) {
+            // 明细展示 todo
+            case 'detlShow':
+                locDetl('0100203');
+                break;
             // 详情
             case 'detail':
                 layer.open({
@@ -331,117 +335,9 @@ layui.use(['table','laydate', 'form'], function(){
                     }
                 });
                 break;
-            case 'wrkSts':
-                var param = top.reObject(data).wrkSts;
-                if (param === undefined) {
-                    layer.msg("无数据");
-                } else {
-                   layer.open({
-                       type: 2,
-                       title: '工作详情',
-                       maxmin: true,
-                       area: [top.detailWidth, top.detailHeight],
-                       shadeClose: false,
-                       content: '../basWrkStatus/basWrkStatus_detail.html',
-                       success: function(layero, index){
-                           $.ajax({
-                               url: "/basWrkStatus/"+ param +"/auth",
-                               headers: {'token': localStorage.getItem('token')},
-                               method: 'GET',
-                               success: function (res) {
-                                   if (res.code === 200){
-                                       setFormVal(layer.getChildFrame('#detail', index), res.data, true);
-                                       top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
-                                       layer.getChildFrame('#data-detail-submit-save,#data-detail-submit-edit,#prompt', index).hide();
-                                       layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
-                                       layero.find('iframe')[0].contentWindow.layui.form.render('select');
-                                       layero.find('iframe')[0].contentWindow.layui.form.render('checkbox');
-                                   } else if (res.code === 403){
-                                       parent.location.href = "/";
-                                   }else {
-                                       layer.msg(res.msg)
-                                   }
-                               }
-                           })
-                       }
-                   });
-                }
-                break;
-            case 'ioType':
-                var param = top.reObject(data).ioType;
-                if (param === undefined) {
-                    layer.msg("无数据");
-                } else {
-                   layer.open({
-                       type: 2,
-                       title: '入出库详情',
-                       maxmin: true,
-                       area: [top.detailWidth, top.detailHeight],
-                       shadeClose: false,
-                       content: '../basWrkIotype/basWrkIotype_detail.html',
-                       success: function(layero, index){
-                           $.ajax({
-                               url: "/basWrkIotype/"+ param +"/auth",
-                               headers: {'token': localStorage.getItem('token')},
-                               method: 'GET',
-                               success: function (res) {
-                                   if (res.code === 200){
-                                       setFormVal(layer.getChildFrame('#detail', index), res.data, true);
-                                       top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
-                                       layer.getChildFrame('#data-detail-submit-save,#data-detail-submit-edit,#prompt', index).hide();
-                                       layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
-                                       layero.find('iframe')[0].contentWindow.layui.form.render('select');
-                                       layero.find('iframe')[0].contentWindow.layui.form.render('checkbox');
-                                   } else if (res.code === 403){
-                                       parent.location.href = "/";
-                                   }else {
-                                       layer.msg(res.msg)
-                                   }
-                               }
-                           })
-                       }
-                   });
-                }
-                break;
-            case 'crnNo':
-                var param = top.reObject(data).crnNo;
-                if (param === undefined) {
-                    layer.msg("无数据");
-                } else {
-                   layer.open({
-                       type: 2,
-                       title: '堆详情',
-                       maxmin: true,
-                       area: [top.detailWidth, top.detailHeight],
-                       shadeClose: false,
-                       content: '../basCrnp/basCrnp_detail.html',
-                       success: function(layero, index){
-                           $.ajax({
-                               url: "/basCrnp/"+ param +"/auth",
-                               headers: {'token': localStorage.getItem('token')},
-                               method: 'GET',
-                               success: function (res) {
-                                   if (res.code === 200){
-                                       setFormVal(layer.getChildFrame('#detail', index), res.data, true);
-                                       top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
-                                       layer.getChildFrame('#data-detail-submit-save,#data-detail-submit-edit,#prompt', index).hide();
-                                       layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
-                                       layero.find('iframe')[0].contentWindow.layui.form.render('select');
-                                       layero.find('iframe')[0].contentWindow.layui.form.render('checkbox');
-                                   } else if (res.code === 403){
-                                       parent.location.href = "/";
-                                   }else {
-                                       layer.msg(res.msg)
-                                   }
-                               }
-                           })
-                       }
-                   });
-                }
-                break;
             case 'locNo':
                 var param = top.reObject(data).locNo;
-                if (param === undefined || param.trim() === '') {
+                if (param === undefined || (param+"").trim() === '') {
                     layer.msg("无数据");
                 } else {
                    layer.open({
@@ -477,7 +373,7 @@ layui.use(['table','laydate', 'form'], function(){
                 break;
             case 'staNo':
                 var param = top.reObject(data).staNo;
-                if (param === undefined || param.trim() === '') {
+                if (param === undefined || (param+"").trim() === '') {
                     layer.msg("无数据");
                 } else {
                    layer.open({
@@ -513,7 +409,7 @@ layui.use(['table','laydate', 'form'], function(){
                 break;
             case 'sourceStaNo':
                 var param = top.reObject(data).sourceStaNo;
-                if (param === undefined || param.trim() === '') {
+                if (param === undefined || (param+"").trim() === '') {
                     layer.msg("无数据");
                 } else {
                    layer.open({
@@ -549,7 +445,7 @@ layui.use(['table','laydate', 'form'], function(){
                 break;
             case 'sourceLocNo':
                 var param = top.reObject(data).sourceLocNo;
-                if (param === undefined || param.trim() === '') {
+                if (param === undefined || (param+"").trim() === '') {
                     layer.msg("无数据");
                 } else {
                    layer.open({
@@ -591,42 +487,6 @@ layui.use(['table','laydate', 'form'], function(){
                    layer.open({
                        type: 2,
                        title: '修改详情',
-                       maxmin: true,
-                       area: [top.detailWidth, top.detailHeight],
-                       shadeClose: false,
-                       content: '../user/user_detail.html',
-                       success: function(layero, index){
-                           $.ajax({
-                               url: "/user/"+ param +"/auth",
-                               headers: {'token': localStorage.getItem('token')},
-                               method: 'GET',
-                               success: function (res) {
-                                   if (res.code === 200){
-                                       setFormVal(layer.getChildFrame('#detail', index), res.data, true);
-                                       top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
-                                       layer.getChildFrame('#data-detail-submit-save,#data-detail-submit-edit,#prompt', index).hide();
-                                       layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
-                                       layero.find('iframe')[0].contentWindow.layui.form.render('select');
-                                       layero.find('iframe')[0].contentWindow.layui.form.render('checkbox');
-                                   } else if (res.code === 403){
-                                       parent.location.href = "/";
-                                   }else {
-                                       layer.msg(res.msg)
-                                   }
-                               }
-                           })
-                       }
-                   });
-                }
-                break;
-            case 'appeUser':
-                var param = top.reObject(data).appeUser;
-                if (param === undefined) {
-                    layer.msg("无数据");
-                } else {
-                   layer.open({
-                       type: 2,
-                       title: '创详情',
                        maxmin: true,
                        area: [top.detailWidth, top.detailHeight],
                        shadeClose: false,
@@ -831,6 +691,66 @@ layui.use(['table','laydate', 'form'], function(){
         type: 'datetime'
     });
 
+    var pageCur;
+    function locDetl(locNo){
+        $('#detlTable').css("display", 'block');
+        // 数据渲染
+        tableIns1 = table.render({
+            elem: '#locDetlByMap',
+            headers: {token: localStorage.getItem('token')},
+            url: '/locDetl/list/auth',
+            page: true,
+            limit: 5,
+            skin: 'line',
+            where: {loc_no: locNo},
+            even: true,
+            cellMinWidth: 50,
+            cols: [[
+                // {type: 'checkbox'}
+                {field: 'locNo$', align: 'center',title: '库位号'}
+                ,{field: 'matnr', align: 'center',title: '物料'}
+                ,{field: 'lgnum', align: 'center',title: '仓库号'}
+                ,{field: 'tbnum', align: 'center',title: '转储请求编号'}
+                // ,{field: 'tbpos', align: 'center',title: '行项目'}
+                ,{field: 'zmatid', align: 'center',title: '物料标签ID'}
+                ,{field: 'maktx', align: 'center',title: '物料描述'}
+                ,{field: 'werks', align: 'center',title: '工厂'}
+                ,{field: 'anfme', align: 'center',title: '数量'}
+                ,{field: 'altme', align: 'center',title: '单位'}
+                ,{field: 'zpallet', align: 'center',title: '托盘条码'}
+                ,{field: 'bname', align: 'center',title: '用户ID'}
+            ]],
+            request: {
+                pageName: 'curr',
+                pageSize: 'limit'
+            },
+            parseData: function (res) {
+                return {
+                    'code': res.code,
+                    'msg': res.msg,
+                    'count': res.data.total,
+                    'data': res.data.records
+                }
+            },
+            response: {
+                statusCode: 200
+            },
+            done: function(res, curr, count) {
+                if (res.code === 403) {
+                    top.location.href = "/";
+                }
+                pageCur=curr;
+                form.on('checkbox(tableCheckbox)', function (data) {
+                    var _index = $(data.elem).attr('table-index')||0;
+                    if(data.elem.checked){
+                        res.data[_index][data.value] = 'Y';
+                    }else{
+                        res.data[_index][data.value] = 'N';
+                    }
+                });
+            }
+        });
+    }
 
 });
 
