@@ -68,6 +68,29 @@ layui.use(['table','laydate', 'form'], function(){
         }
     });
 
+    // 监听排序事件
+    table.on('sort(stoQue)', function (obj) {
+        var searchData = {};
+        $.each($('#search-box [name]').serializeArray(), function() {
+            searchData[this.name] = this.value;
+        });
+        searchData['orderByField'] = obj.field;
+        searchData['orderByType'] = obj.type;
+        tableIns.reload({
+            where: searchData,
+            page: {
+                curr: 1
+            },
+            done: function (res, curr, count) {
+                if (res.code === 403) {
+                    top.location.href = "/";
+                }
+                pageCurr=curr;
+                limit();
+            }
+        });
+    });
+
     // 监听行工具事件
     table.on('tool(locMast)', function(obj) {
         var data = obj.data;

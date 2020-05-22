@@ -31,6 +31,8 @@ public class ApiController extends AbstractBaseController {
     @ManagerAuth
     public R list(@RequestParam(defaultValue = "1")Integer curr,
                   @RequestParam(defaultValue = "10")Integer limit,
+                  @RequestParam(required = false)String orderByField,
+                  @RequestParam(required = false)String orderByType,
                   @RequestParam Map<String, Object> param){
         excludeTrash(param);
         EntityWrapper<Api> wrapper = new EntityWrapper<>();

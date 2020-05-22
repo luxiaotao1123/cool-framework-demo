@@ -19,7 +19,7 @@ layui.use(['table','laydate', 'form'], function(){
         cols: [[
             {type: 'checkbox', fixed: 'left'}
 //            ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
-            ,{field: 'locNo', align: 'center',title: '库位号'}
+            ,{field: 'locNo', align: 'center',title: '库位号',sort:true}
             ,{field: 'whsType$', align: 'center',title: '库位类型',event: 'whsType', style: 'text-decoration: underline;cursor:pointer'}
             // ,{field: 'pltType', align: 'center',title: ''}
             // ,{field: 'ctnType', align: 'center',title: ''}
@@ -28,7 +28,7 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'crnNo', align: 'center',title: '堆垛机号'}
             ,{field: 'row1', align: 'center',title: '排'}
             ,{field: 'bay1', align: 'center',title: '列'}
-            ,{field: 'lev1', align: 'center',title: '层'}
+            ,{field: 'lev1', align: 'center',title: '层', sort:true}
             ,{field: 'fullPlt', align: 'center',title: '满板', templet:function(row){
                     var html = "<input value='fullPlt' type='checkbox' lay-skin='primary' lay-filter='tableCheckbox' table-index='"+row.LAY_TABLE_INDEX+"'";
                     if(row.fullPlt === 'Y'){html += " checked ";}
@@ -85,6 +85,29 @@ layui.use(['table','laydate', 'form'], function(){
                 }
             });
         }
+    });
+
+    // 监听排序事件
+    table.on('sort(locMast)', function (obj) {
+        var searchData = {};
+        $.each($('#search-box [name]').serializeArray(), function() {
+            searchData[this.name] = this.value;
+        });
+        searchData['orderByField'] = obj.field;
+        searchData['orderByType'] = obj.type;
+        tableIns.reload({
+            where: searchData,
+            page: {
+                curr: 1
+            },
+            done: function (res, curr, count) {
+                if (res.code === 403) {
+                    top.location.href = "/";
+                }
+                pageCurr=curr;
+                limit();
+            }
+        });
     });
 
     // 监听头工具栏事件

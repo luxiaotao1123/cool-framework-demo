@@ -34,11 +34,13 @@ public class RowLastnoController extends BaseController {
     @ManagerAuth
     public R list(@RequestParam(defaultValue = "1")Integer curr,
                   @RequestParam(defaultValue = "10")Integer limit,
+                  @RequestParam(required = false)String orderByField,
+                  @RequestParam(required = false)String orderByType,
                   @RequestParam Map<String, Object> param){
         excludeTrash(param);
         EntityWrapper<RowLastno> wrapper = new EntityWrapper<>();
         convert(param, wrapper);
-//        wrapper.orderBy("id", false);
+        if (!Cools.isEmpty(orderByField)){wrapper.orderBy(humpToLine(orderByField), "asc".equals(orderByType));}
         return R.ok(rowLastnoService.selectPage(new Page<>(curr, limit), wrapper));
     }
 

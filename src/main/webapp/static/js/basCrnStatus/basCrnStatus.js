@@ -19,7 +19,7 @@ layui.use(['table','laydate', 'form'], function(){
         cols: [[
             {type: 'checkbox', fixed: 'left'}
 //            ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
-            ,{field: 'stsNo', align: 'center',title: '工作代号'}
+            ,{field: 'stsNo', align: 'center', sort:true ,title: '工作代号'}
             ,{field: 'stsDesc', align: 'center',title: '状态描述'}
             ,{field: 'modiUser$', align: 'center',title: '修改人员'}
             ,{field: 'modiTime$', align: 'center',title: '修改时间'}
@@ -58,6 +58,29 @@ layui.use(['table','laydate', 'form'], function(){
                 }
             });
         }
+    });
+
+    // 监听排序事件
+    table.on('sort(basCrnStatus)', function (obj) {
+        var searchData = {};
+        $.each($('#search-box [name]').serializeArray(), function() {
+            searchData[this.name] = this.value;
+        });
+        searchData['orderByField'] = obj.field;
+        searchData['orderByType'] = obj.type;
+        tableIns.reload({
+            where: searchData,
+            page: {
+                curr: 1
+            },
+            done: function (res, curr, count) {
+                if (res.code === 403) {
+                    top.location.href = "/";
+                }
+                pageCurr=curr;
+                limit();
+            }
+        });
     });
 
     // 监听头工具栏事件

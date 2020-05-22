@@ -5,19 +5,21 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.core.common.DateUtils;
 import com.cool.demo.asrs.entity.WrkMastLog;
 import com.cool.demo.asrs.service.WrkMastLogService;
 import com.cool.demo.common.web.BaseController;
 import com.core.annotations.ManagerAuth;
 import com.core.common.BaseRes;
 import com.core.common.Cools;
+import com.core.common.DateUtils;
 import com.core.common.R;
-import com.core.controller.AbstractBaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class WrkMastLogController extends BaseController {
@@ -35,11 +37,13 @@ public class WrkMastLogController extends BaseController {
     @ManagerAuth
     public R list(@RequestParam(defaultValue = "1")Integer curr,
                   @RequestParam(defaultValue = "10")Integer limit,
+                  @RequestParam(required = false)String orderByField,
+                  @RequestParam(required = false)String orderByType,
                   @RequestParam Map<String, Object> param){
         excludeTrash(param);
         EntityWrapper<WrkMastLog> wrapper = new EntityWrapper<>();
         convert(param, wrapper);
-//        wrapper.orderBy("id", false);
+        if (!Cools.isEmpty(orderByField)){wrapper.orderBy(humpToLine(orderByField), "asc".equals(orderByType));}
         return R.ok(wrkMastLogService.selectPage(new Page<>(curr, limit), wrapper));
     }
 
