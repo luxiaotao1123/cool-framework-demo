@@ -631,6 +631,7 @@ layui.use(['table','laydate', 'form'], function(){
     // 搜索栏搜索事件
     form.on('submit(search)', function (data) {
         pageCurr = 1;
+        $('#detlTable').css("display", 'none');
         tableReload(false);
     });
 
@@ -638,6 +639,7 @@ layui.use(['table','laydate', 'form'], function(){
     form.on('submit(reset)', function (data) {
         pageCurr = 1;
         clearFormVal($('#search-box'));
+        $('#detlTable').css("display", 'none');
         tableReload(false);
     });
 
