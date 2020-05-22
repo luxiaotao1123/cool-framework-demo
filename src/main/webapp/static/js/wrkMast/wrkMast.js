@@ -26,8 +26,8 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'crnNo$', align: 'center',title: '堆垛机',event: 'detlShow'}
             ,{field: 'sourceStaNo$', align: 'center',title: '源站',event: 'sourceStaNo', style: 'cursor:pointer'}
             ,{field: 'staNo$', align: 'center',title: '目标站',event: 'staNo', style: 'cursor:pointer'}
-            ,{field: 'sourceLocNo$', align: 'center',title: '源库位',event: 'sourceLocNo', style: 'cursor:pointer'}
-            ,{field: 'locNo$', align: 'center',title: '目标库位',event: 'locNo', style: 'cursor:pointer'}
+            ,{field: 'sourceLocNo$', align: 'center',title: '源库位',event: 'sourceLocNo', style: 'cursor:pointer', width:100}
+            ,{field: 'locNo$', align: 'center',title: '目标库位',event: 'locNo', style: 'cursor:pointer', width:100}
             ,{field: 'barcode', align: 'center',title: '条码',event: 'detlShow'}
             // ,{field: 'picking', align: 'center',title: '拣料', templet:function(row){
             //         var html = "<input value='picking' type='checkbox' lay-skin='primary' lay-filter='tableCheckbox' table-index='"+row.LAY_TABLE_INDEX+"'";
