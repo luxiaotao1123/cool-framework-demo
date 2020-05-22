@@ -149,6 +149,7 @@ layui.use(['table','laydate', 'form'], function(){
             // 查看明细
             case 'locDetl':
                 locDetl(data.locNo);
+                break;
         }
     });
 
