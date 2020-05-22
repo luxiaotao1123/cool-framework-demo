@@ -145,7 +145,6 @@ layui.use(['table','laydate', 'form'], function(){
         switch (obj.event) {
             // 查看明细
             case 'locDetl':
-                $('#locNo').val(data.locNo);
                 locDetl(data.locNo);
                 $('#detlTable').css("display", 'block');
         }

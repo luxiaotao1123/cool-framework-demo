@@ -31,10 +31,22 @@
 
 <!-- 搜索栏 -->
 <div id="search-box" class="layui-form layui-card-header">
-    <div class="layui-inline">
+    <!--<div class="layui-inline">-->
+        <!--<label class="layui-form-label">库 位 号：</label>-->
+        <!--<div class="layui-input-inline">-->
+            <!--<input class="layui-input" type="text" name="loc_no" placeholder="请输入" autocomplete="off">-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="layui-inline"  style="width:31%;">
         <label class="layui-form-label">库 位 号：</label>
-        <div class="layui-input-inline">
-            <input class="layui-input" type="text" name="loc_no" placeholder="请输入" autocomplete="off">
+        <div class="layui-input-inline cool-auto-complete">
+            <input id="locNo" class="layui-input" name="loc_no" type="text" onkeyup="check(this.id, 'locDetl')" autocomplete="off"  style="display: none">
+            <input id="locNo$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入..." onfocus=this.blur()>
+            <div class="cool-auto-complete-window">
+                <input class="cool-auto-complete-window-input" data-key="locMastQueryBylocNo" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                <select class="cool-auto-complete-window-select" data-key="locMastQueryBylocNoSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                </select>
+            </div>
         </div>
     </div>
 
@@ -59,11 +71,7 @@
 
 <!--明细表-->
 <div id="detlTable" style="display: none">
-    <div class="layui-inline"  style="width:90%;margin-top: 20px">
-        <label class="layui-form-label">库 位 号：</label>
-        <div class="layui-input-inline">
-            <input id="locNo" class="layui-input" type="text" disabled="disabled">
-        </div>
+    <div class="layui-inline"  style="width:90%;margin-top: 10px;margin-left: 20px">
         <span style=" color: indianred">以下为当前库位的物料明细</span>
     </div>
 
