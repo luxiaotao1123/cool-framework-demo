@@ -19,9 +19,9 @@ layui.use(['table','laydate', 'form'], function(){
         cols: [[
             {type: 'checkbox'}
             ,{field: 'wrkNo', align: 'center',title: '工作号',sort: true,event: 'detlShow'}
-            ,{field: 'ioTime$', align: 'center',title: '工作时间',sort: true,event: 'detlShow'}
-            ,{field: 'wrkSts$', align: 'center',title: '工作状态',event: 'detlShow'}
-            ,{field: 'ioType$', align: 'center',title: '入出库类型',event: 'detlShow'}
+            ,{field: 'ioTime$', align: 'center',title: '工作时间',sort: true,event: 'detlShow', width:200}
+            ,{field: 'wrkSts$', align: 'center',title: '工作状态',event: 'detlShow', width:150}
+            ,{field: 'ioType$', align: 'center',title: '入出库类型',event: 'detlShow', width:150}
             ,{field: 'ioPri', align: 'center',title: '优先级',event: 'detlShow'}
             ,{field: 'crnNo$', align: 'center',title: '堆垛机',event: 'detlShow'}
             ,{field: 'sourceStaNo$', align: 'center',title: '源站',event: 'sourceStaNo', style: 'cursor:pointer'}
