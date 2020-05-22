@@ -6,7 +6,6 @@ layui.use(['table','laydate', 'form'], function(){
     var layDate = layui.laydate;
     var form = layui.form;
 
-
     // 数据渲染
     tableIns = table.render({
         elem: '#stoQue',
@@ -18,9 +17,9 @@ layui.use(['table','laydate', 'form'], function(){
         toolbar: '#toolbar',
         cellMinWidth: 50,
         cols: [[
-            {type: 'checkbox', fixed: 'left'}
+            {type: 'checkbox'}
             ,{field: 'locNo', align: 'center',title: '库位号'}
-            ,{field: 'locType$', align: 'center',title: '库位状态'}
+            ,{field: 'locType$', align: 'center',title: '库位状态', width: 180}
             ,{field: 'whsType$', align: 'center',title: '库位类型'}
             ,{field: 'crnNo', align: 'center',title: '堆垛机号'}
             ,{field: 'row1', align: 'center',title: '排'}
@@ -33,7 +32,7 @@ layui.use(['table','laydate', 'form'], function(){
                     return html;
                 },width:80}
             ,{field: 'modiUser$', align: 'center',title: '修改人员'}
-            ,{field: 'modiTime$', align: 'center',title: '修改时间'}
+            ,{field: 'modiTime$', align: 'center',title: '修改时间', width: 180}
             ,{ fixed: 'right', title:'操作', align: 'center', toolbar: '#operate'}
         ]],
         request: {
@@ -91,31 +90,139 @@ layui.use(['table','laydate', 'form'], function(){
         });
     });
 
-    // 监听行工具事件
-    table.on('tool(locMast)', function(obj) {
-        var data = obj.data;
-        switch (obj.event) {
+    // 监听头工具栏事件
+    table.on('toolbar(stoQue)', function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch(obj.event) {
             // 更新库存
-            case 'refreshSto':
-                layer.open({
-                    type: 2,
-                    title: '更新库存',
-                    maxmin: true,
-                    area: [top.detailWidth, top.detailHeight],
-                    shadeClose: false,
-                    content: 'locMast_detail.html',
-                    success: function (layero, index) {
-                        // todo 更新库存
-                    }
+            case 'refreshSto': // todo:luxiaotao
+                alert("还没做");
+                break;
+            case 'exportData':
+                layer.confirm('确定导出Excel吗', function(){
+                    var titles=[];
+                    var fields=[];
+                    obj.config.cols[0].map(function (col) {
+                        if (col.type === 'normal' && col.hide === false && col.toolbar == null) {
+                            titles.push(col.title);
+                            fields.push(col.field);
+                        }
+                    });
+                    var exportData = {};
+                    $.each($('#search-box [name]').serializeArray(), function() {
+                        exportData[this.name] = this.value;
+                    });
+                    var param = {
+                        'wrkLastno': exportData,
+                        'fields': fields
+                    };
+                    $.ajax({
+                        url: "/wrkLastno/export/auth",
+                        headers: {'token': localStorage.getItem('token')},
+                        data: JSON.stringify(param),
+                        dataType:'json',
+                        contentType:'application/json;charset=UTF-8',
+                        method: 'POST',
+                        success: function (res) {
+                            layer.closeAll();
+                            if (res.code === 200) {
+                                table.exportFile(titles,res.data,'xls');
+                            } else if (res.code === 403) {
+                                top.location.href = "/";
+                            } else {
+                                layer.msg(res.msg)
+                            }
+                        }
+                    });
                 });
                 break;
         }
+    });
+
+    // 监听行工具事件
+    table.on('tool(stoQue)', function(obj) {
+        var data = obj.data;
+        switch (obj.event) {
+            // 查看明细
+            case 'locDetl':
+                $('#locNo').val(data.locNo);
+                locDetl(data.locNo);
+                $('#detlTable').css("display", 'block');
+        }
+    });
+
+    var pageCur;
+    function locDetl(locNo){
+        // 数据渲染
+        tableIns1 = table.render({
+            elem: '#locDetlByMap',
+            headers: {token: localStorage.getItem('token')},
+            url: '/locDetl/list/auth',
+            page: true,
+            limit: 5,
+            skin: 'line',
+            where: {loc_no: locNo},
+            even: true,
+            cellMinWidth: 50,
+            cols: [[
+                // {type: 'checkbox'}
+                {field: 'locNo$', align: 'center',title: '库位号'}
+                ,{field: 'matnr', align: 'center',title: '物料'}
+                ,{field: 'lgnum', align: 'center',title: '仓库号'}
+                ,{field: 'tbnum', align: 'center',title: '转储请求编号'}
+                // ,{field: 'tbpos', align: 'center',title: '行项目'}
+                ,{field: 'zmatid', align: 'center',title: '物料标签ID'}
+                ,{field: 'maktx', align: 'center',title: '物料描述'}
+                ,{field: 'werks', align: 'center',title: '工厂'}
+                ,{field: 'anfme', align: 'center',title: '数量'}
+                ,{field: 'altme', align: 'center',title: '单位'}
+                ,{field: 'zpallet', align: 'center',title: '托盘条码'}
+                ,{field: 'bname', align: 'center',title: '用户ID'}
+            ]],
+            request: {
+                pageName: 'curr',
+                pageSize: 'limit'
+            },
+            parseData: function (res) {
+                return {
+                    'code': res.code,
+                    'msg': res.msg,
+                    'count': res.data.total,
+                    'data': res.data.records
+                }
+            },
+            response: {
+                statusCode: 200
+            },
+            done: function(res, curr, count) {
+                if (res.code === 403) {
+                    top.location.href = "/";
+                }
+                pageCur=curr;
+                form.on('checkbox(tableCheckbox)', function (data) {
+                    var _index = $(data.elem).attr('table-index')||0;
+                    if(data.elem.checked){
+                        res.data[_index][data.value] = 'Y';
+                    }else{
+                        res.data[_index][data.value] = 'N';
+                    }
+                });
+            }
+        });
+    }
+
+    // 搜索栏重置事件
+    form.on('submit(reset)', function (data) {
+        pageCurr = 1;
+        clearFormVal($('#search-box'));
+        tableReload(false);
     });
 
     // 搜索栏搜索事件
     form.on('submit(search)', function (data) {
         pageCurr = 1;
         tableReload(false);
+        $('#detlTable').css("display", 'none');
     });
 });
 

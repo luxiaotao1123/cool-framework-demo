@@ -13,9 +13,18 @@
         #btn-export {
             float:initial !important;
         }
-        .refresh-sto {
+        #refresh-sto {
             display: none;
         }
+        .loc-detl {
+            display: none;
+        }
+        #detlTable {
+            margin-top: 20px;
+        }
+        /*#detlTable .layui-table-body.layui-table-main table tbody tr {*/
+            /**/
+        /*}*/
     </style>
 </head>
 <body>
@@ -30,18 +39,37 @@
     </div>
 
     <!-- 待添加 -->
-    <div id="data-search-btn" class="layui-btn-container layui-form-item">
+    <div id="data-search-btn" class="layui-btn-container layui-form-item" style="display: inline-block">
         <button id="search" class="layui-btn layui-btn-primary layui-btn-radius" lay-submit lay-filter="search">搜索</button>
         <button id="reset" class="layui-btn layui-btn-primary layui-btn-radius" lay-submit lay-filter="reset">重置</button>
     </div>
 </div>
-
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" id="refresh-sto" lay-event="refreshSto">更新库存</button>
+        <button class="layui-btn layui-btn-primary layui-btn-sm" id="btn-export" lay-event="exportData">导出</button>
+    </div>
+</script>
 <!-- 表格 -->
 <table class="layui-hide" id="stoQue" lay-filter="stoQue"></table>
 
 <script type="text/html" id="operate">
-    <a class="layui-btn layui-btn-xs refresh-sto" lay-event="refreshSto">更新库存</a>
+    <a class="layui-btn layui-btn-xs loc-detl" lay-event="locDetl">查看明细</a>
 </script>
+
+<!--明细表-->
+<div id="detlTable" style="display: none">
+    <div class="layui-inline"  style="width:90%;margin-top: 20px">
+        <label class="layui-form-label">库 位 号：</label>
+        <div class="layui-input-inline">
+            <input id="locNo" class="layui-input" type="text" disabled="disabled">
+        </div>
+        <span style=" color: indianred">以下为当前库位的物料明细</span>
+    </div>
+
+    <table class="layui-hide" id="locDetlByMap" lay-filter="locDetlByMap"></table>
+</div>
+
 
 <script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/static/layui/layui.js" charset="utf-8"></script>
