@@ -247,6 +247,7 @@ layui.use(['table','laydate', 'form'], function(){
                     shadeClose: false,
                     content: 'wrkMast_detail.html',
                     success: function(layero, index){
+                        layer.getChildFrame('#crnStrTime\\$,#crnEndTime\\$,#refIotime\\$,#ioTime\\$', index).parent().parent().hide();
                         layer.getChildFrame('#data-detail-submit-save', index).hide();
                         setFormVal(layer.getChildFrame('#detail', index), data, false);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
@@ -368,7 +369,7 @@ layui.use(['table','laydate', 'form'], function(){
                 break;
             case 'locNo':
                 var param = top.reObject(data).locNo;
-                if (param === undefined) {
+                if (param === undefined || param.trim() === '') {
                     layer.msg("无数据");
                 } else {
                    layer.open({
@@ -404,7 +405,7 @@ layui.use(['table','laydate', 'form'], function(){
                 break;
             case 'staNo':
                 var param = top.reObject(data).staNo;
-                if (param === undefined) {
+                if (param === undefined || param.trim() === '') {
                     layer.msg("无数据");
                 } else {
                    layer.open({
@@ -440,7 +441,7 @@ layui.use(['table','laydate', 'form'], function(){
                 break;
             case 'sourceStaNo':
                 var param = top.reObject(data).sourceStaNo;
-                if (param === undefined) {
+                if (param === undefined || param.trim() === '') {
                     layer.msg("无数据");
                 } else {
                    layer.open({
@@ -476,7 +477,7 @@ layui.use(['table','laydate', 'form'], function(){
                 break;
             case 'sourceLocNo':
                 var param = top.reObject(data).sourceLocNo;
-                if (param === undefined) {
+                if (param === undefined || param.trim() === '') {
                     layer.msg("无数据");
                 } else {
                    layer.open({

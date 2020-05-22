@@ -51,7 +51,7 @@ public class WrkMastController extends BaseController {
             } else if (entry.getKey().endsWith("<")) {
                 wrapper.le(Cools.deleteChar(entry.getKey()), DateUtils.convert(String.valueOf(entry.getValue())));
             } else {
-                wrapper.eq(entry.getKey(), String.valueOf(entry.getValue()));
+                wrapper.like(entry.getKey(), String.valueOf(entry.getValue()));
             }
         }
     }
