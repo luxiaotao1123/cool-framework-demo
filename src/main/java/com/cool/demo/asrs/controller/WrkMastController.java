@@ -40,7 +40,14 @@ public class WrkMastController extends BaseController {
         excludeTrash(param);
         EntityWrapper<WrkMast> wrapper = new EntityWrapper<>();
         convert(param, wrapper);
-        if (!Cools.isEmpty(orderByField)){wrapper.orderBy(humpToLine(orderByField), "asc".equals(orderByType));}
+        if (!Cools.isEmpty(orderByField)){
+            if (orderByField.endsWith("$")){
+                orderByField = orderByField.substring(0, orderByField.length()-1);
+            }
+            wrapper.orderBy(humpToLine(orderByField), "asc".equals(orderByType));
+        }else {
+            wrapper.orderBy("io_time", false);
+        }
         return R.ok(wrkMastService.selectPage(new Page<>(curr, limit), wrapper));
     }
 
