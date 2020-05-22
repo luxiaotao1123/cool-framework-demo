@@ -23,7 +23,7 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'sno', align: 'center',title: '起始ID'}
             ,{field: 'eno', align: 'center',title: '终止ID'}
             ,{field: 'memoM', align: 'center',title: '备注'}
-            ,{field: 'modiUser$', align: 'center',title: '修改人员',event: 'modiUser', style: 'cursor:pointer'}
+            ,{field: 'modiUser$', align: 'center',title: '修改人员'}
             ,{field: 'modiTime$', align: 'center',title: '修改时间', width:200}
             ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate'}
         ]],

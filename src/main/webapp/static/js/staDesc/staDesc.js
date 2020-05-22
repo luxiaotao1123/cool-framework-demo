@@ -20,7 +20,7 @@ layui.use(['table','laydate', 'form'], function(){
             {type: 'checkbox'}
 //            ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
 //             ,{field: 'typeId', align: 'center',title: '路径ID'}
-            ,{field: 'typeNo$', align: 'center',title: '入出库类型',event: 'typeNo', style: 'cursor:pointer'}
+            ,{field: 'typeNo$', align: 'center',title: '入出库类型'}
             // ,{field: 'typeDesc', align: 'center',title: '作业类型'}
             ,{field: 'stnNo$', align: 'center',title: '作业站点',event: 'stnNo', style: 'cursor:pointer'}
             ,{field: 'stnDesc', align: 'center',title: '站点名称'}
