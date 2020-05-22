@@ -20,10 +20,10 @@ layui.use(['table','laydate', 'form'], function(){
             {type: 'checkbox'}
             ,{field: 'wrkNo', align: 'center',title: '工作号',sort: true, width:80}
             ,{field: 'ioTime$', align: 'center',title: '工作时间',sort: true, width:90}
-            ,{field: 'wrkSts$', align: 'center',title: '工作状态',event: 'wrkSts', style: 'cursor:pointer',width:120}
-            ,{field: 'ioType$', align: 'center',title: '入出库类型',event: 'ioType', style: 'cursor:pointer'}
+            ,{field: 'wrkSts$', align: 'center',title: '工作状态'}
+            ,{field: 'ioType$', align: 'center',title: '入出库类型'}
             ,{field: 'ioPri', align: 'center',title: '优先级',width:80}
-            ,{field: 'crnNo$', align: 'center',title: '堆垛机',event: 'crnNo', style: 'cursor:pointer'}
+            ,{field: 'crnNo$', align: 'center',title: '堆垛机'}
             ,{field: 'sourceStaNo$', align: 'center',title: '源站',event: 'sourceStaNo', style: 'cursor:pointer',width:60}
             ,{field: 'staNo$', align: 'center',title: '目标站',event: 'staNo', style: 'cursor:pointer',width:80}
             ,{field: 'sourceLocNo$', align: 'center',title: '源库位',event: 'sourceLocNo', style: 'cursor:pointer'}
