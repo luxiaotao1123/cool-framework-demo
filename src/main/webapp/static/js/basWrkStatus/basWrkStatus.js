@@ -19,7 +19,7 @@ layui.use(['table','laydate', 'form'], function(){
         cols: [[
             {type: 'checkbox', fixed: 'left'}
 //            ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
-            ,{field: 'wrkSts', align: 'center',title: '代号'}
+            ,{field: 'wrkSts', align: 'center',sort:true,title: '代号'}
             ,{field: 'wrkDesc', align: 'center',title: '状态描述'}
             ,{field: 'modiUser$', align: 'center',title: '修改人员'}
             ,{field: 'modiTime$', align: 'center',title: '修改时间'}

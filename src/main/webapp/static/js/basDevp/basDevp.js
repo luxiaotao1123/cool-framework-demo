@@ -19,7 +19,7 @@ layui.use(['table','laydate', 'form'], function(){
         cols: [[
             {type: 'checkbox', fixed: 'left'}
 //            ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
-            ,{field: 'devNo', align: 'center',title: '编号'}
+            ,{field: 'devNo', align: 'center',sort:true,title: '编号'}
             // ,{field: 'decDesc', align: 'center',title: '设备描述'}
             // ,{field: 'devMk', align: 'center',title: '备注'}
             ,{field: 'inEnable', align: 'center',title: '可入', templet:function(row){

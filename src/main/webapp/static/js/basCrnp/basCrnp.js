@@ -19,7 +19,7 @@ layui.use(['table','laydate', 'form'], function(){
         cols: [[
             {type: 'checkbox', fixed: 'left'}
 //            ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
-            ,{field: 'crnNo', align: 'center',title: '编号',width:80}
+            ,{field: 'crnNo', align: 'center',title: '编号',sort:true,width:80}
             ,{field: 'inEnable', align: 'center',title: '可入', templet:function(row){
                     var html = "<input value='inEnable' type='checkbox' lay-skin='primary' lay-filter='tableCheckbox' table-index='"+row.LAY_TABLE_INDEX+"'";
                     if(row.inEnable === 'Y'){html += " checked ";}
