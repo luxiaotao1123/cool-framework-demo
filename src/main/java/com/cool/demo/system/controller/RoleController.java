@@ -93,6 +93,7 @@ public class RoleController extends BaseController {
     }
 
 	@RequestMapping(value = "/role/update/auth")
+    @ManagerAuth
     public R update(Role role){
         if (Cools.isEmpty(role) || null==role.getId()){
             return R.error();

@@ -73,6 +73,7 @@ public class HostController extends AbstractBaseController {
     }
 
 	@RequestMapping(value = "/host/update/auth")
+    @ManagerAuth
     public R update(Host host){
         if (Cools.isEmpty(host) || null==host.getId()){
             return R.error();

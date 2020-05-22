@@ -80,6 +80,7 @@ public class BasLocTypeController extends BaseController {
     }
 
 	@RequestMapping(value = "/basLocType/update/auth")
+    @ManagerAuth
     public R update(BasLocType basLocType){
         if (Cools.isEmpty(basLocType) || null==basLocType.getLocSts()){
             return R.error();

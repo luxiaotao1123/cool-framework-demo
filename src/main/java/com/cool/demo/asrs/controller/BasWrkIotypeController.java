@@ -49,7 +49,7 @@ public class BasWrkIotypeController extends BaseController {
             } else if (entry.getKey().endsWith("<")) {
                 wrapper.le(Cools.deleteChar(entry.getKey()), DateUtils.convert(String.valueOf(entry.getValue())));
             } else {
-                wrapper.like(entry.getKey(), String.valueOf(entry.getValue()));
+                wrapper.eq(entry.getKey(), String.valueOf(entry.getValue()));
             }
         }
     }
@@ -80,6 +80,7 @@ public class BasWrkIotypeController extends BaseController {
     }
 
 	@RequestMapping(value = "/basWrkIotype/update/auth")
+    @ManagerAuth
     public R update(BasWrkIotype basWrkIotype){
         if (Cools.isEmpty(basWrkIotype) || null==basWrkIotype.getIoType()){
             return R.error();

@@ -23,7 +23,7 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'ioType', align: 'center',title: '入出类型代号'}
             // ,{field: 'ioPri', align: 'center',title: '主要'}
             ,{field: 'ioDesc', align: 'center',title: '入出类型描述'}
-            ,{field: 'modiUser$', align: 'center',title: '修改人员',event: 'modiUser', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'modiUser$', align: 'center',title: '修改人员'}
             ,{field: 'modiTime$', align: 'center',title: '修改时间'}
             // ,{field: 'appeUser$', align: 'center',title: '创建者',event: 'appeUser', style: 'text-decoration: underline;cursor:pointer'}
             // ,{field: 'appeTime$', align: 'center',title: '添加时间'}
