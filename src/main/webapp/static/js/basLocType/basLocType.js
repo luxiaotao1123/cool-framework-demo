@@ -13,7 +13,7 @@ layui.use(['table','laydate', 'form'], function(){
         url: '/basLocType/list/auth',
         page: true,
         limit: 16,
-        skin: 'row',
+        even: true,
         toolbar: '#toolbar',
         cellMinWidth: 50,
         cols: [[
@@ -21,7 +21,7 @@ layui.use(['table','laydate', 'form'], function(){
 //            ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
             ,{field: 'locSts', align: 'center',title: '库位状态代号'}
             ,{field: 'locDesc', align: 'center',sort: true,title: '库位状态描述'}
-            ,{field: 'modiUser$', align: 'center',title: '修改人员',event: 'modiUser', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'modiUser$', align: 'center',title: '修改人员'}
             ,{field: 'modiTime$', align: 'center',title: '修改时间'}
             // ,{field: 'appeUser$', align: 'center',title: '创建者',event: 'appeUser', style: 'text-decoration: underline;cursor:pointer'}
             // ,{field: 'appeTime$', align: 'center',title: '添加时间'}
