@@ -141,6 +141,7 @@ layui.use(['table','laydate', 'form'], function(){
                     shadeClose: false,
                     content: 'basDevp_detail.html',
                     success: function(layero, index){
+                        layer.getChildFrame('#autoing,#loading,#canining,#canouting,#inreq1,#inreq2,#wrkNo,#barcode,#ctnType,#grossWt', index).parent().parent().hide();
                         layer.getChildFrame('#data-detail-submit-edit', index).hide();
                     	clearFormVal(layer.getChildFrame('#detail', index));
                         layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
