@@ -18,12 +18,12 @@
         .home-elem {
             background-color: #fff;
             height: 30%;
-            margin: 15px 15px 0 15px;
+            margin: 15px 15px 45px 15px;
             border-radius: 5px;
             box-shadow: 0 0 3px rgba(0,0,0,.3);
         }
-        .home-elem:last-child{
-            margin-bottom: 40px;
+        .home-elem:first-child{
+            margin-bottom: 0;
         }
         .chart-elem {
             box-sizing: border-box;
@@ -37,14 +37,6 @@
             padding-left: 20px;
             border-left: 1px solid rgba(0,0,0,.1);
         }
-        /*#pie {*/
-            /*height: 50%;*/
-            /*width: 100%;*/
-        /*}*/
-        /*#line {*/
-            /*height: 50%;*/
-            /*width: 100%;*/
-        /*}*/
         /*表格工具栏*/
         .layui-table-tool {
             display: none;
@@ -74,7 +66,6 @@
         .layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {
             background-color: #f9f9f9;
         }
-
         .layui-table thead tr {
             background-color: #fff;
         }
@@ -226,7 +217,7 @@
             headers: {token: localStorage.getItem('token')},
             url: '/report/viewStayTimeList.action',
             page: true,
-            limit: 6,
+            limit: 10,
             toolbar: '#toolbar',
             cellMinWidth: 50,
             cols: [[
