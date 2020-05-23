@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>首页</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -11,336 +11,187 @@
     <script type="text/javascript" src="/static/layui/layui.js"></script>
     <script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="/static/js/echarts/echarts.min.js"></script>
+    <script type="text/javascript" src="/static/js/echarts/highcharts.js"></script>
+    <style>
+        body {
+            background-color: #f1f1f1;
+        }
+        #charts-contain {
+            background-color: #fff;
+            height: 30%;
+            margin: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 3px rgba(0,0,0,.3);
+        }
+        .chart-elem {
+            box-sizing: border-box;
+            display: inline-block;
+            width: 49%
+        }
+        .chart-elem:first-child {
+            padding: 60px;
+        }
+        #pie {
+            height: 50%;
+            width: 100%;
+        }
+        #line {
+            height: 50%;
+            width: 100%;
+        }
+    </style>
 </head>
-<style>
-    html {
-        height: 100%;
-        color: #666;
-        background: #fbfbfb;
-    }
-    body {
-        height: 100%;
-        font: 14px Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;
-    }
-    #container {
-        margin-top: 10px;
-        padding: 15px;
-        height: 100%;
-    }
+<body>
 
-    .col.layui-card {
-        margin: 0 2px 0 2px;
-        width: 32.51%;
-        border-radius: 5px;
-        box-shadow: 0 0 3px rgba(0,0,0,.1);
-    }
-    .layui-btn-group.cool-btn-group {
-        float: right;
-    }
-    .layui-badge {
-        float: right;
-        top: 31%;
-    }
-    .cool-home-top-count {
-        font-size: 36px;
-        color: #666;
-        line-height: 36px;
-        padding: 5px 0 10px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        word-break: break-all;
-        white-space: nowrap;
-    }
-    .cool-home-top-total {
-        margin-top: 7px;
-    }
-    .cool-home-top-count-span {
-        float: right;
-    }
-    .cool-home-top-total .layui-icon {
-        margin-left: 3px;
-    }
-
-    #container-content {
-        width: 98.8%;
-        margin-top: 15px;
-        border-radius: 5px;
-        box-shadow: 0 0 3px rgba(0,0,0,.1);
-        height: 500px;
-    }
-    /*折线图*/
-    #echarts {
-        height:400px;
-        width: 100%;
-        display: inline-block;
-        vertical-align:top
-    }
-    /*进度条*/
-    #progress {
-        padding-top: 60px;
-        width: 100%;
-        height: 400px;
-        display: inline-block;
-        vertical-align:top
-    }
-    .cool-card-list {
-        padding: 15px;
-    }
-    .cool-card-list p {
-        padding-bottom: 10px;
-        font-size: 20px;
-        color: #666;
-        line-height: 24px;
-    }
-
-</style>
-<body id="body" >
-<div id="container">
-
-    <!--头部数据-->
-    <div id="container-top">
-        <div class="layui-row">
-            <div class="layui-col-md4 col layui-card">
-                <div class="layui-card-header">访问量<span class="layui-badge layui-bg-blue">周</span></div>
-                <div class="layui-card-body">
-                    <p id="logWeek" class="cool-home-top-count">999999</p>
-                    <p class="cool-home-top-total">
-                        总访问量
-                        <span class="cool-home-top-count-span">
-                    <span id="logTotal" >
-                        88万
-                    </span>
-                    <i class="layui-inline layui-icon layui-icon-flag"></i>
-                </span>
-                    </p>
-                </div>
-            </div>
-            <div class="layui-col-md4 col layui-card">
-                <div class="layui-card-header">用户量<span class="layui-badge layui-bg-yellow">总</span></div>
-                <div class="layui-card-body">
-                    <p id="userTotal" class="cool-home-top-count">999999</p>
-                    <p class="cool-home-top-total">
-                        活跃度
-                        <span class="cool-home-top-count-span">
-                    <span id="live" >
-                        15%
-                    </span>
-                    <i class="layui-inline layui-icon layui-icon-face-smile"></i>
-                </span>
-                    </p>
-                </div>
-            </div>
-            <div class="layui-col-md4 col layui-card">
-                <div class="layui-card-header">收入<span class="layui-badge layui-bg-green">年</span></div>
-                <div class="layui-card-body">
-                    <p class="cool-home-top-count">999999</p>
-                    <p class="cool-home-top-total">总收入<span class="cool-home-top-count-span">88万<i class="layui-inline layui-icon layui-icon-dollar"></i></span></p>
-                </div>
-            </div>
-        </div>
+<!--报表数据-->
+<div id="charts-contain">
+    <div class="chart-elem">
+        <div id="pie"></div>
     </div>
-
-    <!--统计数据-->
-    <div id="container-content" class="layui-card">
-        <div class="layui-card-header">
-            <div class="layui-row">
-                <div class="layui-col-md6 col">数据概览</div>
-                <div class="layui-col-md6 col">
-                    <div class="layui-btn-group cool-btn-group">
-                        <a href="javascript:void(0);" onclick="initVisits(2)" class="layui-btn layui-btn-primary layui-btn-xs">本月</a>
-                        <a href="javascript:void(0);" onclick="initVisits(1)" class="layui-btn layui-btn-primary layui-btn-xs">本年</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="layui-card-body">
-            <div class="layui-row ">
-                <!--报表-->
-                <div class="layui-col-md8 col">
-                    <div id="echarts"></div>
-                </div>
-                <!--进度-->
-                <div class="layui-col-md4 col">
-                    <div id="progress">
-                        <div class="cool-card-list">
-                            <p>月访问数</p>
-                            <span>同上期增长</span>
-                            <div class="layui-progress layui-progress-big">
-                                <div class="layui-progress-bar" lay-percent="30%">
-                                    <span class="layui-progress-text">30%</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cool-card-list">
-                            <p>月活跃数</p>
-                            <span>同上期增长</span>
-                            <div class="layui-progress layui-progress-big">
-                                <div class="layui-progress-bar" lay-percent="40%">
-                                    <span class="layui-progress-text">40%</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cool-card-list">
-                            <p>月收入</p>
-                            <span>同上期增长</span>
-                            <div class="layui-progress layui-progress-big">
-                                <div class="layui-progress-bar" lay-percent="80%">
-                                    <span class="layui-progress-text">80%</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+    <div class="chart-elem">
+        <div id="line"></div>
     </div>
-
 </div>
+
+<!--表格数据-->
 </body>
-<script >
-    layui.use('element', function(){
-        var element = layui.element,
-            layer = layui.layer,
-            $ = layui.jquery;
-       // todo
-       // initTop();
-       // initVisits(2);
-
-    });
-
-
-
-    var myChart = echarts.init(document.getElementById('echarts'));
-    var option = {
-        title: {
-            // subtext: '堆叠区域图'
-        },
-        // 提示框组件
-        tooltip : {
-            // 坐标轴触发
-            trigger: 'axis',
-            // 坐标轴指示器
-            axisPointer: {
-                // 十字准星指示器
-                type: 'cross',
-                label: {
-                    backgroundColor: '#6a7985'
-                }
-            }
-        },
-        // 图表上方的组件集合
-        legend: {
-            data:['访问量']
-        },
-        // 工具栏
-        toolbox: {
-            feature: {
-                // 保存为图片
-                // saveAsImage: {}
-            }
-        },
-        // 图表的样式
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        // x轴
-        xAxis : [
-            {
-                type : 'category',
-                // 坐标轴两边留白策略
-                boundaryGap : false,
-                data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
-            }
-        ],
-        // y轴
-        yAxis : [
-            {
-                type : 'value'
-            }
-        ],
-        // 数据
-        series : [
-                {
-                    name:'访问量',
-                    type:'line',
-                    stack: '总量',
-                    areaStyle: {
-                        normal: {
-                            // color: '#33CC99'
-                        }
-                    },
-                    lineStyle: {
-                        normal: {
-                            // color: '#33CC99'
-                        }
-                    },
-                    label: {
-                        normal: {
-                            // show: true,
-                            position: 'top'
-                        }
-                    },
-                    data:[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                },
-        ]
-    };
-
-    if (option && typeof option === "object") {
-        myChart.setOption(option, true);
-    }
-
-    // 顶部加载
-    function initTop() {
+<script>
+    pieCharts();
+    lineCharts();
+    // 饼图
+    function pieCharts(){
         $.ajax({
-            url: "/home/top",
+            url:'/console/loc/pie/charts',
             headers: {'token': localStorage.getItem('token')},
+            dataType: 'json',
+            contentType: 'application/json;charset=UTF-8',
             method: 'POST',
-            success: function (res) {
-                if (res.code === 200){
-                    $('#logWeek').text(res.data.logWeek);
-                    $('#logTotal').text(res.data.logTotal);
-                    $('#userTotal').text(res.data.userTotal);
-                    $('#live').text(res.data.live);
-                } else if (res.code === 403){
-                    top.location.href = "/login";
-                } else {
-                    layer.msg(res.msg);
-                }
-            }
-        });
-    }
-
-    // 访问量报表加载
-    function initVisits(type) {
-        var reportView = option;
-        var xAxisDate = [];
-        var seriesDate=[];
-        $.ajax({
-            url: "/home/report",
-            headers: {'token': localStorage.getItem('token')},
-            data: {type: type},
-            method: 'POST',
-            success: function (res) {
-                if (res.code === 200){
-                    var json = res.data.visits;
-                    for (var i = 0; i < json.length; i++) {
-                        xAxisDate[i]=json[i].node;
-                        seriesDate[i]=json[i].val;
+            success:function(res){
+                var data = res.data;
+                var dataPie=eval(data.rows);
+                var chart = {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                };
+                var title = {
+                    text: '库位使用比例',
+                    margin:1,
+                    style: {fontSize: '18px',color: '#777',fontWeight: 'bold'},
+                    y: 35
+                };
+                var tooltip = {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                };
+                var plotOptions = {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            }
+                        }
                     }
-                    reportView.xAxis[0].data=xAxisDate;
-                    reportView.series[0].data=seriesDate;
-                    myChart.setOption(reportView, true)
-                } else if (res.code === 403){
-                    top.location.href = "/login";
-                } else {
-                    layer.msg(res.msg);
-                }
+                };
+                var series= [{
+                    type: 'pie',
+                    name: '库位占比',
+                    data: dataPie
+                }];
+
+                var json = {};
+                json.chart = chart;
+                json.title = title;
+                json.tooltip = tooltip;
+                json.series = series;
+                json.plotOptions = plotOptions;
+                json.credits = {enabled: false};
+                $('#pie').highcharts(json);
+
+            },
+            error:function(){
             }
         });
+    }
+
+    // 折线图
+    function lineCharts() {
+        $.ajax({
+            url: '/console/locIo/line/charts',
+            headers: {'token': localStorage.getItem('token')},
+            dataType: 'json',
+            contentType: 'application/json;charset=UTF-8',
+            method: 'POST',
+            success: function (res) {
+                var data = res.data;
+                var dataPie = eval(data.rows);
+                var title = {
+                    text: '日入出库数量',
+                    margin: 1,
+                    style: {fontSize: '18px',color: '#777',fontWeight: 'bold'},
+                    y: 35
+                };
+                var xAxis = {
+                    categories: [getDate(-11), getDate(-10), getDate(-9), getDate(-8), getDate(-7), getDate(-6),
+                        getDate(-5), getDate(-4), getDate(-3), getDate(-2), getDate(-1), getDate(-0)]
+                };
+                var yAxis = {
+                    title: {
+                        text: '入/出库数量'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                };
+                var tooltip = {};
+                var legend = {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                };
+                var series = dataPie;
+                var json = {};
+                json.title = title;
+                json.xAxis = xAxis;
+                json.yAxis = yAxis;
+                json.tooltip = tooltip;
+                json.legend = legend;
+                json.series = series;
+                json.credits = {enabled: false};
+                $('#line').highcharts(json);
+            }
+        });
+    }
+
+
+    function getDate(value){
+        var date = new Date();// 获取当前时间
+        date.setDate(date.getDate() + value);// 设置天数 -1 天
+        return date.Format("MM-dd");
+    }
+    /**
+     * 日期格式化
+     */
+    Date.prototype.Format = function (fmt) {
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
     }
 </script>
 </html>

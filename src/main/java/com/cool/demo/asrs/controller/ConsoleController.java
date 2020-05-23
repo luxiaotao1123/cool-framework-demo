@@ -2,6 +2,8 @@ package com.cool.demo.asrs.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.cool.demo.asrs.entity.AxisBean;
+import com.cool.demo.asrs.entity.ChartBean;
+import com.cool.demo.asrs.entity.LocChartPie;
 import com.cool.demo.asrs.entity.WorkChartAxis;
 import com.cool.demo.asrs.mapper.ReportQueryMapper;
 import com.core.common.R;
@@ -47,6 +49,37 @@ public class ConsoleController {
 //        return R.ok(pieVo);
         String s = "{\"forbidDes\":\"禁用库位0.1%\",\"forbidQty\":2,\"fullDes\":\"在库库位44.4%\",\"fullQty\":1061,\"nullDes\":\"空库位47.2%\",\"nullQty\":1128,\"occDes\":\"使用库位8.4%\",\"occQty\":201,\"totalDes\":\"\",\"totalQty\":2392}\n";
         return R.ok(JSON.parse(s));
+    }
+
+    @PostMapping("loc/pie/charts")
+    public R dsa(){
+        Map<String,Object> map=new HashMap<String, Object>();
+        List<ChartBean>  list = new ArrayList<ChartBean>();
+
+        LocChartPie locUseRate = reportQueryMapper.getLocUseRate();
+        if(locUseRate!=null) {
+            ChartBean fqty = new ChartBean();
+            fqty.setName("在库库位");
+            fqty.setY(locUseRate.getFqty());
+            list.add(fqty);
+
+            ChartBean oqty = new ChartBean();
+            oqty.setName("空库位");
+            oqty.setY(locUseRate.getOqty());
+            list.add(oqty);
+
+            ChartBean uqty = new ChartBean();
+            uqty.setName("使用库位");
+            uqty.setY(locUseRate.getUqty());
+            list.add(uqty);
+
+            ChartBean xqty = new ChartBean();
+            xqty.setName("禁用库位");
+            xqty.setY(locUseRate.getXqty());
+            list.add(xqty);
+        }
+        map.put("rows",list);
+        return R.ok(map);
     }
 
     @PostMapping("locIo/line/charts")
