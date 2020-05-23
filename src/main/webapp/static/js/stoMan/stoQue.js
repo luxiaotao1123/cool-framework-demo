@@ -162,6 +162,7 @@ layui.use(['table','laydate', 'form'], function(){
         }
     });
 
+    // iframe物料详情
     function locDetlToLayer(val) {
         locNo = val;
         layer.open({
@@ -175,6 +176,7 @@ layui.use(['table','laydate', 'form'], function(){
             }
         });
     }
+    // div物料详情
     var pageCur;
     function locDetl(locNo){
         $('#detlTable').css("display", 'block');
