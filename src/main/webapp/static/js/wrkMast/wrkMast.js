@@ -13,7 +13,7 @@ layui.use(['table','laydate', 'form'], function(){
         headers: {token: localStorage.getItem('token')},
         url: '/wrkMast/list/auth',
         page: true,
-        limit: 5,
+        limit: 10,
         even: true,
         toolbar: '#toolbar',
         cellMinWidth: 50,
@@ -149,7 +149,6 @@ layui.use(['table','laydate', 'form'], function(){
                                 layer.closeAll();
                                 if (res.code === 200){
                                     $(".layui-laypage-btn")[0].click();
-                                    tableReload(false);
                                 } else if (res.code === 403){
                                     top.location.href = "/";
                                 } else {
@@ -185,7 +184,6 @@ layui.use(['table','laydate', 'form'], function(){
                                 layer.closeAll();
                                 if (res.code === 200){
                                     $(".layui-laypage-btn")[0].click();
-                                    tableReload(false);
                                 } else if (res.code === 403){
                                     top.location.href = "/";
                                 } else {

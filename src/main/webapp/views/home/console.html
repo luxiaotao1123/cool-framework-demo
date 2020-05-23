@@ -122,7 +122,7 @@
                     text: '库位使用比例',
                     margin:1,
                     style: {fontSize: '18px',color: '#777',fontWeight: 'bold'},
-                    y: 35
+                    y: 20
                 };
                 var tooltip = {
                     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -176,7 +176,7 @@
                     text: '日入出库数量',
                     margin: 1,
                     style: {fontSize: '18px',color: '#777',fontWeight: 'bold'},
-                    y: 35
+                    y: 20
                 };
                 var xAxis = {
                     categories: [getDate(-11), getDate(-10), getDate(-9), getDate(-8), getDate(-7), getDate(-6),
@@ -226,7 +226,7 @@
             headers: {token: localStorage.getItem('token')},
             url: '/report/viewStayTimeList.action',
             page: true,
-            limit: 5,
+            limit: 6,
             toolbar: '#toolbar',
             cellMinWidth: 50,
             cols: [[
