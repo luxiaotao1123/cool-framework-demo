@@ -19,9 +19,12 @@
         .home-elem {
             background-color: #fff;
             height: 30%;
-            margin: 10px;
+            margin: 10px 10px 0 10px;
             border-radius: 5px;
             box-shadow: 0 0 3px rgba(0,0,0,.3);
+        }
+        .home-elem:last-child{
+            margin-bottom: 40px;
         }
         .chart-elem {
             box-sizing: border-box;
@@ -43,6 +46,10 @@
             height: 50%;
             width: 100%;
         }
+        /*表格工具栏*/
+        .layui-table-tool {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -60,7 +67,7 @@
 <!--表格数据-->
 <div class="home-elem loc-retention">
     <div class="layui-form">
-        <table class="layui-hide" id="" lay-filter=""></table>
+        <table class="layui-hide" id="stayTime" lay-filter="stayTime"></table>
     </div>
 </div>
 </body>
@@ -177,6 +184,62 @@
             }
         });
     }
+
+    // 表格
+    var pageCurr;
+    layui.use(['table','laydate', 'form'], function() {
+        var table = layui.table;
+        var $ = layui.jquery;
+        var layer = layui.layer;
+
+        // 数据渲染
+        tableIns = table.render({
+            elem: '#stayTime',
+            headers: {token: localStorage.getItem('token')},
+            url: '/report/viewStayTimeList.action',
+            page: true,
+            limit: 5,
+            toolbar: '#toolbar',
+            cellMinWidth: 50,
+            cols: [[
+                {field: 'appe_time', title: '入库时间', sort: true, align: 'center'}
+                ,{field: 'stay_time', align: 'center',title: '滞留天数'}
+                ,{field: 'loc_no', align: 'center',title: '库位号'}
+                ,{field: 'matnr', align: 'center',title: '物料'}
+                ,{field: 'maktx', align: 'center',title: '物料描述'}
+                ,{field: 'lgnum', align: 'center',title: '仓库号'}
+                ,{field: 'tbnum', align: 'center',title: '请求编号'}
+                ,{field: 'zmatid', align: 'center',title: '物料标签ID'}
+                ,{field: 'werks', align: 'center',title: '工厂'}
+                ,{field: 'anfme', align: 'center',title: '数量'}
+                ,{field: 'altme', align: 'center',title: '单位'}
+                ,{field: 'zpallet', align: 'center',title: '托盘码'}
+                ,{field: 'bname', align: 'center',title: '用户ID'}
+            ]],
+            request: {
+                pageName: 'curr',
+                pageSize: 'limit'
+            },
+            parseData: function (res) {
+                return {
+                    'code': res.code,
+                    'msg': res.msg,
+                    'count': res.data.total,
+                    'data': res.data.records
+                }
+            },
+            response: {
+                statusCode: 200
+            },
+            done: function(res, curr, count) {
+                if (res.code === 403) {
+                    top.location.href = "/";
+                }
+                pageCurr=curr;
+                limit();
+            }
+        });
+    });
 
 
     function getDate(value){
