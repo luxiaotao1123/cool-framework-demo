@@ -36,10 +36,22 @@
 
 <!-- 搜索栏 -->
 <div id="search-box" class="layui-form layui-card-header">
+    <!--<div class="layui-inline">-->
+        <!--<label class="layui-form-label">工 作 号：</label>-->
+        <!--<div class="layui-input-inline">-->
+            <!--<input class="layui-input" type="text" name="wrk_no" placeholder="请输入" autocomplete="off">-->
+        <!--</div>-->
+    <!--</div>-->
     <div class="layui-inline">
         <label class="layui-form-label">工 作 号：</label>
-        <div class="layui-input-inline">
-            <input class="layui-input" type="text" name="wrk_no" placeholder="请输入" autocomplete="off">
+        <div class="layui-input-inline cool-auto-complete">
+            <input id="wrkNo" name="wrk_no" class="layui-input" type="text" placeholder="请输入" autocomplete="off" style="display: none">
+            <input id="wrkNo$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" placeholder="请输入" onfocus=this.blur()>
+            <div class="cool-auto-complete-window">
+                <input class="cool-auto-complete-window-input" data-key="wrkMastQueryBywrkSts" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                <select class="cool-auto-complete-window-select" data-key="wrkMastQueryBywrkStsSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                </select>
+            </div>
         </div>
     </div>
     <div class="layui-inline">

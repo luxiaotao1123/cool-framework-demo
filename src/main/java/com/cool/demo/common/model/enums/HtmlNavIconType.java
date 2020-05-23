@@ -7,6 +7,11 @@ public enum HtmlNavIconType {
     SET("set", "layui-icon-set"),
     MERCHANT("merchant", "layui-icon-user"),
     DEVELOP("develop", "layui-icon-util"),
+    STOCK("stock", ""),
+    LOG_REPORT("logReport", ""),
+    IO_WORK("ioWork", ""),
+    WORK_FLOW("workFlow", ""),
+    BASE("base", ""),
     ;
 
 
