@@ -1,4 +1,5 @@
 var pageCurr;
+var wrkNo;
 layui.use(['table','laydate', 'form'], function(){
     var table = layui.table;
     var $ = layui.jquery;
@@ -24,10 +25,10 @@ layui.use(['table','laydate', 'form'], function(){
             ,{field: 'ioType$', align: 'center',title: '入出库类型',event: 'detlShow', width:150}
             ,{field: 'ioPri', align: 'center',title: '优先级',event: 'detlShow'}
             ,{field: 'crnNo$', align: 'center',title: '堆垛机',event: 'detlShow'}
-            ,{field: 'sourceStaNo$', align: 'center',title: '源站',event: 'sourceStaNo', style: 'cursor:pointer'}
-            ,{field: 'staNo$', align: 'center',title: '目标站',event: 'staNo', style: 'cursor:pointer'}
-            ,{field: 'sourceLocNo$', align: 'center',title: '源库位',event: 'sourceLocNo', style: 'cursor:pointer', width:100}
-            ,{field: 'locNo$', align: 'center',title: '目标库位',event: 'locNo', style: 'cursor:pointer', width:100}
+            ,{field: 'sourceStaNo$', align: 'center',title: '源站',event: 'detlShow'}
+            ,{field: 'staNo$', align: 'center',title: '目标站',event: 'detlShow'}
+            ,{field: 'sourceLocNo$', align: 'center',title: '源库位',event: 'detlShow', width:100}
+            ,{field: 'locNo$', align: 'center',title: '目标库位',event: 'detlShow', width:100}
             ,{field: 'barcode', align: 'center',title: '条码',event: 'detlShow'}
             // ,{field: 'picking', align: 'center',title: '拣料', templet:function(row){
             //         var html = "<input value='picking' type='checkbox' lay-skin='primary' lay-filter='tableCheckbox' table-index='"+row.LAY_TABLE_INDEX+"'";
@@ -210,14 +211,6 @@ layui.use(['table','laydate', 'form'], function(){
                     }
                 });
                 break;
-            case 'refreshData':
-                tableIns.reload({
-                    page: {
-                        curr: pageCurr
-                    }
-                });
-                limit();
-                break;
             case 'deleteData':
                 var data = checkStatus.data;
                 if (data.length === 0){
@@ -291,7 +284,20 @@ layui.use(['table','laydate', 'form'], function(){
         switch (obj.event) {
             // 明细展示 todo
             case 'detlShow':
-                locDetl('0100203');
+                // 表格下方显示
+                // locDetl(data.wrkNo);
+                // 弹层显示
+                layer.open({
+                    type: 2,
+                    title: '工作档明细',
+                    maxmin: true,
+                    area: [top.detailWidth, top.detailHeight],
+                    shadeClose: false,
+                    content: 'wrkDetl.html',
+                    success: function(layero, index){
+                        wrkNo = data.wrkNo;
+                    }
+                });
                 break;
             // 详情
             case 'detail':
@@ -479,43 +485,6 @@ layui.use(['table','laydate', 'form'], function(){
                    });
                 }
                 break;
-            case 'modiUser':
-                var param = top.reObject(data).modiUser;
-                if (param === undefined) {
-                    layer.msg("无数据");
-                } else {
-                   layer.open({
-                       type: 2,
-                       title: '修改详情',
-                       maxmin: true,
-                       area: [top.detailWidth, top.detailHeight],
-                       shadeClose: false,
-                       content: '../user/user_detail.html',
-                       success: function(layero, index){
-                           $.ajax({
-                               url: "/user/"+ param +"/auth",
-                               headers: {'token': localStorage.getItem('token')},
-                               method: 'GET',
-                               success: function (res) {
-                                   if (res.code === 200){
-                                       setFormVal(layer.getChildFrame('#detail', index), res.data, true);
-                                       top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
-                                       layer.getChildFrame('#data-detail-submit-save,#data-detail-submit-edit,#prompt', index).hide();
-                                       layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
-                                       layero.find('iframe')[0].contentWindow.layui.form.render('select');
-                                       layero.find('iframe')[0].contentWindow.layui.form.render('checkbox');
-                                   } else if (res.code === 403){
-                                       parent.location.href = "/";
-                                   }else {
-                                       layer.msg(res.msg)
-                                   }
-                               }
-                           })
-                       }
-                   });
-                }
-                break;
-
         }
     });
 
@@ -538,7 +507,6 @@ layui.use(['table','laydate', 'form'], function(){
             shade: [0.5,'#000'] //0.1透明度的背景
         });
         var data = {
-//            id: $('#id').val(),
             wrkNo: $('#wrkNo').val(),
             invWh: $('#invWh').val(),
             ymd: top.strToDate($('#ymd\\$').val()),
@@ -694,26 +662,29 @@ layui.use(['table','laydate', 'form'], function(){
     });
 
     var pageCur;
-    function locDetl(locNo){
+    function locDetl(param){
         $('#detlTable').css("display", 'block');
         // 数据渲染
+        $('#wrkNo').val(param);
+        // 数据渲染
         tableIns1 = table.render({
-            elem: '#locDetlByMap',
+            elem: '#wrkDetlByMap',
             headers: {token: localStorage.getItem('token')},
-            url: '/locDetl/list/auth',
+            url: '/wrkDetl/list/auth',
+            where: {wrk_no: param},
             page: true,
-            limit: 5,
-            skin: 'line',
-            where: {loc_no: locNo},
+            limit: 16,
             even: true,
+            toolbar: '#toolbar',
             cellMinWidth: 50,
             cols: [[
-                // {type: 'checkbox'}
-                {field: 'locNo$', align: 'center',title: '库位号'}
+                {type: 'checkbox'}
+                ,{field: 'wrkNo', align: 'center',title: '工作号'}
+                ,{field: 'ioTime$', align: 'center',title: '工作时间'}
                 ,{field: 'matnr', align: 'center',title: '物料'}
                 ,{field: 'lgnum', align: 'center',title: '仓库号'}
                 ,{field: 'tbnum', align: 'center',title: '转储请求编号'}
-                // ,{field: 'tbpos', align: 'center',title: '行项目'}
+                ,{field: 'tbpos', align: 'center',title: '行项目'}
                 ,{field: 'zmatid', align: 'center',title: '物料标签ID'}
                 ,{field: 'maktx', align: 'center',title: '物料描述'}
                 ,{field: 'werks', align: 'center',title: '工厂'}
@@ -721,6 +692,9 @@ layui.use(['table','laydate', 'form'], function(){
                 ,{field: 'altme', align: 'center',title: '单位'}
                 ,{field: 'zpallet', align: 'center',title: '托盘条码'}
                 ,{field: 'bname', align: 'center',title: '用户ID'}
+                ,{field: 'memo', align: 'center',title: '备注'}
+
+                ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:50}
             ]],
             request: {
                 pageName: 'curr',
