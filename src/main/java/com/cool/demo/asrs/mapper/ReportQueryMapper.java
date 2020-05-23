@@ -55,4 +55,11 @@ public interface ReportQueryMapper {
 	public int getViewWorkOutCount(ViewWorkInBean viewWorkOut);
 	//不分页查询所有信息，用于excel导出
 	public List<ViewWorkInBean> getViewWorkOutAll(ViewWorkInBean viewWorkOut);
+
+
+	// ------图表
+	//曲线图
+	@Select("select ymd,SUM(sto_qty) inqty,SUM(ret_qty) outqty from asr_sta_inout_view "
+			+ "where ymd>CONVERT(char(10), DATEADD(DAY,-12,GETDATE()), 120) group by ymd order by ymd")
+	public List<WorkChartAxis> getChartAxis();
 }
