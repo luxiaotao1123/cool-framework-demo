@@ -1,4 +1,5 @@
 var pageCurr;
+var locNo;
 layui.use(['table','laydate', 'form'], function(){
     var table = layui.table;
     var $ = layui.jquery;
@@ -12,27 +13,27 @@ layui.use(['table','laydate', 'form'], function(){
         headers: {token: localStorage.getItem('token')},
         url: '/locMast/list/auth',
         page: true,
-        limit: 5,
+        limit: 10,
         even: true,
         toolbar: '#toolbar',
         cellMinWidth: 50,
         cols: [[
             {type: 'checkbox'}
-            ,{field: 'locNo', align: 'center',title: '库位号'}
-            ,{field: 'locType$', align: 'center',title: '库位状态', width: 180}
-            ,{field: 'whsType$', align: 'center',title: '库位类型'}
-            ,{field: 'crnNo', align: 'center',title: '堆垛机号'}
-            ,{field: 'row1', align: 'center',title: '排'}
-            ,{field: 'bay1', align: 'center',title: '列'}
-            ,{field: 'lev1', align: 'center',title: '层'}
-            ,{field: 'fullPlt', align: 'center',title: '满板', templet:function(row){
+            ,{field: 'locNo', align: 'center',title: '库位号',event: 'locDetl'}
+            ,{field: 'locType$', align: 'center',title: '库位状态', width: 180,event: 'locDetl'}
+            ,{field: 'whsType$', align: 'center',title: '库位类型',event: 'locDetl'}
+            ,{field: 'crnNo', align: 'center',title: '堆垛机号',event: 'locDetl'}
+            ,{field: 'row1', align: 'center',title: '排',event: 'locDetl'}
+            ,{field: 'bay1', align: 'center',title: '列',event: 'locDetl'}
+            ,{field: 'lev1', align: 'center',title: '层',event: 'locDetl'}
+            ,{field: 'fullPlt', align: 'center',title: '满板',event: 'locDetl', templet:function(row){
                     var html = "<input value='fullPlt' type='checkbox' lay-skin='primary' lay-filter='tableCheckbox' table-index='"+row.LAY_TABLE_INDEX+"'";
                     if(row.fullPlt === 'Y'){html += " checked ";}
-                    html += ">";
+                    html += "disabled='disabled' >";
                     return html;
                 },width:80}
-            ,{field: 'modiUser$', align: 'center',title: '修改人员'}
-            ,{field: 'modiTime$', align: 'center',title: '修改时间', width: 180}
+            ,{field: 'modiUser$', align: 'center',title: '修改人员',event: 'locDetl'}
+            ,{field: 'modiTime$', align: 'center',title: '修改时间', width: 180,event: 'locDetl'}
             ,{ fixed: 'right', title:'操作', align: 'center', toolbar: '#operate'}
         ]],
         request: {
@@ -65,7 +66,7 @@ layui.use(['table','laydate', 'form'], function(){
                 }
             });
             if (count === 1){
-                locDetl(res.data[0][locNo]);
+                // locDetl(res.data[0][locNo]);
             }
         }
     });
@@ -148,11 +149,32 @@ layui.use(['table','laydate', 'form'], function(){
         switch (obj.event) {
             // 查看明细
             case 'locDetl':
-                locDetl(data.locNo);
+                // locDetl(data.locNo);
+                if (data.locType.trim() === ''
+                    || data.locType.trim() === 'S'
+                    || data.locType.trim() === 'D'
+                    || data.locType.trim() === 'O')  {
+                    layer.msg("此库位的状态不存在物料");
+                    return;
+                }
+                locDetlToLayer(data.locNo);
                 break;
         }
     });
 
+    function locDetlToLayer(val) {
+        locNo = val;
+        layer.open({
+            type: 2,
+            title: '工作档明细',
+            maxmin: true,
+            area: [top.detailWidth, top.detailHeight],
+            shadeClose: true,
+            content: '../report/locDetl.html',
+            success: function(layero, index){
+            }
+        });
+    }
     var pageCur;
     function locDetl(locNo){
         $('#detlTable').css("display", 'block');
@@ -245,7 +267,7 @@ layui.use(['table','laydate', 'form'], function(){
                 }
                 pageCurr=curr;
                 if (count === 1){
-                    locDetl(res.data[0][locNo]);
+                    // locDetl(res.data[0][locNo]);
                 }
                 if (res.data.length === 0 && count !== 0) {
                     tableIns.reload({
