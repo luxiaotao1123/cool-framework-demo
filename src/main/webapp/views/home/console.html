@@ -69,6 +69,17 @@
         .layui-table thead tr {
             background-color: #fff;
         }
+        #form-header {
+            font-size: 18px;
+            color: #377bb5;
+            font-weight: bold;
+            height: 30px;
+            box-sizing: border-box;
+            padding: 10px 0 10px 20px;
+        }
+        .layui-form.layui-border-box.layui-table-view {
+            border-top: 1px solid rgba(0,0,0,.1);
+        }
     </style>
 </head>
 <body>
@@ -86,6 +97,7 @@
 <!--表格数据-->
 <div class="home-elem loc-retention">
     <div class="layui-form">
+        <div id="form-header">库存滞留时间统计表</div>
         <table class="layui-hide" id="stayTime" lay-filter="stayTime"></table>
     </div>
 </div>
