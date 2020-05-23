@@ -293,7 +293,7 @@ layui.use(['table','laydate', 'form'], function(){
                     title: '工作档明细',
                     maxmin: true,
                     area: [top.detailWidth, top.detailHeight],
-                    shadeClose: false,
+                    shadeClose: true,
                     content: 'wrkDetl.html',
                     success: function(layero, index){
                     }

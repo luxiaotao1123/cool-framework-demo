@@ -49,7 +49,7 @@ function locDetl(el) {
             title: '库位物料',
             maxmin: true,
             area: [top.detailWidth, top.detailHeight],
-            shadeClose: false,
+            shadeClose: true,
             content: 'locDetl.html',
             success: function(layero, index){
                 locNo = value;
