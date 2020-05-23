@@ -74,6 +74,10 @@
         .layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {
             background-color: #f9f9f9;
         }
+
+        .layui-table thead tr {
+            background-color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -226,7 +230,7 @@
             toolbar: '#toolbar',
             cellMinWidth: 50,
             cols: [[
-                {field: 'appe_time', title: '入库时间', sort: true, align: 'center'}
+                {field: 'appe_time', title: '入库时间', sort: true, align: 'center', width: 200}
                 ,{field: 'stay_time', align: 'center',title: '滞留天数'}
                 ,{field: 'loc_no', align: 'center',title: '库位号'}
                 ,{field: 'matnr', align: 'center',title: '物料'}
@@ -260,8 +264,29 @@
                     top.location.href = "/";
                 }
                 pageCurr=curr;
-                limit();
             }
+        });
+
+        // 监听排序事件
+        table.on('sort(stayTime)', function (obj) {
+            var searchData = {};
+            $.each($('#search-box [name]').serializeArray(), function() {
+                searchData[this.name] = this.value;
+            });
+            searchData['orderByField'] = obj.field;
+            searchData['orderByType'] = obj.type;
+            tableIns.reload({
+                where: searchData,
+                page: {
+                    curr: 1
+                },
+                done: function (res, curr, count) {
+                    if (res.code === 403) {
+                        top.location.href = "/";
+                    }
+                    pageCurr=curr;
+                }
+            });
         });
     });
 
