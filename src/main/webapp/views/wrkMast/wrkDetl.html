@@ -46,8 +46,8 @@
             toolbar: '#toolbar',
             cellMinWidth: 50,
             cols: [[
-                {type: 'checkbox'}
-                ,{field: 'wrkNo', align: 'center',title: '工作号'}
+                // {type: 'checkbox'}
+                {field: 'wrkNo', align: 'center',title: '工作号'}
                 ,{field: 'ioTime$', align: 'center',title: '工作时间'}
                 ,{field: 'matnr', align: 'center',title: '物料'}
                 ,{field: 'lgnum', align: 'center',title: '仓库号'}
@@ -60,9 +60,7 @@
                 ,{field: 'altme', align: 'center',title: '单位'}
                 ,{field: 'zpallet', align: 'center',title: '托盘条码'}
                 ,{field: 'bname', align: 'center',title: '用户ID'}
-                ,{field: 'memo', align: 'center',title: '备注'}
-
-                ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:50}
+                // ,{field: 'memo', align: 'center',title: '备注'}
             ]],
             request: {
                 pageName: 'curr',

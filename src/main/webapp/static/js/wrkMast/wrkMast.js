@@ -284,6 +284,7 @@ layui.use(['table','laydate', 'form'], function(){
         switch (obj.event) {
             // 明细展示 todo
             case 'detlShow':
+                wrkNo = data.wrkNo;
                 // 表格下方显示
                 // locDetl(data.wrkNo);
                 // 弹层显示
@@ -295,7 +296,6 @@ layui.use(['table','laydate', 'form'], function(){
                     shadeClose: false,
                     content: 'wrkDetl.html',
                     success: function(layero, index){
-                        wrkNo = data.wrkNo;
                     }
                 });
                 break;
