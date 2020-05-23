@@ -15,13 +15,13 @@
     <!--<script type="text/javascript" src="/static/js/home/console.js"></script>-->
     <style>
         body {
-            background-color: white;
+            /*background-color: white;*/
         }
         #charts {
             height: 30%;
         }
         #pie {
-            height: 500px;
+            height: 400px;
             width: 100%;
         }
         #line {
@@ -33,9 +33,9 @@
 <body>
 
 <!--报表数据-->
-<div id="charts" class="layui-row">
-    <div class="layui-col-md6 col"><div id="pie"></div></div>
-    <div class="layui-col-md6 col"><div id="line"></div></div>
+<div id="charts">
+    <div style="display: inline-block; width: 48%"><div id="pie"></div></div>
+    <div style="display: inline-block; width: 48%"><div id="line"></div></div>
 </div>
 
 <!--表格数据-->
@@ -57,7 +57,7 @@
                 if (res.code === 200) {
                     var pieVo = res.data;
                     pieOption = {
-                        backgroundColor: '#fff',
+                        backgroundColor: '#2c343c',
                         title: {
                             text: '库存使用比例',
                             left: 'center',
