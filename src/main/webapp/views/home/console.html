@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="/static/css/common.css" media="all">
     <script type="text/javascript" src="/static/layui/layui.js"></script>
     <script type="text/javascript" src="/static/js/jquery/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="/static/js/echarts/echarts.min.js"></script>
@@ -19,7 +18,7 @@
         .home-elem {
             background-color: #fff;
             height: 30%;
-            margin: 10px 10px 0 10px;
+            margin: 15px 15px 0 15px;
             border-radius: 5px;
             box-shadow: 0 0 3px rgba(0,0,0,.3);
         }
@@ -38,17 +37,42 @@
             padding-left: 20px;
             border-left: 1px solid rgba(0,0,0,.1);
         }
-        #pie {
-            height: 50%;
-            width: 100%;
-        }
-        #line {
-            height: 50%;
-            width: 100%;
-        }
+        /*#pie {*/
+            /*height: 50%;*/
+            /*width: 100%;*/
+        /*}*/
+        /*#line {*/
+            /*height: 50%;*/
+            /*width: 100%;*/
+        /*}*/
         /*表格工具栏*/
         .layui-table-tool {
             display: none;
+        }
+        /*表格*/
+        .layui-table thead th {
+            font-weight: bold;
+            text-align: center;
+        }
+        div .layui-table-tool .layui-table-tool-self .layui-inline[title='导出']{
+            display: none;
+        }
+        .layui-form.layui-border-box.layui-table-view{
+            margin: 15px 0 35px 0;
+            width: 100%;
+            border-width: 0;
+        }
+        .layui-table-box{
+            padding-bottom: 10px;
+        }
+        .layui-table-body.layui-table-main{
+            overflow: hidden;
+        }
+        .layui-table-page{
+            border-width: 0;
+        }
+        .layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {
+            background-color: #f9f9f9;
         }
     </style>
 </head>
