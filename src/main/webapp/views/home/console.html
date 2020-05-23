@@ -16,7 +16,7 @@
         body {
             background-color: #f1f1f1;
         }
-        #charts-contain {
+        .home-elem {
             background-color: #fff;
             height: 30%;
             margin: 10px;
@@ -26,10 +26,14 @@
         .chart-elem {
             box-sizing: border-box;
             display: inline-block;
-            width: 49%
+            width: 49%;
         }
         .chart-elem:first-child {
-            padding: 60px;
+            padding: 0 50px;
+        }
+        .chart-elem:last-child {
+            padding-left: 20px;
+            border-left: 1px solid rgba(0,0,0,.1);
         }
         #pie {
             height: 50%;
@@ -44,7 +48,7 @@
 <body>
 
 <!--报表数据-->
-<div id="charts-contain">
+<div class="home-elem charts-contain">
     <div class="chart-elem">
         <div id="pie"></div>
     </div>
@@ -54,6 +58,11 @@
 </div>
 
 <!--表格数据-->
+<div class="home-elem loc-retention">
+    <div class="layui-form">
+        <table class="layui-hide" id="" lay-filter=""></table>
+    </div>
+</div>
 </body>
 <script>
     pieCharts();
