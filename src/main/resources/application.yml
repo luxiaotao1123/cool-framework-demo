@@ -2,18 +2,19 @@ server:
   port: 8088
   servlet:
     context-path:
+
 spring:
   application:
     name: @pom.build.finalName@
   datasource:
-#      driver-class-name: com.mysql.jdbc.Driver
-#      url: jdbc:mysql://127.0.0.1:3306/cool?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
-#      username: root
-#      password: xltys1995
-      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-      url: jdbc:sqlserver://127.0.0.1:1433;databasename=yfzx
-      username: sa
-      password: sa@123
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/cool?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+      username: root
+      password: root
+#      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#      url: jdbc:sqlserver://127.0.0.1:1433;databasename=yfzx
+#      username: sa
+#      password: sa@123
   mvc:
     static-path-pattern: /**
   redis:

@@ -1,8 +1,5 @@
-// 生产
-// var baseUrl = "/pms";
-// 测试
-var baseUrl = "";
 
+var baseUrl = "";
 
 // 详情窗口-高度
 var detailHeight = '80%';
