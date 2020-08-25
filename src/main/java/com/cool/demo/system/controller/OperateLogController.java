@@ -3,20 +3,20 @@ package com.cool.demo.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.cool.demo.system.entity.OperateLog;
-import com.cool.demo.system.service.OperateLogService;
 import com.core.annotations.ManagerAuth;
 import com.core.common.Cools;
 import com.core.common.DateUtils;
 import com.core.common.R;
-import com.core.controller.AbstractBaseController;
+import com.cool.demo.common.web.BaseController;
+import com.cool.demo.system.entity.OperateLog;
+import com.cool.demo.system.service.OperateLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
-public class OperateLogController extends AbstractBaseController {
+public class OperateLogController extends BaseController {
 
     @Autowired
     private OperateLogService operateLogService;
@@ -31,6 +31,8 @@ public class OperateLogController extends AbstractBaseController {
     @ManagerAuth
     public R list(@RequestParam(defaultValue = "1")Integer curr,
                   @RequestParam(defaultValue = "10")Integer limit,
+                  @RequestParam(required = false)String orderByField,
+                  @RequestParam(required = false)String orderByType,
                   @RequestParam Map<String, Object> param){
         excludeTrash(param);
         EntityWrapper<OperateLog> wrapper = new EntityWrapper<>();
@@ -39,14 +41,15 @@ public class OperateLogController extends AbstractBaseController {
         return R.ok(operateLogService.selectPage(new Page<>(curr, limit), wrapper));
     }
 
-    private void convert(Map<String, Object> map, EntityWrapper wrapper){
+    private <T> void convert(Map<String, Object> map, EntityWrapper<T> wrapper){
         for (Map.Entry<String, Object> entry : map.entrySet()){
-            if (entry.getKey().endsWith(">")) {
-                wrapper.ge(Cools.deleteChar(entry.getKey()), DateUtils.convert(String.valueOf(entry.getValue())));
-            } else if (entry.getKey().endsWith("<")) {
-                wrapper.le(Cools.deleteChar(entry.getKey()), DateUtils.convert(String.valueOf(entry.getValue())));
+            String val = String.valueOf(entry.getValue());
+            if (val.contains(RANGE_TIME_LINK)){
+                String[] dates = val.split(RANGE_TIME_LINK);
+                wrapper.ge(entry.getKey(), DateUtils.convert(dates[0]));
+                wrapper.le(entry.getKey(), DateUtils.convert(dates[1]));
             } else {
-                wrapper.like(entry.getKey(), String.valueOf(entry.getValue()));
+                wrapper.like(entry.getKey(), val);
             }
         }
     }

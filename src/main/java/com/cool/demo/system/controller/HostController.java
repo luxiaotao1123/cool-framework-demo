@@ -3,20 +3,20 @@ package com.cool.demo.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.core.common.DateUtils;
-import com.cool.demo.system.entity.Host;
-import com.cool.demo.system.service.HostService;
 import com.core.annotations.ManagerAuth;
 import com.core.common.Cools;
+import com.core.common.DateUtils;
 import com.core.common.R;
-import com.core.controller.AbstractBaseController;
+import com.cool.demo.common.web.BaseController;
+import com.cool.demo.system.entity.Host;
+import com.cool.demo.system.service.HostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
-public class HostController extends AbstractBaseController {
+public class HostController extends BaseController {
 
     @Autowired
     private HostService hostService;
@@ -31,6 +31,8 @@ public class HostController extends AbstractBaseController {
     @ManagerAuth
     public R list(@RequestParam(defaultValue = "1")Integer curr,
                   @RequestParam(defaultValue = "10")Integer limit,
+                  @RequestParam(required = false)String orderByField,
+                  @RequestParam(required = false)String orderByType,
                   @RequestParam Map<String, Object> param){
         excludeTrash(param);
         EntityWrapper<Host> wrapper = new EntityWrapper<>();
@@ -39,14 +41,15 @@ public class HostController extends AbstractBaseController {
         return R.ok(hostService.selectPage(new Page<>(curr, limit), wrapper));
     }
 
-    private void convert(Map<String, Object> map, EntityWrapper wrapper){
+    private <T> void convert(Map<String, Object> map, EntityWrapper<T> wrapper){
         for (Map.Entry<String, Object> entry : map.entrySet()){
-            if (entry.getKey().endsWith(">")) {
-                wrapper.ge(Cools.deleteChar(entry.getKey()), DateUtils.convert(String.valueOf(entry.getValue())));
-            } else if (entry.getKey().endsWith("<")) {
-                wrapper.le(Cools.deleteChar(entry.getKey()), DateUtils.convert(String.valueOf(entry.getValue())));
+            String val = String.valueOf(entry.getValue());
+            if (val.contains(RANGE_TIME_LINK)){
+                String[] dates = val.split(RANGE_TIME_LINK);
+                wrapper.ge(entry.getKey(), DateUtils.convert(dates[0]));
+                wrapper.le(entry.getKey(), DateUtils.convert(dates[1]));
             } else {
-                wrapper.like(entry.getKey(), String.valueOf(entry.getValue()));
+                wrapper.like(entry.getKey(), val);
             }
         }
     }
@@ -73,6 +76,7 @@ public class HostController extends AbstractBaseController {
     }
 
 	@RequestMapping(value = "/host/update/auth")
+    @ManagerAuth
     public R update(Host host){
         if (Cools.isEmpty(host) || null==host.getId()){
             return R.error();

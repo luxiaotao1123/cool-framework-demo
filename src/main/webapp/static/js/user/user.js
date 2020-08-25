@@ -1,4 +1,5 @@
 var pageCurr;
+var tableData;
 layui.use(['table','laydate', 'form'], function(){
     var table = layui.table;
     var $ = layui.jquery;
@@ -10,23 +11,29 @@ layui.use(['table','laydate', 'form'], function(){
     tableIns = table.render({
         elem: '#user',
         headers: {token: localStorage.getItem('token')},
-        url: '/user/list/auth',
+        url: baseUrl+'/user/list/auth',
         page: true,
         limit: 16,
+        limits: [16, 30, 50, 100, 200, 500],
         toolbar: '#toolbar',
+        even: true,
         cellMinWidth: 50,
         cols: [[
-            {type: 'checkbox', fixed: 'left'}
-            ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
-            ,{field: 'hostName', align: 'center',title: '授权商户',event: 'Host', style: 'text-decoration: underline;cursor:pointer'}
-            ,{field: 'username', align: 'center',title: '账号'}
-            ,{field: 'mobile', align: 'center',title: '手机号'}
-            ,{field: 'password', align: 'center',title: '密码'}
-            ,{field: 'roleName', align: 'center',title: '角色',event: 'Role', style: 'text-decoration: underline;cursor:pointer'}
-            ,{field: 'createTime$', align: 'center',title: '注册时间'}
-            ,{field: 'status$', align: 'center',title: '状态'}
+            {type: 'checkbox'}
+            // ,{field: 'id', title: 'ID', sort: true,align: 'center', width: 80}
+            // ,{field: 'hostName', align: 'center',title: '授权商户'}
+            ,{field: 'nickname', align: 'center',title: '名称'}
+            ,{field: 'username', align: 'center',title: '登录账号'}
+            ,{field: 'mobile', align: 'center',title: '联系方式'}
+            // ,{field: 'password', align: 'center',title: '密码'}
+            ,{field: 'deptName', align: 'center',title: '所属部门'}
+            ,{field: 'roleName', align: 'center',title: '角色'}
+            ,{field: 'email', align: 'center',title: '邮箱'}
+            ,{field: 'sex$', align: 'center',title: '性别'}
+            ,{field: 'createTime$', align: 'center',title: '注册时间', hide: true}
+            ,{field: 'status$', align: 'center',title: '状态', templet: '#statusTpl', width: 120, unresize: true}
 
-            ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
+            ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:170}
         ]],
         request: {
             pageName: 'curr',
@@ -45,10 +52,46 @@ layui.use(['table','laydate', 'form'], function(){
         },
         done: function(res, curr, count) {
             if (res.code === 403) {
-                top.location.href = "/";
+                top.location.href = baseUrl+"/";
             }
+            tableData = table.cache.user;
             pageCurr=curr;
+            limit();
         }
+    });
+
+    // 修改状态
+    form.on('switch(statusSwitch)', function (obj) {
+        var index  = obj.othis.parents('tr').attr("data-index");
+        var data = tableData[index];
+        data[this.name] = obj.elem.checked?1:0;
+        http.post(baseUrl+"/user/edit/auth", {id: data.id, status: data[this.name]}, function (res) {
+            layer.msg(res.msg);
+        })
+    })
+
+    // 监听排序事件
+    table.on('sort(user)', function (obj) {
+        var searchData = {};
+        $.each($('#search-box [name]').serializeArray(), function() {
+            searchData[this.name] = this.value;
+        });
+        searchData['orderByField'] = obj.field;
+        searchData['orderByType'] = obj.type;
+        tableIns.reload({
+            where: searchData,
+            page: {
+                curr: 1
+            },
+            done: function (res, curr, count) {
+                if (res.code === 403) {
+                    top.location.href = baseUrl+"/";
+                }
+                tableData = table.cache.user;
+                pageCurr=curr;
+                limit();
+            }
+        });
     });
 
     // 监听头工具栏事件
@@ -60,19 +103,12 @@ layui.use(['table','laydate', 'form'], function(){
                     type: 2,
                     title: '新增',
                     maxmin: true,
-                    area: [top.detailWidth, top.detailHeight],
-                    shadeClose: false,
+                    area: ['30%', top.detailHeight],
+                    shadeClose: true,
                     content: 'user_detail.html',
                     success: function(layero, index){
                     	clearFormVal(layer.getChildFrame('#detail', index));
-                        detailScreen(index);
-                    }
-                });
-                break;
-            case 'refreshData':
-                tableIns.reload({
-                    page: {
-                        curr: pageCurr
+                        layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                     }
                 });
                 break;
@@ -87,7 +123,7 @@ layui.use(['table','laydate', 'form'], function(){
                 } else {
                     layer.confirm('确定删除'+(ids.length===1?'此':ids.length)+'条数据吗', function(){
                         $.ajax({
-                            url: "/user/delete/auth",
+                            url: baseUrl+"/user/delete/auth",
                             headers: {'token': localStorage.getItem('token')},
                             data: {ids: ids},
                             method: 'POST',
@@ -97,7 +133,7 @@ layui.use(['table','laydate', 'form'], function(){
                                     layer.closeAll();
                                     tableReload(false);
                                 } else if (res.code === 403){
-                                    top.location.href = "/";
+                                    top.location.href = baseUrl+"/";
                                 } else {
                                     layer.msg(res.msg)
                                 }
@@ -107,7 +143,7 @@ layui.use(['table','laydate', 'form'], function(){
                 }
                 break;
             case 'exportData':
-                layer.confirm('确定导出Excel吗', function() {
+                layer.confirm('确定导出Excel吗', {shadeClose: true}, function() {
                     var titles = [];
                     var fields = [];
                     obj.config.cols[0].map(function (col) {
@@ -125,7 +161,7 @@ layui.use(['table','laydate', 'form'], function(){
                         'fields': fields
                     };
                     $.ajax({
-                        url: "/user/export/auth",
+                        url: baseUrl+"/user/export/auth",
                         headers: {'token': localStorage.getItem('token')},
                         data: JSON.stringify(param),
                         dataType: 'json',
@@ -136,7 +172,7 @@ layui.use(['table','laydate', 'form'], function(){
                             if (res.code === 200) {
                                 table.exportFile(titles, res.data, 'xls');
                             } else if (res.code === 403) {
-                                top.location.href = "/";
+                                top.location.href = baseUrl+"/";
                             } else {
                                 layer.msg(res.msg)
                             }
@@ -151,110 +187,39 @@ layui.use(['table','laydate', 'form'], function(){
     table.on('tool(user)', function(obj){
         var data = obj.data;
         switch (obj.event) {
-            // 查看
-            case 'detail':
-                layer.open({
-                    type: 2,
-                    title: '查看',
-                    maxmin: true,
-                    area: [top.detailWidth, top.detailHeight],
-                    shadeClose: false,
-                    content: 'user_detail.html',
-                    success: function(layero, index){
-                        setFormVal(layer.getChildFrame('#detail', index), data);
-                        top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
-                        layer.getChildFrame('#data-detail-submit', index).hide();
-                        detailScreen(index);
-                        layero.find('iframe')[0].contentWindow.layui.form.render('select');
-                    }
-                });
-                break;
             // 编辑
             case 'edit':
                 layer.open({
                     type: 2,
                     title: '修改',
                     maxmin: true,
-                    area: [top.detailWidth, top.detailHeight],
-                    shadeClose: false,
+                    area: ['30%', top.detailHeight],
+                    shadeClose: true,
                     content: 'user_detail.html',
                     success: function(layero, index){
+                        layer.getChildFrame('#password', index).parent().parent().hide();
                         setFormVal(layer.getChildFrame('#detail', index), data);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
-                        detailScreen(index);
+                        layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                     }
                 });
                 break;
-            case 'Role':
-                var param = top.reObject(data).roleId;
-                if (param === undefined) {
-                    layer.msg("无数据");
-                } else {
-                    layer.open({
-                        type: 2,
-                        title: '详情',
-                        maxmin: true,
-                        area: [top.detailHeight, top.detailWidth],
-                        shadeClose: false,
-                        content: 'role_detail',
-                        success: function(layero, index){
-                            $.ajax({
-                                url: "/role/"+ param +"/auth",
-                                headers: {'token': localStorage.getItem('token')},
-                                method: 'GET',
-                                success: function (res) {
-                                    if (res.code === 200){
-                                        setFormVal(layer.getChildFrame('#detail', index), res.data);
-                                        top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
-                                        layer.getChildFrame('#data-detail-submit', index).hide();
-                                        detailScreen(index);
-                                        layero.find('iframe')[0].contentWindow.layui.form.render('select');
-                                    } else if (res.code === 403){
-                                        parent.location.href = "/";
-                                    }else {
-                                        layer.msg(res.msg)
-                                    }
-                                }
-                            })
-                        }
-                    });
-                }
-                break;
-            case 'Host':
-                var param = top.reObject(data).hostId;
-                if (param === undefined) {
-                    layer.msg("无数据");
-                } else {
-                    layer.open({
-                        type: 2,
-                        title: '详情',
-                        maxmin: true,
-                        area: [top.detailHeight, top.detailWidth],
-                        shadeClose: false,
-                        content: '../host/host_detail.html',
-                        success: function(layero, index){
-                            $.ajax({
-                                url: "/host/"+ param +"/auth",
-                                headers: {'token': localStorage.getItem('token')},
-                                method: 'GET',
-                                success: function (res) {
-                                    if (res.code === 200){
-                                        setFormVal(layer.getChildFrame('#detail', index), res.data);
-                                        top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
-                                        layer.getChildFrame('#data-detail-submit', index).hide();
-                                        detailScreen(index);
-                                        layero.find('iframe')[0].contentWindow.layui.form.render('select');
-                                    } else if (res.code === 403){
-                                        parent.location.href = "/";
-                                    }else {
-                                        layer.msg(res.msg)
-                                    }
-                                }
-                            })
-                        }
-                    });
-                }
+            // 重置密码
+            case 'resetPwd':
+                layer.open({
+                    type: 1,
+                    title: '重置密码',
+                    offset: '150px',
+                    area: ['360px'],
+                    shade: 0.1,
+                    shadeClose: true,
+                    content: $("#resetpwd-window"),
+                    success: function(layero, index){
+                        layer.iframeAuto(index);
+                        $('#resetUserId').val(data.id);
+                    }
+                });
                 break;
         }
     });
@@ -267,28 +232,34 @@ layui.use(['table','laydate', 'form'], function(){
         var data = {
             id: $('#id').val(),
             hostId: $('#hostId').val(),
-            username: $('#username').val(),
-            mobile: $('#mobile').val(),
-            password: $('#password').val(),
             roleId: $('#roleId').val(),
+            deptId: $('#deptId').val(),
+            username: $('#username').val(),
+            nickname: $('#nickname').val(),
+            mobile: $('#mobile').val(),
+            password: hex_md5($('#password').val()),
+            avatar: $('#avatar').val(),
+            email: $('#email').val(),
+            sex: $('#sex').val(),
             createTime: top.strToDate($('#createTime\\$').val()),
             status: $('#status').val(),
 
         };
         $.ajax({
-            url: "/user/edit/auth",
+            url: baseUrl+"/user/edit/auth",
             headers: {'token': localStorage.getItem('token')},
             data: top.reObject(data),
             method: 'POST',
             success: function (res) {
                 if (res.code === 200){
                     parent.layer.closeAll();
-                    tableReload(true);
+                    parent.$(".layui-laypage-btn")[0].click();
+                    limit();
                     $("#data-detail :input").each(function () {
                         $(this).val("");
                     });
                 } else if (res.code === 403){
-                    top.location.href = "/";
+                    top.location.href = baseUrl+"/";
                 }else {
                     layer.msg(res.msg)
                 }
@@ -316,14 +287,37 @@ layui.use(['table','laydate', 'form'], function(){
         type: 'datetime'
     });
     layDate.render({
-        elem: '#create_time\\>',
-        type: 'datetime'
-    });
-    layDate.render({
-        elem: '#create_time\\<',
-        type: 'datetime'
+        elem: '.layui-laydate-range'
+        ,type: 'datetime'
+        ,range: true
     });
 
+    // 重置密码
+    form.on('submit(savePwd)', function (data) {
+        $.ajax({
+            url: baseUrl+"/user/edit/auth",
+            headers: {'token': localStorage.getItem('token')},
+            data: {
+                id: data.field.resetUserId,
+                password: hex_md5(data.field.resetPassword)
+            },
+            method: 'POST',
+            success: function (res) {
+                if (res.code === 200){
+                    layer.closeAll();
+                    layer.msg("重置密码成功");
+                } else if (res.code === 403){
+                    top.location.href = baseUrl+"/";
+                }else {
+                    layer.msg(res.msg)
+                }
+            }
+        })
+    })
+
+    $('#cancel').click(function () {
+        layer.closeAll();
+    })
 });
 
 // 关闭动作
@@ -343,8 +337,9 @@ function tableReload(child) {
         },
         done: function (res, curr, count) {
             if (res.code === 403) {
-                top.location.href = "/";
+                top.location.href = baseUrl+"/";
             }
+            tableData = table.cache.user;
             pageCurr=curr;
             if (res.data.length === 0 && count !== 0) {
                 tableIns.reload({
@@ -355,6 +350,7 @@ function tableReload(child) {
                 });
                 pageCurr -= 1;
             }
+            limit(child);
         }
     });
 }
@@ -365,28 +361,9 @@ function setFormVal(el, data) {
     }
 }
 
-function clearFormVal(el) {
-    $(':input', el)
-        .val('')
-        .removeAttr('checked')
-        .removeAttr('selected');
-}
-
-function detailScreen(index) {
-    var detail = layer.getChildFrame('#data-detail', index);
-    var height = detail.height()+60;
-    if (height > ($(window).height()*0.9)) {
-        height = ($(window).height()*0.9);
-    }
-    layer.style(index, {
-        top: (($(window).height()-height)/3)+"px",
-        height: height+'px'
-    });
-    $(".layui-layer-shade").remove();
-}
-
 $('body').keydown(function () {
     if (event.keyCode === 13) {
         $("#search").click();
     }
 });
+

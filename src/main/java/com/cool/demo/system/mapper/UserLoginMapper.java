@@ -1,7 +1,7 @@
 package com.cool.demo.system.mapper;
 
-import com.cool.demo.system.entity.UserLogin;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.cool.demo.system.entity.UserLogin;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;

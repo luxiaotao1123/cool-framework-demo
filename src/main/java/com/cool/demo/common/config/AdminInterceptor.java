@@ -2,12 +2,12 @@ package com.cool.demo.common.config;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.cool.demo.common.utils.Http;
-import com.cool.demo.system.entity.*;
-import com.cool.demo.system.service.*;
 import com.core.annotations.ManagerAuth;
 import com.core.common.BaseRes;
 import com.core.common.Cools;
+import com.cool.demo.common.utils.Http;
+import com.cool.demo.system.entity.*;
+import com.cool.demo.system.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.Nullable;
@@ -19,6 +19,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
+import java.util.Date;
 
 /**
  * Created by vincent on 2019-06-13
@@ -69,7 +70,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
         if (method.isAnnotationPresent(ManagerAuth.class)){
             ManagerAuth annotation = method.getAnnotation(ManagerAuth.class);
             if (annotation.value().equals(ManagerAuth.Auth.CHECK)){
-                return check(request, response);
+                return check(request, response, annotation.memo());
             }
         }
         return true;
@@ -85,7 +86,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
         }
     }
 
-    private boolean check(HttpServletRequest request, HttpServletResponse response) {
+    private boolean check(HttpServletRequest request, HttpServletResponse response, String memo) {
         try {
             String token = request.getHeader("token");
             UserLogin userLogin = userLoginService.selectOne(new EntityWrapper<UserLogin>().eq("token", token));
@@ -94,10 +95,10 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
                 return false;
             }
             User user = userService.selectById(userLogin.getUserId());
-            String deToken = Cools.deTokn(token, user.getPassword());
-            long timestamp = Long.parseLong(deToken.substring(0, 13));
-            // 1天后过期
-            if (System.currentTimeMillis() - timestamp > 86400000){
+//            String deToken = Cools.deTokn(token, user.getPassword());
+//            long timestamp = Long.parseLong(deToken.substring(0, 13));
+            // 15分钟后过期
+            if (System.currentTimeMillis() - userLogin.getCreateTime().getTime() > 900000){
                 Http.response(response, BaseRes.DENIED);
                 return false;
             }
@@ -106,15 +107,20 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
                 Http.response(response, BaseRes.LIMIT);
                 return false;
             }
-            // 操作日志
-            OperateLog operateLog = new OperateLog();
-            operateLog.setAction(request.getRequestURI());
-            operateLog.setIp(request.getRemoteAddr());
-            operateLog.setUserId(user.getId());
-            operateLog.setRequest(JSON.toJSONString(request.getParameterMap()));
             // 请求缓存
             request.setAttribute("userId", user.getId());
-            request.setAttribute("operateLog", operateLog);
+            // 更新 token 有效期
+            userLogin.setCreateTime(new Date());
+            userLoginService.updateById(userLogin);
+            // 操作日志
+            if (!Cools.isEmpty(memo)) {
+                OperateLog operateLog = new OperateLog();
+                operateLog.setAction(Cools.isEmpty(memo)?request.getRequestURI():memo);
+                operateLog.setIp(request.getRemoteAddr());
+                operateLog.setUserId(user.getId());
+                operateLog.setRequest(JSON.toJSONString(request.getParameterMap()));
+                request.setAttribute("operateLog", operateLog);
+            }
             return true;
         } catch (Exception e){
             Http.response(response, BaseRes.DENIED);
@@ -142,7 +148,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
     /**
      * 跨域
      */
-    private void cors(HttpServletResponse response){
+    public static void cors(HttpServletResponse response){
         // 跨域设置
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Credentials", "true");

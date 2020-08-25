@@ -2,10 +2,10 @@ package com.cool.demo.common.entity;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.cool.demo.system.entity.Config;
-import com.cool.demo.system.service.ConfigService;
 import com.core.common.Cools;
 import com.core.common.SpringUtils;
+import com.cool.demo.system.entity.Config;
+import com.cool.demo.system.service.ConfigService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -49,4 +49,25 @@ public class Parameter {
         return instance;
     }
 
+    // 验证码开关
+    private String codeSwitch;
+
+    public String getCodeSwitch() {
+        return codeSwitch;
+    }
+
+    public void setCodeSwitch(String codeSwitch) {
+        this.codeSwitch = codeSwitch;
+    }
+
+        // 周计划周天分割规则  0: 全天    1:分上下午
+    private Integer weekPlanDayRule;
+
+    public Integer getWeekPlanDayRule() {
+        return weekPlanDayRule;
+    }
+
+    public void setWeekPlanDayRule(Integer weekPlanDayRule) {
+        this.weekPlanDayRule = weekPlanDayRule;
+    }
 }

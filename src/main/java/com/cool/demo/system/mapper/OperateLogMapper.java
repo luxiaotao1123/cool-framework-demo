@@ -1,7 +1,7 @@
 package com.cool.demo.system.mapper;
 
-import com.cool.demo.system.entity.OperateLog;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.cool.demo.system.entity.OperateLog;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -18,9 +18,9 @@ public interface OperateLogMapper extends BaseMapper<OperateLog> {
     int selectCountByCurrentWeek();
 
     @Select("select MONTH(create_time) as node , count(1) as val from sys_operate_log where 1 = 1 and year(create_time) = #{year} group by MONTH(create_time)")
-    List<Map<String, Object>> getReportByYear(@Param("year")Integer year);
+    List<Map<String, Object>> getReportByYear(@Param("year") Integer year);
 
     @Select("select DAYOFMONTH(create_time) as node,count(1) as val from sys_operate_log where 1 = 1 and year(create_time) = #{year} and month(create_time) = #{month} group by DAYOFMONTH(create_time)")
-    List<Map<String, Object>> getReportByMonth(@Param("year")Integer year, @Param("month")Integer month);
+    List<Map<String, Object>> getReportByMonth(@Param("year") Integer year, @Param("month") Integer month);
 
 }

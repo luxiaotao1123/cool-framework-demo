@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../static/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../static/css/cool.css" media="all">
+    <link rel="stylesheet" href="../../static/css/common.css" media="all">
+</head>
+<body>
+
+<!-- 详情 -->
+<div id="data-detail" class="layer_self_wrap">
+    <form id="detail" class="layui-form" style="text-align: center">
+        <div class="layui-inline"  style="width:80%;display: none">
+            <label class="layui-form-label"><span class="not-null">*</span>部门编号：</label>
+            <div class="layui-input-inline">
+                <input id="id" class="layui-input" type="text" onkeyup="check(this.id, 'dept')" lay-verify="number" >
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:80%;">
+            <label class="layui-form-label">父部门：</label>
+            <div class="layui-input-inline cool-auto-complete">
+                <input id="parentId" class="layui-input" type="text" style="display: none">
+                <input id="deptName" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" onfocus=this.blur()>
+                <div class="cool-auto-complete-window">
+                    <input class="cool-auto-complete-window-input" data-key="deptQuery" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                    <select class="cool-auto-complete-window-select" data-key="deptQuerySelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:80%;">
+            <label class="layui-form-label"><span class="not-null">*</span>部门名称：</label>
+            <div class="layui-input-inline">
+                <input id="name" class="layui-input" type="text" lay-verify="required" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:80%;">
+            <label class="layui-form-label">负 责 人：</label>
+            <div class="layui-input-inline cool-auto-complete">
+                <input id="leader" class="layui-input" type="text" lay-verify="number"  style="display: none">
+                <input id="leader$" class="layui-input cool-auto-complete-div" onclick="autoShow(this.id)" type="text" onfocus=this.blur()>
+                <div class="cool-auto-complete-window">
+                    <input class="cool-auto-complete-window-input" data-key="userQueryByleader" onkeyup="autoLoad(this.getAttribute('data-key'))">
+                    <select class="cool-auto-complete-window-select" data-key="userQueryByleaderSelect" onchange="confirmed(this.getAttribute('data-key'))" multiple="multiple">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:80%;">
+            <label class="layui-form-label">联系电话：</label>
+            <div class="layui-input-inline">
+                <input id="phone" class="layui-input" type="text" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:80%;">
+            <label class="layui-form-label">邮　　箱：</label>
+            <div class="layui-input-inline">
+                <input id="email" class="layui-input" type="text" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:80%;">
+            <label class="layui-form-label">部门状态：</label>
+            <div class="layui-input-inline">
+                <select id="status">
+                    <option value="" style="display: none"></option>
+                    <option value="1">正常</option>
+                    <option value="0">停用</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:80%;">
+            <label class="layui-form-label">显示顺序：</label>
+            <div class="layui-input-inline">
+                <input id="sort" class="layui-input" type="text" lay-verify="number" autocomplete="off">
+            </div>
+        </div>
+        <hr class="layui-bg-gray">
+
+        <div id="data-detail-btn" class="layui-btn-container layui-form-item">
+            <div id="data-detail-submit-save" type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="save">保存</div>
+            <div id="data-detail-submit-edit" type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="edit">修改</div>
+            <div id="data-detail-close" type="button" class="layui-btn" lay-submit lay-filter="close">关闭</div>
+        </div>
+
+        <div id="prompt">
+            温馨提示：请仔细填写相关信息，<span class="extrude"><span class="not-null">*</span> 为必填选项。</span>
+        </div>
+    </form>
+</div>
+</body>
+<script type="text/javascript" src="../../static/js/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../../static/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../static/js/common.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../static/js/cool.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../static/js/dept/dept.js" charset="utf-8"></script>
+</html>
+

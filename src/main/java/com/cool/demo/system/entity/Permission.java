@@ -1,12 +1,13 @@
 package com.cool.demo.system.entity;
 
-import com.core.common.Cools;import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
+import com.core.common.Cools;
 import com.core.common.SpringUtils;
 import com.cool.demo.system.service.ResourceService;
-import com.baomidou.mybatisplus.annotations.TableField;
 
-import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
 
 @TableName("sys_permission")

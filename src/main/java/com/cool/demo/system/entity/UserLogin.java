@@ -1,16 +1,16 @@
 package com.cool.demo.system.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
+import com.core.common.Cools;
 import com.core.common.SpringUtils;
 import com.cool.demo.system.service.UserService;
-import com.baomidou.mybatisplus.annotations.TableField;
-import java.text.SimpleDateFormat;
-import com.core.common.Cools;
-import java.util.Date;
 
-import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @TableName("sys_user_login")
 public class UserLogin implements Serializable {

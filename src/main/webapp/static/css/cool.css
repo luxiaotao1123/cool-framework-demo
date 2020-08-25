@@ -16,20 +16,24 @@
 }
 
 .cool-auto-complete-window-input {
-
     height: 28px;
     box-sizing: border-box;
     border: 1px solid #dedede;
-
     width: 100%;
 }
-
+.cool-auto-complete-window-input:focus {
+    border-color: #007bff !important;
+}
 .cool-auto-complete-window-select {
     width: 100%;
     border: 1px solid #dedede;
     margin: 0;
     height: 142px;
 
+}
+
+.cool-auto-complete-window-select option:hover {
+    background-color: #f1f1f1;
 }
 
 .cool-auto-complete-window-select option{

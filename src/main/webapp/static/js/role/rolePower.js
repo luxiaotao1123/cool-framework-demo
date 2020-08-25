@@ -13,20 +13,27 @@ layui.use(['form', 'tree'], function() {
         isJump: true
     });
 
-    $.ajax({
-        url: "/power/"+parent.roleId+"/auth",
-        headers: {'token': localStorage.getItem('token')},
-        method: 'GET',
-        success: function (res) {
-            if (res.code === 200){
-                tree.setChecked('powerTree', res.data);
-            } else if (res.code === 403){
-                top.location.href = "/";
-            } else {
-                layer.msg(res.msg)
+    loadPower();
+    function loadPower(){
+        $.ajax({
+            url: baseUrl+"/power/"+parent.roleId+"/auth",
+            headers: {'token': localStorage.getItem('token')},
+            method: 'GET',
+            beforeSend: function () {
+                layer.load(1, {shade: [0.1,'#fff']});
+            },
+            success: function (res) {
+                if (res.code === 200){
+                    tree.setChecked('powerTree', res.data);
+                } else if (res.code === 403){
+                    top.location.href = baseUrl+"/";
+                } else {
+                    layer.msg(res.msg)
+                }
+                layer.closeAll("loading");
             }
-        }
-    });
+        });
+    }
 
     // 数据修改动作
     form.on('submit(save)', function () {
@@ -34,23 +41,33 @@ layui.use(['form', 'tree'], function() {
         var checkData = tree.getChecked('powerTree');
         checkData.map(function (obj) {
             obj.children.map(function (resource) {
-                param.push(resource.id);
+
+                var childrens = [];
+                resource.children.map(function (resource) {
+                    childrens.push(resource.id);
+                });
+                var one = {
+                    'two': resource.id,
+                    'three': childrens
+                };
+                param.push(one);
             })
         });
         $.ajax({
-            url: "/power/auth",
+            url: baseUrl+"/power/auth",
             traditional: true,
             headers: {'token': localStorage.getItem('token')},
             data: {
                 'roleId': parent.roleId,
-                'powers': param
+                'powers': JSON.stringify(param)
             },
             method: 'POST',
             success: function (res) {
                 if (res.code === 200){
                     parent.layer.closeAll();
+                    parent.layer.msg(res.msg);
                 } else if (res.code === 403){
-                    top.location.href = "/";
+                    top.location.href = baseUrl+"/";
                 } else {
                     layer.msg(res.msg)
                 }

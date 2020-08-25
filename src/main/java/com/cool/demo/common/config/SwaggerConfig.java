@@ -1,9 +1,9 @@
 package com.cool.demo.common.config;
 
-import com.cool.demo.common.properties.SwaggerProperties;
 import com.core.common.BaseRes;
 import com.core.common.Cools;
 import com.core.common.R;
+import com.cool.demo.common.properties.SwaggerProperties;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;

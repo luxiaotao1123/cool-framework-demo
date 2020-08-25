@@ -10,9 +10,10 @@ layui.use(['table','laydate', 'form'], function(){
     tableIns = table.render({
         elem: '#permission',
         headers: {token: localStorage.getItem('token')},
-        url: '/permission/list/auth',
+        url: baseUrl+'/permission/list/auth',
         page: true,
         limit: 16,
+        limits: [16, 30, 50, 100, 200, 500],
         toolbar: '#toolbar',
         cellMinWidth: 50,
         cols: [[
@@ -42,10 +43,34 @@ layui.use(['table','laydate', 'form'], function(){
         },
         done: function(res, curr, count) {
             if (res.code === 403) {
-                top.location.href = "/";
+                top.location.href = baseUrl+"/";
             }
             pageCurr=curr;
+            limit();
         }
+    });
+
+    // 监听排序事件
+    table.on('sort(permission)', function (obj) {
+        var searchData = {};
+        $.each($('#search-box [name]').serializeArray(), function() {
+            searchData[this.name] = this.value;
+        });
+        searchData['orderByField'] = obj.field;
+        searchData['orderByType'] = obj.type;
+        tableIns.reload({
+            where: searchData,
+            page: {
+                curr: 1
+            },
+            done: function (res, curr, count) {
+                if (res.code === 403) {
+                    top.location.href = baseUrl+"/";
+                }
+                pageCurr=curr;
+                limit();
+            }
+        });
     });
 
     // 监听头工具栏事件
@@ -62,7 +87,7 @@ layui.use(['table','laydate', 'form'], function(){
                     content: 'permission_detail.html',
                     success: function(layero, index){
                     	clearFormVal(layer.getChildFrame('#detail', index));
-                        detailScreen(index);
+                        layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                     }
                 });
                 break;
@@ -72,6 +97,7 @@ layui.use(['table','laydate', 'form'], function(){
                         curr: pageCurr
                     }
                 });
+                limit();
                 break;
             case 'deleteData':
                 var data = checkStatus.data;
@@ -84,7 +110,7 @@ layui.use(['table','laydate', 'form'], function(){
                 } else {
                     layer.confirm('确定删除'+(ids.length===1?'此':ids.length)+'条数据吗', function(){
                         $.ajax({
-                            url: "/permission/delete/auth",
+                            url: baseUrl+"/permission/delete/auth",
                             headers: {'token': localStorage.getItem('token')},
                             data: {ids: ids},
                             method: 'POST',
@@ -94,7 +120,7 @@ layui.use(['table','laydate', 'form'], function(){
                                     layer.closeAll();
                                     tableReload(false);
                                 } else if (res.code === 403){
-                                    top.location.href = "/";
+                                    top.location.href = baseUrl+"/";
                                 } else {
                                     layer.msg(res.msg)
                                 }
@@ -104,7 +130,7 @@ layui.use(['table','laydate', 'form'], function(){
                 }
                 break;
             case 'exportData':
-                layer.confirm('确定导出Excel吗', function(){
+                layer.confirm('确定导出Excel吗', {shadeClose: true}, function(){
                     var titles=[];
                     var fields=[];
                     obj.config.cols[0].map(function (col) {
@@ -122,7 +148,7 @@ layui.use(['table','laydate', 'form'], function(){
                         'fields': fields
                     };
                     $.ajax({
-                        url: "/permission/export/auth",
+                        url: baseUrl+"/permission/export/auth",
                         headers: {'token': localStorage.getItem('token')},
                         data: JSON.stringify(param),
                         dataType:'json',
@@ -133,7 +159,7 @@ layui.use(['table','laydate', 'form'], function(){
                             if (res.code === 200) {
                                 table.exportFile(titles,res.data,'xls');
                             } else if (res.code === 403) {
-                                top.location.href = "/";
+                                top.location.href = baseUrl+"/";
                             } else {
                                 layer.msg(res.msg)
                             }
@@ -148,11 +174,11 @@ layui.use(['table','laydate', 'form'], function(){
     table.on('tool(permission)', function(obj){
         var data = obj.data;
         switch (obj.event) {
-            // 查看
+            // 详情
             case 'detail':
                 layer.open({
                     type: 2,
-                    title: '查看',
+                    title: '详情',
                     maxmin: true,
                     area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
@@ -161,7 +187,7 @@ layui.use(['table','laydate', 'form'], function(){
                         setFormVal(layer.getChildFrame('#detail', index), data, true);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
                         layer.getChildFrame('#data-detail-submit', index).hide();
-                        detailScreen(index);
+                        layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                     }
                 });
@@ -178,7 +204,7 @@ layui.use(['table','laydate', 'form'], function(){
                     success: function(layero, index){
                         setFormVal(layer.getChildFrame('#detail', index), data, false);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
-                        detailScreen(index);
+                        layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                     }
                 });
@@ -197,7 +223,7 @@ layui.use(['table','laydate', 'form'], function(){
                        content: '../resource/resource_detail.html',
                        success: function(layero, index){
                            $.ajax({
-                               url: "/resource/"+ param +"/auth",
+                               url: baseUrl+"/resource/"+ param +"/auth",
                                headers: {'token': localStorage.getItem('token')},
                                method: 'GET',
                                success: function (res) {
@@ -205,7 +231,7 @@ layui.use(['table','laydate', 'form'], function(){
                                        setFormVal(layer.getChildFrame('#detail', index), res.data, true);
                                        top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
                                        layer.getChildFrame('#data-detail-submit', index).hide();
-                                       detailScreen(index);
+                                       layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                                        layero.find('iframe')[0].contentWindow.layui.form.render('select');
                                    } else if (res.code === 403){
                                        parent.location.href = "/";
@@ -236,7 +262,7 @@ layui.use(['table','laydate', 'form'], function(){
 
         };
         $.ajax({
-            url: "/permission/edit/auth",
+            url: baseUrl+"/permission/edit/auth",
             headers: {'token': localStorage.getItem('token')},
             data: top.reObject(data),
             method: 'POST',
@@ -248,7 +274,7 @@ layui.use(['table','laydate', 'form'], function(){
                         $(this).val("");
                     });
                 } else if (res.code === 403){
-                    top.location.href = "/";
+                    top.location.href = baseUrl+"/";
                 }else {
                     layer.msg(res.msg)
                 }
@@ -272,7 +298,6 @@ layui.use(['table','laydate', 'form'], function(){
 
     // 时间选择器
 
-
 });
 
 // 关闭动作
@@ -292,7 +317,7 @@ function tableReload(child) {
         },
         done: function (res, curr, count) {
             if (res.code === 403) {
-                top.location.href = "/";
+                top.location.href = baseUrl+"/";
             }
             pageCurr=curr;
             if (res.data.length === 0 && count !== 0) {
@@ -304,6 +329,7 @@ function tableReload(child) {
                 });
                 pageCurr -= 1;
             }
+            limit(child);
         }
     });
 }

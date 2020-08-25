@@ -1,3 +1,37 @@
+/**, *::before, *::after {*/
+/*    -webkit-box-sizing: border-box;*/
+/*    box-sizing: border-box;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*}*/
+
+body {
+    background-color: #fff;
+}
+
+input::placeholder {
+    color: #b4b4b4;
+}
+input::-webkit-input-placeholder { /* WebKit browsers 适配谷歌 */
+    color: #b4b4b4;
+}
+.layui-input input:-moz-placeholder { /* Mozilla Firefox 4 to 18 适配火狐 */
+    color: #b4b4b4;
+}
+.layui-input input::-moz-placeholder { /* Mozilla Firefox 19+ 适配火狐 */
+    color: #b4b4b4;
+}
+.layui-input input:-ms-input-placeholder { /* Internet Explorer 10+  适配ie*/
+    color: #b4b4b4;
+}
+
+/* layui优化 */
+.layui-form-label {
+    /*color: #595959;*/
+}
+.layui-input:focus {
+    border-color: #007bff !important;
+}
 /*搜索栏*/
 .layui-form.layui-card-header {
     padding: 20px 0 5px 0;
@@ -7,28 +41,28 @@
     margin-left: 10px;
     z-index: 999;
     position: relative;
+    padding: 30px 30px 10px 30px;
 }
 #search-box .layui-inline{
     margin-bottom: 10px;
-    margin-right: 15px;
+    margin-right: 5px;
 }
 #search-box .layui-input-inline {
     width: 150px;
 }
 .layui-form-label{
     font-size: 100%;
-    padding: 9px 0 9px 5px;
+    padding: 13px 0 9px 5px;
     text-align: right;
 }
 #data-search-btn {
-    margin-top: 10px;
-    display: flex;
+    display: inline-block;
+    margin: 8px 0 0 10px;
     justify-content: center;
     align-items: center;
-    margin-bottom: 0;
 }
 #data-search-btn.layui-btn-container .layui-btn{
-    margin-right: 30px;
+    margin-right: 20px;
 }
 
 /*头工具栏*/
@@ -49,13 +83,15 @@
 }
 
 /*表格*/
+.layui-table thead th {
+    font-weight: bold;
+    text-align: center;
+}
 div .layui-table-tool .layui-table-tool-self .layui-inline[title='导出']{
     display: none;
 }
 .layui-form.layui-border-box.layui-table-view{
-    margin: 30px 0 0 0;
-    /*position: absolute;*/
-    /*top: 140px;*/
+    margin: 15px 0 35px 0;
     width: 100%;
     border-width: 0;
 }
@@ -68,6 +104,25 @@ div .layui-table-tool .layui-table-tool-self .layui-inline[title='导出']{
 .layui-table-page{
     border-width: 0;
 }
+.layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.layui-table-tool {
+    /*background-color: #fff;*/
+}
+/* table （换行/详情）显示控制 */
+/*.layui-table-cell {*/
+    /*font-size:14px;*/
+    /*padding:0 5px;*/
+    /*height:auto;*/
+    /*overflow:visible;*/
+    /*text-overflow:inherit;*/
+    /*white-space:normal;*/
+    /*word-break: break-all;*/
+/*}*/
+/*.layui-table-grid-down {*/
+    /*display: none;*/
+/*}*/
 
 /*详情*/
 #detail .layui-form-label{
@@ -77,7 +132,7 @@ div .layui-table-tool .layui-table-tool-self .layui-inline[title='导出']{
     text-align: right;
 }
 #detail {
-    padding: 25px 0 15px 0;
+    padding: 25px 0;
     margin: 0 20px 0 30px;
 }
 #detail .layui-inline {
@@ -85,7 +140,7 @@ div .layui-table-tool .layui-table-tool-self .layui-inline[title='导出']{
 }
 #detail .layui-input-inline {
     margin-right: 40px;
-    margin-left: 85px;
+    margin-left: 95px;
     display: block;
 }
 .layui-bg-gray {
@@ -110,14 +165,16 @@ div .layui-table-tool .layui-table-tool-self .layui-inline[title='导出']{
     color:red;
 }
 
+#detail .layui-form-checkbox {
+    top: 10px;
+}
+
 /*图片*/
 .cool-img {
     cursor:pointer;
     width: 200px;
     height: 200px;
 }
-
-
 
 /*
     布局
@@ -133,4 +190,47 @@ div .layui-table-tool .layui-table-tool-self .layui-inline[title='导出']{
     height: inherit;
 }
 
+/*权限*/
+#btn-add {
+    display: none;
+}
+.btn-edit {
+    display: none;
+}
+#btn-delete {
+    display: none;
+}
+#btn-export {
+    display: none;
+}
+#btn-into {
+    display: none;
+}
 
+/* 背景图 */
+.bg-bubbles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: url(../../static/image/bg.jpg);
+}
+
+/*修改复选框颜色*/
+/*.layui-form-checked[lay-skin=primary] i {*/
+    /*border-color: #4c95b8!important;*/
+    /*background-color: #4c95b8;*/
+    /*color: #fff;*/
+/*}*/
+/*.layui-form-checkbox[lay-skin=primary]:hover i {*/
+    /*border-color: #4c95b8;*/
+    /*color: #fff;*/
+/*}*/
+
+/* 媒体查询 —— 响应布局 */
+/* 做响应式布局时，不建议用固定尺寸，尽量用% */
+@media only screen and (max-width: 800px) {
+
+}

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>中扬 - 研发中心</title>
+    <link rel="icon" type="image/x-icon" href="../static/image/log.png" />
+    <link rel="stylesheet" href="../static/layui/css/layui.css" media="all">
+    <script type="text/javascript" src="../static/layui/layui.js"></script>
+    <script type="text/javascript" src="../static/js/common.js"></script>
+    <style>
+        html{
+            height: 100%;
+        }
+        body.login-bg {
+            color: #777;
+            height: 100%;
+            background-image: url("../static/image/bg-imgage.jpg");
+            /*background-image: url("../static/image/login_bg.jpg");*/
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: top center;
+        }
+
+        #login-wrapper {
+            /*color: #fff;*/
+            box-sizing:border-box;
+            /*background: #576669;*/
+            background: #fff;
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            margin-top: -210px;
+            margin-left: -220px;
+            width: 440px;
+            min-height: 420px;
+            padding: 50px;
+            text-align: center;
+            border-radius: 5px;
+
+            transform-origin: 50% 50%;
+            animation: loading 1s 0s forwards;
+            transform: rotateX(0deg);
+        }
+
+        #login-wrapper h2 {
+            letter-spacing: 3px;
+            font-size: 26px;
+            margin-bottom: 30px;
+        }
+
+        .layadmin-user-login-body .layui-form-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .layadmin-user-login-body .layui-form-item .layui-input {
+            height: 42px;
+            padding-left: 40px;
+            font-size: 16px;
+            border: 1px solid #c8cccf;
+            color: inherit;
+        }
+        .login-submit {
+            margin-top: 30px;
+        }
+        .layadmin-user-login-icon {
+            position: absolute;
+            left: 1px;
+            top: 1px;
+            width: 38px;
+            line-height: 40px;
+            text-align: center;
+            color: #B2B2B2;
+            font-size: 18px;
+        }
+        .layui-btn-normal {
+            background-color: #0767aa;
+            font-size: 20px;
+            border-radius: 4px;
+            height: 52px;
+        }
+        .layui-form-checked[lay-skin=primary] i {
+            border-color: #0767aa!important;
+            background-color: #0767aa;
+            color: #fff;
+        }
+        .layui-form-checkbox[lay-skin=primary]:hover i {
+            border-color: #0767aa;
+            color: #fff;
+        }
+        #code-box {
+            position: relative;
+            height: 42px;
+        }
+        #code-label {
+            z-index: 999;
+        }
+        #code {
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: inline-block;
+            width: 60%;
+        }
+        #codeImg {
+            border: 1px solid rgba(0,0,0,0.1);
+            position: absolute;
+            right: 5%;
+            top: 0;
+            width: 30%;
+            height: 90%;
+        }
+    </style>
+</head>
+<body class="login-bg">
+
+<div id="login-wrapper">
+    <header>
+        <h2>系统登录</h2>
+    </header>
+    <div class="layui-form layadmin-user-login-body">
+        <div class="layui-form-item">
+            <label class="layui-icon layui-icon-username layadmin-user-login-icon"></label>
+            <input id="username" class="layui-input" type="text" name="username" lay-verify="username" placeholder="账号">
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-icon layui-icon-password layadmin-user-login-icon"></label>
+            <input id="password" class="layui-input" type="password" name="password" lay-verify="password" placeholder="密码">
+        </div>
+        <div id="code-box" class="layui-form-item" style="">
+            <label id="code-label" class="layui-icon layui-icon-vercode layadmin-user-login-icon"></label>
+            <input id="code" class="layui-input" type="text" name="password" lay-verify="code" placeholder="验证码">
+            <img id="codeImg" title="看不清？点击换一张。">
+        </div>
+        <div class="layui-form-item" style="text-align: left;padding-left: 3px;">
+            <input id="rememberPwd" style="vertical-align: middle" type="checkbox" lay-skin='primary' lay-filter="remPwd" title="记住密码" checked="checked">
+        </div>
+    </div>
+    <div class="layui-form-item login-submit">
+        <button id="login-button" class="layui-btn layui-btn-fluid layui-btn-normal" lay-submit="" lay-filter="login">登 录</button>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="../static/js/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../static/js/tools/md5.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        var oldUserName = localStorage.getItem('oldUserName');
+        var oldPass = localStorage.getItem('oldPass');
+        if(oldUserName){
+            $('#username').val(oldUserName);
+        }
+        if(oldPass){
+            $('#password').val(oldPass);
+        }
+    })
+
+    // 验证码开关
+    var codeSwitch = 'Y';
+    $.ajax({
+        url: baseUrl+"/code/switch.action",
+        async: false,
+        success: function (res) {
+            if (res.data === 'N'){
+                codeSwitch = res.data;
+                $('#code-box').css("display", "none");
+            }
+        }
+    });
+
+    // 初始化验证码
+    initCode();
+    $('#codeImg').click(function () {
+        initCode();
+    });
+    function initCode() {
+        var random = Math.random();
+        $('#codeImg').attr("src", baseUrl+"/code.action?sd="+random);
+        setTimeout(function () {
+            $.ajax({
+                url: baseUrl+"/code.do",
+                data: {sd: random},
+                method: 'POST',
+                async: false,
+                success: function (code) {
+                    sessionStorage.setItem("code", code);
+                }
+            });
+        }, 100);
+    }
+
+    layui.use(['form','layer'],function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.jquery;
+
+        form.on('submit(login)', function (data) {
+            var username = $("#username").val();
+            if (username === "") {
+                layer.msg("请输入账号", {offset: '150px'});
+                return;
+            }
+            var password = $("#password").val();
+            // if (password === "") {
+            //     layer.msg("请输入密码", {offset: '150px'});
+            //     return;
+            // }
+            var code = $("#code").val();
+            if (code === "" && codeSwitch === 'Y') {
+                layer.msg("请输入验证码", {offset: '150px'});
+                return;
+            }
+            if (sessionStorage.getItem("code").toUpperCase() !== code.toUpperCase()&&codeSwitch==='Y'){
+                layer.msg("验证码错误", {offset: '150px'});
+                return;
+            }
+
+            var user = {
+                username: username,
+                password: hex_md5(password)
+            };
+            $.ajax({
+                url: baseUrl+"/login.action",
+                data: user,
+                method: 'POST',
+                success: function (res) {
+                    if (res.code === 200){
+                        // 记住密码
+                        if($('#rememberPwd').is(':checked')){
+                            localStorage.setItem('oldUserName',user.username);
+                            localStorage.setItem('oldPass',password);
+                        } else {
+                            localStorage.removeItem('oldUserName');
+                            localStorage.removeItem('oldPass');
+                        }
+                        localStorage.setItem("token", res.data.token);
+                        localStorage.setItem("nickname", res.data.nickname);
+                        window.location.href = "index.html";
+                    } else {
+                        layer.msg(res.msg, {offset: '150px'});
+                    }
+                }
+            });
+            return false;
+        });
+
+        $('body').keydown(function () {
+            if (event.keyCode === 13) {
+                $("#login-button").click();
+            }
+        });
+
+    });
+</script>
+</html>

@@ -10,15 +10,16 @@ layui.use(['table','laydate', 'form'], function(){
     tableIns = table.render({
         elem: '#userLogin',
         headers: {token: localStorage.getItem('token')},
-        url: '/userLogin/list/auth',
+        url: baseUrl+'/userLogin/list/auth',
         page: true,
         limit: 16,
+        limits: [16, 30, 50, 100, 200, 500],
         toolbar: '#toolbar',
         cellMinWidth: 50,
         cols: [[
             {type: 'checkbox', fixed: 'left'}
             ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
-            ,{field: 'userUsername', align: 'center',title: '员工',event: 'User', style: 'text-decoration: underline;cursor:pointer'}
+            ,{field: 'userUsername', align: 'center',title: '用户'}
             ,{field: 'token', align: 'center',title: '凭证值'}
             ,{field: 'createTime$', align: 'center',title: '添加时间'}
 
@@ -41,10 +42,34 @@ layui.use(['table','laydate', 'form'], function(){
         },
         done: function(res, curr, count) {
             if (res.code === 403) {
-                top.location.href = "/";
+                top.location.href = baseUrl+"/";
             }
             pageCurr=curr;
+            limit();
         }
+    });
+
+    // 监听排序事件
+    table.on('sort(userLogin)', function (obj) {
+        var searchData = {};
+        $.each($('#search-box [name]').serializeArray(), function() {
+            searchData[this.name] = this.value;
+        });
+        searchData['orderByField'] = obj.field;
+        searchData['orderByType'] = obj.type;
+        tableIns.reload({
+            where: searchData,
+            page: {
+                curr: 1
+            },
+            done: function (res, curr, count) {
+                if (res.code === 403) {
+                    top.location.href = baseUrl+"/";
+                }
+                pageCurr=curr;
+                limit();
+            }
+        });
     });
 
     // 监听头工具栏事件
@@ -61,7 +86,7 @@ layui.use(['table','laydate', 'form'], function(){
                     content: 'userLogin_detail.html',
                     success: function(layero, index){
                     	clearFormVal(layer.getChildFrame('#detail', index));
-                        detailScreen(index);
+                        layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                     }
                 });
                 break;
@@ -71,6 +96,7 @@ layui.use(['table','laydate', 'form'], function(){
                         curr: pageCurr
                     }
                 });
+                limit();
                 break;
             case 'deleteData':
                 var data = checkStatus.data;
@@ -83,7 +109,7 @@ layui.use(['table','laydate', 'form'], function(){
                 } else {
                     layer.confirm('确定删除'+(ids.length===1?'此':ids.length)+'条数据吗', function(){
                         $.ajax({
-                            url: "/userLogin/delete/auth",
+                            url: baseUrl+"/userLogin/delete/auth",
                             headers: {'token': localStorage.getItem('token')},
                             data: {ids: ids},
                             method: 'POST',
@@ -93,7 +119,7 @@ layui.use(['table','laydate', 'form'], function(){
                                     layer.closeAll();
                                     tableReload(false);
                                 } else if (res.code === 403){
-                                    top.location.href = "/";
+                                    top.location.href = baseUrl+"/";
                                 } else {
                                     layer.msg(res.msg)
                                 }
@@ -103,7 +129,7 @@ layui.use(['table','laydate', 'form'], function(){
                 }
                 break;
             case 'exportData':
-                layer.confirm('确定导出Excel吗', function() {
+                layer.confirm('确定导出Excel吗', {shadeClose: true}, function() {
                     var titles = [];
                     var fields = [];
                     obj.config.cols[0].map(function (col) {
@@ -121,7 +147,7 @@ layui.use(['table','laydate', 'form'], function(){
                         'fields': fields
                     };
                     $.ajax({
-                        url: "/userLogin/export/auth",
+                        url: baseUrl+"/userLogin/export/auth",
                         headers: {'token': localStorage.getItem('token')},
                         data: JSON.stringify(param),
                         dataType: 'json',
@@ -132,7 +158,7 @@ layui.use(['table','laydate', 'form'], function(){
                             if (res.code === 200) {
                                 table.exportFile(titles, res.data, 'xls');
                             } else if (res.code === 403) {
-                                top.location.href = "/";
+                                top.location.href = baseUrl+"/";
                             } else {
                                 layer.msg(res.msg)
                             }
@@ -147,11 +173,11 @@ layui.use(['table','laydate', 'form'], function(){
     table.on('tool(userLogin)', function(obj){
         var data = obj.data;
         switch (obj.event) {
-            // 查看
+            // 详情
             case 'detail':
                 layer.open({
                     type: 2,
-                    title: '查看',
+                    title: '详情',
                     maxmin: true,
                     area: [top.detailWidth, top.detailHeight],
                     shadeClose: false,
@@ -159,8 +185,8 @@ layui.use(['table','laydate', 'form'], function(){
                     success: function(layero, index){
                         setFormVal(layer.getChildFrame('#detail', index), data);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
-                        layer.getChildFrame('#data-detail-submit', index).hide();
-                        detailScreen(index);
+                        layer.getChildFrame('#data-detail-submit,#prompt', index).hide();
+                        layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                     }
                 });
@@ -177,7 +203,7 @@ layui.use(['table','laydate', 'form'], function(){
                     success: function(layero, index){
                         setFormVal(layer.getChildFrame('#detail', index), data);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
-                        detailScreen(index);
+                        layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                     }
                 });
@@ -196,15 +222,15 @@ layui.use(['table','laydate', 'form'], function(){
                         content: '../user/user_detail.html',
                         success: function(layero, index){
                             $.ajax({
-                                url: "/user/"+ param +"/auth",
+                                url: baseUrl+"/user/"+ param +"/auth",
                                 headers: {'token': localStorage.getItem('token')},
                                 method: 'GET',
                                 success: function (res) {
                                     if (res.code === 200){
                                         setFormVal(layer.getChildFrame('#detail', index), res.data);
                                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
-                                        layer.getChildFrame('#data-detail-submit', index).hide();
-                                        detailScreen(index);
+                                        layer.getChildFrame('#data-detail-submit,#prompt', index).hide();
+                                        layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                                     } else if (res.code === 403){
                                         parent.location.href = "/";
@@ -234,7 +260,7 @@ layui.use(['table','laydate', 'form'], function(){
 
         };
         $.ajax({
-            url: "/userLogin/edit/auth",
+            url: baseUrl+"/userLogin/edit/auth",
             headers: {'token': localStorage.getItem('token')},
             data: top.reObject(data),
             method: 'POST',
@@ -246,7 +272,7 @@ layui.use(['table','laydate', 'form'], function(){
                         $(this).val("");
                     });
                 } else if (res.code === 403){
-                    top.location.href = "/";
+                    top.location.href = baseUrl+"/";
                 }else {
                     layer.msg(res.msg)
                 }
@@ -274,7 +300,6 @@ layui.use(['table','laydate', 'form'], function(){
         type: 'datetime'
     });
 
-
 });
 
 // 关闭动作
@@ -294,7 +319,7 @@ function tableReload(child) {
         },
         done: function (res, curr, count) {
             if (res.code === 403) {
-                top.location.href = "/";
+                top.location.href = baseUrl+"/";
             }
             pageCurr=curr;
             if (res.data.length === 0 && count !== 0) {
@@ -306,6 +331,7 @@ function tableReload(child) {
                 });
                 pageCurr -= 1;
             }
+            limit(child);
         }
     });
 }

@@ -38,7 +38,7 @@ function autoLoad(val) {
     selectDom.appendChild(defaultOption);
     selectDom.style.display='none';
     $.ajax({
-        url: "/"+getForeignKeyQuery(val)+"/auth",
+        url: baseUrl+"/"+getForeignKeyQuery(val)+"/auth",
         headers: {'token': localStorage.getItem('token')},
         data: {condition: inputDomVal},
         method: 'POST',
@@ -53,7 +53,7 @@ function autoLoad(val) {
                 }
                 selectDom.style.display='block';
             } else if (res.code === 403){
-                top.location.href = "/";
+                top.location.href = baseUrl+"/";
             } else {
                 layer.msg(res.msg)
             }
@@ -104,4 +104,50 @@ function getForeignKeyQuery(str) {
         return str.substring(0, index);
     }
     return str;
+}
+
+// 表单值清空
+function clearFormVal(el) {
+    $(':input', el)
+        .val('')
+        .removeAttr('checked')
+        .removeAttr('selected');
+}
+
+var banMsg;
+var tips;
+// 主键校验
+function check(id, domain) {
+    var param = {
+        key: id,
+        val: $('#'+id).val()
+    };
+    $.ajax({
+        url: baseUrl+"/"+domain+"/check/column/auth",
+        headers: {'token': localStorage.getItem('token')},
+        data: JSON.stringify(param),
+        dataType:'json',
+        contentType:'application/json;charset=UTF-8',
+        method: 'POST',
+        success: function (res) {
+            if (res.code === 200) {
+                layer.close(tips);
+                banMsg = null;
+            } else if (res.code === 403) {
+                top.location.href = baseUrl+"/";
+            } else if (res.code === 407) {
+                banMsg = res.data + "不可用";
+                tips = layer.tips(
+                    "<span style='color:red;'>已存在</span>",
+                    '#'+id,
+                    {
+                        // tipsMore: true,
+                        tips: [2,'#fff'],
+                        time:0
+                        ,area: 'auto'
+                        ,maxWidth:500
+                    });
+            }
+        }
+    });
 }
