@@ -10,13 +10,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Created by vincent on 2019-11-25
  */
-public class MateExcelListener extends AnalysisEventListener<MateExcel> {
+public class MateExcelListener extends AnalysisEventListener<Mate> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MateExcelListener.class);
 
@@ -48,15 +49,14 @@ public class MateExcelListener extends AnalysisEventListener<MateExcel> {
      * 这个每一条数据解析都会来调用
      */
     @Override
-    public void invoke(MateExcel data, AnalysisContext ctx) {
-        MateService matCodeService = SpringUtils.getBean(MateService.class);
-        if (matCodeService.selectById(data.getMatNo()) == null) {
-            Mate matCode = new Mate();
-//            matCode.setModiTime(new Date());
-//            matCode.setModiUser(this.userId);
-//            matCode.setAppeTime(new Date());
-//            matCode.setAppeUser(this.userId);
-            if (!matCodeService.insert(matCode)) {
+    public void invoke(Mate data, AnalysisContext ctx) {
+        MateService mateService = SpringUtils.getBean(MateService.class);
+        if (mateService.selectById(data.getCode()) == null) {
+            data.setUpdateTime(new Date());
+            data.setUpdateBy(this.userId);
+            data.setCreateTime(new Date());
+            data.setCreateBy(this.userId);
+            if (!mateService.insert(data)) {
                 throw new CoolException("导入数据异常");
             }
             total ++;

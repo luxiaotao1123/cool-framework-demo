@@ -8,7 +8,6 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.cool.demo.common.web.BaseController;
 import com.cool.demo.manager.entity.Mate;
-import com.cool.demo.manager.excel.MateExcel;
 import com.cool.demo.manager.excel.MateExcelListener;
 import com.cool.demo.manager.service.MateService;
 import com.core.annotations.ManagerAuth;
@@ -139,7 +138,7 @@ public class MateController extends BaseController {
     @Transactional
     public R matCodeImport(MultipartFile file) throws IOException, InterruptedException {
         MateExcelListener listener = new MateExcelListener(getUserId());
-        EasyExcel.read(file.getInputStream(), MateExcel.class, listener).sheet().doRead();
+        EasyExcel.read(file.getInputStream(), Mate.class, listener).sheet().doRead();
         return R.ok("成功导入"+listener.getTotal()+"条物料信息");
     }
 

@@ -1,5 +1,7 @@
 package com.cool.demo.manager.entity;
 
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.format.DateTimeFormat;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -29,6 +31,7 @@ public class Mate implements Serializable {
     /**
      * 单据编号
      */
+    @ExcelProperty(value= "单据编号", index = 0)
     @ApiModelProperty(value= "单据编号")
     @TableField("bill_id")
     private String billId;
@@ -36,6 +39,8 @@ public class Mate implements Serializable {
     /**
      * 单据日期
      */
+    @DateTimeFormat("yyyy-MM-dd")
+    @ExcelProperty(value= "单据日期", index = 1)
     @ApiModelProperty(value= "单据日期")
     @TableField("bill_time")
     private Date billTime;
@@ -43,37 +48,44 @@ public class Mate implements Serializable {
     /**
      * 供应商
      */
+    @ExcelProperty(value= "供应商", index = 2)
     @ApiModelProperty(value= "供应商")
     private String supplier;
 
     /**
      * 商品编码
      */
+    @ExcelProperty(value= "商品编码", index = 3)
     @ApiModelProperty(value= "商品编码")
     private String code;
 
     /**
      * 商品名称
      */
+    @ExcelProperty(value= "商品名称", index = 4)
     @ApiModelProperty(value= "商品名称")
     private String name;
 
     /**
      * 数量
      */
+    @ExcelProperty(value= "数量", index = 5)
     @ApiModelProperty(value= "数量")
     private Double amount;
 
     /**
      * 交货时间
      */
-    @ApiModelProperty(value= "交货时间")
+    @DateTimeFormat("yyyy-MM-dd")
+    @ExcelProperty(value= "交货日期", index = 6)
+    @ApiModelProperty(value= "交货日期")
     @TableField("lead_time")
     private Date leadTime;
 
     /**
      * 已入库数量
      */
+    @ExcelProperty(value= "已入库数量", index = 7)
     @ApiModelProperty(value= "已入库数量")
     @TableField("pakin_amount")
     private Double pakinAmount;
@@ -81,6 +93,7 @@ public class Mate implements Serializable {
     /**
      * 未入库数量
      */
+    @ExcelProperty(value= "未入库数量", index = 8)
     @ApiModelProperty(value= "未入库数量")
     @TableField("notpak_amount")
     private Double notpakAmount;
@@ -88,24 +101,28 @@ public class Mate implements Serializable {
     /**
      * 商品行备注
      */
+    @ExcelProperty(value= "商品行备注", index = 9)
     @ApiModelProperty(value= "商品行备注")
     private String content;
 
     /**
      * 审核状态
      */
+    @ExcelProperty(value= "审核状态", index = 10)
     @ApiModelProperty(value= "审核状态")
     private String state;
 
     /**
      * 关闭状态
      */
+    @ExcelProperty(value= "关闭状态", index = 11)
     @ApiModelProperty(value= "关闭状态")
     private String status;
 
     /**
      * 入库状态
      */
+    @ExcelProperty(value= "入库状态", index = 12)
     @ApiModelProperty(value= "入库状态")
     @TableField("pak_status")
     private String pakStatus;
@@ -113,6 +130,7 @@ public class Mate implements Serializable {
     /**
      * 单据备注
      */
+    @ExcelProperty(value= "单据备注", index = 13)
     @ApiModelProperty(value= "单据备注")
     @TableField("bill_memo")
     private String billMemo;
@@ -120,6 +138,7 @@ public class Mate implements Serializable {
     /**
      * 单位
      */
+    @ExcelProperty(value= "单位", index = 14)
     @ApiModelProperty(value= "单位")
     private String unit;
 
