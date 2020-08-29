@@ -1,10 +1,11 @@
 var pageCurr;
-layui.use(['table','laydate', 'form'], function(){
+layui.use(['table','laydate', 'form', 'upload'], function(){
     var table = layui.table;
     var $ = layui.jquery;
     var layer = layui.layer;
     var layDate = layui.laydate;
     var form = layui.form;
+    var upload = layui.upload;
 
     // 数据渲染
     tableIns = table.render({
@@ -173,8 +174,59 @@ layui.use(['table','laydate', 'form'], function(){
                     });
                 });
                 break;
+            // 导入
+            case 'intoData':
+                layer.open({
+                    type: 1,
+                    title: '数据导入',
+                    shadeClose: true,
+                    content: $('#importDataDiv'),
+                    success: function(layero, index){
+                        uploader.reload();
+                    },
+                    end: function () {
+                        $('#uploadDesc').show();
+                        $('#uploadDemoView').hide();
+                        $('#fileMame').html("");
+                    }
+                });
+                break;
         }
     });
+
+    // 导入excel
+    var uploader = upload.render({
+        elem: '#uploadEx'
+        , url: baseUrl + '/mate/import/auth'
+        , headers: {token: localStorage.getItem('token')}
+        , accept: 'file'
+        , exts: 'xls|excel|xlsx'
+        , auto: false
+        , bindAction: '#uploadDo'
+        , before: function(obj){
+            layer.closeAll();
+            layer.load(1, {shade: [0.1,'#fff']});
+        }
+        , choose: function(obj){
+            $('#uploadDesc').hide();
+            $('#uploadDemoView').show();
+            obj.preview(function(index, file, result){
+                $('#fileMame').html(file.name);
+            });
+        }
+        , done: function (res) {
+            limit();
+            $('#uploadDesc').show();
+            $('#uploadDemoView').hide();
+            $('#fileMame').html("");
+            layer.closeAll('loading');
+            layer.msg(res.msg);
+            tableReload(false);
+        }
+        , error: function(index, upload){
+            layer.closeAll('loading');
+        }
+    })
 
     // 监听行工具事件
     table.on('tool(mate)', function(obj){

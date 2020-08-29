@@ -1,5 +1,6 @@
 package com.cool.demo.manager.controller;
 
+import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -7,6 +8,8 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.cool.demo.common.web.BaseController;
 import com.cool.demo.manager.entity.Mate;
+import com.cool.demo.manager.excel.MateExcel;
+import com.cool.demo.manager.excel.MateExcelListener;
 import com.cool.demo.manager.service.MateService;
 import com.core.annotations.ManagerAuth;
 import com.core.common.BaseRes;
@@ -14,8 +17,11 @@ import com.core.common.Cools;
 import com.core.common.DateUtils;
 import com.core.common.R;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -125,6 +131,16 @@ public class MateController extends BaseController {
             return R.parse(BaseRes.REPEAT).add(getComment(Mate.class, String.valueOf(param.get("key"))));
         }
         return R.ok();
+    }
+
+    // 导入
+    @RequestMapping(value = "/mate/import/auth")
+    @ManagerAuth(memo = "商品数据导入")
+    @Transactional
+    public R matCodeImport(MultipartFile file) throws IOException, InterruptedException {
+        MateExcelListener listener = new MateExcelListener(getUserId());
+        EasyExcel.read(file.getInputStream(), MateExcel.class, listener).sheet().doRead();
+        return R.ok("成功导入"+listener.getTotal()+"条物料信息");
     }
 
 }

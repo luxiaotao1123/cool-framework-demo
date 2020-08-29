@@ -36,8 +36,27 @@
         <button class="layui-btn layui-btn-sm" id="btn-add" lay-event="addData">新增</button>
         <button class="layui-btn layui-btn-sm" id="btn-delete" lay-event="deleteData">删除</button>
         <button class="layui-btn layui-btn-primary layui-btn-sm" id="btn-export" lay-event="exportData">导出</button>
+        <button class="layui-btn layui-btn-primary layui-btn-sm" id="btn-into" lay-event="intoData" style="float: right">导入</button>
     </div>
 </script>
+
+<!-- 导入操作弹窗 -->
+<div id="importDataDiv" style="display: none;padding: 20px 40px">
+    <div class="layui-upload-drag" id="uploadEx" style="width: 200px; font-size: x-small; padding: 10px; text-align: center; box-sizing: border-box">
+        <div id="uploadDesc" style="display: inline-block; ">
+            <i class="layui-icon"></i>
+            <p>点击添加，或将文件拖拽到此处</p>
+        </div>
+        <div id="uploadDemoView" style="display: none">
+            <img src="../../static/image/Excel.png" alt="上传成功后渲染" style="max-width: 196px; padding: 20px 0 10px 0">
+            <span id="fileMame" style="display: block; font-size: small; color: #333"></span>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 20px">
+        <button class="layui-btn layui-btn-radius" id="uploadDo">开始导入</button>
+    </div>
+</div>
+
 
 <script type="text/html" id="operate">
     <a class="layui-btn layui-btn-xs btn-edit" lay-event="edit">编辑</a>
