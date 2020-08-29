@@ -13,17 +13,13 @@ public class CodeBuilder {
         generator.url="localhost:3306/db_xty";
         generator.username="root";
         generator.password="root";
-        generator.table="sys_host";
+        generator.table="man_mate";
         // sqlserver
 //        generator.url="127.0.0.1:1433;databasename=db_xty";
 //        generator.username="sa";
 //        generator.password="sa@123";
 //        generator.table="man_wp_detl";
-//        generator.packagePath="com.cool.demo.manager";
-        generator.js = false;
-        generator.html = false;
-        generator.htmlDetail = false;
-        generator.sql = false;
+        generator.packagePath="com.cool.demo.manager";
         generator.build();
     }
 
