@@ -60,14 +60,4 @@ public class Parameter {
         this.codeSwitch = codeSwitch;
     }
 
-        // 周计划周天分割规则  0: 全天    1:分上下午
-    private Integer weekPlanDayRule;
-
-    public Integer getWeekPlanDayRule() {
-        return weekPlanDayRule;
-    }
-
-    public void setWeekPlanDayRule(Integer weekPlanDayRule) {
-        this.weekPlanDayRule = weekPlanDayRule;
-    }
 }
