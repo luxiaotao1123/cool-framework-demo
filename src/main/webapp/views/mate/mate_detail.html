@@ -30,6 +30,18 @@
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">单据编号：</label>
+            <div class="layui-input-inline">
+                <input id="billId" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">单据日期：</label>
+            <div class="layui-input-inline">
+                <input id="billTime$" class="layui-input" type="text" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
             <label class="layui-form-label">供 应 商：</label>
             <div class="layui-input-inline">
                 <input id="supplier" class="layui-input" type="text">
@@ -53,6 +65,24 @@
                 <input id="amount" class="layui-input" type="text" lay-verify="number" >
             </div>
         </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">交货时间：</label>
+            <div class="layui-input-inline">
+                <input id="leadTime$" class="layui-input" type="text" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">已入库数量：</label>
+            <div class="layui-input-inline">
+                <input id="pakinAmount" class="layui-input" type="text" lay-verify="number" >
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">未入库数量：</label>
+            <div class="layui-input-inline">
+                <input id="notpakAmount" class="layui-input" type="text" lay-verify="number" >
+            </div>
+        </div>
         <div class="layui-inline"  style="width:64%;">
             <label class="layui-form-label">商品行备注：</label>
             <div class="layui-input-inline">
@@ -60,15 +90,33 @@
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">
-            <label class="layui-form-label">交货地址：</label>
+            <label class="layui-form-label">审核状态：</label>
             <div class="layui-input-inline">
-                <input id="leadAddr" class="layui-input" type="text">
+                <input id="state" class="layui-input" type="text">
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">
-            <label class="layui-form-label">交货时间：</label>
+            <label class="layui-form-label">关闭状态：</label>
             <div class="layui-input-inline">
-                <input id="leadTime$" class="layui-input" type="text" autocomplete="off">
+                <input id="status" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">入库状态：</label>
+            <div class="layui-input-inline">
+                <input id="pakStatus" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">单据备注：</label>
+            <div class="layui-input-inline">
+                <input id="billMemo" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline"  style="width:31%;">
+            <label class="layui-form-label">单　　位：</label>
+            <div class="layui-input-inline">
+                <input id="unit" class="layui-input" type="text">
             </div>
         </div>
         <div class="layui-inline"  style="width:31%;">

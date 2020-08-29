@@ -5,13 +5,21 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.cool.demo.manager.entity.Mate">
         <id column="id" property="id" />
+        <result column="bill_id" property="billId" />
+        <result column="bill_time" property="billTime" />
         <result column="supplier" property="supplier" />
         <result column="code" property="code" />
         <result column="name" property="name" />
         <result column="amount" property="amount" />
-        <result column="content" property="content" />
-        <result column="lead_addr" property="leadAddr" />
         <result column="lead_time" property="leadTime" />
+        <result column="pakin_amount" property="pakinAmount" />
+        <result column="notpak_amount" property="notpakAmount" />
+        <result column="content" property="content" />
+        <result column="state" property="state" />
+        <result column="status" property="status" />
+        <result column="pak_status" property="pakStatus" />
+        <result column="bill_memo" property="billMemo" />
+        <result column="unit" property="unit" />
         <result column="create_by" property="createBy" />
         <result column="create_time" property="createTime" />
         <result column="update_by" property="updateBy" />

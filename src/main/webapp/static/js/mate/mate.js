@@ -21,19 +21,26 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
         cols: [[
             {type: 'checkbox'}
 //            ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
-//             ,{field: 'id', align: 'center',title: '编号'}
+            ,{field: 'billId', align: 'center',title: '单据编号'}
+            ,{field: 'billTime$', align: 'center',title: '单据日期'}
             ,{field: 'supplier', align: 'center',title: '供应商'}
             ,{field: 'code', align: 'center',title: '商品编码'}
             ,{field: 'name', align: 'center',title: '商品名称'}
             ,{field: 'amount', align: 'center',title: '数量'}
-            ,{field: 'content', align: 'center',title: '商品行备注'}
-            ,{field: 'leadAddr', align: 'center',title: '交货地址'}
             ,{field: 'leadTime$', align: 'center',title: '交货时间'}
-            ,{field: 'createBy$', align: 'center',title: '创建者', hide: true}
-            ,{field: 'createTime$', align: 'center',title: '创建时间', hide: true}
-            ,{field: 'updateBy$', align: 'center',title: '修改人员', hide: true}
-            ,{field: 'updateTime$', align: 'center',title: '修改时间', hide: true}
-            ,{field: 'memo', align: 'center',title: '备注'}
+            ,{field: 'pakinAmount', align: 'center',title: '已入库数量'}
+            ,{field: 'notpakAmount', align: 'center',title: '未入库数量'}
+            ,{field: 'content', align: 'center',title: '商品行备注'}
+            ,{field: 'state', align: 'center',title: '审核状态'}
+            ,{field: 'status', align: 'center',title: '关闭状态'}
+            ,{field: 'pakStatus', align: 'center',title: '入库状态'}
+            ,{field: 'billMemo', align: 'center',title: '单据备注'}
+            ,{field: 'unit', align: 'center',title: '单位'}
+            ,{field: 'createBy$', align: 'center',title: '创建者',hide:true}
+            ,{field: 'createTime$', align: 'center',title: '创建时间',hide:true}
+            ,{field: 'updateBy$', align: 'center',title: '修改人员',hide:true}
+            ,{field: 'updateTime$', align: 'center',title: '修改时间',hide:true}
+            ,{field: 'memo', align: 'center',title: '备注',hide:true}
 
             ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
         ]],
@@ -228,6 +235,7 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
         }
     })
 
+
     // 监听行工具事件
     table.on('tool(mate)', function(obj){
         var data = obj.data;
@@ -276,13 +284,21 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
         var data = {
 //            id: $('#id').val(),
             id: $('#id').val(),
+            billId: $('#billId').val(),
+            billTime: top.strToDate($('#billTime\\$').val()),
             supplier: $('#supplier').val(),
             code: $('#code').val(),
             name: $('#name').val(),
             amount: $('#amount').val(),
-            content: $('#content').val(),
-            leadAddr: $('#leadAddr').val(),
             leadTime: top.strToDate($('#leadTime\\$').val()),
+            pakinAmount: $('#pakinAmount').val(),
+            notpakAmount: $('#notpakAmount').val(),
+            content: $('#content').val(),
+            state: $('#state').val(),
+            status: $('#status').val(),
+            pakStatus: $('#pakStatus').val(),
+            billMemo: $('#billMemo').val(),
+            unit: $('#unit').val(),
             createBy: $('#createBy').val(),
             createTime: top.strToDate($('#createTime\\$').val()),
             updateBy: $('#updateBy').val(),
@@ -336,6 +352,10 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
     });
 
     // 时间选择器
+    layDate.render({
+        elem: '#billTime\\$',
+        type: 'datetime'
+    });
     layDate.render({
         elem: '#leadTime\\$',
         type: 'datetime'
