@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.cool.demo.common.web.BaseController;
 import com.cool.demo.manager.entity.Mate;
+import com.cool.demo.manager.excel.MateExcel;
 import com.cool.demo.manager.excel.MateExcelListener;
 import com.cool.demo.manager.excel.MonthSheetWriteHandler;
 import com.cool.demo.manager.service.MateService;
@@ -20,9 +21,7 @@ import com.core.common.BaseRes;
 import com.core.common.Cools;
 import com.core.common.DateUtils;
 import com.core.common.R;
-import org.apache.poi.ss.usermodel.BorderStyle;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -76,11 +75,26 @@ public class MateController extends BaseController {
         allLike(Mate.class, param.keySet(), wrapper, condition);
         if (!Cools.isEmpty(orderByField)){wrapper.orderBy(humpToLine(orderByField), "asc".equals(orderByType));}
         List<Mate> mates = mateService.selectList(wrapper);
+        List<MateExcel> excels = new ArrayList<>();
+        for (Mate mate : mates) {
+            excels.add(MateExcel.cover(mate));
+        }
 
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
         String fileName = URLEncoder.encode("数据", "UTF-8");
         response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+
+
+        // 头的策略
+        WriteCellStyle headWriteCellStyle = new WriteCellStyle();
+        // 背景设置为红色
+        headWriteCellStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+        WriteFont headWriteFont = new WriteFont();
+        headWriteFont.setFontHeightInPoints((short)11);
+        headWriteFont.setBold(false);
+        headWriteCellStyle.setWriteFont(headWriteFont);
+
 
         //内容样式策略
         WriteCellStyle contentWriteCellStyle = new WriteCellStyle();
@@ -96,19 +110,18 @@ public class MateController extends BaseController {
         // 字体策略
         WriteFont contentWriteFont = new WriteFont();
         // 字体大小
-        contentWriteFont.setFontHeightInPoints((short) 12);
+        contentWriteFont.setFontHeightInPoints((short) 11);
         contentWriteCellStyle.setWriteFont(contentWriteFont);
-        //头策略使用默认
-        WriteCellStyle headWriteCellStyle = new WriteCellStyle();
 
-        EasyExcel.write(response.getOutputStream(), Mate.class)
+
+        EasyExcel.write(response.getOutputStream(), MateExcel.class)
                 .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
                 //设置拦截器或自定义样式
                 .registerWriteHandler(new MonthSheetWriteHandler())
                 .registerWriteHandler(new HorizontalCellStyleStrategy(headWriteCellStyle,contentWriteCellStyle))
                 .sheet("sheet1")
-                .useDefaultStyle(true).relativeHeadRowIndex(4)
-                .doWrite(mates);
+                .useDefaultStyle(true).relativeHeadRowIndex(3)
+                .doWrite(excels);
     }
 
     private void convert(Map<String, Object> map, EntityWrapper wrapper){

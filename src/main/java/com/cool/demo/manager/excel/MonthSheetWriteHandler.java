@@ -55,5 +55,18 @@ public class MonthSheetWriteHandler implements SheetWriteHandler {
         row3.createCell(4).setCellValue("交货日期");
         row3.createCell(7).setCellValue("订单编号");
 
+//        Row row = sheet.getRow(3);
+//        for (int i= 0;i<10;i++) {
+//            Cell cell4 = row.getCell(i);
+//            CellStyle cellStyle4 = workbook.createCellStyle();
+//            cellStyle4.setVerticalAlignment(VerticalAlignment.CENTER);
+//            cellStyle4.setAlignment(HorizontalAlignment.CENTER);
+//            WriteFont contentWriteFont = new WriteFont();
+//            // 字体大小
+//            contentWriteFont.setFontHeightInPoints((short) 8);
+////            cellStyle4.setWriteFont(contentWriteFont);
+//            cell4.setCellStyle(cellStyle4);
+//
+//        }
     }
 }
