@@ -18,19 +18,19 @@ public class MateExcel {
     @ExcelProperty(value= "商品编码", index = 1)
     private String code;
 
-    @ExcelProperty(value= "商品名称", index = 2)
+    @ExcelProperty(value= "商品名称", index = 3)
     private String name;
 
-    @ExcelProperty(value= "规格型号", index = 3)
+    @ExcelProperty(value= "规格型号", index = 5)
     private String str;
 
-    @ExcelProperty(value= "数量", index = 4)
+    @ExcelProperty(value= "数量", index = 7)
     private Double amount;
 
-    @ExcelProperty(value= "单位", index = 5)
+    @ExcelProperty(value= "单位", index = 8)
     private String unit;
 
-    @ExcelProperty(value= "商品行备注", index = 6)
+    @ExcelProperty(value= "商品行备注", index = 9)
     private String content;
 
     public static MateExcel cover(Mate mate) {
