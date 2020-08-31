@@ -1,6 +1,9 @@
 package com.cool.demo.manager.controller;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.write.metadata.style.WriteCellStyle;
+import com.alibaba.excel.write.metadata.style.WriteFont;
+import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -10,12 +13,16 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.cool.demo.common.web.BaseController;
 import com.cool.demo.manager.entity.Mate;
 import com.cool.demo.manager.excel.MateExcelListener;
+import com.cool.demo.manager.excel.MonthSheetWriteHandler;
 import com.cool.demo.manager.service.MateService;
 import com.core.annotations.ManagerAuth;
 import com.core.common.BaseRes;
 import com.core.common.Cools;
 import com.core.common.DateUtils;
 import com.core.common.R;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -70,14 +77,37 @@ public class MateController extends BaseController {
         if (!Cools.isEmpty(orderByField)){wrapper.orderBy(humpToLine(orderByField), "asc".equals(orderByType));}
         List<Mate> mates = mateService.selectList(wrapper);
 
-        mates = mates.subList(0, 10);
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
         String fileName = URLEncoder.encode("数据", "UTF-8");
         response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+
+        //内容样式策略
+        WriteCellStyle contentWriteCellStyle = new WriteCellStyle();
+        //垂直居中,水平居中
+        contentWriteCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        contentWriteCellStyle.setHorizontalAlignment(HorizontalAlignment.CENTER);
+        contentWriteCellStyle.setBorderLeft(BorderStyle.THIN);
+        contentWriteCellStyle.setBorderTop(BorderStyle.THIN);
+        contentWriteCellStyle.setBorderRight(BorderStyle.THIN);
+        contentWriteCellStyle.setBorderBottom(BorderStyle.THIN);
+        //设置 自动换行
+        contentWriteCellStyle.setWrapped(true);
+        // 字体策略
+        WriteFont contentWriteFont = new WriteFont();
+        // 字体大小
+        contentWriteFont.setFontHeightInPoints((short) 12);
+        contentWriteCellStyle.setWriteFont(contentWriteFont);
+        //头策略使用默认
+        WriteCellStyle headWriteCellStyle = new WriteCellStyle();
+
         EasyExcel.write(response.getOutputStream(), Mate.class)
                 .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+                //设置拦截器或自定义样式
+                .registerWriteHandler(new MonthSheetWriteHandler())
+                .registerWriteHandler(new HorizontalCellStyleStrategy(headWriteCellStyle,contentWriteCellStyle))
                 .sheet("sheet1")
+                .useDefaultStyle(true).relativeHeadRowIndex(4)
                 .doWrite(mates);
     }
 
