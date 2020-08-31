@@ -1,17 +1,16 @@
 var pageCurr;
-layui.use(['table','laydate', 'form', 'upload'], function(){
+layui.use(['table','laydate', 'form'], function(){
     var table = layui.table;
     var $ = layui.jquery;
     var layer = layui.layer;
     var layDate = layui.laydate;
     var form = layui.form;
-    var upload = layui.upload;
 
     // 数据渲染
     tableIns = table.render({
-        elem: '#mate',
+        elem: '#mateLog',
         headers: {token: localStorage.getItem('token')},
-        url: baseUrl+'/mate/list/auth',
+        url: baseUrl+'/mateLog/list/auth',
         page: true,
         limit: 16,
         limits: [16, 30, 50, 100, 200, 500],
@@ -20,8 +19,9 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
         cellMinWidth: 50,
         cols: [[
             {type: 'checkbox'}
-//            ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
-            ,{field: 'billId', align: 'center',title: '单据编号', sort: true}
+            ,{field: 'uuid', align: 'center',title: '转储编号'}
+            ,{field: 'logTime$', align: 'center',title: '转储日期'}
+            ,{field: 'billId', align: 'center',title: '单据编号'}
             ,{field: 'billTime$', align: 'center',title: '单据日期'}
             ,{field: 'supplier', align: 'center',title: '供应商'}
             ,{field: 'code', align: 'center',title: '商品编码'}
@@ -36,13 +36,13 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
             ,{field: 'pakStatus', align: 'center',title: '入库状态'}
             ,{field: 'billMemo', align: 'center',title: '单据备注'}
             ,{field: 'unit', align: 'center',title: '单位'}
-            ,{field: 'createBy$', align: 'center',title: '创建者',hide:true}
-            ,{field: 'createTime$', align: 'center',title: '创建时间',hide:true}
-            ,{field: 'updateBy$', align: 'center',title: '修改人员',hide:true}
-            ,{field: 'updateTime$', align: 'center',title: '修改时间',hide:true}
-            ,{field: 'memo', align: 'center',title: '备注',hide:true}
+            ,{field: 'createBy$', align: 'center',title: '创建者', hide:true}
+            ,{field: 'createTime$', align: 'center',title: '创建时间', hide:true}
+            ,{field: 'updateBy$', align: 'center',title: '修改人员', hide:true}
+            ,{field: 'updateTime$', align: 'center',title: '修改时间', hide:true}
+            ,{field: 'memo', align: 'center',title: '备注'}
 
-            // ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
+            ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
         ]],
         request: {
             pageName: 'curr',
@@ -65,30 +65,15 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
             }
             pageCurr=curr;
             limit();
-        }
-    });
-
-    // 监听排序事件
-    table.on('sort(mate)', function (obj) {
-        var searchData = {};
-        $.each($('#search-box [name]').serializeArray(), function() {
-            searchData[this.name] = this.value;
-        });
-        searchData['orderByField'] = obj.field;
-        searchData['orderByType'] = obj.type;
-        tableIns.reload({
-            where: searchData,
-            page: {
-                curr: 1
-            },
-            done: function (res, curr, count) {
-                if (res.code === 403) {
-                    top.location.href = baseUrl+"/";
+            form.on('checkbox(tableCheckbox)', function (data) {
+                var _index = $(data.elem).attr('table-index')||0;
+                if(data.elem.checked){
+                    res.data[_index][data.value] = 'Y';
+                }else{
+                    res.data[_index][data.value] = 'N';
                 }
-                pageCurr=curr;
-                limit();
-            }
-        });
+            });
+        }
     });
 
     // 监听排序事件
@@ -115,7 +100,7 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
     });
 
     // 监听头工具栏事件
-    table.on('toolbar(mate)', function (obj) {
+    table.on('toolbar(mateLog)', function (obj) {
         var checkStatus = table.checkStatus(obj.config.id);
         switch(obj.event) {
             case 'addData':
@@ -124,7 +109,7 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
                     title: '新增',
                     maxmin: true,
                     area: [top.detailWidth, top.detailHeight],
-                    content: 'mate_detail.html',
+                    content: 'mateLog_detail.html',
                     success: function(layero, index){
                         layer.getChildFrame('#data-detail-submit-edit', index).hide();
                     	clearFormVal(layer.getChildFrame('#detail', index));
@@ -139,7 +124,7 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
                 } else {
                     layer.confirm('确定删除'+(data.length===1?'此':data.length)+'条数据吗', function(){
                         $.ajax({
-                            url: baseUrl+"/mate/delete/auth",
+                            url: baseUrl+"/mateLog/delete/auth",
                             headers: {'token': localStorage.getItem('token')},
                             data: {param: JSON.stringify(data)},
                             method: 'POST',
@@ -158,118 +143,70 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
                     });
                 }
                 break;
-            case 'coverData':
-                var data = checkStatus.data;
-
-                if (data.length === 0){
-                    layer.msg('请选择数据');
-                } else {
-                    var ids = [];
-                    data.forEach(function (item) {
-                        ids.push(item);
-                    })
-                    layer.confirm('确定转储'+(data.length===1?'此':data.length)+'条数据吗', function(){
-                        $.ajax({
-                            url: baseUrl+"/mate/cover/auth",
-                            headers: {'token': localStorage.getItem('token')},
-                            data:JSON.stringify(ids),
-                            contentType:"application/json",
-                            method: 'POST',
-                            success: function (res) {
-                                if (res.code === 200){
-                                    layer.closeAll();
-                                    $(".layui-laypage-btn")[0].click();
-                                } else if (res.code === 403){
-                                    top.location.href = baseUrl+"/";
-                                } else {
-                                    layer.msg(res.msg)
-                                }
-                            }
-                        })
-                    });
-                }
-                break;
             case 'exportData':
                 layer.confirm('确定导出Excel吗', {shadeClose: true}, function(){
-
-                    var form = $("<form>");
-                    form.attr('style', 'display:none');
-                    form.attr('target', '');
-                    form.attr('method', 'post');
-                    form.attr('action', baseUrl+"/mate/export/auth");
-                    $('body').append(form);
-                    $.each($('#search-box [name]').serializeArray(), function() {
-                        var input1 = $('<input>');
-                        input1.attr('type', 'hidden');
-                        input1.attr('name',  this.name);
-                        input1.attr('value', this.value);
-                        form.append(input1);
+                    var titles=[];
+                    var fields=[];
+                    obj.config.cols[0].map(function (col) {
+                        if (col.type === 'normal' && col.hide === false && col.toolbar == null) {
+                            titles.push(col.title);
+                            fields.push(col.field);
+                        }
                     });
-
-                    form.submit();
-                    form.remove();
-                    layer.closeAll();
-                });
-                break;
-            // 导入
-            case 'intoData':
-                layer.open({
-                    type: 1,
-                    title: '数据导入',
-                    shadeClose: true,
-                    content: $('#importDataDiv'),
-                    success: function(layero, index){
-                        uploader.reload();
-                    },
-                    end: function () {
-                        $('#uploadDesc').show();
-                        $('#uploadDemoView').hide();
-                        $('#fileMame').html("");
-                    }
+                    var exportData = {};
+                    $.each($('#search-box [name]').serializeArray(), function() {
+                        exportData[this.name] = this.value;
+                    });
+                    var param = {
+                        'mateLog': exportData,
+                        'fields': fields
+                    };
+                    $.ajax({
+                        url: baseUrl+"/mateLog/export/auth",
+                        headers: {'token': localStorage.getItem('token')},
+                        data: JSON.stringify(param),
+                        dataType:'json',
+                        contentType:'application/json;charset=UTF-8',
+                        method: 'POST',
+                        success: function (res) {
+                            layer.closeAll();
+                            if (res.code === 200) {
+                                table.exportFile(titles,res.data,'xls');
+                            } else if (res.code === 403) {
+                                top.location.href = baseUrl+"/";
+                            } else {
+                                layer.msg(res.msg)
+                            }
+                        }
+                    });
                 });
                 break;
         }
     });
 
-    // 导入excel
-    var uploader = upload.render({
-        elem: '#uploadEx'
-        , url: baseUrl + '/mate/import/auth'
-        , headers: {token: localStorage.getItem('token')}
-        , accept: 'file'
-        , exts: 'xls|excel|xlsx'
-        , auto: false
-        , bindAction: '#uploadDo'
-        , before: function(obj){
-            layer.closeAll();
-            layer.load(1, {shade: [0.1,'#fff']});
-        }
-        , choose: function(obj){
-            $('#uploadDesc').hide();
-            $('#uploadDemoView').show();
-            obj.preview(function(index, file, result){
-                $('#fileMame').html(file.name);
-            });
-        }
-        , done: function (res) {
-            limit();
-            $('#uploadDesc').show();
-            $('#uploadDemoView').hide();
-            $('#fileMame').html("");
-            layer.closeAll('loading');
-            layer.msg(res.msg);
-            tableReload(false);
-        }
-        , error: function(index, upload){
-            layer.closeAll('loading');
-        }
-    })
-
-
     // 监听行工具事件
-    table.on('tool(mate)', function(obj){
+    table.on('tool(mateLog)', function(obj){
         var data = obj.data;
         switch (obj.event) {
+            // 详情
+            case 'detail':
+                layer.open({
+                    type: 2,
+                    title: '详情',
+                    maxmin: true,
+                    area: [top.detailWidth, top.detailHeight],
+                    shadeClose: true,
+                    content: 'mateLog_detail.html',
+                    success: function(layero, index){
+                        setFormVal(layer.getChildFrame('#detail', index), data, true);
+                        top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
+                        layer.getChildFrame('#data-detail-submit-save,#data-detail-submit-edit,#prompt', index).hide();
+                        layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
+                        layero.find('iframe')[0].contentWindow.layui.form.render('select');
+                        layero.find('iframe')[0].contentWindow.layui.form.render('checkbox');
+                    }
+                });
+                break;
             // 编辑
             case 'edit':
                 layer.open({
@@ -277,17 +214,89 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
                     title: '修改',
                     maxmin: true,
                     area: [top.detailWidth, top.detailHeight],
-                    content: 'mate_detail.html',
+                    content: 'mateLog_detail.html',
                     success: function(layero, index){
                         layer.getChildFrame('#data-detail-submit-save', index).hide();
                         setFormVal(layer.getChildFrame('#detail', index), data, false);
                         top.convertDisabled(layer.getChildFrame('#data-detail :input', index), false);
-                        top.convertDisabled(layer.getChildFrame('#id', index), true);
+                        top.convertDisabled(layer.getChildFrame('', index), true);
                         layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
                         layero.find('iframe')[0].contentWindow.layui.form.render('select');
                         layero.find('iframe')[0].contentWindow.layui.form.render('checkbox');
                     }
                 });
+                break;
+            case 'createBy':
+                var param = top.reObject(data).createBy;
+                if (param === undefined) {
+                    layer.msg("无数据");
+                } else {
+                   layer.open({
+                       type: 2,
+                       title: '创建者详情',
+                       maxmin: true,
+                       area: [top.detailWidth, top.detailHeight],
+                       shadeClose: true,
+                       content: '../user/user_detail.html',
+                       success: function(layero, index){
+                           $.ajax({
+                               url: "baseUrl+/user/"+ param +"/auth",
+                               headers: {'token': localStorage.getItem('token')},
+                               method: 'GET',
+                               success: function (res) {
+                                   if (res.code === 200){
+                                       setFormVal(layer.getChildFrame('#detail', index), res.data, true);
+                                       top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
+                                       layer.getChildFrame('#data-detail-submit-save,#data-detail-submit-edit,#prompt', index).hide();
+                                       layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
+                                       layero.find('iframe')[0].contentWindow.layui.form.render('select');
+                                       layero.find('iframe')[0].contentWindow.layui.form.render('checkbox');
+                                   } else if (res.code === 403){
+                                       top.location.href = baseUrl+"/";
+                                   }else {
+                                       layer.msg(res.msg)
+                                   }
+                               }
+                           })
+                       }
+                   });
+                }
+                break;
+            case 'updateBy':
+                var param = top.reObject(data).updateBy;
+                if (param === undefined) {
+                    layer.msg("无数据");
+                } else {
+                   layer.open({
+                       type: 2,
+                       title: '修改人员详情',
+                       maxmin: true,
+                       area: [top.detailWidth, top.detailHeight],
+                       shadeClose: true,
+                       content: '../user/user_detail.html',
+                       success: function(layero, index){
+                           $.ajax({
+                               url: "baseUrl+/user/"+ param +"/auth",
+                               headers: {'token': localStorage.getItem('token')},
+                               method: 'GET',
+                               success: function (res) {
+                                   if (res.code === 200){
+                                       setFormVal(layer.getChildFrame('#detail', index), res.data, true);
+                                       top.convertDisabled(layer.getChildFrame('#data-detail :input', index), true);
+                                       layer.getChildFrame('#data-detail-submit-save,#data-detail-submit-edit,#prompt', index).hide();
+                                       layer.iframeAuto(index);layer.style(index, {top: (($(window).height()-layer.getChildFrame('#data-detail', index).height())/3)+"px"});
+                                       layero.find('iframe')[0].contentWindow.layui.form.render('select');
+                                       layero.find('iframe')[0].contentWindow.layui.form.render('checkbox');
+                                   } else if (res.code === 403){
+                                       top.location.href = baseUrl+"/";
+                                   }else {
+                                       layer.msg(res.msg)
+                                   }
+                               }
+                           })
+                       }
+                   });
+                }
                 break;
 
         }
@@ -313,7 +322,8 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
         });
         var data = {
 //            id: $('#id').val(),
-            id: $('#id').val(),
+            uuid: $('#uuid').val(),
+            logTime: top.strToDate($('#logTime\\$').val()),
             billId: $('#billId').val(),
             billTime: top.strToDate($('#billTime\\$').val()),
             supplier: $('#supplier').val(),
@@ -337,7 +347,7 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
 
         };
         $.ajax({
-            url: baseUrl+"/mate/"+name+"/auth",
+            url: baseUrl+"/mateLog/"+name+"/auth",
             headers: {'token': localStorage.getItem('token')},
             data: top.reObject(data),
             method: 'POST',
@@ -383,6 +393,10 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
 
     // 时间选择器
     layDate.render({
+        elem: '#logTime\\$',
+        type: 'datetime'
+    });
+    layDate.render({
         elem: '#billTime\\$',
         type: 'datetime'
     });
@@ -398,11 +412,8 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
         elem: '#updateTime\\$',
         type: 'datetime'
     });
-    layDate.render({
-        elem: '.layui-laydate-range'
-        ,type: 'datetime'
-        ,range: true
-    });
+
+
 });
 
 // 关闭动作

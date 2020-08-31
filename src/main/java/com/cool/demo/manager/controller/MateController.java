@@ -137,6 +137,15 @@ public class MateController extends BaseController {
         }
     }
 
+    @RequestMapping(value = "/mate/cover/auth")
+    @ManagerAuth
+    public R cover(@RequestBody List<Long> ids){
+        if (Cools.isEmpty(ids)){
+            return R.error();
+        }
+        return R.ok();
+    }
+
     @RequestMapping(value = "/mate/add/auth")
     @ManagerAuth
     public R add(Mate mate) {
