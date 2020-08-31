@@ -44,10 +44,12 @@ public class MateController extends BaseController {
                   @RequestParam(defaultValue = "10")Integer limit,
                   @RequestParam(required = false)String orderByField,
                   @RequestParam(required = false)String orderByType,
+                  @RequestParam(required = false)String condition,
                   @RequestParam Map<String, Object> param){
         EntityWrapper<Mate> wrapper = new EntityWrapper<>();
         excludeTrash(param);
         convert(param, wrapper);
+        allLike(Mate.class, param.keySet(), wrapper, condition);
         if (!Cools.isEmpty(orderByField)){wrapper.orderBy(humpToLine(orderByField), "asc".equals(orderByType));}
         return R.ok(mateService.selectPage(new Page<>(curr, limit), wrapper));
     }

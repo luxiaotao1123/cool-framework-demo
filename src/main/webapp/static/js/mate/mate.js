@@ -42,7 +42,7 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
             ,{field: 'updateTime$', align: 'center',title: '修改时间',hide:true}
             ,{field: 'memo', align: 'center',title: '备注',hide:true}
 
-            ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
+            // ,{fixed: 'right', title:'操作', align: 'center', toolbar: '#operate', width:150}
         ]],
         request: {
             pageName: 'curr',
@@ -368,8 +368,11 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
         elem: '#updateTime\\$',
         type: 'datetime'
     });
-
-
+    layDate.render({
+        elem: '.layui-laydate-range'
+        ,type: 'datetime'
+        ,range: true
+    });
 });
 
 // 关闭动作
