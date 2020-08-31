@@ -1,6 +1,7 @@
 package com.cool.demo.manager.controller;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -20,7 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +55,30 @@ public class MateController extends BaseController {
         allLike(Mate.class, param.keySet(), wrapper, condition);
         if (!Cools.isEmpty(orderByField)){wrapper.orderBy(humpToLine(orderByField), "asc".equals(orderByType));}
         return R.ok(mateService.selectPage(new Page<>(curr, limit), wrapper));
+    }
+
+    @RequestMapping(value = "/mate/export/auth")
+    public void export(@RequestParam(required = false)String orderByField,
+                    @RequestParam(required = false)String orderByType,
+                    @RequestParam(required = false)String condition,
+                    @RequestParam Map<String, Object> param,
+                    HttpServletResponse response)throws Exception{
+        EntityWrapper<Mate> wrapper = new EntityWrapper<>();
+        excludeTrash(param);
+        convert(param, wrapper);
+        allLike(Mate.class, param.keySet(), wrapper, condition);
+        if (!Cools.isEmpty(orderByField)){wrapper.orderBy(humpToLine(orderByField), "asc".equals(orderByType));}
+        List<Mate> mates = mateService.selectList(wrapper);
+
+        mates = mates.subList(0, 10);
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        String fileName = URLEncoder.encode("数据", "UTF-8");
+        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+        EasyExcel.write(response.getOutputStream(), Mate.class)
+                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+                .sheet("sheet1")
+                .doWrite(mates);
     }
 
     private void convert(Map<String, Object> map, EntityWrapper wrapper){
@@ -95,17 +122,6 @@ public class MateController extends BaseController {
             mateService.delete(new EntityWrapper<>(entity));
         }
         return R.ok();
-    }
-
-    @RequestMapping(value = "/mate/export/auth")
-    @ManagerAuth
-    public R export(@RequestBody JSONObject param){
-        EntityWrapper<Mate> wrapper = new EntityWrapper<>();
-        List<String> fields = JSONObject.parseArray(param.getJSONArray("fields").toJSONString(), String.class);
-        Map<String, Object> map = excludeTrash(param.getJSONObject("mate"));
-        convert(map, wrapper);
-        List<Mate> list = mateService.selectList(wrapper);
-        return R.ok(exportSupport(list, fields));
     }
 
     @RequestMapping(value = "/mateQuery/auth")

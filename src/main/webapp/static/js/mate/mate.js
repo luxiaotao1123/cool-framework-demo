@@ -21,7 +21,7 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
         cols: [[
             {type: 'checkbox'}
 //            ,{field: 'id', title: 'ID', sort: true,align: 'center', fixed: 'left', width: 80}
-            ,{field: 'billId', align: 'center',title: '单据编号'}
+            ,{field: 'billId', align: 'center',title: '单据编号', sort: true}
             ,{field: 'billTime$', align: 'center',title: '单据日期'}
             ,{field: 'supplier', align: 'center',title: '供应商'}
             ,{field: 'code', align: 'center',title: '商品编码'}
@@ -65,15 +65,30 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
             }
             pageCurr=curr;
             limit();
-            form.on('checkbox(tableCheckbox)', function (data) {
-                var _index = $(data.elem).attr('table-index')||0;
-                if(data.elem.checked){
-                    res.data[_index][data.value] = 'Y';
-                }else{
-                    res.data[_index][data.value] = 'N';
-                }
-            });
         }
+    });
+
+    // 监听排序事件
+    table.on('sort(mate)', function (obj) {
+        var searchData = {};
+        $.each($('#search-box [name]').serializeArray(), function() {
+            searchData[this.name] = this.value;
+        });
+        searchData['orderByField'] = obj.field;
+        searchData['orderByType'] = obj.type;
+        tableIns.reload({
+            where: searchData,
+            page: {
+                curr: 1
+            },
+            done: function (res, curr, count) {
+                if (res.code === 403) {
+                    top.location.href = baseUrl+"/";
+                }
+                pageCurr=curr;
+                limit();
+            }
+        });
     });
 
     // 监听排序事件
@@ -145,40 +160,24 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
                 break;
             case 'exportData':
                 layer.confirm('确定导出Excel吗', {shadeClose: true}, function(){
-                    var titles=[];
-                    var fields=[];
-                    obj.config.cols[0].map(function (col) {
-                        if (col.type === 'normal' && col.hide === false && col.toolbar == null) {
-                            titles.push(col.title);
-                            fields.push(col.field);
-                        }
-                    });
-                    var exportData = {};
+
+                    var form = $("<form>");
+                    form.attr('style', 'display:none');
+                    form.attr('target', '');
+                    form.attr('method', 'post');
+                    form.attr('action', baseUrl+"/mate/export/auth");
+                    $('body').append(form);
                     $.each($('#search-box [name]').serializeArray(), function() {
-                        exportData[this.name] = this.value;
+                        var input1 = $('<input>');
+                        input1.attr('type', 'hidden');
+                        input1.attr('name',  this.name);
+                        input1.attr('value', this.value);
+                        form.append(input1);
                     });
-                    var param = {
-                        'mate': exportData,
-                        'fields': fields
-                    };
-                    $.ajax({
-                        url: baseUrl+"/mate/export/auth",
-                        headers: {'token': localStorage.getItem('token')},
-                        data: JSON.stringify(param),
-                        dataType:'json',
-                        contentType:'application/json;charset=UTF-8',
-                        method: 'POST',
-                        success: function (res) {
-                            layer.closeAll();
-                            if (res.code === 200) {
-                                table.exportFile(titles,res.data,'xls');
-                            } else if (res.code === 403) {
-                                top.location.href = baseUrl+"/";
-                            } else {
-                                layer.msg(res.msg)
-                            }
-                        }
-                    });
+
+                    form.submit();
+                    form.remove();
+                    layer.closeAll();
                 });
                 break;
             // 导入
