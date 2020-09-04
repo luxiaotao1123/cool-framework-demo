@@ -166,18 +166,20 @@ layui.use(['table','laydate', 'form', 'upload'], function(){
                 } else {
                     var ids = [];
                     data.forEach(function (item) {
-                        ids.push(item);
+                        ids.push(item.id);
                     })
                     layer.confirm('确定转储'+(data.length===1?'此':data.length)+'条数据吗', function(){
                         $.ajax({
                             url: baseUrl+"/mate/cover/auth",
                             headers: {'token': localStorage.getItem('token')},
-                            data:JSON.stringify(ids),
-                            contentType:"application/json",
+                            data: {ids: ids},
                             method: 'POST',
                             success: function (res) {
                                 if (res.code === 200){
                                     layer.closeAll();
+                                    layer.confirm('转储编号：'+res.data, function(){
+                                        layer.closeAll();
+                                    });
                                     $(".layui-laypage-btn")[0].click();
                                 } else if (res.code === 403){
                                     top.location.href = baseUrl+"/";

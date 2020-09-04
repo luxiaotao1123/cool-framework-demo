@@ -12,15 +12,18 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.cool.demo.common.web.BaseController;
 import com.cool.demo.manager.entity.Mate;
+import com.cool.demo.manager.entity.MateLog;
 import com.cool.demo.manager.excel.MateExcel;
 import com.cool.demo.manager.excel.MateExcelListener;
 import com.cool.demo.manager.excel.MonthSheetWriteHandler;
+import com.cool.demo.manager.service.MateLogService;
 import com.cool.demo.manager.service.MateService;
 import com.core.annotations.ManagerAuth;
 import com.core.common.BaseRes;
 import com.core.common.Cools;
 import com.core.common.DateUtils;
 import com.core.common.R;
+import com.core.exception.CoolException;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,16 +33,16 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 public class MateController extends BaseController {
 
     @Autowired
     private MateService mateService;
+    @Autowired
+    private MateLogService mateLogService;
 
     @RequestMapping(value = "/mate/{id}/auth")
     @ManagerAuth
@@ -139,11 +142,52 @@ public class MateController extends BaseController {
 
     @RequestMapping(value = "/mate/cover/auth")
     @ManagerAuth
-    public R cover(@RequestBody List<Long> ids){
-        if (Cools.isEmpty(ids)){
+//    @Transactional
+    public R cover(@RequestParam("ids[]")Long[] ids){
+        if (null == ids || ids.length == 0){
+            return R.error(BaseRes.PARAM);
+        }
+        List<Mate> mates = mateService.selectList(new EntityWrapper<Mate>().in("id", Arrays.asList(ids)));
+        if (mates.isEmpty()) {
             return R.error();
         }
-        return R.ok();
+        String uuid = UUID.randomUUID().toString().substring(24);
+        Date now = new Date();
+        List<MateLog> mateLogs = new ArrayList<>();
+        for (Mate mate : mates) {
+            MateLog mateLog = new MateLog(
+                uuid,    // 转储编号
+                now,    // 转储日期
+                mate.getBillId(),    // 单据编号
+                mate.getBillTime(),    // 单据日期
+                mate.getSupplier(),    // 供应商
+                mate.getCode(),    // 商品编码[非空]
+                mate.getName(),    // 商品名称[非空]
+                mate.getAmount(),    // 数量
+                mate.getLeadTime(),    // 交货时间
+                mate.getPakinAmount(),    // 已入库数量
+                mate.getNotpakAmount(),    // 未入库数量
+                mate.getContent(),    // 商品行备注
+                mate.getState(),    // 审核状态
+                mate.getStatus(),    // 关闭状态
+                mate.getPakStatus(),    // 入库状态
+                mate.getBillMemo(),    // 单据备注
+                mate.getUnit(),    // 单位
+                mate.getCreateBy(),    // 创建者
+                mate.getCreateTime(),    // 创建时间
+                mate.getUpdateBy(),    // 修改人员
+                mate.getUpdateTime(),    // 修改时间
+                mate.getMemo()    // 备注
+            );
+            mateLogs.add(mateLog);
+        }
+        if (!mateLogService.insertBatch(mateLogs)) {
+            throw new CoolException("转储商品失败");
+        }
+        if (!mateService.deleteBatchIds(mates.stream().map(Mate::getId).distinct().collect(Collectors.toList()))) {
+            throw new CoolException("转储商品失败");
+        }
+        return R.ok().add(uuid);
     }
 
     @RequestMapping(value = "/mate/add/auth")
