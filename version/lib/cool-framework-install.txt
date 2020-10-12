@@ -1,0 +1,1 @@
+mvn install:install-file -Dfile=framework-2.0.0.jar -DgroupId=cn.cool -DartifactId=framework -Dversion=2.0.0 -Dpackaging=jar -DgeneratePom=true
