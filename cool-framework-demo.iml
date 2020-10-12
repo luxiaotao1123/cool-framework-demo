@@ -78,7 +78,7 @@
     <orderEntry type="library" name="Maven: io.netty:netty-resolver:4.1.33.Final" level="project" />
     <orderEntry type="library" name="Maven: io.projectreactor:reactor-core:3.2.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.reactivestreams:reactive-streams:1.0.2" level="project" />
-    <orderEntry type="library" name="Maven: cn.cool:framework:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: cn.cool:framework:2.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:5.1.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.47" level="project" />
     <orderEntry type="library" name="Maven: com.microsoft.sqlserver:mssql-jdbc:8.2.2.jre8" level="project" />
