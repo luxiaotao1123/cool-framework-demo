@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Cool</title>
+	<link href="https://fonts.googleapis.com/css?family=Barlow:400,500,700|Playfair+Display" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../static/css/base.css" />
+	<link rel="stylesheet" type="text/css" href="../static/css/demo1.css" />
+	<link rel="icon" type="image/x-icon" href="../static/image/log.png" />
+	<link rel="stylesheet" href="../static/layui/css/layui.css" media="all">
+	<script type="text/javascript" src="../static/layui/layui.js"></script>
+	<script type="text/javascript" src="../static/js/common.js"></script>
+	<script>document.documentElement.className="js";var supportsCssVars=function(){var e,t=document.createElement("style");return t.innerHTML="root: { --tmp-var: bold; }",document.head.appendChild(t),e=!!(window.CSS&&window.CSS.supports&&window.CSS.supports("font-weight","var(--tmp-var)")),t.parentNode.removeChild(t),e};supportsCssVars()||alert("Please view this demo in a modern browser that supports CSS Variables.");</script>
+	<style>
+		html{
+			height: 100%;
+		}
+		body.login-bg {
+			color: #777;
+			height: 100%;
+			background-image: url("../static/image/bg-imgage.jpg");
+			/*background-image: url("../static/image/login_bg.jpg");*/
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: top center;
+		}
+
+		#login-wrapper {
+			/*color: #fff;*/
+			box-sizing:border-box;
+			/*background: #576669;*/
+			background: #fff;
+			position: absolute;
+			top: 45%;
+			left: 50%;
+			margin-top: -210px;
+			margin-left: -220px;
+			width: 440px;
+			min-height: 420px;
+			padding: 50px;
+			text-align: center;
+			border-radius: 5px;
+
+			transform-origin: 50% 50%;
+			animation: loading 1s 0s forwards;
+			transform: rotateX(0deg);
+		}
+
+		#login-wrapper h2 {
+			letter-spacing: 3px;
+			font-size: 26px;
+			margin-bottom: 30px;
+		}
+
+		.layadmin-user-login-body .layui-form-item {
+			margin-bottom: 20px;
+			position: relative;
+		}
+		.layadmin-user-login-body .layui-form-item .layui-input {
+			height: 42px;
+			padding-left: 40px;
+			font-size: 16px;
+			border: 1px solid #c8cccf;
+			color: inherit;
+		}
+		.login-submit {
+			margin-top: 30px;
+		}
+		.layadmin-user-login-icon {
+			position: absolute;
+			left: 1px;
+			top: 1px;
+			width: 38px;
+			line-height: 40px;
+			text-align: center;
+			color: #B2B2B2;
+			font-size: 18px;
+		}
+		.layui-btn-normal {
+			background-color: #0767aa;
+			font-size: 20px;
+			border-radius: 4px;
+			height: 52px;
+		}
+		.layui-form-checked[lay-skin=primary] i {
+			border-color: #0767aa!important;
+			background-color: #0767aa;
+			color: #fff;
+		}
+		.layui-form-checkbox[lay-skin=primary]:hover i {
+			border-color: #0767aa;
+			color: #fff;
+		}
+		#code-box {
+			position: relative;
+			height: 42px;
+		}
+		#code-label {
+			z-index: 999;
+		}
+		#code {
+			position: absolute;
+			left: 0;
+			top: 0;
+			display: inline-block;
+			width: 60%;
+		}
+		#codeImg {
+			border: 1px solid rgba(0,0,0,0.1);
+			position: absolute;
+			right: 5%;
+			top: 0;
+			width: 30%;
+			height: 90%;
+		}
+	</style>
+</head>
+	<body class="demo-1">
+		
+		<main>
+			<div class="content">
+				<canvas class="scene scene--full" id="scene"></canvas>
+				<script type="x-shader/x-vertex" id="wrapVertexShader">
+					attribute float size;
+					attribute vec3 color;
+					varying vec3 vColor;
+					void main() {
+						vColor = color;
+						vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+						gl_PointSize = size * ( 350.0 / - mvPosition.z );
+						gl_Position = projectionMatrix * mvPosition;
+					}
+				</script>
+				<script type="x-shader/x-fragment" id="wrapFragmentShader">
+					varying vec3 vColor;
+					uniform sampler2D texture;
+					void main(){
+						vec4 textureColor = texture2D( texture, gl_PointCoord );
+						if ( textureColor.a < 0.3 ) discard;
+						vec4 color = vec4(vColor.xyz, 1.0) * textureColor;
+						gl_FragColor = color;
+					}
+				</script>
+				<div class="content__inner">
+					<h2 class="content__title">Information</h2>
+					<h2 class="content__subtitle">Data Science</h2>
+				</div>
+			</div>
+		</main>
+		<script src="../static/js/login/demo.js"></script>
+		<script src="../static/js/three.min.js"></script>
+		<script src="../static/js/TweenMax.min.js"></script>
+		<script src="../static/js/demo1.js"></script>
+	</body>
+<script type="text/javascript" src="../static/js/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../static/js/tools/md5.js"></script>
+<script type="text/javascript">
+
+	$(function () {
+		var oldUserName = localStorage.getItem('oldUserName');
+		var oldPass = localStorage.getItem('oldPass');
+		if(oldUserName){
+			$('#username').val(oldUserName);
+		}
+		if(oldPass){
+			$('#password').val(oldPass);
+		}
+	})
+
+	// 验证码开关
+	var codeSwitch = 'Y';
+	$.ajax({
+		url: baseUrl+"/code/switch.action",
+		async: false,
+		success: function (res) {
+			if (res.data === 'N'){
+				codeSwitch = res.data;
+				$('#code-box').css("display", "none");
+			}
+		}
+	});
+
+	// 初始化验证码
+	initCode();
+	$('#codeImg').click(function () {
+		initCode();
+	});
+	function initCode() {
+		var random = Math.random();
+		$('#codeImg').attr("src", baseUrl+"/code.action?sd="+random);
+		setTimeout(function () {
+			$.ajax({
+				url: baseUrl+"/code.do",
+				data: {sd: random},
+				method: 'POST',
+				async: false,
+				success: function (code) {
+					sessionStorage.setItem("code", code);
+				}
+			});
+		}, 100);
+	}
+
+	layui.use(['form','layer'],function () {
+		var form = layui.form,
+				layer = layui.layer,
+				$ = layui.jquery;
+
+		form.on('submit(login)', function (data) {
+			var username = $("#username").val();
+			if (username === "") {
+				layer.msg("请输入账号", {offset: '150px'});
+				return;
+			}
+			var password = $("#password").val();
+			// if (password === "") {
+			//     layer.msg("请输入密码", {offset: '150px'});
+			//     return;
+			// }
+			var code = $("#code").val();
+			if (code === "" && codeSwitch === 'Y') {
+				layer.msg("请输入验证码", {offset: '150px'});
+				return;
+			}
+			if (sessionStorage.getItem("code").toUpperCase() !== code.toUpperCase()&&codeSwitch==='Y'){
+				layer.msg("验证码错误", {offset: '150px'});
+				return;
+			}
+
+			var user = {
+				username: username,
+				password: hex_md5(password)
+			};
+			$.ajax({
+				url: baseUrl+"/login.action",
+				data: user,
+				method: 'POST',
+				success: function (res) {
+					if (res.code === 200){
+						// 记住密码
+						if($('#rememberPwd').is(':checked')){
+							localStorage.setItem('oldUserName',user.username);
+							localStorage.setItem('oldPass',password);
+						} else {
+							localStorage.removeItem('oldUserName');
+							localStorage.removeItem('oldPass');
+						}
+						localStorage.setItem("token", res.data.token);
+						localStorage.setItem("nickname", res.data.nickname);
+						window.location.href = "index.html";
+					} else {
+						layer.msg(res.msg, {offset: '150px'});
+					}
+				}
+			});
+			return false;
+		});
+
+		$('body').keydown(function () {
+			if (event.keyCode === 13) {
+				$("#login-button").click();
+			}
+		});
+
+	});
+</script>
+</html>
