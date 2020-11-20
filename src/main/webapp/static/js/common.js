@@ -155,63 +155,68 @@ function limit(child){
     }) : "object" == typeof module && module.exports ? module.exports = http : n.http = http
 }(this);
 
-/*************************************************************************************************************/
-/********************************************** 物料业务抽象 ***************************************************/
-/*************************************************************************************************************/
 
-function arrRemove(arr, key, val) {
-    for(let i=arr.length-1; i>=0; i--){
-        if(arr[i][key] === val){
-            arr.splice(i,1);
-        }
+// 全屏 -----------------------------------------------------------------------
+
+//开始全屏
+function full() {
+    var docElm = document.documentElement;
+    //W3C
+    if (docElm.requestFullscreen) {
+        docElm.requestFullscreen();
+    }
+    //FireFox
+    else if (docElm.mozRequestFullScreen) {
+        docElm.mozRequestFullScreen();
+    }
+    //Chrome等
+    else if (docElm.webkitRequestFullScreen) {
+        docElm.webkitRequestFullScreen();
+    }
+    //IE11
+    else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
     }
 }
 
-var matCols = [
-    {field: 'matNo', align: 'center',title: '商品编码'}
-    ,{field: 'barcode', align: 'center',title: '条形码'}
-    ,{field: 'matName', align: 'center',title: '商品名称'}
-    ,{field: 'str1', align: 'center',title: '基本单位'}
-    ,{field: 'str2', align: 'center',title: '商品类别'}
-    ,{field: 'str3', align: 'center',title: '规格型号'}
-    ,{field: 'str4', align: 'center',title: '状态', hide: true}
-    ,{field: 'str5', align: 'center',title: '助记码'}
-    ,{field: 'str6', align: 'center',title: '默认供应商'}
-    ,{field: 'str7', align: 'center',title: '默认仓库'}
-    // ,{field: 'str8', align: 'center',title: '品牌'}
-    // ,{field: 'str9', align: 'center',title: '采购员'}
-    // ,{field: 'str10', align: 'center',title: '产地'}
-    // ,{field: 'str11', align: 'center',title: '序列号管理'}
-    // ,{field: 'str12', align: 'center',title: '批次管理'}
-    // ,{field: 'str13', align: 'center',title: '保质期单位'}
-    // ,{field: 'str14', align: 'center',title: '保质期管理'}
-    // ,{field: 'str15', align: 'center',title: '保质期'}
-    // ,{field: 'str16', align: 'center',title: '可销售'}
-    ,{field: 'str17', align: 'center',title: '可采购', hide: true}
-    ,{field: 'str18', align: 'center',title: '可为子件', hide: true}
-    // ,{field: 'str19', align: 'center',title: '可为组件'}
-    // ,{field: 'str20', align: 'center',title: '辅助属性管理'}
-    ,{field: 'str21', align: 'center',title: '成本计算方法', hide: true}
-    ,{field: 'str22', align: 'center',title: '采购单位', hide: true}
-    ,{field: 'str23', align: 'center',title: '销售单位', hide: true}
-    // ,{field: 'num1', align: 'center',title: '预警天数'}
-    // ,{field: 'num2', align: 'center',title: '最低库存数量'}
-    // ,{field: 'num3', align: 'center',title: '最高库存数量'}
-    // ,{field: 'num4', align: 'center',title: '安全库存'}
-    // ,{field: 'num5', align: 'center',title: '税率'}
-]
+//退出全屏
+function exitFull() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    }
+    else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+    }
+    else if (document.webkitCancelFullScreen) {
+        document.webkitCancelFullScreen();
+    }
+    else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+    }
+}
 
-var detlCols = [
-    {field: 'matnr', align: 'center',title: '商品编码'}
-    ,{field: 'maktx', align: 'center',title: '商品名称'}
-    ,{field: 'lgnum', align: 'center',title: '规格'}
-    ,{field: 'type', align: 'center',title: '商品类别'}
-    // ,{field: 'mnemonic', align: 'center',title: '助记码'}
-    // ,{field: 'supplier', align: 'center',title: '供应商'}
-    // ,{field: 'warehouse', align: 'center',title: '仓库'}
-    // ,{field: 'brand', align: 'center',title: '品牌'}
-    ,{field: 'anfme', align: 'center',title: '数量'}
-    ,{field: 'altme', align: 'center',title: '单位'}
-    ,{field: 'zpallet', align: 'center',title: '托盘条码'}
-]
-
+//事件监听
+document.addEventListener("fullscreenchange", function () {
+    try {
+        fullscreenState.innerHTML = (document.fullscreen) ? "" : "not ";
+    } catch (e) {}
+}, false);
+document.addEventListener("mozfullscreenchange", function () {
+    fullscreenState.innerHTML = (document.mozFullScreen) ? "" : "not ";
+}, false);
+document.addEventListener("webkitfullscreenchange", function () {
+    fullscreenState.innerHTML = (document.webkitIsFullScreen) ? "" : "not ";
+}, false);
+document.addEventListener("msfullscreenchange", function () {
+    fullscreenState.innerHTML = (document.msFullscreenElement) ? "" : "not ";
+}, false);
+document.onkeyup = function (e) {
+    if (window.event)//如果window.event对象存在，就以此事件对象为准
+        e = window.event;
+    var key = e.charCode || e.keyCode;
+    if (key === 13 || key === 49 || key === 97) {
+        full();
+    } else if (key === 50 || key === 98) {
+        exitFull();
+    }
+}
